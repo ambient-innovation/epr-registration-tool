@@ -1,0 +1,48 @@
+version: "3.3"
+
+services:
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+      target: dev
+    depends_on:
+      - db
+    container_name: epr_tool_backend
+    env_file: ./backend/.env.development
+    volumes:
+      - ./backend/:/app
+    ports:
+      - "8000:8000"
+    restart: "no"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: dev
+    depends_on:
+      - backend
+    container_name: epr_tool_frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules/
+    ports:
+      - "3000:3000"
+    restart: "no"
+
+  db:
+    image: library/postgres:11.8-alpine
+    container_name: epr_tool_db
+    environment:
+      POSTGRES_DB: epr-tool
+      POSTGRES_USER: epr-tool
+      POSTGRES_PASSWORD: top-secret
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+    restart: "no"
+
+volumes:
+  postgres_data:

@@ -1,0 +1,14 @@
+# Basics
+__pycache__
+*.pid
+*.db
+.env
+*.mo
+*.sqlite3
+*.sqlite3-jurnal
+*.css.map
+.coverage
+coverage.xml
+
+media/
+staticfiles/

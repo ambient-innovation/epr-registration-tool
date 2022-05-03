@@ -1,0 +1,52 @@
+{
+  "name": "epr-registration-tool",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "run-p lint:ts lint:eslint lint:prettier",
+    "lint:eslint": "eslint --ext=ts --ext=tsx --ext=js --ext=jsx .",
+    "lint:prettier": "prettier --check \"**/*.{ts,tsx,js,jsx,json,yaml}\"",
+    "lint:ts": "tsc --pretty --noEmit",
+    "format": "run-s format:eslint format:prettier",
+    "format:eslint": "yarn lint:eslint --fix",
+    "format:prettier": "yarn lint:prettier --write",
+    "start:storybook": "start-storybook -p 9009 -s ./public --ci"
+  },
+  "dependencies": {
+    "@emotion/cache": "^11.7.1",
+    "@emotion/react": "^11.9.0",
+    "@emotion/server": "^11.4.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/material": "^5.6.4",
+    "next": "12.1.5",
+    "react": "18.1.0",
+    "react-dom": "18.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@emotion/babel-plugin": "^11.9.2",
+    "@storybook/addon-a11y": "^6.4.22",
+    "@storybook/addon-essentials": "^6.4.22",
+    "@storybook/react": "^6.4.22",
+    "@trivago/prettier-plugin-sort-imports": "^3.2.0",
+    "@types/node": "17.0.31",
+    "@types/react": "18.0.8",
+    "@types/react-dom": "18.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.22.0",
+    "babel-loader": "^8.2.5",
+    "eslint": "8.14.0",
+    "eslint-config-next": "12.1.6",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-next": "^0.0.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.5.0",
+    "eslint-plugin-storybook": "^0.5.11",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.6.2",
+    "tsconfig-paths-webpack-plugin": "^3.5.2",
+    "typescript": "4.6.4"
+  }
+}

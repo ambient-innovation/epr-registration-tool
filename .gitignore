@@ -1,0 +1,5 @@
+*.idea
+.DS_Store
+./backend/media/*
+./backend/staticfiles/*
+node_modules
