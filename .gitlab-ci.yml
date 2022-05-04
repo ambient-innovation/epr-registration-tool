@@ -1,11 +1,9 @@
 image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:stable
 
 stages:
-  - lint
-  - security
+  - pre-build
   - build
-# When using dind, it's wise to use the overlays driver for
-# improved performance.
+# When using dind, it's wise to use the overlays driver for improved performance.
 variables:
   DOCKER_DRIVER: overlay2
   IMAGE_TAG_BACKEND: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_REF_SLUG
@@ -21,7 +19,7 @@ services:
 
 backend:lint:
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.9-slim
-  stage: lint
+  stage: pre-build
   tags:
     - low-load
   script:
@@ -33,8 +31,7 @@ backend:lint:
 
 backend:security-check:
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.9-slim
-  stage: security
-  needs: []
+  stage: pre-build
   tags:
     - low-load
   script:
@@ -63,7 +60,7 @@ backend:build:
     - /^helm[-/\/].*$/
 
 frontend:lint:
-  stage: lint
+  stage: pre-build
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:current-alpine
   tags:
     - low-load
@@ -81,11 +78,9 @@ frontend:lint:
   except:
     - /^helm[-/\/].*$/
 
-
-frontend:security:check :
+frontend:security:check:
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:14-alpine
-  stage: security
-  needs: []
+  stage: pre-build
   tags:
     - low-load
   script:
