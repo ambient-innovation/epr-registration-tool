@@ -1,0 +1,33 @@
+repos:
+  -   repo: https://github.com/ambv/black
+      rev: 22.3.0
+      hooks:
+        - id: black
+          args: [--check, --diff]
+          language_version: python3.8
+          stages: [push]
+
+  -   repo: https://github.com/pycqa/isort
+      rev: 5.9.1
+      hooks:
+        - id: isort
+          name: isort
+          args: [ --profile, black, --check, --diff ]
+          language_version: python3.8
+          stages: [ push ]
+
+  -   repo: https://gitlab.com/pycqa/flake8
+      rev: 3.9.0
+      hooks:
+        - id: flake8
+          args: [--config=./backend/setup.cfg, -v, --count]
+          language_version: python3.8
+          stages: [ push ]
+
+#  -   repo: local
+#      hooks:
+#        - id: lint
+#          language: system
+#          name: Check frontend linting.
+#          entry: sh -c "cd frontend && yarn lint"
+#          stages: [ push ]
