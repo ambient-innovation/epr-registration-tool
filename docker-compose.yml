@@ -16,6 +16,21 @@ services:
       - "8000:8000"
     restart: "no"
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: dev
+    depends_on:
+      - backend
+    container_name: giz_frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules/
+    ports:
+      - "3000:3000"
+    restart: "no"
+
   db:
     image: library/postgres:11.8-alpine
     container_name: giz_db

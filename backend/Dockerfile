@@ -1,4 +1,4 @@
-FROM python:3.9 as build-python
+FROM python:3.9 as base
 
 RUN apt-get update && apt-get install -y gettext \
   # Cleanup apt cache
@@ -13,17 +13,25 @@ ADD Pipfile Pipfile.lock ./
 
 # Install dependencies
 RUN pip install -U pip pipenv
+
+FROM base as prod-build-python
+
+RUN pipenv install --system --verbose --deploy
+
+FROM base as dev-build-python
+
 RUN pipenv install --system --verbose --deploy --dev
 
 ### Dev image used for loca development (bigger than prod image)
-FROM build-python as dev
+FROM dev-build-python as dev
 
 COPY . /app/
 WORKDIR /app
 
-RUN useradd -ms /bin/bash giz-user-dev && chown -R giz-user-dev /app
+RUN addgroup --system --gid 1001 backend
+RUN adduser --system --uid 1001 backend-user-dev && chown -R backend-user-dev /app
 
-USER giz-user-dev
+USER backend-user-dev
 
 # Django-env expects this file to exist and prints warnings, but we use docker compose env vars.
 RUN touch ./apps/config/.env
@@ -52,15 +60,17 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
-COPY --from=build-python /usr/local/lib/python3.9/site-packages/ /usr/local/lib/python3.9/site-packages/
-COPY --from=build-python /usr/local/bin/ /usr/local/bin/
+COPY --from=prod-build-python /usr/local/lib/python3.9/site-packages/ /usr/local/lib/python3.9/site-packages/
+COPY --from=prod-build-python /usr/local/bin/ /usr/local/bin/
 
 COPY . /app/
 WORKDIR /app
 
-RUN useradd -ms /bin/bash giz-user-prod && chown -R giz-user-prod /app
+RUN addgroup --system --gid 1001 backend
+RUN adduser --system --uid 1001 backend-user-prod && chown -R backend-user-prod /app
 
-USER giz-user-prod
+USER backend-user-prod
+
 
 # Django-env expects this file to exist and prints warnings, but we use docker compose env vars.
 RUN touch ./apps/config/.env

@@ -90,3 +90,21 @@ frontend:security:check:
   allow_failure: true
   except:
     - /^helm[-/\/].*$/
+
+frontend:build:
+  stage: build
+  tags:
+    - normal-load
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build
+      --compress
+      --cache-from $CI_REGISTRY_IMAGE/frontend:develop
+      -t $IMAGE_TAG_FRONTEND
+      -t $IMAGE_TAG_FRONTEND_SHA
+      --build-arg BUILDKIT_INLINE_CACHE=1
+      ./frontend
+    - docker push $IMAGE_TAG_FRONTEND
+    - docker push $IMAGE_TAG_FRONTEND_SHA
+  except:
+    - /^helm[-/\/].*$/
