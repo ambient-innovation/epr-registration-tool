@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "==3.2"
+django-environ = "==0.8.1"
+psycopg2 = "==2.9.3"
+whitenoise = "==6.0.0"
+
+[dev-packages]
+flake8 = "==4.0.1"
+pep8-naming = "==0.12.1"
+black = "==22.3.0"
+isort = "==5.10.1"
+coverage = "==6.3.2"
+
+[requires]
+python_version = "3.9"

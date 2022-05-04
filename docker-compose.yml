@@ -1,0 +1,33 @@
+version: "3.3"
+
+services:
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+      target: dev
+    depends_on:
+      - db
+    container_name: giz_backend
+    env_file: ./backend/dev.env
+    volumes:
+      - ./backend/:/app
+    ports:
+      - "8000:8000"
+    restart: "no"
+
+  db:
+    image: library/postgres:11.8-alpine
+    container_name: giz_db
+    environment:
+      POSTGRES_DB: giz
+      POSTGRES_USER: giz
+      POSTGRES_PASSWORD: top-secret
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+    restart: "no"
+
+volumes:
+  postgres_data:

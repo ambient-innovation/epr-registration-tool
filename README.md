@@ -8,6 +8,18 @@ To make it easy for you to get started with GitLab, here's a list of recommended
 
 Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
 
+
+## pre-push hooks
+- config in [`.pre-commit-config`](./.pre-commit-config.yaml)
+- to activate it run in the project root dir
+
+    pre-commit install --hook-type pre-push
+
+- You may need to install pre-commit if not already installed
+
+    pip install pre-commit
+
+
 ## Add your files
 
 - [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
