@@ -1,0 +1,97 @@
+image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:stable
+
+stages:
+  - lint
+  - security
+  - build
+# When using dind, it's wise to use the overlays driver for
+# improved performance.
+variables:
+  DOCKER_DRIVER: overlay2
+  IMAGE_TAG_BACKEND: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_REF_SLUG
+  IMAGE_TAG_FRONTEND: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_REF_SLUG
+  IMAGE_TAG_BACKEND_SHA: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_SHORT_SHA
+  IMAGE_TAG_FRONTEND_SHA: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_SHORT_SHA
+  FF_ENABLE_BASH_EXIT_CODE_CHECK: "true"
+  DOCKER_HOST: tcp://localhost:2375
+  DOCKER_API_VERSION: "1.39"
+
+services:
+  - ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:18.09-dind
+
+backend:lint:
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.9-slim
+  stage: lint
+  tags:
+    - low-load
+  script:
+    - cd backend
+    - pip install flake8~=3.9.2 pep8-naming~=0.12.1 black==22.3.0 isort==5.9.3
+    - ./scripts/lint.sh
+  except:
+    - /^helm[-/\/].*$/
+
+backend:security-check:
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.9-slim
+  stage: security
+  needs: []
+  tags:
+    - low-load
+  script:
+    - cd backend
+    - ./scripts/packages_security_check.sh
+  allow_failure: true
+  except:
+    - /^helm[-/\/].*$/
+
+backend:build:
+  stage: build
+  tags:
+    - normal-load
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build
+      --compress
+      --cache-from $CI_REGISTRY_IMAGE/backend:develop
+      -t $IMAGE_TAG_BACKEND
+      -t $IMAGE_TAG_BACKEND_SHA
+      --build-arg BUILDKIT_INLINE_CACHE=1
+      ./backend
+    - docker push $IMAGE_TAG_BACKEND
+    - docker push $IMAGE_TAG_BACKEND_SHA
+  except:
+    - /^helm[-/\/].*$/
+
+frontend:lint:
+  stage: lint
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:current-alpine
+  tags:
+    - low-load
+  cache:
+    key:
+      files:
+        - frontend/yarn.lock
+        - frontend/.yarn/
+    paths:
+      - frontend/node_modules/
+  script:
+    - cd frontend
+    - yarn install --frozen-lockfile --cache-folder .yarn
+    - yarn lint
+  except:
+    - /^helm[-/\/].*$/
+
+
+frontend:security:check :
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:14-alpine
+  stage: security
+  needs: []
+  tags:
+    - low-load
+  script:
+    - cd frontend
+    # https://classic.yarnpkg.com/en/docs/cli/audit/#toc-yarn-audit - Only fail at "high" or "critical"
+    - yarn audit --groups dependencies || if [ $? -lt 8 ]; then exit 0; else exit 1; fi
+  allow_failure: true
+  except:
+    - /^helm[-/\/].*$/

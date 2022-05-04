@@ -24,10 +24,10 @@ repos:
           language_version: python3.8
           stages: [ push ]
 
-#  -   repo: local
-#      hooks:
-#        - id: lint
-#          language: system
-#          name: Check frontend linting.
-#          entry: sh -c "cd frontend && yarn lint"
-#          stages: [ push ]
+  -   repo: local
+      hooks:
+        - id: lint
+          language: system
+          name: Check frontend linting.
+          entry: sh -c "cd frontend && yarn lint"
+          stages: [ push ]
