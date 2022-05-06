@@ -1,0 +1,17 @@
+{
+  "name": "e2e",
+  "version": "1.0.0",
+  "description": "End to end testing environment",
+  "main": "index.js",
+  "author": "evilbeards@ambient.digital",
+  "license": "proprietary",
+  "dependencies": {
+    "@playwright/test": "^1.21.1"
+  },
+  "scripts": {
+    "test:head": "playwright test --headed",
+    "test:create": "playwright codegen",
+    "playwright": "playwright",
+    "test": "playwright test"
+  }
+}
