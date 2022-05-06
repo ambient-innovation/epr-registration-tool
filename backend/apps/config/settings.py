@@ -9,25 +9,26 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
 import sys
 from pathlib import Path
 
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-ROOT_DIR = environ.Path(__file__) - 2
-APPS_DIR = ROOT_DIR.path('../')
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # To make apps are findable without a prefix
 sys.path.append(str(BASE_DIR / "apps"))
 
 env = environ.Env(
     # Django
+    DJANGO_DEBUG=(bool, False),
     DJANGO_SECRET_KEY=(str, '!hTrYYVEfQb2wM9tG*PEh@K384Wtuvxgg@8dGrwWQEGZH9@oa9'),
-    DJANGO_STATIC_ROOT=(str, str(APPS_DIR('staticfiles'))),
-    DJANGO_MEDIA_ROOT=(str, str(APPS_DIR('media'))),
+    DJANGO_STATIC_ROOT=(str, 'staticfiles'),
+    DJANGO_MEDIA_ROOT=(str, 'media'),
+    DJANGO_SERVER_URL=(str, 'http://localhost:8000'),
+    DJANGO_FRONTEND_URL=(str, 'http://localhost:3000'),
+    DJANGO_ALLOWED_HOSTS=(list, ['127.0.0.1', 'localhost', '0.0.0.0']),
     # Database
     DATABASE_HOST=(str, ''),
     DATABASE_NAME=(str, ''),
@@ -36,6 +37,8 @@ env = environ.Env(
     DATABASE_PASSWORD=(str, ''),
 )
 
+# read default env variables
+environ.Env.read_env()
 
 # Test testing flag
 IS_TESTING = False
@@ -49,9 +52,9 @@ if 'test' in sys.argv or 'test_coverage' in sys.argv:
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DJANGO_DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
 
 
 # Application definition
@@ -63,7 +66,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'common',
+    'account',
 ]
+AUTH_USER_MODEL = 'account.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -78,6 +84,9 @@ MIDDLEWARE = [
 MEDIA_ROOT = env('DJANGO_MEDIA_ROOT')
 MEDIA_URL = '/media/'
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/3.2/howto/static-files/
+
 STATIC_URL = '/static/'
 STATIC_ROOT = env('DJANGO_STATIC_ROOT')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -87,9 +96,9 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
-STATICFILES_DIRS = (APPS_DIR('static'),)
+STATICFILES_DIRS = ('static',)
 
-ROOT_URLCONF = 'apps.config.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
@@ -107,7 +116,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'apps.config.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database
@@ -158,12 +167,13 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-
-STATIC_URL = '/static/'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+FRONTEND_URL = env('DJANGO_FRONTEND_URL')
+BASE_URL = env("DJANGO_SERVER_URL")
+
+# todo add debug tool bar
+# todo add axes

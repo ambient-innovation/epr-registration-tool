@@ -3,6 +3,7 @@ image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:stable
 stages:
   - pre-build
   - build
+  - test
 # When using dind, it's wise to use the overlays driver for improved performance.
 variables:
   DOCKER_DRIVER: overlay2
@@ -43,6 +44,7 @@ backend:security-check:
 
 backend:build:
   stage: build
+  needs: []
   tags:
     - normal-load
   script:
@@ -93,6 +95,7 @@ frontend:security:check:
 
 frontend:build:
   stage: build
+  needs: []
   tags:
     - normal-load
   script:
