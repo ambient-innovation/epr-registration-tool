@@ -23,12 +23,11 @@
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    //"target": "esnext",
     "noImplicitAny": true,
     "noImplicitThis": true,
-    "strictNullChecks": true
-    //    "jsxImportSource": "@emotion/react",
+    "strictNullChecks": true,
+    "jsxImportSource": "@emotion/react"
   },
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", ".next"]
 }
