@@ -134,8 +134,8 @@ initjob:
   commandArgs: [""]
   resources: # Please note that, limits and requests should be properly set for your deployment. These values have to be changed accordingly. Comments regarding request and limits below are for a reference only, needs change according to different workloads, but if you have no idea at all, they can be good advice to start with.
     limits:
-      cpu: 1000m
-      memory: 1000Mi
+      cpu: 300m
+      memory: 800Mi
     requests:
-      cpu: 500m
-      memory: 1000Mi
+      cpu: 50m
+      memory: 400Mi
