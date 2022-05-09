@@ -169,6 +169,7 @@ deploy:test:
   except:
     - /^helm[-/\/].*$/
 
+
 frontend:lint:
   stage: pre-build
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:current-alpine
@@ -188,6 +189,28 @@ frontend:lint:
   except:
     - /^helm[-/\/].*$/
 
+
+frontend:test:
+  stage: pre-build
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:current-alpine
+  tags:
+    - normal-load
+  needs:
+    - frontend:lint
+  cache:
+    key:
+      files:
+        - frontend/yarn.lock
+        - frontend/.yarn/
+    paths:
+      - frontend/node_modules/
+  script:
+    - cd frontend
+    - yarn install --frozen-lockfile --cache-folder .yarn
+    - yarn test:ci
+  except:
+    - /^helm[-/\/].*$/
+
 frontend:security:check:
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:14-alpine
   stage: pre-build
@@ -203,7 +226,9 @@ frontend:security:check:
 
 frontend:build:
   stage: build
-  needs: []
+  needs:
+    - frontend:lint
+    - frontend:test
   tags:
     - normal-load
   script:
@@ -219,23 +244,6 @@ frontend:build:
     - docker push $IMAGE_TAG_FRONTEND_SHA
   except:
     - /^helm[-/\/].*$/
-
-frontend:test:
-  stage: post-build
-  needs: ['frontend:build']
-  tags:
-    - normal-load
-  variables:
-    GIT_STRATEGY: none
-  artifacts:
-    paths:
-      - coverage/
-  script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker run --rm -v ${PWD}/coverage:/src/coverage $IMAGE_TAG_FRONTEND yarn test --watchAll=false --coverage
-  except:
-    - /^helm[-/\/].*$/
-  allow_failure: true
 
 helm:lint:
   stage: pre-build
@@ -312,4 +320,3 @@ check:deploy:test:
     - develop
   except:
     - /^helm[-/\/].*$/
-
