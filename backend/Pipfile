@@ -1,0 +1,23 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "==4.0.4"
+django-environ = "==0.8.1"
+psycopg2 = "==2.9.3"
+whitenoise = "==6.0.0"
+model-bakery = "*"
+strawberry-graphql-django = "==0.1.2"                                   # graphql library
+strawberry-graphql = {extras = ["debug-server"], version = "0.111.1"}   # django plugin for strawberry
+
+[dev-packages]
+flake8 = "==4.0.1"
+pep8-naming = "==0.12.1"
+black = "==22.3.0"
+isort = "==5.10.1"
+coverage = "==6.3.2"
+
+[requires]
+python_version = "3.9"

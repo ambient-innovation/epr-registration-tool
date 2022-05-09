@@ -1,0 +1,16 @@
+version: 2
+updates:
+  - package-ecosystem:"npm"
+    versioning-strategy: lockfile-only
+    directory: "frontend/"
+    schedule:
+      interval:"weekly"
+    assignees:
+      -ibrahim.taaloulou
+  - package-ecosystem: "pip"
+    versioning-strategy: lockfile-only
+    directory: "backend/"
+    schedule:
+      interval:"weekly"
+    assignees:
+      - ibrahim.taaloulou
