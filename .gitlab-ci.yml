@@ -84,6 +84,8 @@ backend:migrations:check:
       -e USE_POSTGRES_DATABASE=False
       $IMAGE_TAG_BACKEND
       ./scripts/check_models.sh
+  except:
+    - /^helm[-/\/].*$/
 
 backend:test:
   stage: post-build
