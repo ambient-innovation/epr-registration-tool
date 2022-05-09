@@ -2,7 +2,6 @@
 echo "django shell commands for production"
 
 python ./manage.py collectstatic --noinput
-python ./manage.py migrate
 
 # Start Gunicorn processes
 echo Starting Gunicorn.

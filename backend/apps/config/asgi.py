@@ -1,5 +1,5 @@
 """
-ASGI config for GIZ project.
+ASGI config for EPR-Tool project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

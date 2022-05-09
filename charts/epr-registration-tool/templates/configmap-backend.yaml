@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "epr-tool.fullname" . }}-backend
+  labels:
+    app.kubernetes.io/name: {{ include "epr-tool.name" . }}-backend
+    helm.sh/chart: {{ include "epr-tool.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+data:
+  DJANGO_ALLOWED_HOSTS: {{ .Values.backend.django.allowedHosts | quote }}
+  DJANGO_DEFAULT_FROM_EMAIL: {{ .Values.backend.django.defaultFromMail | quote }}
+  DJANGO_SENTRY_DSN: {{ .Values.backend.sentry.dsn | quote }}
+  DJANGO_SENTRY_RELEASE: {{ .Values.backend.sentry.release | quote }}
+  DJANGO_BASE_URL:  "https://{{ .Values.ingress.host.backend}}"
+  DJANGO_FRONTEND_URL: "https://{{ .Values.ingress.host.frontend}}"
+  AWS_BUCKET_NAME: {{ .Values.backend.aws.bucketName | quote }}
+  PYTHONUNBUFFERED: "1"

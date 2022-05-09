@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "epr-tool.fullname" . }}-backend
+  labels: # Every kubernetes object needs to have some common labels as shown below. If you are going to create new kubernetes object from scratch, please add these labels accordingly.
+    app.kubernetes.io/name: {{ include "epr-tool.name" . }}-backend # Keep this label consistent with name metadata. You will most likely need to change "workshop" part according to _helpers.tpl file.
+    helm.sh/chart: {{ include "epr-tool.chart" . }} # You would most likely only change "workshop" part accordingly to how it is named in _helpers.tpl file.
+    app.kubernetes.io/instance: {{ .Release.Name }} # This is same for every kubernetes object. Do not change.
+    app.kubernetes.io/managed-by: {{ .Release.Service }} # This is same for every kubernetes object. Do not change.
+spec:
+  replicas: {{ .Values.backend.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "epr-tool.name" . }}-backend
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "epr-tool.name" . }}-backend
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}"
+          imagePullPolicy: {{ .Values.backend.image.pullPolicy }}
+          env:
+            - name: FORCE_RESTART_AT
+              value: {{ .Values.forceRestartAt | quote }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "epr-tool.fullname" . }}-backend
+                optional: false
+            - secretRef:
+                name: {{ include "epr-tool.fullname" . }}-django-secret
+                optional: false
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            {{- toYaml .Values.backend.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.backend.readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.backend.resources | nindent 12 }}
+      imagePullSecrets:
+        - name: ai-registry
+      {{- with .Values.backend.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.backend.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app.kubernetes.io/name"
+                    operator: In
+                    values:
+                    - {{ include "epr-tool.name" $ }}-backend
+                  - key: "app.kubernetes.io/instance"
+                    operator: In
+                    values:
+                    - {{ $.Release.Name }}
+              topologyKey: "kubernetes.io/hostname"
+      {{- end }}
+      {{- with .Values.backend.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

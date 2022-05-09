@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "epr-tool.fullname" . }}-frontend
+  labels:
+    app.kubernetes.io/name: {{ include "epr-tool.name" . }}-frontend
+    helm.sh/chart: {{ include "epr-tool.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+data:
+  NODE_OPTIONS: --max-old-space-size=2048
+  NODE_ENV: production

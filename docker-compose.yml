@@ -8,7 +8,7 @@ services:
       target: dev
     depends_on:
       - db
-    container_name: giz_backend
+    container_name: epr_tool_backend
     env_file: ./backend/dev.env
     volumes:
       - ./backend/:/app
@@ -23,7 +23,7 @@ services:
       target: dev
     depends_on:
       - backend
-    container_name: giz_frontend
+    container_name: epr_tool_frontend
     volumes:
       - ./frontend:/app
       - /app/node_modules/
@@ -33,10 +33,10 @@ services:
 
   db:
     image: library/postgres:11.8-alpine
-    container_name: giz_db
+    container_name: epr_tool_db
     environment:
-      POSTGRES_DB: giz
-      POSTGRES_USER: giz
+      POSTGRES_DB: epr-tool
+      POSTGRES_USER: epr-tool
       POSTGRES_PASSWORD: top-secret
     volumes:
       - postgres_data:/var/lib/postgresql/data/
