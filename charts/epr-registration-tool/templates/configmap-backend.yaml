@@ -16,3 +16,15 @@ data:
   DJANGO_FRONTEND_URL: "https://{{ .Values.ingress.host.frontend}}"
   AWS_BUCKET_NAME: {{ .Values.backend.aws.bucketName | quote }}
   PYTHONUNBUFFERED: "1"
+  # axes
+  AXES_ENABLED: {{.Values.backend.axes.enabled | quote }}
+  AXES_FAILURE_LIMIT: {{.Values.backend.axes.attempts | quote }}
+  AXES_RESET_ON_SUCCESS: {{.Values.backend.axes.reset | quote }}
+  AXES_LOCK_OUT_BY_COMBINATION_USER_AND_IP: {{.Values.backend.axes.lockByUserAndIp | quote }}
+  AXES_USE_USER_AGENT: {{.Values.backend.axes.useUserAgent | quote }}
+  AXES_ONLY_ADMIN_SITE: {{.Values.backend.axes.adminSiteOnly | quote }}
+  # database
+  DATABASE_NAME: {{.Values.backend.db.name | quote }}
+  DATABASE_HOST: {{.Values.backend.db.host | quote }}
+  DATABASE_PORT: {{.Values.backend.db.port | quote }}
+  DATABASE_USERNAME: {{.Values.backend.db.username | quote }}

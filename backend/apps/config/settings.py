@@ -36,6 +36,14 @@ env = environ.Env(
     DATABASE_USERNAME=(str, ''),
     DATABASE_PASSWORD=(str, ''),
     USE_POSTGRES_DATABASE=(bool, True),
+    # Django Axes
+    AXES_ENABLED=(bool, True),
+    ATOMIC_REQUESTS=(bool, True),
+    AXES_FAILURE_LIMIT=(int, 5),
+    AXES_RESET_ON_SUCCESS=(bool, False),
+    AXES_LOCK_OUT_BY_COMBINATION_USER_AND_IP=(bool, True),
+    AXES_USE_USER_AGENT=(bool, True),
+    AXES_ONLY_ADMIN_SITE=(bool, True),
 )
 
 # read default env variables
@@ -68,6 +76,7 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'axes',
     'strawberry.django',
 ]
 
@@ -89,6 +98,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # AxesMiddleware should be the last middleware in the MIDDLEWARE list.
+    # It only formats user lockout messages and renders Axes lockout responses
+    # on failed user authentication attempts from login views.
+    # If you do not want Axes to override the authentication response
+    # you can skip installing the middleware and use your own views.
+    'axes.middleware.AxesMiddleware',
 ]
 
 MEDIA_ROOT = env('DJANGO_MEDIA_ROOT')
@@ -189,5 +204,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 FRONTEND_URL = env('DJANGO_FRONTEND_URL')
 BASE_URL = env("DJANGO_SERVER_URL")
 
-# todo add debug tool bar
-# todo add axes
+AUTHENTICATION_BACKENDS = [
+    # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
+    'axes.backends.AxesBackend',
+    # Django ModelBackend is the default authentication backend.
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+# configuration for the django-axes package to log the login-attempts
+if env.bool('AXES_ENABLED'):
+    from datetime import timedelta
+
+    AXES_COOLOFF_TIME = timedelta(minutes=10)
+    AXES_FAILURE_LIMIT = env.int('AXES_FAILURE_LIMIT')
+    AXES_RESET_ON_SUCCESS = env.bool('AXES_RESET_ON_SUCCESS')
+    AXES_LOCK_OUT_BY_COMBINATION_USER_AND_IP = env.bool('AXES_LOCK_OUT_BY_COMBINATION_USER_AND_IP')
+    AXES_USE_USER_AGENT = env.bool('AXES_USE_USER_AGENT')
+    AXES_ONLY_ADMIN_SITE = env.bool('AXES_ONLY_ADMIN_SITE')
+else:
+    AXES_ENABLED = False

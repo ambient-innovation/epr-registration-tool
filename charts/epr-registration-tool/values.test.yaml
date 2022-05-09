@@ -26,9 +26,16 @@ backend:
     bucketName: ""
     accessKeyId: ""
     secretAccessKey: ""
+  axes:
+    enabled: true
+    reset: false
+    attempts: 5
+    lockByUserAndIp: true
+    useUserAgent: true
+    adminSiteOnly: true
   db:
     enabled: true
-    host: "	ai-postgres-test-db.czkubjsaknys.eu-central-1.rds.amazonaws.com"
+    host: "ai-postgres-test-db.czkubjsaknys.eu-central-1.rds.amazonaws.com"
     port: "5432"
     name: "epr_registration_tool_epr"
     username: "epr_registration_tool_epr"
