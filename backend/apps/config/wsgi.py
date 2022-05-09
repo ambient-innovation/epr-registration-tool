@@ -1,5 +1,5 @@
 """
-WSGI config for giz project.
+WSGI config for EPR-Tool project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

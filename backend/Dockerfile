@@ -16,6 +16,10 @@ RUN pip install -U pip pipenv
 
 FROM base as prod-build-python
 
+# copy migrations script
+COPY ./scripts/migrations.sh /bin/migrations.sh
+RUN chmod +x /bin/migrations.sh
+
 RUN pipenv install --system --verbose --deploy
 
 FROM base as dev-build-python
@@ -62,6 +66,7 @@ RUN apt-get update \
 
 COPY --from=prod-build-python /usr/local/lib/python3.9/site-packages/ /usr/local/lib/python3.9/site-packages/
 COPY --from=prod-build-python /usr/local/bin/ /usr/local/bin/
+COPY --from=prod-build-python /bin/migrations.sh /bin/
 
 COPY . /app/
 WORKDIR /app
