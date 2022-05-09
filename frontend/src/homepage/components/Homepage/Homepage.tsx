@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material'
 
 import { containerCss } from '@/homepage/components/Homepage/Homepage.styles'
 
-export const Homepage = () => (
+export const Homepage = (): React.ReactElement => (
   <div css={containerCss}>
     <Box
       sx={{
