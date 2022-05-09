@@ -235,6 +235,7 @@ frontend:test:
     - docker run --rm -v ${PWD}/coverage:/src/coverage $IMAGE_TAG_FRONTEND yarn test --watchAll=false --coverage
   except:
     - /^helm[-/\/].*$/
+  allow_failure: true
 
 helm:lint:
   stage: pre-build
