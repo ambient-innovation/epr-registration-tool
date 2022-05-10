@@ -45,8 +45,8 @@ env = environ.Env(
     AXES_USE_USER_AGENT=(bool, True),
     AXES_ONLY_ADMIN_SITE=(bool, True),
     # Sentry
-    SENTRY_DSN=(str, ''),
-    DJANGO_SENTRY_RELEASE=(str, 'local'),
+    DJANGO_SENTRY_DSN=(str, ''),
+    DJANGO_SENTRY_ENV=(str, 'local'),
 )
 
 # read default env variables
@@ -229,15 +229,15 @@ else:
 
 # sentry
 # Scrubbing Sensitive Data
-if env('SENTRY_DSN'):
+if env('DJANGO_SENTRY_DSN'):
     import sentry_sdk
     from sentry_sdk.integrations.django import DjangoIntegration
 
     sentry_sdk.init(
-        dsn=env('SENTRY_DSN'),
+        dsn=env('DJANGO_SENTRY_DSN'),
         integrations=[DjangoIntegration()],
         max_breadcrumbs=50,
         debug=DEBUG,
-        environment=env('DJANGO_SENTRY_RELEASE'),
+        environment=env('DJANGO_SENTRY_ENV'),
         server_name=FRONTEND_URL,
     )

@@ -9,7 +9,7 @@ stages:
 
 # When using dind, it's wise to use the overlays driver for improved performance.
 variables:
-  TEST_HELM_CHART_VERSION: "0.0.4"
+  TEST_HELM_CHART_VERSION: "0.0.5"
   DOCKER_DRIVER: overlay2
   IMAGE_TAG_BACKEND: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_REF_SLUG
   IMAGE_TAG_FRONTEND: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_REF_SLUG
@@ -211,7 +211,7 @@ frontend:test:
   except:
     - /^helm[-/\/].*$/
 
-frontend:security:check:
+frontend:security-check:
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:14-alpine
   stage: pre-build
   tags:
@@ -271,7 +271,7 @@ helm:render:
     - /^helm[-/\/].*$/
 
 # Release with tags in this format: helm-1.0.0 (adjust version number)
-helm:deply:
+helm:deploy:
   stage: deploy
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/alpine/helm
   tags:
