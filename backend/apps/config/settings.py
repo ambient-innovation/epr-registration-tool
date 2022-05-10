@@ -44,6 +44,9 @@ env = environ.Env(
     AXES_LOCK_OUT_BY_COMBINATION_USER_AND_IP=(bool, True),
     AXES_USE_USER_AGENT=(bool, True),
     AXES_ONLY_ADMIN_SITE=(bool, True),
+    # Sentry
+    DJANGO_SENTRY_DSN=(str, ''),
+    DJANGO_SENTRY_ENV=(str, 'local'),
 )
 
 # read default env variables
@@ -223,3 +226,18 @@ if env.bool('AXES_ENABLED'):
     AXES_ONLY_ADMIN_SITE = env.bool('AXES_ONLY_ADMIN_SITE')
 else:
     AXES_ENABLED = False
+
+# sentry
+# Scrubbing Sensitive Data
+if env('DJANGO_SENTRY_DSN'):
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
+
+    sentry_sdk.init(
+        dsn=env('DJANGO_SENTRY_DSN'),
+        integrations=[DjangoIntegration()],
+        max_breadcrumbs=50,
+        debug=DEBUG,
+        environment=env('DJANGO_SENTRY_ENV'),
+        server_name=FRONTEND_URL,
+    )
