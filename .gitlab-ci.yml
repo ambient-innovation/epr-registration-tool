@@ -70,7 +70,7 @@ backend:build-and-push:
   except:
     - /^helm[-/\/].*$/
 
-backend:migrations:check:
+backend:post-build-checks:
   stage: post-build
   needs: ["backend:build-and-push"]
   tags:
@@ -83,7 +83,8 @@ backend:migrations:check:
       --rm --entrypoint=/bin/bash
       -e USE_POSTGRES_DATABASE=False
       $IMAGE_TAG_BACKEND
-      ./scripts/check_migrations.sh
+      -c "./scripts/check_migrations.sh && ./scripts/check_graphql_schema.sh"
+
   except:
     - /^helm[-/\/].*$/
 
@@ -185,6 +186,7 @@ frontend:lint:
   script:
     - cd frontend
     - yarn install --frozen-lockfile --cache-folder .yarn
+    - ./check_generated_types.sh
     - yarn lint
   except:
     - /^helm[-/\/].*$/

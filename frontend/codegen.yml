@@ -1,0 +1,24 @@
+# Use schema file from backend
+schema: ../backend/schema.graphql
+overwrite: true
+documents:
+  - src/**/queries/*.ts
+  - src/**/mutations/*.ts
+  - src/**/*queries.ts
+  - src/**/*mutations.ts
+generates:
+  src/api/__types__.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+    config:
+      addDocBlocks: false
+      reactApolloVersion: 3
+      namingConvention:
+        enumValues: keep
+
+# Format generated files
+hooks:
+  afterAllFileWrite:
+    - prettier --write

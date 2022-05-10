@@ -15,6 +15,8 @@ from pathlib import Path
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from corsheaders.defaults import default_methods
+
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # To make apps are findable without a prefix
@@ -44,6 +46,8 @@ env = environ.Env(
     AXES_LOCK_OUT_BY_COMBINATION_USER_AND_IP=(bool, True),
     AXES_USE_USER_AGENT=(bool, True),
     AXES_ONLY_ADMIN_SITE=(bool, True),
+    # Security
+    DJANGO_CORS_ORIGIN_WHITELIST=(list, []),
     # Sentry
     DJANGO_SENTRY_DSN=(str, ''),
     DJANGO_SENTRY_ENV=(str, 'local'),
@@ -60,13 +64,8 @@ if 'test' in sys.argv or 'test_coverage' in sys.argv:
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('DJANGO_SECRET_KEY')
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DJANGO_DEBUG')
-
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
 
 # Application definition
 DJANGO_APPS = [
@@ -81,6 +80,7 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     'axes',
     'strawberry.django',
+    'corsheaders',
 ]
 
 LOCAL_APPS = [
@@ -96,6 +96,7 @@ AUTH_USER_MODEL = 'account.User'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -207,12 +208,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 FRONTEND_URL = env('DJANGO_FRONTEND_URL')
 BASE_URL = env("DJANGO_SERVER_URL")
 
+# ---- SECURITY --- #
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = env('DJANGO_SECRET_KEY')
+
 AUTHENTICATION_BACKENDS = [
     # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
     'axes.backends.AxesBackend',
     # Django ModelBackend is the default authentication backend.
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
+CORS_ORIGIN_WHITELIST = env.list('DJANGO_CORS_ORIGIN_WHITELIST')
+CORS_ALLOWED_ORIGINS = (f'{FRONTEND_URL}',)
+CORS_ALLOW_METHODS = default_methods
 
 # configuration for the django-axes package to log the login-attempts
 if env.bool('AXES_ENABLED'):
@@ -227,7 +238,8 @@ if env.bool('AXES_ENABLED'):
 else:
     AXES_ENABLED = False
 
-# sentry
+# --- SENTRY --- #
+
 # Scrubbing Sensitive Data
 if env('DJANGO_SENTRY_DSN'):
     import sentry_sdk
