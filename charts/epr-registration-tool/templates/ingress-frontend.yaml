@@ -43,5 +43,5 @@ spec:
           - path: "/"
             backend:
               serviceName: {{ include "epr-tool.fullname" . }}-frontend
-              servicePort: 80
+              servicePort: 3000
 {{- end }}
