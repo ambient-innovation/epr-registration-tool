@@ -51,7 +51,7 @@ backend:security-check:
   except:
     - /^helm[-/\/].*$/
 
-backend:build:
+backend:build-and-push:
   stage: build
   needs: []
   tags:
@@ -72,7 +72,7 @@ backend:build:
 
 backend:migrations:check:
   stage: post-build
-  needs: ["backend:build"]
+  needs: ["backend:build-and-push"]
   tags:
     - normal-load
   variables:
@@ -89,7 +89,7 @@ backend:migrations:check:
 
 backend:test:
   stage: post-build
-  needs: ["backend:build"]
+  needs: ["backend:build-and-push"]
   tags:
     - normal-load
   variables:
@@ -224,7 +224,7 @@ frontend:security:check:
   except:
     - /^helm[-/\/].*$/
 
-frontend:build:
+frontend:build-and-push:
   stage: build
   needs:
     - frontend:lint
