@@ -44,6 +44,9 @@ module.exports = {
         ],
       },
     })
+    // Please see `next.config.js` for more details on this
+    // Since Storybook is a pure browser app, we don't need `@sentry/node` at all
+    config.resolve.alias['@sentry/node'] = '@sentry/react'
     return config
   },
 }

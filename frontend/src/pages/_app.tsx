@@ -5,6 +5,7 @@ import type { AppProps } from 'next/app'
 import Head from 'next/head'
 
 import { useApollo } from '@/config/apolloClient'
+import { initSentry } from '@/config/sentry'
 import { createEmotionCache, theme } from '@/theme'
 
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -13,6 +14,9 @@ const clientSideEmotionCache = createEmotionCache()
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache
 }
+
+// Initialize Sentry
+initSentry()
 
 function MyApp({
   Component,
