@@ -18,17 +18,6 @@ metadata:
     {{- if .Values.ingress.useLetsEncrypt }}
     certmanager.k8s.io/cluster-issuer: letsencrypt-prod
     {{- end }}
-
-    # Todo: check if need to adjust configuration-snippet
-    # you need to configure your CSP-headers to run your project.
-    # this has to be done for each URL/ingress, please refer to:
-    # https://ambient327.sharepoint.com/sites/AmbientInnovationGmbH/_layouts/OneNote.aspx?id=%2Fsites%2FAmbientInnovationGmbH%2FFreigegebene%20Dokumente%2FGeneral%2FAMBIENT%20Knowledge%20Base&wd=target%2850.4%20-%20Kubernetes%20und%20Helm.one%7CB4F470AB-EC84-452A-9249-8A5709956B52%2FIngress%20%28SSL%2C%20CSP%20und%20Annotations%5C%29%7C547E666D-89FC-4EF4-9ECB-634022D4DCB2%2F%29
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      more_set_headers "X-Content-Type-Options: nosniff";
-      more_set_headers "X-XSS-Protection: 1; mode=block";
-      more_set_headers "Content-Security-Policy:
-        default-src 'self' frontend.example.com ; script-src 'self' ; style-src 'self' my.example.com ; font-src static.example.com; img-src 'self' ; ";
-
 spec:
 {{- if .Values.ingress.secretName }}
   tls:

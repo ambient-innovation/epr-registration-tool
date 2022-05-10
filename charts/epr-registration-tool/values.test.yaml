@@ -70,7 +70,7 @@ backend:
       httpHeaders:
         - name: Host
           value: localhost
-      path: /
+      path: /admin/
       port: 8000
       scheme: HTTP
     initialDelaySeconds: 15 # If your application needs a lot of initial delay (e.g. more than 10-15 seconds) check what is slowing the boot time and check if there is anything you can do to speed up the boot time. If you are not sure what to do, ask to Ops team for guidance.
@@ -128,8 +128,8 @@ ingress:
   useLetsEncrypt: true
   secretName: epr-tool-le
   host:
-    backend: api.epr-test.ambient.digital
-    frontend: epr-test.ambient.digital
+    backend: epr-tool-api.ambient.digital
+    frontend: epr-tool.ambient.digital
 
 # Please USE INITJOB for performing your database migrations. This is make sure that your backends pods will boot faster and you will avoid many production issue that can occour related with this.
 # Initjob will perform your database migrations and most of the time, resources consumed for database migrations are high. Observe metrics for your initjob from Rancher and see if you need to adjust these.
