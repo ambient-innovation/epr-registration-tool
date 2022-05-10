@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "89233d6ba5005b54ed0bca4e922d20e226bfb21d8983c71a2600009e6a38f507"
+            "sha256": "3efea4727641641cf85e8acc57a4871f89caa223d72825f8df405508059a2351"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -85,8 +85,16 @@
                 "sha256:9d1bf141427b7d54be944587c8349df791ce60ade2e3cccaf9c56368c133c201",
                 "sha256:f83c658e4968998eed1923a2e3e3eddd347e005ac0315fbb7ca4d70ea9156323"
             ],
-            "markers": "python_version >= '3.6' and python_version < '4'",
+            "markers": "python_version >= '3.6' and python_version < '4.0'",
             "version": "==3.2.1"
+        },
+        "gunicorn": {
+            "hashes": [
+                "sha256:9dcc4547dbb1cb284accfb15ab5667a0e5d1881cc443e0677b4882a4067a807e",
+                "sha256:e0a968b5ba15f8a328fdfd7ab1fcb5af4470c28aaf7e55df02a99bc13138e6e8"
+            ],
+            "index": "pypi",
+            "version": "==20.1.0"
         },
         "h11": {
             "hashes": [
@@ -195,11 +203,11 @@
                 "debug-server"
             ],
             "hashes": [
-                "sha256:42bce8eda4b146fc466f52c8705f8cbad4ffa5723c6c6f69b0c154980a418cb2",
-                "sha256:a4b91fb393e8385263bdba8b3ba9ce274207182a5d268b44253d0c79e326d217"
+                "sha256:27a387e64df40f64d648df7e5a491f6876fc1605f95972e7802acceb84fa8450",
+                "sha256:cab6f87181244c4fba42447824d13b4de81ad82fcd5ef9738b1da937485fa45c"
             ],
             "index": "pypi",
-            "version": "==0.111.1"
+            "version": "==0.111.2"
         },
         "strawberry-graphql-django": {
             "hashes": [

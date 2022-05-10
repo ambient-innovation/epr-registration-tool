@@ -12,6 +12,7 @@ model-bakery = "*"
 strawberry-graphql-django = "==0.1.2"                                   # graphql library
 strawberry-graphql = {extras = ["debug-server"], version = "0.111.1"}   # django plugin for strawberry
 django-axes = "*"
+gunicorn = "==20.1.0"
 
 [dev-packages]
 flake8 = "==4.0.1"
