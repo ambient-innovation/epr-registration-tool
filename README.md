@@ -27,3 +27,9 @@ You may need to install pre-commit if not already installed
     pip install pre-commit
     brew install pre-commit     (mac alternative)
 
+
+## Glossary
+
+* **[EPR](https://www.zmart.de/blog/epr-was-ist-die-erweiterte-herstellerverantwortung)**  
+  extended producer responsibility
+  (erweiterte Herstellerverantwortung)  
