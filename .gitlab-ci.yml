@@ -230,7 +230,6 @@ frontend:build-and-push:
   stage: build
   needs:
     - frontend:lint
-    - frontend:test
   tags:
     - normal-load
   script:
