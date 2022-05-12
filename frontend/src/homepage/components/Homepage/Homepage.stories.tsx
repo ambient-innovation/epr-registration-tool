@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/react'
 import { Homepage } from './Homepage'
 
 export default {
-  title: 'components/Homepage',
+  title: 'homepage/Homepage',
   component: Homepage,
 } as Meta<Homepage>
 

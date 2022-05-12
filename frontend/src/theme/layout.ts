@@ -1,47 +1,57 @@
 import { css } from '@emotion/react'
+import { Breakpoint } from '@mui/system/createTheme/createBreakpoints'
 
-import { BreakpointKeyType, breakpoints } from '@/theme/breakpoints'
+import { breakpoints } from './breakpoints'
+import { pxToRem, pxToRemAsString } from './utils'
 
 export const layout = {
   maxWidth: {
-    desktop: '128rem',
+    md: pxToRemAsString(1024),
+    hero: pxToRemAsString(1600),
   },
   paddingX: {
-    mobile: '2.4rem',
-    tablet: '3.2rem',
-    laptop: '1.8rem',
-    desktop: '0',
+    xs: pxToRemAsString(24),
+    sm: pxToRemAsString(24),
+    md: pxToRemAsString(32),
+    lg: pxToRemAsString(18),
+    xl: '0',
   },
 }
+
 export const maxWidthCss = css`
   width: 100%;
   margin-left: auto;
   margin-right: auto;
 
-  ${breakpoints.up('laptop')} {
-    max-width: ${layout.maxWidth.desktop};
+  ${breakpoints.up('md')} {
+    max-width: ${layout.maxWidth.md};
   }
 `
 
 export const paddedSectionCss = css`
+  // xs
   box-sizing: border-box;
   width: 100%;
-  padding-left: ${layout.paddingX.mobile};
-  padding-right: ${layout.paddingX.mobile};
+  padding-left: ${layout.paddingX.xs};
+  padding-right: ${layout.paddingX.xs};
 
-  ${breakpoints.up('tablet')} {
-    padding-left: ${layout.paddingX.tablet};
-    padding-right: ${layout.paddingX.tablet};
+  ${breakpoints.up('sm')} {
+    padding-left: ${layout.paddingX.sm};
+    padding-right: ${layout.paddingX.sm};
+  }
+  ${breakpoints.up('md')} {
+    padding-left: ${layout.paddingX.md};
+    padding-right: ${layout.paddingX.md};
   }
 
-  ${breakpoints.up('laptop')} {
-    padding-left: ${layout.paddingX.laptop};
-    padding-right: ${layout.paddingX.laptop};
+  ${breakpoints.up('lg')} {
+    padding-left: ${layout.paddingX.lg};
+    padding-right: ${layout.paddingX.lg};
   }
 
-  ${breakpoints.up('desktop')} {
-    padding-left: ${layout.paddingX.desktop};
-    padding-right: ${layout.paddingX.desktop};
+  ${breakpoints.up('xl')} {
+    padding-left: ${layout.paddingX.xl};
+    padding-right: ${layout.paddingX.xl};
   }
 `
 interface ColumnConfig {
@@ -50,55 +60,51 @@ interface ColumnConfig {
   gutter: string
 }
 
-export const grid: Record<BreakpointKeyType, ColumnConfig> = {
-  mobile: {
-    columns: 6,
-    columnWidth: '4.8rem',
-    gutter: '0.8rem',
+export const grid: Record<Breakpoint, ColumnConfig> = {
+  xs: {
+    columns: 10,
+    columnWidth: pxToRemAsString(12),
+    gutter: pxToRemAsString(24),
   },
-  tablet: {
-    columns: 9,
-    columnWidth: '6.4rem',
-    gutter: '1.6rem',
-  },
-  laptop: {
+  sm: {
     columns: 12,
-    columnWidth: '6.4rem',
-    gutter: '2rem',
+    columnWidth: pxToRemAsString(24),
+    gutter: pxToRemAsString(24),
   },
-  desktop: {
+  md: {
     columns: 12,
-    columnWidth: '8rem',
-    gutter: '2rem',
+    columnWidth: pxToRemAsString(49),
+    gutter: pxToRemAsString(24),
+  },
+  lg: {
+    columns: 12,
+    columnWidth: pxToRemAsString(74),
+    gutter: pxToRemAsString(24),
+  },
+  xl: {
+    columns: 12,
+    columnWidth: pxToRemAsString(102),
+    gutter: pxToRemAsString(24),
   },
 }
 
-export const defaultGridGapCss = css`
-  grid-column-gap: ${grid.mobile.gutter};
-
-  ${breakpoints.up('tablet')} {
-    grid-column-gap: ${grid.tablet.gutter};
-  }
-  ${breakpoints.up('laptop')} {
-    grid-column-gap: ${grid.laptop.gutter};
-  }
-  ${breakpoints.up('desktop')} {
-    grid-column-gap: ${grid.desktop.gutter};
-  }
-`
 export const defaultGridCss = css`
-  ${defaultGridGapCss};
+  // xs
   display: grid;
-  grid-template-columns: repeat(${grid.mobile.columns}, 1fr);
+  grid-column-gap: ${pxToRem(24)}rem;
+  grid-template-columns: repeat(${grid.xs.columns}, 1fr);
 
-  ${breakpoints.up('tablet')} {
-    grid-template-columns: repeat(${grid.tablet.columns}, 1fr);
+  ${breakpoints.up('sm')} {
+    grid-template-columns: repeat(${grid.sm.columns}, 1fr);
   }
-  ${breakpoints.up('laptop')} {
-    grid-template-columns: repeat(${grid.laptop.columns}, 1fr);
+  ${breakpoints.up('md')} {
+    grid-template-columns: repeat(${grid.md.columns}, 1fr);
   }
-  ${breakpoints.up('desktop')} {
-    grid-template-columns: repeat(${grid.desktop.columns}, 1fr);
+  ${breakpoints.up('lg')} {
+    grid-template-columns: repeat(${grid.lg.columns}, 1fr);
+  }
+  ${breakpoints.up('xl')} {
+    grid-template-columns: repeat(${grid.xl.columns}, 1fr);
   }
 `
 
