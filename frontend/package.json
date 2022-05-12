@@ -15,7 +15,7 @@
     "format": "run-s format:eslint format:prettier",
     "format:eslint": "yarn lint:eslint --fix",
     "format:prettier": "yarn lint:prettier --write",
-    "start:storybook": "start-storybook -p 9009 -s ./public --ci",
+    "storybook": "start-storybook -p 9009 -s ./public --ci",
     "generate-types": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
