@@ -17,6 +17,7 @@ metadata:
   annotations:
     {{- if .Values.ingress.useLetsEncrypt }}
     certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/cluster-issuer: letsencrypt-prod
     {{- end }}
 spec:
 {{- if .Values.ingress.secretName }}
