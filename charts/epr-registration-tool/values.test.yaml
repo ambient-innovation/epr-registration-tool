@@ -127,7 +127,7 @@ ingress:
   useLetsEncrypt: true
   secretName: epr-tool-le
   host:
-    backend: epr-tool-api.ambient.digital
+    backend: api.epr-tool.ambient.digital
     frontend: epr-tool.ambient.digital
 
 # Please USE INITJOB for performing your database migrations. This is make sure that your backends pods will boot faster and you will avoid many production issue that can occour related with this.
