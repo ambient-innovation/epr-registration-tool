@@ -1,29 +1,36 @@
 export const customViewports = {
-  sm: {
-    name: 'sm | Mobile',
+  xs: {
+    name: 'xs',
     styles: {
-      width: '480px',
+      width: '375px',
+      height: '800px',
+    },
+  },
+  sm: {
+    name: 'sm',
+    styles: {
+      width: '720px',
       height: '800px',
     },
   },
   md: {
-    name: 'md | Tablet',
+    name: 'md',
     styles: {
-      width: '768px',
+      width: '1024px',
       height: '1024px',
     },
   },
   lg: {
-    name: 'lg | Laptop',
+    name: 'lg',
     styles: {
-      width: '992px',
+      width: '1440px',
       height: '558px',
     },
   },
   xl: {
-    name: 'xl | Desktop',
+    name: 'xl',
     styles: {
-      width: '1280px',
+      width: '2048px',
       height: '720px',
     },
   },
