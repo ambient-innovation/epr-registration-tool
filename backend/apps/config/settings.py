@@ -47,7 +47,9 @@ env = environ.Env(
     AXES_USE_USER_AGENT=(bool, True),
     AXES_ONLY_ADMIN_SITE=(bool, True),
     # Security
+    DJANGO_COOKIE_DOMAIN=(str, 'localhost'),
     DJANGO_CORS_ORIGIN_WHITELIST=(list, []),
+    DJANGO_CSRF_TRUSTED_ORIGINS=(list, []),
     # Sentry
     DJANGO_SENTRY_DSN=(str, ''),
     DJANGO_SENTRY_ENV=(str, 'local'),
@@ -225,6 +227,16 @@ ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
 CORS_ORIGIN_WHITELIST = env.list('DJANGO_CORS_ORIGIN_WHITELIST')
 CORS_ALLOWED_ORIGINS = (f'{FRONTEND_URL}',)
 CORS_ALLOW_METHODS = default_methods
+
+# store csrf token in a cookie instead of the user session
+# --> this is needed so next.js can receive the csrf token directly from the browser
+CSRF_USE_SESSIONS = False
+CSRF_FAILURE_VIEW = 'account.views.csrf_failure'
+CSRF_COOKIE_DOMAIN = env.str('DJANGO_COOKIE_DOMAIN')
+CSRF_TRUSTED_ORIGINS = env.list('DJANGO_CSRF_TRUSTED_ORIGINS')
+
+SESSION_COOKIE_DOMAIN = env.str('DJANGO_COOKIE_DOMAIN')
+
 
 # configuration for the django-axes package to log the login-attempts
 if env.bool('AXES_ENABLED'):
