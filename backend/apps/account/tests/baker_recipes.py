@@ -10,7 +10,6 @@ super_user = Recipe(
     email=seq('superuser', suffix='@local.local'),
     password=make_password(SUPER_USER_PASSWORD),
     is_superuser=True,
-    is_staff=True,
     is_active=True,
 )
 

@@ -53,6 +53,8 @@ env = environ.Env(
     # Sentry
     DJANGO_SENTRY_DSN=(str, ''),
     DJANGO_SENTRY_ENV=(str, 'local'),
+    # dev
+    ENABLE_DEBUG_TOOLBAR=(bool, False),
 )
 
 # read default env variables
@@ -83,17 +85,18 @@ THIRD_PARTY_APPS = [
     'axes',
     'strawberry.django',
     'corsheaders',
+    'ai_django_core',
 ]
 
 LOCAL_APPS = [
     'common',
     'account',
+    'company',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 AUTH_USER_MODEL = 'account.User'
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -237,7 +240,6 @@ CSRF_TRUSTED_ORIGINS = env.list('DJANGO_CSRF_TRUSTED_ORIGINS')
 
 SESSION_COOKIE_DOMAIN = env.str('DJANGO_COOKIE_DOMAIN')
 
-
 # configuration for the django-axes package to log the login-attempts
 if env.bool('AXES_ENABLED'):
     from datetime import timedelta
@@ -266,3 +268,14 @@ if env('DJANGO_SENTRY_DSN'):
         environment=env('DJANGO_SENTRY_ENV'),
         server_name=FRONTEND_URL,
     )
+ENABLE_DEBUG_TOOLBAR = env.bool('ENABLE_DEBUG_TOOLBAR')
+if ENABLE_DEBUG_TOOLBAR:
+    MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+    INSTALLED_APPS += ('debug_toolbar',)
+    # http://django-debug-toolbar.readthedocs.org/en/latest/installation.html
+    INTERNAL_IPS = ['127.0.0.1', '0.0.0.0', '10.0.2.2']
+    import socket
+
+    # tricks to have debug toolbar when developing with docker
+    ip = socket.gethostbyname(socket.gethostname())
+    INTERNAL_IPS += [ip[:-1] + '1']
