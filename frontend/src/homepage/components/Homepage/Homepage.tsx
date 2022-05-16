@@ -7,9 +7,7 @@ import { containerCss } from './Homepage.styles'
 export type Homepage = Record<string, never>
 
 export const Homepage = (_: Homepage): React.ReactElement => {
-  const { data, loading } = useExampleQuery({
-    fetchPolicy: 'cache-only',
-  })
+  const { data, loading } = useExampleQuery()
 
   return (
     <div css={containerCss}>
