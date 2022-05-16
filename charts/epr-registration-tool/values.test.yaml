@@ -22,6 +22,7 @@ backend:
     emailUrl: ""
     defaultFromMail: "noreply@ambient.digital"
     trustedCORSOrigins: "https://api.epr-tool.ambient.digital,https://epr-tool.ambient.digital,http://0.0.0.0:8000,http://localhost:8000,http://localhost:3000,http://127.0.0.1:3000"
+    trustedCSRFOrigins: "api.epr-tool.ambient.digital,epr-tool.ambient.digital,0.0.0.0:8000,localhost:8000,localhost:3000,127.0.0.1:3000"
   aws:
     enabled: false
     bucketName: ""

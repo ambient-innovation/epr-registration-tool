@@ -27,6 +27,7 @@ backend: # Do NOT run database migrations within your backend deployment. Use in
     grapqhlCsrfExempt: false
     defaultFromMail: "noreply@ambient.digital"
     trustedCORSOrigins: ""
+    trustedCSRFOrigins: ""
   aws:
     enabled: false
     bucketName: ""
