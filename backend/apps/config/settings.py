@@ -73,7 +73,6 @@ DEBUG = env.bool('DJANGO_DEBUG')
 
 # Application definition
 DJANGO_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -89,6 +88,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
+    'config.admin.CustomAdminConfig',
     'common',
     'account',
     'company',
@@ -138,7 +138,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
