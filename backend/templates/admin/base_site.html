@@ -1,0 +1,18 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | {{ site_title }}{% endblock %}
+
+{% block extrahead %}
+  <link rel="icon" href="{% static 'img/favicon.ico' %}" sizes="48x48"/>
+  <link href="{% static 'css/light_mode.css' %}" rel="stylesheet" type="text/css" media="screen,projection"/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans"
+    rel="stylesheet"
+    type="text/css"
+  />
+{% endblock %}
+
+{% block branding %}
+  <h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header }}</a></h1>
+{% endblock %}
