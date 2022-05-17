@@ -26,7 +26,7 @@ class Subsector(models.Model):
 
     name = models.CharField(verbose_name=_('Name'), max_length=150, blank=True, unique=True)
     related_sector = models.ForeignKey(
-        verbose_name=_('Sector'), to=Sector, on_delete=models.PROTECT, related_name='subsectors_queryset'
+        verbose_name=_('Sector'), to=Sector, on_delete=models.CASCADE, related_name='subsectors_queryset'
     )
 
     def __str__(self):
