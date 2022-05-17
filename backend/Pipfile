@@ -21,6 +21,8 @@ gunicorn = "==20.1.0"
 whitenoise = "==6.0.0"
 # other
 sentry-sdk = "~=1.5.4"                                                  # loggin / reporting
+ai-django-core = "==5.14.1"                                             # various useful helper functions    
+pyyaml = "*"                                                            # to be able to load yaml fixtures
 
 [dev-packages]
 flake8 = "==4.0.1"
@@ -28,6 +30,7 @@ pep8-naming = "==0.12.1"
 black = "==22.3.0"
 isort = "==5.10.1"
 coverage = "==6.3.2"
+django-debug-toolbar = "==3.4.0"
 
 [requires]
 python_version = "3.9"

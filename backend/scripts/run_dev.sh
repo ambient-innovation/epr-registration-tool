@@ -6,7 +6,7 @@ sleep 5
 
 python ./manage.py migrate
 
-python ./manage.py loaddata dev_users.json
+python ./manage.py loaddata dev_users.yaml
 
 echo "Starting django server on 0.0.0.0:8000"
 exec python ./manage.py runserver 0.0.0.0:8000

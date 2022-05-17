@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
+from django.db.models import F
 from django.utils.translation import gettext_lazy as _
 
 from account.models import User
@@ -11,15 +12,16 @@ admin.site.unregister(Group)
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     ordering = ('email',)
+    autocomplete_fields = ('related_company',)
     list_display = (
         'email',
         'full_name',
         'is_active',
+        'company_name',
     )
     list_filter = (
         'is_active',
         'is_superuser',
-        'is_staff',
     )
     fieldsets = (
         (
@@ -39,8 +41,11 @@ class CustomUserAdmin(UserAdmin):
             _('Profile'),
             {
                 'fields': (
-                    'first_name',
-                    'last_name',
+                    'title',
+                    'full_name',
+                    'related_company',
+                    'position',
+                    'phone_or_mobile',
                 )
             },
         ),
@@ -54,6 +59,8 @@ class CustomUserAdmin(UserAdmin):
                     'email',
                     'password1',
                     'password2',
+                    'title',
+                    'full_name',
                     'is_active',
                     'is_superuser',
                 ),
@@ -64,4 +71,12 @@ class CustomUserAdmin(UserAdmin):
         'date_joined',
         'last_login',
     )
-    search_fields = ['email', 'first_name', 'last_name']
+    search_fields = ['email', 'full_name']
+
+    @admin.display(description='Company', ordering='company_name')
+    def company_name(self, obj):
+        return obj.company_name
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.annotate(company_name=F('related_company__name'))
