@@ -56,12 +56,17 @@ class Company(CreatedAtInfo):
     phone = models.CharField(verbose_name=_('Phone number'), max_length=16, blank=True)
     mobile = models.CharField(verbose_name=_('Mobile numer'), max_length=16, blank=True)
     fax = models.CharField(verbose_name=_('Fax number'), max_length=16, blank=True)
-    related_sector = models.ForeignKey(
-        verbose_name=_('Sector'), to='company.Sector', on_delete=models.PROTECT, related_name='companies_queryset'
-    )
-    related_subsector = models.ForeignKey(
-        verbose_name=_('Subsector'), to='company.Subsector', on_delete=models.PROTECT, related_name='companies_queryset'
+    related_subsector = models.ManyToManyField(
+        verbose_name=_('Subsector'),
+        to='company.Subsector',
+        through='company.CompaniesSubsectors',
+        related_name='companies_queryset',
     )
 
     def __str__(self):
         return self.name
+
+
+class CompaniesSubsectors(CreatedAtInfo):
+    company = models.ForeignKey(verbose_name=_('Company'), to='company.Company', on_delete=models.CASCADE)
+    subsector = models.ForeignKey(verbose_name=_('Subsector'), to='company.Subsector', on_delete=models.PROTECT)

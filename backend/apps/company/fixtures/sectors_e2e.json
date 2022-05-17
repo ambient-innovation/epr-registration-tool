@@ -1,0 +1,16 @@
+[
+  {
+    "fields": {
+      "name": "Beverages"
+    },
+    "model": "company.sector",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "name": "Food"
+    },
+    "model": "company.sector",
+    "pk": 1
+  }
+]

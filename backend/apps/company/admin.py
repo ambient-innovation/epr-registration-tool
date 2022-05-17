@@ -37,14 +37,13 @@ class CompanyAdmin(admin.ModelAdmin):
     list_display = ('registration_number', 'name')
     list_filter = (
         'city',
-        'related_sector',
         'related_subsector',
     )
     search_fields = (
         'name',
         'email',
         'registration_number',
-        'related_sector' 'related_subsector',
+        'related_subsector',
     )
     fieldsets = (
         (
@@ -53,8 +52,6 @@ class CompanyAdmin(admin.ModelAdmin):
                 'fields': (
                     'name',
                     'registration_number',
-                    'related_sector',
-                    'related_subsector',
                 )
             },
         ),

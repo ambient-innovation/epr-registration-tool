@@ -22,9 +22,50 @@ export type Scalars = {
   Float: number
 }
 
+export type Mutation = {
+  __typename?: 'Mutation'
+  registerCompany: Scalars['String']
+}
+
+export type MutationRegisterCompanyArgs = {
+  additionalAddressInfo: Scalars['String']
+  city: Scalars['String']
+  companyEmail: Scalars['String']
+  country: Scalars['String']
+  fax?: InputMaybe<Scalars['String']>
+  fullName: Scalars['String']
+  mobile?: InputMaybe<Scalars['String']>
+  name: Scalars['String']
+  password: Scalars['String']
+  phone: Scalars['String']
+  phoneOrMobile: Scalars['String']
+  position: Scalars['String']
+  province: Scalars['String']
+  registrationNumber: Scalars['Int']
+  streetAndNumber: Scalars['String']
+  subsectorIds: Array<Scalars['Int']>
+  title?: InputMaybe<Scalars['String']>
+  userEmail: Scalars['String']
+  zipCode?: InputMaybe<Scalars['Int']>
+}
+
 export type Query = {
   __typename?: 'Query'
   helloWorld: Scalars['String']
+  sectors: Array<SectorType>
+}
+
+export type SectorType = {
+  __typename?: 'SectorType'
+  id: Scalars['ID']
+  name: Scalars['String']
+  subsectors: Array<SubsectorType>
+}
+
+export type SubsectorType = {
+  __typename?: 'SubsectorType'
+  id: Scalars['ID']
+  name: Scalars['String']
 }
 
 export type ExampleQueryVariables = Exact<{ [key: string]: never }>
