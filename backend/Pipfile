@@ -23,6 +23,7 @@ whitenoise = "==6.0.0"
 sentry-sdk = "~=1.5.4"                                                  # loggin / reporting
 ai-django-core = "==5.14.1"                                             # various useful helper functions    
 pyyaml = "*"                                                            # to be able to load yaml fixtures
+django-modeltranslation = "==0.18.2"
 
 [dev-packages]
 flake8 = "==4.0.1"

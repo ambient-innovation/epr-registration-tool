@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
+from modeltranslation.admin import TranslationAdmin, TranslationStackedInline
+
 from account.models import User
 from company.models import Company, Sector, Subsector
 
@@ -18,13 +20,13 @@ class CompanyUserInline(admin.StackedInline):
     )
 
 
-class SubsectorInline(admin.StackedInline):
+class SubsectorInline(TranslationStackedInline):
     model = Subsector
     extra = 0
 
 
 @admin.register(Sector)
-class SectorAdmin(admin.ModelAdmin):
+class SectorAdmin(TranslationAdmin):
     inlines = (SubsectorInline,)
     fields = ('name',)
 

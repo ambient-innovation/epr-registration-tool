@@ -85,6 +85,7 @@ THIRD_PARTY_APPS = [
     'strawberry.django',
     'corsheaders',
     'ai_django_core',
+    'modeltranslation',
 ]
 
 LOCAL_APPS = [
@@ -279,3 +280,10 @@ if ENABLE_DEBUG_TOOLBAR:
     # tricks to have debug toolbar when developing with docker
     ip = socket.gethostbyname(socket.gethostname())
     INTERNAL_IPS += [ip[:-1] + '1']
+
+# django model translations settings
+MODELTRANSLATION_FALLBACK_LANGUAGES = ('en',)
+LANGUAGES = (
+    ('en', 'English'),
+    ('ar', 'Arabic'),
+)
