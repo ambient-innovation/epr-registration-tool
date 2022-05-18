@@ -8,6 +8,7 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 data:
+  DJANGO_DEBUG: {{ .Values.backend.django.debug | quote }}
   DJANGO_ALLOWED_HOSTS: {{ .Values.backend.django.allowedHosts | quote }}
   DJANGO_DEFAULT_FROM_EMAIL: {{ .Values.backend.django.defaultFromMail | quote }}
   DJANGO_CORS_ORIGIN_WHITELIST: {{ .Values.backend.django.trustedCORSOrigins | quote }}
