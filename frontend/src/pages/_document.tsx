@@ -22,7 +22,7 @@ export default class MyDocument extends Document {
           />
           <link
             href={
-              'https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap'
+              'https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600&display=swap'
             }
             rel={'stylesheet'}
           />
