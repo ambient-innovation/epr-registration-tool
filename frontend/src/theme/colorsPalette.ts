@@ -1,12 +1,6 @@
 // --> Documentation
 // https://mui.com/material-ui/customization/palette/#adding-new-colors
 declare module '@mui/material/styles' {
-  interface Palette {
-    example: Palette['primary']
-  }
-  interface PaletteOptions {
-    example: PaletteOptions['primary']
-  }
   interface TypeBackground {
     default: string
     paper: string
@@ -35,9 +29,6 @@ export const palette = {
   error: {
     main: '#D32F2F',
     dark: '#C62828',
-  },
-  example: {
-    main: '#D32F2F',
   },
   background: {
     light: '#F3F4F6',

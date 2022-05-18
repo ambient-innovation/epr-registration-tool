@@ -37,7 +37,7 @@ export const PageLayout = ({ children }: PageLayout): React.ReactElement => {
           </Link>
         </div>
       </Box>
-      {children}
+      <main>{children}</main>
     </div>
   )
 }

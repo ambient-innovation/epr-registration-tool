@@ -3,7 +3,7 @@ import { Story } from '@storybook/react'
 import { HeroImage } from './HeroImage'
 
 export default {
-  title: 'Common/MultiStepForm/HeroImage',
+  title: 'Common/FormLayout/HeroImage',
   component: HeroImage,
 }
 

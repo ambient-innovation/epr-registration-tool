@@ -4,6 +4,7 @@ import { createTheme } from '@mui/material/styles'
 import { BorderRadius, borderRadius } from './borderRadius'
 import { breakpoints } from './breakpoints'
 import { palette } from './colorsPalette'
+import { components } from './components'
 import { shadows } from './shadows'
 import { spacing } from './spacing'
 import { typography } from './typography'
@@ -18,30 +19,7 @@ export const theme = createTheme({
   shape: {
     borderRadius,
   },
-  components: {
-    MuiButtonBase: {
-      defaultProps: {
-        // No more ripple, on the whole application 💣!
-        disableRipple: true,
-      },
-      styleOverrides: {
-        root: {
-          borderRadius: borderRadius[2],
-          '&.Mui-focusVisible': {
-            outline: '0.125rem solid #4299E1',
-          },
-        },
-      },
-    },
-    MuiFormLabel: {
-      styleOverrides: {
-        asterisk: {
-          // hide asterisk --> we mark optional fields instead
-          display: 'none',
-        },
-      },
-    },
-  },
+  components,
 })
 
 // https://mui.com/material-ui/customization/palette/#adding-new-colors

@@ -21,6 +21,7 @@ export const containerCss = css`
 `
 
 export const imageGap = {
+  md: `(${grid.md.columnWidth} + ${grid.md.gutter}) * 2.1`, // (2 * column + gutter) - (gutter/2)
   lg: `(${grid.lg.columnWidth} + ${grid.lg.gutter}) * 1.8`, // (2 * column + gutter) - (gutter/2)
   xl: `(${grid.xl.columnWidth} + ${grid.xl.gutter}) * 1.5`, // (2 * column + gutter) - (gutter/2)
 }
@@ -29,15 +30,20 @@ export const imageWrapperCss = css`
   // xs
   top: 0;
   height: 100vh;
-  background: ${palette.grey?.['500']};
+  background: ${palette.background.light};
   max-width: calc(${layout.maxWidth.hero} / 2);
   position: fixed;
 
   display: none;
 
-  ${breakpoints.up('lg')} {
+  ${breakpoints.up('md')} {
     display: block;
 
+    width: calc(50% - ${imageGap.md});
+    right: calc(50% + ${imageGap.md});
+  }
+
+  ${breakpoints.up('lg')} {
     width: calc(50% - ${imageGap.lg});
     right: calc(50% + ${imageGap.lg});
   }
@@ -55,8 +61,12 @@ export const contentColumnCss = css`
   display: flex;
   flex-direction: column;
 
+  ${breakpoints.up('sm')} {
+    grid-column: 3 / -3;
+  }
+
   ${breakpoints.up('md')} {
-    grid-column: 2 / -2;
+    grid-column: 6 / -1;
   }
 
   ${breakpoints.up('lg')} {

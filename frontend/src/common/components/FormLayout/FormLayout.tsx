@@ -2,12 +2,12 @@ import { Box } from '@mui/material'
 
 import { defaultSectionCss } from '@/theme/layout'
 
-import { HeroImage } from '..'
 import {
   containerCss,
   contentColumnCss,
   imageWrapperCss,
 } from './FormLayout.styles'
+import { HeroImage } from './HeroImage'
 
 export type FormLayoutContent = {
   children: React.ReactNode
