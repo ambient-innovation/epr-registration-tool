@@ -20,16 +20,16 @@ const TestingError = (_: Homepage): React.ReactElement => {
           borderRadius: 3,
         }}
       >
-        <Typography variant="h1" sx={{ color: 'primary.main' }} gutterBottom>
-          EPR Registration Tool
+        <Typography variant={'h1'} sx={{ color: 'primary.main' }} gutterBottom>
+          {'EPR Registration Tool'}
         </Typography>
         <Typography
-          variant="h5"
-          component="h2"
+          variant={'h5'}
+          component={'h2'}
           gutterBottom
           sx={{ color: 'secondary.main' }}
         >
-          Testing Sentry Connection
+          {'Testing Sentry Connection'}
         </Typography>
       </Box>
     </div>

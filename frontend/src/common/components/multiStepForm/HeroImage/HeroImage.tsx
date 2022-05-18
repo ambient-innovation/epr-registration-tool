@@ -8,7 +8,7 @@ export type HeroImage = Record<string, never>
 export const HeroImage = (_: HeroImage): React.ReactElement => {
   return (
     <Image
-      src="/assets/hero-image.png"
+      src={'/assets/hero-image.png'}
       css={imageCss}
       layout={'fill'}
       objectFit={'cover'}

@@ -16,16 +16,18 @@ const FailingComponent = ({ throwError }: StoryArgs) => {
   }
   return (
     <p>
-      Happy UI
+      {'Happy UI'}
       <br />
-      Please use controls to throw an error
+      {'Please use controls to throw an error'}
     </p>
   )
 }
 
 export const Default = ({ throwError }: StoryArgs): React.ReactElement => {
   return (
-    <ErrorBoundary fallback={<p>This is the fallback ui in case of errors</p>}>
+    <ErrorBoundary
+      fallback={<p>{'This is the fallback ui in case of errors'}</p>}
+    >
       <FailingComponent throwError={throwError} />
     </ErrorBoundary>
   )

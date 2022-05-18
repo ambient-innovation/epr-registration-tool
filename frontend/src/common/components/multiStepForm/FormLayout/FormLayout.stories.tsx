@@ -12,7 +12,7 @@ const Template: Story<FormLayout> = () => {
   return (
     <FormLayout>
       <FormLayoutContent>
-        <Typography variant={'h1'}>Hello 👋</Typography>
+        <Typography variant={'h1'}>{'Hello 👋'}</Typography>
       </FormLayoutContent>
     </FormLayout>
   )
