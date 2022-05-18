@@ -7,22 +7,24 @@ import { createEmotionCache, theme } from '@/theme'
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang="en">
+      <Html lang={'en'}>
         <Head>
           {/* PWA primary color */}
-          <meta name="theme-color" content={theme.palette.primary.main} />
-          <link rel="shortcut icon" href="/favicon.ico" />
+          <meta name={'theme-color'} content={theme.palette.primary.main} />
+          <link rel={'shortcut icon'} href={'/favicon.ico'} />
           <meta
-            name="msapplication-navbutton-color"
+            name={'msapplication-navbutton-color'}
             content={theme.palette.primary.light}
           />
           <meta
-            name="apple-mobile-web-app-status-bar-style"
+            name={'apple-mobile-web-app-status-bar-style'}
             content={theme.palette.primary.light}
           />
           <link
-            href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap"
-            rel="stylesheet"
+            href={
+              'https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600&display=swap'
+            }
+            rel={'stylesheet'}
           />
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
           {/*eslint-disable-next-line react/no-danger*/}

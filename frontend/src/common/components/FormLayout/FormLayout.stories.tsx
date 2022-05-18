@@ -1,10 +1,12 @@
 import { Typography } from '@mui/material'
 import { Meta, Story } from '@storybook/react'
-
-import { FormLayout, FormLayoutContent } from './FormLayout'
+import {
+  FormLayout,
+  FormLayoutContent,
+} from 'src/common/components/FormLayout/FormLayout'
 
 export default {
-  title: 'common/MultiStepForm/Layout',
+  title: 'common/FormLayout',
   component: FormLayout,
 } as Meta<FormLayout>
 
@@ -12,7 +14,7 @@ const Template: Story<FormLayout> = () => {
   return (
     <FormLayout>
       <FormLayoutContent>
-        <Typography variant={'h1'}>Hello 👋</Typography>
+        <Typography variant={'h1'}>{'Hello 👋'}</Typography>
       </FormLayoutContent>
     </FormLayout>
   )

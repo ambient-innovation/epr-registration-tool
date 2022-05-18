@@ -8,11 +8,13 @@ module.exports = {
       name: '@storybook/addon-essentials',
       options: {
         backgrounds: false,
-        outline: false,
+        outline: true,
       },
     },
     '@storybook/addon-a11y',
+    'storybook-addon-apollo-client',
   ],
+  staticDirs: ['../public'],
   features: {
     // a fix to be able to load typographies styles
     emotionAlias: false,

@@ -6,7 +6,7 @@ import { pxToRemAsString } from './utils'
 export const fontWeights = {
   light: '300',
   regular: '400',
-  medium: '400',
+  medium: '500',
   bold: '600',
 }
 

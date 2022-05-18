@@ -11,8 +11,8 @@ export const Default = (): React.ReactElement => {
     <>
       <Box css={defaultSectionCss} bgcolor={'gray.50'}>
         <Typography gridColumn={'1/-1'} gutterBottom>
-          Change the size of the preview above to see the grid in different
-          sizes
+          {'Change the size of the preview above to see the grid in different'}
+          {'sizes'}
         </Typography>
         <Box sx={{ height: '50vh', backgroundColor: 'primary.light' }} />
         <Box sx={{ height: '50vh', backgroundColor: 'primary.light' }} />

@@ -7,8 +7,11 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>EPR Registration Tool Home page</title>
-        <meta name="description" content={'EPR Registration Tool Home page'} />
+        <title>{'EPR Registration Tool Home page'}</title>
+        <meta
+          name={'description'}
+          content={'EPR Registration Tool Home page'}
+        />
         <link rel={'canonical'} href={'/'} />
       </Head>
       <Homepage />
