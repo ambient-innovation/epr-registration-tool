@@ -1,3 +1,4 @@
+import { MockedProvider } from '@apollo/client/testing'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 import { addDecorator } from '@storybook/react'
 
@@ -35,5 +36,8 @@ export const parameters = {
   },
   viewport: {
     viewports: customViewports,
+  },
+  apolloClient: {
+    MockedProvider,
   },
 }
