@@ -3,6 +3,12 @@ import { ThemeOptions } from '@mui/material/styles/createTheme'
 import { borderRadius } from './borderRadius'
 import { palette } from './colorsPalette'
 
+declare module '@mui/material/Button' {
+  interface ButtonPropsVariantOverrides {
+    inverted: true
+  }
+}
+
 export const components: ThemeOptions['components'] = {
   MuiButtonBase: {
     defaultProps: {
@@ -17,6 +23,43 @@ export const components: ThemeOptions['components'] = {
         },
       },
     },
+  },
+  MuiButton: {
+    variants: [
+      {
+        props: { variant: 'inverted' },
+        style: ({ theme }) => ({
+          color: theme.palette.primary.main,
+          backgroundColor: theme.palette.common.white,
+          border: `1px solid ${theme.palette.primary.main}`,
+          '&:hover': {
+            backgroundColor: theme.palette.grey['300'],
+          },
+        }),
+      },
+      {
+        props: { variant: 'inverted', color: 'secondary' },
+        style: ({ theme }) => ({
+          color: theme.palette.secondary.main,
+          backgroundColor: theme.palette.common.white,
+          border: `1px solid ${theme.palette.secondary.main}`,
+          '&:hover': {
+            backgroundColor: theme.palette.grey['300'],
+          },
+        }),
+      },
+      {
+        props: { variant: 'inverted', color: 'error' },
+        style: ({ theme }) => ({
+          color: theme.palette.error.main,
+          backgroundColor: theme.palette.common.white,
+          border: `1px solid ${theme.palette.secondary.main}`,
+          '&:hover': {
+            backgroundColor: theme.palette.grey['300'],
+          },
+        }),
+      },
+    ],
   },
   MuiFormLabel: {
     styleOverrides: {

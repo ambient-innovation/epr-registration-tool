@@ -1,7 +1,13 @@
 import { MockedProvider } from '@apollo/client/testing'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 import { addDecorator } from '@storybook/react'
+import i18n from 'i18next'
+import { RouterContext } from 'next/dist/shared/lib/router-context'
+import { useEffect } from 'react'
+import { I18nextProvider, initReactI18next } from 'react-i18next'
 
+import commonAr from '../public/locales/ar/common.json'
+import commonEn from '../public/locales/en/common.json'
 import { theme } from '../src/theme'
 import './nextImage'
 import { customViewports } from './viewports'
@@ -16,6 +22,28 @@ import { customViewports } from './viewports'
  * */
 const Story = ({ storyFn }) => storyFn()
 
+const TranslationsDecorator = (Story, context) => {
+  const lng = context.globals.lng
+  i18n.use(initReactI18next).init({
+    resources: {
+      ar: { common: commonAr },
+      en: { common: commonEn },
+    },
+    fallbackLng: 'en',
+    ns: ['common'],
+  })
+
+  useEffect(() => {
+    i18n.changeLanguage(lng)
+  }, [lng])
+
+  return (
+    <I18nextProvider i18n={i18n}>
+      <Story {...context} />
+    </I18nextProvider>
+  )
+}
+
 export const CustomHooksDecorator = (storyFn, context) => (
   <ThemeProvider theme={theme}>
     <CssBaseline />
@@ -24,6 +52,7 @@ export const CustomHooksDecorator = (storyFn, context) => (
 )
 
 addDecorator(CustomHooksDecorator)
+addDecorator(TranslationsDecorator)
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -40,4 +69,7 @@ export const parameters = {
   apolloClient: {
     MockedProvider,
   },
+  nextRouter: { Provider: RouterContext.Provider },
+  locales: ['en', 'ar'],
+  defaultLocale: 'en',
 }

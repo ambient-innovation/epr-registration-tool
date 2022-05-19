@@ -1,6 +1,7 @@
 import { Box, SxProps, Theme, Typography } from '@mui/material'
 import Link from 'next/link'
 
+import { LangSwitcher } from '@/common/components/langSwitcher'
 import { ROUTES } from '@/routes'
 import { defaultSectionCss } from '@/theme/layout'
 import { pxToRemAsString } from '@/theme/utils'
@@ -35,6 +36,9 @@ export const PageLayout = ({ children }: PageLayout): React.ReactElement => {
               {'Logo'}
             </Typography>
           </Link>
+          <Box gridColumn={'-1'}>
+            <LangSwitcher />
+          </Box>
         </div>
       </Box>
       <main>{children}</main>

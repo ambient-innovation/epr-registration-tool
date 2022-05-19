@@ -1,4 +1,5 @@
 import { Box, Link, Typography } from '@mui/material'
+import { useTranslation } from 'next-i18next'
 import NextLink from 'next/link'
 
 import { useExampleQuery } from '@/api/__types__'
@@ -11,6 +12,7 @@ export type Homepage = Record<string, never>
 
 export const Homepage = (_: Homepage): React.ReactElement => {
   const { data, loading } = useExampleQuery()
+  const { t } = useTranslation()
 
   return (
     <PageLayout>
@@ -32,7 +34,7 @@ export const Homepage = (_: Homepage): React.ReactElement => {
             sx={{ color: 'primary.main' }}
             gutterBottom
           >
-            {'EPR Registration Tool'}
+            {t('welcome')}
           </Typography>
           <Typography variant={'h2'}>
             {loading ? 'loading...' : data?.helloWorld}
@@ -46,7 +48,7 @@ export const Homepage = (_: Homepage): React.ReactElement => {
             {'Work in progress'}
           </Typography>
           <NextLink href={ROUTES.registration} passHref>
-            <Link>{'👉 Registration'}</Link>
+            <Link>{t('registration')}</Link>
           </NextLink>
         </Box>
       </div>

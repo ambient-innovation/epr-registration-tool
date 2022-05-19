@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Autocomplete, Checkbox, Chip, Stack, TextField } from '@mui/material'
+import { useTranslation } from 'next-i18next'
 import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { SchemaOf } from 'yup'
@@ -35,15 +36,14 @@ const schema: SchemaOf<Record<keyof FormData, unknown>> = yup.object().shape({
   companyName: requiredStringValidator(),
   companyRegistrationNumber: companyRegistrationNumberValidator(),
   companySectorId: requiredStringValidator(),
-  companySubSectorIds: yup
-    .array()
-    .min(1, 'The Field must have at least 1 item'),
+  companySubSectorIds: yup.array().min(1, 'requiredMultiselect'),
 })
 
 const resolver = yupResolver(schema)
 
 export const Step1 = (_: Step1) => {
   const { initialData, onSubmit } = useRegistrationContext()
+  const { t } = useTranslation()
 
   const { register, handleSubmit, formState, control } = useForm<FormData>({
     mode: 'onTouched',
@@ -51,34 +51,33 @@ export const Step1 = (_: Step1) => {
     defaultValues: pick(initialData, ...FIELD_NAMES),
   })
 
+  const errorMsg = (translationKey: string | undefined): string | undefined =>
+    translationKey && (t(translationKey) as string)
+
   const { errors } = formState
 
   return (
     <FormStep
-      title={'Enter general company information'}
-      description={
-        'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. ' +
-        'Aenean commodo ligula eget dolor. Aenean massa. ' +
-        'Cum sociis natoque penatibus et magnis dis parturient montes, ' +
-        'nascetur ridiculus mus.'
-      }
+      title={t('registrationForm.step1Title')}
+      description={t('registrationForm.step1Description')}
       onSubmit={handleSubmit(onSubmit)}
     >
       <Stack spacing={DEFAULT_FORM_SPACING}>
         <TextField
           autoFocus // autofocus first field
-          label={'Name of company'}
+          label={t('registrationForm.companyName')}
           error={!!errors?.companyName}
-          helperText={errors?.companyName?.message}
+          helperText={errorMsg(errors?.companyName?.message)}
           fullWidth
           required
           {...register('companyName')}
         />
         <TextField
+          dir={'ltr'}
           fullWidth
-          label={'Company registration number'}
+          label={t('registrationForm.registrationNumber')}
           error={!!errors?.companyRegistrationNumber}
-          helperText={errors?.companyRegistrationNumber?.message}
+          helperText={errorMsg(errors?.companyRegistrationNumber?.message)}
           required
           {...register('companyRegistrationNumber')}
         />
@@ -98,9 +97,9 @@ export const Step1 = (_: Step1) => {
                     <TextField
                       {...params}
                       inputRef={ref}
-                      label={'Sectors'}
+                      label={t('registrationForm.sector')}
                       error={!!errors?.companySectorId}
-                      helperText={errors?.companySectorId?.message}
+                      helperText={errorMsg(errors?.companySectorId?.message)}
                       fullWidth
                       required
                     />
@@ -154,10 +153,12 @@ export const Step1 = (_: Step1) => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label={'Subsectors'}
+                    label={t('registrationForm.subsector')}
                     inputRef={ref}
                     error={!!errors?.companySubSectorIds}
-                    helperText={(errors?.companySubSectorIds as any)?.message}
+                    helperText={errorMsg(
+                      (errors?.companySubSectorIds as any)?.message
+                    )}
                     fullWidth
                     required
                   />

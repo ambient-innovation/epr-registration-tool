@@ -1,4 +1,5 @@
 import { Box, Button, Typography } from '@mui/material'
+import { useTranslation } from 'next-i18next'
 import React, { memo } from 'react'
 import { FormEventHandler } from 'react'
 
@@ -24,6 +25,7 @@ export const FormStep = memo(
     description,
     isLoading,
   }: FormStep) => {
+    const { t } = useTranslation()
     return (
       <section>
         <form onSubmit={onSubmit} noValidate>
@@ -42,10 +44,14 @@ export const FormStep = memo(
               onClick={onClickBack}
               disabled={!onClickBack || isLoading}
             >
-              {'Prev'}
+              {t('prev')}
             </Button>
             <Button variant={'contained'} type={'submit'} disabled={isLoading}>
-              {isLoading ? 'Loading ...' : isFinalStep ? 'Submit' : 'Next'}
+              {isLoading
+                ? 'Loading ...'
+                : isFinalStep
+                ? t('submit')
+                : t('next')}
             </Button>
           </Box>
         </form>

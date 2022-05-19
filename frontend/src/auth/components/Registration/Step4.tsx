@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { TextField } from '@mui/material'
+import { useTranslation } from 'next-i18next'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { SchemaOf } from 'yup'
@@ -23,6 +24,7 @@ const resolver = yupResolver(schema)
 
 export const Step4 = (_: Step4) => {
   const { data, goToPrevStep, onSubmit, isLoading } = useRegistrationContext()
+  const { t } = useTranslation()
 
   const { register, handleSubmit, formState } = useForm<FormData>({
     mode: 'onTouched',
@@ -32,16 +34,15 @@ export const Step4 = (_: Step4) => {
     },
   })
 
+  const errorMsg = (translationKey: string | undefined): string | undefined =>
+    translationKey && (t(translationKey) as string)
+
   const { errors } = formState
 
   return (
     <FormStep
-      title={'Choose a password'}
-      description={
-        'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo\n' +
-        'ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis\n' +
-        'dis parturient montes, nascetur ridiculus mus.'
-      }
+      title={t('registrationForm.step4Title')}
+      description={t('registrationForm.step4Description')}
       onSubmit={handleSubmit(onSubmit)}
       onClickBack={goToPrevStep}
       isLoading={isLoading}
@@ -49,10 +50,11 @@ export const Step4 = (_: Step4) => {
     >
       <TextField
         autoFocus
-        label={'Password'}
+        label={t('password')}
         error={!!errors?.password}
-        helperText={errors?.password?.message}
+        helperText={errorMsg(errors?.password?.message)}
         type={'password'}
+        autoComplete={'new-password'} // let the browser give suggestions
         required
         fullWidth
         {...register('password')}

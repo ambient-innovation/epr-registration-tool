@@ -1,2 +1,2 @@
 export { theme } from './theme'
-export { createEmotionCache } from './createEmotionCache'
+export { createEmotionCache, EmotionCacheProvider } from './emotionCache'

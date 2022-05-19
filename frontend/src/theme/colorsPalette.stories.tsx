@@ -34,6 +34,7 @@ export const Palette = (): React.ReactElement => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: color as string,
+                    padding: 2,
                   }}
                 >
                   <Typography

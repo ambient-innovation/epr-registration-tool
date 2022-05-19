@@ -5,6 +5,7 @@ import {
   StepContent,
   Typography,
 } from '@mui/material'
+import { useTranslation } from 'next-i18next'
 
 import { FormLayout } from '@/common/components/FormLayout'
 
@@ -19,28 +20,30 @@ import { Step4 } from './Step4'
 
 export const RegistrationStepper = () => {
   const { activeStep } = useRegistrationContext()
+  const { t } = useTranslation()
+
   return (
     <Stepper activeStep={activeStep} orientation={'vertical'}>
       <Step>
-        <StepLabel>{'General company information'}</StepLabel>
+        <StepLabel>{t('registrationForm.generalCompanyInformation')}</StepLabel>
         <StepContent TransitionProps={{ unmountOnExit: false }}>
           <Step1 />
         </StepContent>
       </Step>
       <Step>
-        <StepLabel>{'Company address'}</StepLabel>
+        <StepLabel>{t('registrationForm.companyAddress')}</StepLabel>
         <StepContent TransitionProps={{ unmountOnExit: false }}>
           <Step2 />
         </StepContent>
       </Step>
       <Step>
-        <StepLabel>{'Contact person'}</StepLabel>
+        <StepLabel>{t('registrationForm.contactPerson')}</StepLabel>
         <StepContent TransitionProps={{ unmountOnExit: false }}>
           <Step3 />
         </StepContent>
       </Step>
       <Step>
-        <StepLabel>{'Password'}</StepLabel>
+        <StepLabel>{t('password')}</StepLabel>
         <StepContent TransitionProps={{ unmountOnExit: false }}>
           <Step4 />
         </StepContent>
@@ -52,6 +55,7 @@ export const RegistrationStepper = () => {
 export type RegistrationSection = Record<string, never>
 
 export const RegistrationSection = () => {
+  const { t } = useTranslation()
   return (
     <FormLayout>
       <Typography
@@ -59,7 +63,7 @@ export const RegistrationSection = () => {
         variant={'h4'}
         mb={{ xs: 8, sm: 10, md: 11 }}
       >
-        {'Create new account'}
+        {t('registrationForm.createNewAccount')}
       </Typography>
       <RegistrationProvider>
         <RegistrationStepper />
