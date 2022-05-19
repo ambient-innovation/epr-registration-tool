@@ -19,6 +19,7 @@ export const LAST_STEP_NUMBER = stepNumbers[stepNumbers.length - 1]
 
 export interface RegistrationContextType {
   data: RegistrationData
+  initialData: RegistrationData
   goToPrevStep: () => void
   onSubmit: (data: Partial<RegistrationData>) => void
   activeStep: StepNumber
@@ -32,8 +33,8 @@ RegistrationContext.displayName = 'RegsitrationContext'
 export const initialData: RegistrationData = {
   companyName: '',
   companyRegistrationNumber: '',
-  companySector: '',
-  companySubSector: '',
+  companySectorId: '',
+  companySubSectorIds: [],
   companyStreet: '',
   companyAddressInfo: '',
   companyZipCode: '',
@@ -89,6 +90,7 @@ export const RegistrationProvider: React.FC<{
       activeStep,
       data,
       isLoading,
+      initialData,
     }),
     [onSubmit, goToPrevStep, activeStep, data, isLoading]
   )

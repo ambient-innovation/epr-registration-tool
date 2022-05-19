@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Stack, TextField } from '@mui/material'
-import { useForm } from 'react-hook-form'
+import { Autocomplete, Stack, TextField } from '@mui/material'
+import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { SchemaOf } from 'yup'
 
@@ -10,11 +10,11 @@ import {
 } from '@/auth/components/Registration/mocks'
 import { FormStep } from '@/common/components/FormStep'
 import { DEFAULT_FORM_SPACING } from '@/common/components/FormStep/constants'
-import { SelectField } from '@/common/components/SelecField'
 import {
   emailValidator,
   requiredStringValidator,
 } from '@/utils/form-validation.utils'
+import { pick } from '@/utils/typescript.utils'
 
 import { useRegistrationContext } from './RegistrationContext'
 import { RegistrationData } from './types'
@@ -53,17 +53,12 @@ const schema: SchemaOf<Record<keyof FormData, unknown>> = yup.object().shape({
 const resolver = yupResolver(schema)
 
 export const Step2 = (_: Step2) => {
-  const { data, goToPrevStep, onSubmit } = useRegistrationContext()
+  const { initialData, goToPrevStep, onSubmit } = useRegistrationContext()
 
-  const defaultValues = FIELD_NAMES.reduce((acc, next) => {
-    acc[next] = data[next]
-    return acc
-  }, {} as FormData)
-
-  const { register, handleSubmit, formState } = useForm<FormData>({
+  const { register, handleSubmit, formState, control } = useForm<FormData>({
     mode: 'onTouched',
     resolver,
-    defaultValues,
+    defaultValues: pick(initialData, ...FIELD_NAMES),
   })
 
   const { errors } = formState
@@ -84,7 +79,6 @@ export const Step2 = (_: Step2) => {
           label={'Street, number'}
           error={!!errors?.companyStreet}
           helperText={errors?.companyStreet?.message}
-          defaultValue={defaultValues.companyStreet}
           required
           fullWidth
           {...register('companyStreet')}
@@ -95,11 +89,9 @@ export const Step2 = (_: Step2) => {
         >
           <TextField
             label={'Postal code'}
-            type={'number'}
+            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
             error={!!errors?.companyZipCode}
             helperText={errors?.companyZipCode?.message}
-            defaultValue={defaultValues.companyZipCode}
-            required
             fullWidth
             {...register('companyZipCode')}
           />
@@ -107,37 +99,69 @@ export const Step2 = (_: Step2) => {
             label={'City'}
             error={!!errors?.companyCity}
             helperText={errors?.companyCity?.message}
-            defaultValue={defaultValues.companyCity}
             required
             fullWidth
             {...register('companyCity')}
           />
         </Stack>
-        <SelectField
-          label={'Country'}
-          error={!!errors?.companyCountry}
-          helperText={errors?.companyCountry?.message}
-          defaultValue={defaultValues.companyCountry}
-          options={companyCountryOptions}
-          required
-          fullWidth
-          {...register('companyCountry')}
+        <Controller
+          control={control}
+          name={'companyCountry'}
+          render={({ field: { onChange }, formState: { errors } }) => {
+            return (
+              <Autocomplete
+                defaultValue={companyCountryOptions.find(
+                  (option) => option.value === initialData.companyCountry
+                )}
+                options={companyCountryOptions}
+                onChange={(_, item) => onChange(item?.value)}
+                renderInput={(params) => {
+                  return (
+                    <TextField
+                      {...params}
+                      label={'Country'}
+                      error={!!errors?.companyCountry}
+                      helperText={errors?.companyCountry?.message}
+                      fullWidth
+                      required
+                    />
+                  )
+                }}
+              />
+            )
+          }}
         />
-        <SelectField
-          label={'Province'}
-          error={!!errors?.companyProvince}
-          helperText={errors?.companyProvince?.message}
-          defaultValue={defaultValues.companyProvince}
-          options={companyProvinceOptions}
-          required
-          fullWidth
-          {...register('companyProvince')}
+        <Controller
+          control={control}
+          name={'companyProvince'}
+          render={({ field: { onChange }, formState: { errors } }) => {
+            return (
+              <Autocomplete
+                defaultValue={companyProvinceOptions.find(
+                  (option) => option.value === initialData.companyProvince
+                )}
+                options={companyCountryOptions}
+                onChange={(_, item) => onChange(item?.value)}
+                renderInput={(params) => {
+                  return (
+                    <TextField
+                      {...params}
+                      label={'Province'}
+                      error={!!errors?.companyProvince}
+                      helperText={errors?.companyProvince?.message}
+                      fullWidth
+                      required
+                    />
+                  )
+                }}
+              />
+            )
+          }}
         />
         <TextField
           label={'Additional address info (optional)'}
           error={!!errors?.companyAddressInfo}
           helperText={errors?.companyAddressInfo?.message}
-          defaultValue={defaultValues.companyAddressInfo}
           fullWidth
           {...register('companyAddressInfo')}
         />
@@ -145,7 +169,6 @@ export const Step2 = (_: Step2) => {
           label={'Company e-mail'}
           error={!!errors?.companyEmail}
           helperText={errors?.companyEmail?.message}
-          defaultValue={defaultValues.companyEmail}
           required
           fullWidth
           {...register('companyEmail')}
@@ -154,7 +177,6 @@ export const Step2 = (_: Step2) => {
           label={'Company phone number (optional)'}
           error={!!errors?.companyPhone}
           helperText={errors?.companyPhone?.message}
-          defaultValue={defaultValues.companyPhone}
           fullWidth
           {...register('companyPhone')}
         />
@@ -162,7 +184,6 @@ export const Step2 = (_: Step2) => {
           label={'Company mobile number (optional)'}
           error={!!errors?.companyMobile}
           helperText={errors?.companyMobile?.message}
-          defaultValue={defaultValues.companyMobile}
           fullWidth
           {...register('companyMobile')}
         />
@@ -170,7 +191,6 @@ export const Step2 = (_: Step2) => {
           label={'Company fax number (optional)'}
           error={!!errors?.companyFax}
           helperText={errors?.companyFax?.message}
-          defaultValue={defaultValues.companyFax}
           fullWidth
           {...register('companyFax')}
         />

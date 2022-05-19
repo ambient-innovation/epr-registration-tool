@@ -1,61 +1,29 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Stack, TextField } from '@mui/material'
-import { useForm } from 'react-hook-form'
+import { Autocomplete, Checkbox, Chip, Stack, TextField } from '@mui/material'
+import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { SchemaOf } from 'yup'
 
+import {
+  companySectorOptions,
+  companySubSectorsOptions,
+} from '@/auth/components/Registration/mocks'
 import { FormStep } from '@/common/components/FormStep'
 import { DEFAULT_FORM_SPACING } from '@/common/components/FormStep/constants'
-import { SelectField } from '@/common/components/SelecField'
 import {
   companyRegistrationNumberValidator,
   requiredStringValidator,
 } from '@/utils/form-validation.utils'
+import { pick } from '@/utils/typescript.utils'
 
-import { initialData, useRegistrationContext } from './RegistrationContext'
+import { useRegistrationContext } from './RegistrationContext'
 import { RegistrationData } from './types'
 
-const companySectorOptions = [
-  {
-    value: 'sector1',
-    label: 'Sector1',
-  },
-  {
-    value: 'sector2',
-    label: 'Sector2',
-  },
-  {
-    value: 'sector3',
-    label: 'Sector3',
-  },
-  {
-    value: 'sector4',
-    label: 'Sector4',
-  },
-]
-const companySubSectorOptions = [
-  {
-    value: 'subsector1',
-    label: 'SubSector1',
-  },
-  {
-    value: 'subsector2',
-    label: 'SubSector2',
-  },
-  {
-    value: 'subsector3',
-    label: 'SubSector3',
-  },
-  {
-    value: 'subsector4',
-    label: 'SubSector4',
-  },
-]
 const FIELD_NAMES = [
   'companyName',
   'companyRegistrationNumber',
-  'companySector',
-  'companySubSector',
+  'companySectorId',
+  'companySubSectorIds',
 ] as const
 
 type FieldName = typeof FIELD_NAMES[number]
@@ -63,27 +31,24 @@ type FormData = Pick<RegistrationData, FieldName>
 
 export type Step1 = Record<string, never>
 
-const schema: SchemaOf<Record<keyof FormData, string>> = yup.object().shape({
+const schema: SchemaOf<Record<keyof FormData, unknown>> = yup.object().shape({
   companyName: requiredStringValidator(),
   companyRegistrationNumber: companyRegistrationNumberValidator(),
-  companySector: requiredStringValidator(),
-  companySubSector: requiredStringValidator(),
+  companySectorId: requiredStringValidator(),
+  companySubSectorIds: yup
+    .array()
+    .min(1, 'The Field must have at least 1 item'),
 })
 
 const resolver = yupResolver(schema)
 
 export const Step1 = (_: Step1) => {
-  const { data, onSubmit } = useRegistrationContext()
+  const { initialData, onSubmit } = useRegistrationContext()
 
-  const defaultValues = FIELD_NAMES.reduce((acc, next) => {
-    acc[next] = data[next]
-    return acc
-  }, {} as FormData)
-
-  const { register, handleSubmit, formState } = useForm<FormData>({
+  const { register, handleSubmit, formState, control } = useForm<FormData>({
     mode: 'onTouched',
     resolver,
-    defaultValues,
+    defaultValues: pick(initialData, ...FIELD_NAMES),
   })
 
   const { errors } = formState
@@ -117,27 +82,89 @@ export const Step1 = (_: Step1) => {
           required
           {...register('companyRegistrationNumber')}
         />
-        <SelectField
-          label={'Sector'}
-          error={!!errors?.companySector}
-          helperText={errors?.companySector?.message}
-          inputProps={register('companySector')}
-          options={companySectorOptions}
-          defaultValue={initialData.companySector}
-          required
-          fullWidth
-          {...register('companySector')}
+        <Controller
+          control={control}
+          name={'companySectorId'}
+          render={({ field: { onChange, ref }, formState: { errors } }) => {
+            return (
+              <Autocomplete
+                defaultValue={companySectorOptions.find(
+                  (option) => option.value === initialData.companySectorId
+                )}
+                options={companySectorOptions}
+                onChange={(_, item) => onChange(item?.value)}
+                renderInput={(params) => {
+                  return (
+                    <TextField
+                      {...params}
+                      inputRef={ref}
+                      label={'Sectors'}
+                      error={!!errors?.companySectorId}
+                      helperText={errors?.companySectorId?.message}
+                      fullWidth
+                      required
+                    />
+                  )
+                }}
+              />
+            )
+          }}
         />
-        <SelectField
-          label={'Subsector'}
-          error={!!errors?.companySubSector}
-          helperText={errors?.companySubSector?.message}
-          inputProps={register('companySubSector')}
-          defaultValue={initialData.companySubSector}
-          options={companySubSectorOptions}
-          required
-          fullWidth
-          {...register('companySubSector')}
+        <Controller
+          control={control}
+          name={'companySubSectorIds'}
+          render={({ field: { onChange, ref }, formState: { errors } }) => {
+            return (
+              <Autocomplete
+                multiple
+                options={companySubSectorsOptions}
+                disableCloseOnSelect
+                renderTags={(items, getTagProps) => {
+                  return items.map(({ value, label }, index) => {
+                    return (
+                      <Chip
+                        {...getTagProps({ index })}
+                        color={'secondary'}
+                        key={value}
+                        sx={{
+                          color: 'white',
+                          '& .MuiChip-deleteIcon': {
+                            display: 'none',
+                          },
+                        }}
+                        label={label}
+                      />
+                    )
+                  })
+                }}
+                onChange={(_, items) => {
+                  onChange(items.map(({ value }) => value))
+                }}
+                getOptionLabel={(option) => option.label}
+                renderOption={(props, option, { selected }) => (
+                  <li {...props}>
+                    <Checkbox
+                      style={{ marginRight: 8 }}
+                      color={'secondary'}
+                      checked={selected}
+                    />
+                    {option.label}
+                  </li>
+                )}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label={'Subsectors'}
+                    inputRef={ref}
+                    error={!!errors?.companySubSectorIds}
+                    helperText={(errors?.companySubSectorIds as any)?.message}
+                    fullWidth
+                    required
+                  />
+                )}
+              />
+            )
+          }}
         />
       </Stack>
     </FormStep>

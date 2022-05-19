@@ -29,6 +29,7 @@ export const Step1: Story<RegistrationContextType> = (args) => {
 Step1.args = {
   activeStep: 0,
   data: initialData,
+  initialData,
   onSubmit: () => null,
   goToPrevStep: undefined,
 }
@@ -43,6 +44,7 @@ export const Step2: Story<RegistrationContextType> = (args) => {
 Step2.args = {
   activeStep: 1,
   data: initialData,
+  initialData,
   onSubmit: () => null,
   goToPrevStep: undefined,
 }
@@ -57,6 +59,7 @@ export const Step3: Story<RegistrationContextType> = (args) => {
 Step3.args = {
   activeStep: 2,
   data: initialData,
+  initialData,
   onSubmit: () => null,
   goToPrevStep: undefined,
 }
@@ -71,6 +74,7 @@ export const Step4: Story<RegistrationContextType> = (args) => {
 Step4.args = {
   activeStep: 3,
   data: initialData,
+  initialData,
   onSubmit: () => null,
   goToPrevStep: undefined,
 }
