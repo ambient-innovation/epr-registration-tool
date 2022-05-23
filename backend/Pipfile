@@ -11,7 +11,7 @@ psycopg2 = "==2.9.3"
 # django testing
 model-bakery = "*"
 # api
-strawberry-graphql-django = "==0.1.2"                                   # graphql library
+strawberry-graphql-django = "==0.2.5"                                   # graphql library
 strawberry-graphql = {extras = ["debug-server"], version = "0.111.1"}   # django plugin for strawberry
 # security
 django-cors-headers = "==3.12.0"                                        # Cross-Origin-Request headers
