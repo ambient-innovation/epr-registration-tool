@@ -1,33 +1,32 @@
 import { ApolloProvider } from '@apollo/client'
-import { CacheProvider, EmotionCache } from '@emotion/react'
 import { CssBaseline, ThemeProvider } from '@mui/material'
+import { appWithTranslation } from 'next-i18next'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 import { useApollo } from '@/config/apolloClient'
 import { initSentry } from '@/config/sentry'
-import { createEmotionCache, theme } from '@/theme'
-
-// Client-side cache, shared for the whole session of the user in the browser.
-const clientSideEmotionCache = createEmotionCache()
-
-interface MyAppProps extends AppProps {
-  emotionCache?: EmotionCache
-}
+import { theme, EmotionCacheProvider } from '@/theme'
 
 // Initialize Sentry
 initSentry()
 
-function MyApp({
-  Component,
-  emotionCache = clientSideEmotionCache,
-  pageProps,
-}: MyAppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
   const apolloClient = useApollo(pageProps)
+
+  const { locale } = useRouter()
+
+  useEffect(() => {
+    const dir = locale === 'ar' ? 'rtl' : 'ltr'
+    document.documentElement.setAttribute('dir', dir)
+    document.body.dir = dir
+  }, [locale])
 
   return (
     <ApolloProvider client={apolloClient}>
-      <CacheProvider value={emotionCache}>
+      <EmotionCacheProvider>
         <Head>
           <meta
             name={'viewport'}
@@ -39,9 +38,9 @@ function MyApp({
           <CssBaseline />
           <Component {...pageProps} />
         </ThemeProvider>
-      </CacheProvider>
+      </EmotionCacheProvider>
     </ApolloProvider>
   )
 }
 
-export default MyApp
+export default appWithTranslation(MyApp)

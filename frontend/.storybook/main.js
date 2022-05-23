@@ -13,6 +13,7 @@ module.exports = {
     },
     '@storybook/addon-a11y',
     'storybook-addon-apollo-client',
+    'storybook-addon-next-router',
   ],
   staticDirs: ['../public'],
   features: {
@@ -21,6 +22,10 @@ module.exports = {
   },
   framework: '@storybook/react',
   webpackFinal: async (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'next-i18next': 'react-i18next',
+    }
     // tell storybook the location of .tsconfig
     config.resolve.plugins = [
       new TsconfigPathsPlugin({

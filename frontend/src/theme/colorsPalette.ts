@@ -34,6 +34,10 @@ export const palette = {
     light: '#F3F4F6',
     paper: '#FFF',
   },
+  common: {
+    black: '#121212',
+    white: '#fff',
+  },
 }
 
 export type ColorPalette = typeof palette

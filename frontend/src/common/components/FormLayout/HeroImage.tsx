@@ -16,6 +16,9 @@ export const HeroImage = (_: HeroImage): React.ReactElement => {
       quality={90}
       aria-hidden
       alt={'Jordan Amman city'}
+      // image is marked as LCP
+      // https://nextjs.org/docs/api-reference/next/image#priority
+      priority
     />
   )
 }

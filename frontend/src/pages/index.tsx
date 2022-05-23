@@ -1,4 +1,5 @@
-import type { NextPage } from 'next'
+import type { GetStaticProps, NextPage } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 
 import { Homepage } from '@/homepage/components/Homepage'
@@ -17,6 +18,15 @@ const Home: NextPage = () => {
       <Homepage />
     </>
   )
+}
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale as string, ['common'])),
+      // Will be passed to the page component as props
+    },
+  }
 }
 
 // export const getStaticProps: GetStaticProps = async () => {

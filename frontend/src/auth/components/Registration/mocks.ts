@@ -1,3 +1,5 @@
+import { TFunction } from 'next-i18next'
+
 export const companySectorOptions = [
   {
     value: 'sector1',
@@ -16,6 +18,7 @@ export const companySectorOptions = [
     label: 'Sector4',
   },
 ]
+
 export const companySubSectorsOptions = [
   {
     value: 'subsector1',
@@ -73,7 +76,7 @@ export const companyProvinceOptions = [
   },
 ]
 
-export const titleOptions = [
-  { value: 'mr', label: 'Mr.' },
-  { value: 'mrs', label: 'Mrs.' },
+export const titleOptions = (t: TFunction) => [
+  { value: 'mr', label: t('registrationForm.mr') },
+  { value: 'mrs', label: t('registrationForm.mrs') },
 ]

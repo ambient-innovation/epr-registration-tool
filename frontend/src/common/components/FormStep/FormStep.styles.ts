@@ -21,9 +21,9 @@ export const buttonWrapperSx: SxProps<Theme> = {
     fontWeight: 600, // note --> maybe move to theme
     textTransform: 'uppercase',
 
-    '&:nth-child(1)': {},
+    '&:nth-of-type(1)': {},
 
-    '&:nth-child(2)': {
+    '&:nth-of-type(2)': {
       marginLeft: 5,
       minWidth: pxToRemAsString(42),
     },

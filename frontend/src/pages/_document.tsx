@@ -1,13 +1,15 @@
 import createEmotionServer from '@emotion/server/create-instance'
 import Document, { Html, Head, Main, NextScript } from 'next/document'
-import * as React from 'react'
 
-import { createEmotionCache, theme } from '@/theme'
+import { theme } from '@/theme'
+import { createEmotionCache } from '@/theme'
 
 export default class MyDocument extends Document {
   render() {
+    const { locale } = this.props
     return (
-      <Html lang={'en'}>
+      // lang will be provided by nextjs
+      <Html dir={locale === 'ar' ? 'rtl' : 'ltr'}>
         <Head>
           {/* PWA primary color */}
           <meta name={'theme-color'} content={theme.palette.primary.main} />
@@ -65,10 +67,12 @@ MyDocument.getInitialProps = async (ctx) => {
   // 4. page.render
 
   const originalRenderPage = ctx.renderPage
-
+  const locale = ctx?.locale || 'en'
+  const dir = locale === 'ar' ? 'rtl' : 'ltr'
   // You can consider sharing the same emotion cache between all the SSR requests to speed up performance.
   // However, be aware that it can have global side effects.
-  const cache = createEmotionCache()
+  // const cache = isRtlLocal ? createRtlEmotionCache() : createEmotionCache()
+  const cache = createEmotionCache(dir)
   const { extractCriticalToChunks } = createEmotionServer(cache)
 
   ctx.renderPage = () =>
@@ -94,10 +98,8 @@ MyDocument.getInitialProps = async (ctx) => {
 
   return {
     ...initialProps,
+    locale,
     // Styles fragment is rendered after the app and page rendering finish.
-    styles: [
-      ...React.Children.toArray(initialProps.styles),
-      ...emotionStyleTags,
-    ],
+    emotionStyleTags,
   }
 }

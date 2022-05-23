@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Autocomplete, Stack, TextField } from '@mui/material'
+import { useTranslation } from 'next-i18next'
 import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { SchemaOf } from 'yup'
@@ -54,6 +55,7 @@ const resolver = yupResolver(schema)
 
 export const Step2 = (_: Step2) => {
   const { initialData, goToPrevStep, onSubmit } = useRegistrationContext()
+  const { t } = useTranslation()
 
   const { register, handleSubmit, formState, control } = useForm<FormData>({
     mode: 'onTouched',
@@ -61,24 +63,23 @@ export const Step2 = (_: Step2) => {
     defaultValues: pick(initialData, ...FIELD_NAMES),
   })
 
+  const errorMsg = (translationKey: string | undefined): string | undefined =>
+    translationKey && (t(translationKey) as string)
+
   const { errors } = formState
   return (
     <FormStep
-      title={'Enter your company address and contact information'}
-      description={
-        'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo\n' +
-        'ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis\n' +
-        'dis parturient montes, nascetur ridiculus mus.'
-      }
+      title={t('registrationForm.step2Title')}
+      description={t('registrationForm.step2Description')}
       onSubmit={handleSubmit(onSubmit)}
       onClickBack={goToPrevStep}
     >
       <Stack spacing={DEFAULT_FORM_SPACING}>
         <TextField
           autoFocus // autofocus first field
-          label={'Street, number'}
+          label={t('registrationForm.streetAndNumber')}
           error={!!errors?.companyStreet}
-          helperText={errors?.companyStreet?.message}
+          helperText={errorMsg(errors?.companyStreet?.message)}
           required
           fullWidth
           {...register('companyStreet')}
@@ -88,17 +89,18 @@ export const Step2 = (_: Step2) => {
           spacing={DEFAULT_FORM_SPACING}
         >
           <TextField
-            label={'Postal code'}
+            dir={'ltr'}
+            label={t('registrationForm.postalCode')}
             inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
             error={!!errors?.companyZipCode}
-            helperText={errors?.companyZipCode?.message}
+            helperText={errorMsg(errors?.companyZipCode?.message)}
             fullWidth
             {...register('companyZipCode')}
           />
           <TextField
-            label={'City'}
+            label={t('registrationForm.city')}
             error={!!errors?.companyCity}
-            helperText={errors?.companyCity?.message}
+            helperText={errorMsg(errors?.companyCity?.message)}
             required
             fullWidth
             {...register('companyCity')}
@@ -119,9 +121,9 @@ export const Step2 = (_: Step2) => {
                   return (
                     <TextField
                       {...params}
-                      label={'Country'}
+                      label={t('registrationForm.country')}
                       error={!!errors?.companyCountry}
-                      helperText={errors?.companyCountry?.message}
+                      helperText={errorMsg(errors?.companyCountry?.message)}
                       fullWidth
                       required
                     />
@@ -146,9 +148,9 @@ export const Step2 = (_: Step2) => {
                   return (
                     <TextField
                       {...params}
-                      label={'Province'}
+                      label={t('registrationForm.province')}
                       error={!!errors?.companyProvince}
-                      helperText={errors?.companyProvince?.message}
+                      helperText={errorMsg(errors?.companyProvince?.message)}
                       fullWidth
                       required
                     />
@@ -159,38 +161,42 @@ export const Step2 = (_: Step2) => {
           }}
         />
         <TextField
-          label={'Additional address info (optional)'}
+          label={t('registrationForm.additionalAddressInfo')}
           error={!!errors?.companyAddressInfo}
-          helperText={errors?.companyAddressInfo?.message}
+          helperText={errorMsg(errors?.companyAddressInfo?.message)}
           fullWidth
           {...register('companyAddressInfo')}
         />
         <TextField
-          label={'Company e-mail'}
+          dir={'ltr'} // email is always from left to right
+          label={t('registrationForm.companyEmail')}
           error={!!errors?.companyEmail}
-          helperText={errors?.companyEmail?.message}
+          helperText={errorMsg(errors?.companyEmail?.message)}
           required
           fullWidth
           {...register('companyEmail')}
         />
         <TextField
-          label={'Company phone number (optional)'}
+          dir={'ltr'} // numbers is always from left to right
+          label={t('registrationForm.companyPhoneNumber')}
           error={!!errors?.companyPhone}
-          helperText={errors?.companyPhone?.message}
+          helperText={errorMsg(errors?.companyPhone?.message)}
           fullWidth
           {...register('companyPhone')}
         />
         <TextField
-          label={'Company mobile number (optional)'}
+          dir={'ltr'}
+          label={t('registrationForm.companyMobileNumber')}
           error={!!errors?.companyMobile}
-          helperText={errors?.companyMobile?.message}
+          helperText={errorMsg(errors?.companyMobile?.message)}
           fullWidth
           {...register('companyMobile')}
         />
         <TextField
-          label={'Company fax number (optional)'}
+          dir={'ltr'}
+          label={t('registrationForm.companyFaxNumber')}
           error={!!errors?.companyFax}
-          helperText={errors?.companyFax?.message}
+          helperText={errorMsg(errors?.companyFax?.message)}
           fullWidth
           {...register('companyFax')}
         />

@@ -1,4 +1,5 @@
-import type { NextPage } from 'next'
+import type { GetStaticProps, NextPage } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 
 import { RegistrationSection } from '@/auth/components/Registration'
@@ -20,6 +21,14 @@ const RegistrationPage: NextPage = () => {
       </PageLayout>
     </>
   )
+}
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale as string, ['common'])),
+    },
+  }
 }
 
 export default RegistrationPage

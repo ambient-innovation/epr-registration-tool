@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Divider, Stack, TextField } from '@mui/material'
+import { useTranslation } from 'next-i18next'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { SchemaOf } from 'yup'
@@ -42,6 +43,7 @@ const resolver = yupResolver(schema)
 
 export const Step3 = (_: Step3) => {
   const { initialData, goToPrevStep, onSubmit } = useRegistrationContext()
+  const { t } = useTranslation()
 
   const { register, handleSubmit, formState } = useForm<FormData>({
     mode: 'onTouched',
@@ -49,27 +51,26 @@ export const Step3 = (_: Step3) => {
     defaultValues: pick(initialData, ...FIELD_NAMES),
   })
 
+  const errorMsg = (translationKey: string | undefined): string | undefined =>
+    translationKey && (t(translationKey) as string)
+
   const { errors } = formState
 
   return (
     <FormStep
-      title={'Provide a contact person'}
-      description={
-        'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo\n' +
-        'ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis\n' +
-        'dis parturient montes, nascetur ridiculus mus.'
-      }
+      title={t('registrationForm.step3Title')}
+      description={t('registrationForm.step3Description')}
       onSubmit={handleSubmit(onSubmit)}
       onClickBack={goToPrevStep}
     >
       <Stack spacing={DEFAULT_FORM_SPACING}>
         <TextField
           autoFocus // autofocus first field
-          label={'Email'}
+          label={t('email')}
           error={!!errors?.userEmail}
           helperText={
-            errors?.userEmail?.message ||
-            'Attention: This is the E-mail your company will use to log in to the EPR Registration Tool.'
+            errorMsg(errors?.userEmail?.message) ||
+            (t('registrationForm.emailHelpText') as string)
           }
           type={'email'}
           required
@@ -85,35 +86,35 @@ export const Step3 = (_: Step3) => {
             sx={{
               width: { sm: pxToRemAsString(120) },
             }}
-            label={'Title'}
+            label={t('registrationForm.title')}
             error={!!errors?.userTitle}
-            helperText={errors?.userTitle?.message}
+            helperText={errorMsg(errors?.userTitle?.message)}
             defaultValue={initialData.userTitle}
-            options={titleOptions}
+            options={titleOptions(t)}
             fullWidth
             required
             {...register('userTitle')}
           />
           <TextField
-            label={'Full name'}
+            label={t('registrationForm.fullName')}
             error={!!errors?.userFullName}
-            helperText={errors?.userFullName?.message}
+            helperText={errorMsg(errors?.userFullName?.message)}
             fullWidth
             required
             {...register('userFullName')}
           />
         </Stack>
         <TextField
-          label={'Position'}
+          label={t('registrationForm.position')}
           error={!!errors?.userPosition}
-          helperText={errors?.userPosition?.message}
+          helperText={errorMsg(errors?.userPosition?.message)}
           required
           {...register('userPosition')}
         />
         <TextField
-          label={'Phone / mobile number'}
+          label={t('registrationForm.phoneMobileNumber')}
           error={!!errors?.userPhone}
-          helperText={errors?.userPhone?.message}
+          helperText={errorMsg(errors?.userPhone?.message)}
           required
           {...register('userPhone')}
         />
