@@ -7,12 +7,13 @@ import { SchemaOf } from 'yup'
 import { titleOptions } from '@/auth/components/Registration/mocks'
 import { FormStep } from '@/common/components/FormStep'
 import { DEFAULT_FORM_SPACING } from '@/common/components/FormStep/constants'
-import { SelectField } from '@/common/components/SelecField'
+import { SelectField } from '@/common/components/SelectField'
 import { pxToRemAsString } from '@/theme/utils'
 import {
   emailValidator,
   requiredStringValidator,
 } from '@/utils/form-validation.utils'
+import { pick } from '@/utils/typescript.utils'
 
 import { useRegistrationContext } from './RegistrationContext'
 import { RegistrationData } from './types'
@@ -40,17 +41,12 @@ const schema: SchemaOf<Record<keyof FormData, unknown>> = yup.object({
 const resolver = yupResolver(schema)
 
 export const Step3 = (_: Step3) => {
-  const { data, goToPrevStep, onSubmit } = useRegistrationContext()
-
-  const defaultValues = FIELD_NAMES.reduce((acc, next) => {
-    acc[next] = data[next]
-    return acc
-  }, {} as FormData)
+  const { initialData, goToPrevStep, onSubmit } = useRegistrationContext()
 
   const { register, handleSubmit, formState } = useForm<FormData>({
     mode: 'onTouched',
     resolver,
-    defaultValues,
+    defaultValues: pick(initialData, ...FIELD_NAMES),
   })
 
   const { errors } = formState
@@ -75,7 +71,6 @@ export const Step3 = (_: Step3) => {
             errors?.userEmail?.message ||
             'Attention: This is the E-mail your company will use to log in to the EPR Registration Tool.'
           }
-          defaultValue={defaultValues.userEmail}
           type={'email'}
           required
           {...register('userEmail')}
@@ -93,18 +88,16 @@ export const Step3 = (_: Step3) => {
             label={'Title'}
             error={!!errors?.userTitle}
             helperText={errors?.userTitle?.message}
-            defaultValue={defaultValues.userTitle}
+            defaultValue={initialData.userTitle}
             options={titleOptions}
             fullWidth
             required
             {...register('userTitle')}
           />
           <TextField
-            // sx={{ flexGrow: { sm: 1 } }}
             label={'Full name'}
             error={!!errors?.userFullName}
             helperText={errors?.userFullName?.message}
-            defaultValue={defaultValues.userFullName}
             fullWidth
             required
             {...register('userFullName')}
@@ -114,7 +107,6 @@ export const Step3 = (_: Step3) => {
           label={'Position'}
           error={!!errors?.userPosition}
           helperText={errors?.userPosition?.message}
-          defaultValue={defaultValues.userPosition}
           required
           {...register('userPosition')}
         />
@@ -122,7 +114,6 @@ export const Step3 = (_: Step3) => {
           label={'Phone / mobile number'}
           error={!!errors?.userPhone}
           helperText={errors?.userPhone?.message}
-          defaultValue={defaultValues.userPhone}
           required
           {...register('userPhone')}
         />

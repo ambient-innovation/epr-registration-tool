@@ -1,8 +1,8 @@
 export interface RegistrationData {
   companyName: string
   companyRegistrationNumber: string
-  companySector: string
-  companySubSector: string
+  companySectorId: string
+  companySubSectorIds: string[]
   companyStreet: string
   companyAddressInfo: string
   companyZipCode: string

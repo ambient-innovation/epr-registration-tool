@@ -29,7 +29,7 @@ export const companyRegistrationNumberValidator = () =>
     .required('This field is required')
     .test(
       'len',
-      'The registration number must consist of 8 digits',
+      'The registration number must consist of 9 digits',
       (val) => val?.length === 9
     )
 
