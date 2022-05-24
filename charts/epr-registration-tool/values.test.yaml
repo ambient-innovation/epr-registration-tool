@@ -107,7 +107,7 @@ frontend:
     initialDelaySeconds: 5 # Wait number of seconds before performing first check.
     periodSeconds: 5 # Wait number of seconds between each check.
     successThreshold: 1
-    timeoutSeconds: 3 # Number of seconds to wait for timeout on each request.
+    timeoutSeconds: 10 # Number of seconds to wait for timeout on each request.
   readinessProbe: # Pay attention -> This setting is used to determine whether - for the initial boot of your application - your application is ready to start receiving traffic or not.
     failureThreshold: 3
     httpGet:
@@ -117,7 +117,7 @@ frontend:
     initialDelaySeconds: 5 # If your application needs a lot of initial delay (e.g. more than 10-15 seconds) check what is slowing the boot time and check if there is anything you can do to speed up the boot time. If you are not sure what to do, ask to Ops team for guidance.
     periodSeconds: 5
     successThreshold: 1
-    timeoutSeconds: 3
+    timeoutSeconds: 10
   nodeSelector: {} # You will most likely will not need to add anything to nodeSelector, tolerations or affinity. These are often used for assigning your workload to specific instance, in most cases it is not needed for your web app.
   tolerations: []
   affinity:
