@@ -44,7 +44,7 @@
   },
   "validations": {
     "required": "هذه الخانة مطلوبه",
-    "requiredMultiselect": "الرجاء تحديد عنصر واحد على الأقل",
+    "requiredMultiselect": "الرجاء أختيار عنصر واحد على الأقل",
     "emailInvalid": "يرجى إدخال عنوان بريد إلكتروني صالح",
     "registrationNumberLength": "يجب أن يتكون رقم التسجيل من 9 أرقام",
     "passwordMustHaveUppercase": "يجب أن تحتوي كلمة المرور على حرف واحد كبير على الأقل",

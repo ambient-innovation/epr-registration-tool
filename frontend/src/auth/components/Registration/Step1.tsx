@@ -36,7 +36,7 @@ const schema: SchemaOf<Record<keyof FormData, unknown>> = yup.object().shape({
   companyName: requiredStringValidator(),
   companyRegistrationNumber: companyRegistrationNumberValidator(),
   companySectorId: requiredStringValidator(),
-  companySubSectorIds: yup.array().min(1, 'requiredMultiselect'),
+  companySubSectorIds: yup.array().min(1, 'validations.requiredMultiselect'),
 })
 
 const resolver = yupResolver(schema)
