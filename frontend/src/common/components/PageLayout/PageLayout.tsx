@@ -3,8 +3,9 @@ import Link from 'next/link'
 
 import { LangSwitcher } from '@/common/components/langSwitcher'
 import { ROUTES } from '@/routes'
-import { defaultSectionCss } from '@/theme/layout'
 import { pxToRemAsString } from '@/theme/utils'
+
+import { wrapperCss } from './PageLayout.styles'
 
 export interface PageLayout {
   children: React.ReactNode
@@ -23,7 +24,7 @@ export const PageLayout = ({ children }: PageLayout): React.ReactElement => {
   return (
     <div>
       <Box component={'header'} sx={headerSx}>
-        <div css={defaultSectionCss}>
+        <div css={wrapperCss}>
           <Link href={ROUTES.home} passHref>
             <Typography
               component={'a'}
@@ -36,7 +37,7 @@ export const PageLayout = ({ children }: PageLayout): React.ReactElement => {
               {'Logo'}
             </Typography>
           </Link>
-          <Box gridColumn={'-1'}>
+          <Box>
             <LangSwitcher />
           </Box>
         </div>
