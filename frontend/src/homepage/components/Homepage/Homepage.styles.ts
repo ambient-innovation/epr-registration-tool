@@ -1,11 +1,11 @@
-import { css } from '@emotion/react'
+import { defaultSectionSx } from '@/theme/layout'
+import { SxStyles } from '@/theme/utils'
 
-import { defaultSectionCss } from '@/theme/layout'
-
-export const containerCss = css`
-  ${defaultSectionCss};
-
-  > * {
-    grid-column: 1 / -1;
-  }
-`
+export const containerCss: SxStyles = [
+  ...defaultSectionSx,
+  {
+    '> *': {
+      gridColumn: '1 / -1',
+    },
+  },
+]

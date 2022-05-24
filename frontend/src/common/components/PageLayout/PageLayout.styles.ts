@@ -1,11 +1,12 @@
-import { css } from '@emotion/react'
-
 import { maxWidthCss, paddedSectionCss } from '@/theme/layout'
+import { SxStyles } from '@/theme/utils'
 
-export const wrapperCss = css`
-  ${maxWidthCss};
-  ${paddedSectionCss};
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`
+export const wrapperSx: SxStyles = [
+  maxWidthCss,
+  paddedSectionCss,
+  {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+]

@@ -5,7 +5,7 @@ import { LangSwitcher } from '@/common/components/langSwitcher'
 import { ROUTES } from '@/routes'
 import { pxToRemAsString } from '@/theme/utils'
 
-import { wrapperCss } from './PageLayout.styles'
+import { wrapperSx } from './PageLayout.styles'
 
 export interface PageLayout {
   children: React.ReactNode
@@ -24,7 +24,7 @@ export const PageLayout = ({ children }: PageLayout): React.ReactElement => {
   return (
     <div>
       <Box component={'header'} sx={headerSx}>
-        <div css={wrapperCss}>
+        <Box sx={wrapperSx}>
           <Link href={ROUTES.home} passHref>
             <Typography
               component={'a'}
@@ -40,7 +40,7 @@ export const PageLayout = ({ children }: PageLayout): React.ReactElement => {
           <Box>
             <LangSwitcher />
           </Box>
-        </div>
+        </Box>
       </Box>
       <main>{children}</main>
     </div>

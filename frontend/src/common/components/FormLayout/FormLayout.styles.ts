@@ -1,24 +1,22 @@
-import { css } from '@emotion/react'
+import { grid } from '@/theme/layout'
+import { SxStyleFunc, SxStyleObject, SxStyles } from '@/theme/utils'
 
-import { breakpoints } from '@/theme/breakpoints'
-import { palette } from '@/theme/colorsPalette'
-import { grid, layout } from '@/theme/layout'
-import { pxToRem } from '@/theme/utils'
-
-const fullHeightCss = css`
+const fullHeightCss: SxStyleObject = {
   // to be placed in another flex container
   // --> take remaining space
-  flex-grow: 1;
+  flexGrow: 1,
   // allow children to do the same
   // --> define flex container
-  display: flex;
-`
+  display: 'flex',
+}
 
-export const containerCss = css`
-  ${fullHeightCss};
-  position: relative;
-  width: 100%;
-`
+export const containerCss: SxStyles = [
+  fullHeightCss,
+  {
+    position: 'relative',
+    width: '100%',
+  },
+]
 
 export const imageGap = {
   md: `(${grid.md.columnWidth} + ${grid.md.gutter}) * 2.1`, // (2 * column + gutter) - (gutter/2)
@@ -26,50 +24,37 @@ export const imageGap = {
   xl: `(${grid.xl.columnWidth} + ${grid.xl.gutter}) * 1.5`, // (2 * column + gutter) - (gutter/2)
 }
 
-export const imageWrapperCss = css`
+export const imageWrapperSx: SxStyleFunc = (theme) => ({
   // xs
-  top: 0;
-  height: 100vh;
-  background: ${palette.background.light};
-  max-width: calc(${layout.maxWidth.hero} / 2);
-  position: fixed;
+  top: 0,
+  height: '100vh',
+  backgroundColor: theme.palette.background.light,
+  maxWidth: `calc(${theme.mixins.hero.maxWidth} / 2)`,
+  position: 'fixed',
 
-  display: none;
+  display: 'none',
 
-  ${breakpoints.up('md')} {
-    display: block;
+  [theme.breakpoints.up('md')]: {
+    display: 'block',
+    width: `calc(50% - ${imageGap.md})`,
+    right: `calc(50% + ${imageGap.md})`,
+  },
 
-    width: calc(50% - ${imageGap.md});
-    right: calc(50% + ${imageGap.md});
-  }
+  [theme.breakpoints.up('lg')]: {
+    width: `calc(50% - ${imageGap.lg})`,
+    right: `calc(50% + ${imageGap.lg})`,
+  },
 
-  ${breakpoints.up('lg')} {
-    width: calc(50% - ${imageGap.lg});
-    right: calc(50% + ${imageGap.lg});
-  }
+  [theme.breakpoints.up('xl')]: {
+    width: `calc(50% - ${imageGap.xl})`,
+    right: `calc(50% + ${imageGap.xl})`,
+  },
+})
 
-  ${breakpoints.up('xl')} {
-    width: calc(50% - (${imageGap.xl}));
-    right: calc(50% + (${imageGap.xl}));
-  }
-`
-
-export const contentColumnCss = css`
-  grid-column: 1 / -1;
-  padding-top: ${pxToRem(40)}rem;
-  padding-bottom: ${pxToRem(40)}rem;
-  display: flex;
-  flex-direction: column;
-
-  ${breakpoints.up('sm')} {
-    grid-column: 3 / -3;
-  }
-
-  ${breakpoints.up('md')} {
-    grid-column: 6 / -1;
-  }
-
-  ${breakpoints.up('lg')} {
-    grid-column: 6 / -2;
-  }
-`
+export const contentColumnSx: SxStyleObject = {
+  paddingTop: 11,
+  paddingBottom: 11,
+  display: 'flex',
+  flexDirection: 'column',
+  gridColumn: { xs: '1 / -1', md: '6/-1', lg: '6/-2' },
+}

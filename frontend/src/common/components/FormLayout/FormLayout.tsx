@@ -1,11 +1,11 @@
 import { Box } from '@mui/material'
 
-import { defaultSectionCss } from '@/theme/layout'
+import { defaultSectionSx } from '@/theme/layout'
 
 import {
   containerCss,
-  contentColumnCss,
-  imageWrapperCss,
+  contentColumnSx,
+  imageWrapperSx,
 } from './FormLayout.styles'
 import { HeroImage } from './HeroImage'
 
@@ -25,13 +25,13 @@ export type FormLayout = {
 
 export const FormLayout = ({ children }: FormLayout): React.ReactElement => {
   return (
-    <div css={containerCss}>
-      <div css={imageWrapperCss}>
+    <Box sx={containerCss}>
+      <Box sx={imageWrapperSx}>
         <HeroImage />
-      </div>
-      <div css={defaultSectionCss}>
-        <div css={contentColumnCss}>{children}</div>
-      </div>
-    </div>
+      </Box>
+      <Box sx={defaultSectionSx}>
+        <Box sx={contentColumnSx}>{children}</Box>
+      </Box>
+    </Box>
   )
 }
