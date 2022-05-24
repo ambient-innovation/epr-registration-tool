@@ -55,6 +55,9 @@ COPY --from=builder /app/package.json ./package.json
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# user should own this dir to be able to create cache dir for example
+RUN chown -R nextjs:nodejs ./.next
+
 USER nextjs
 
 EXPOSE 3000
