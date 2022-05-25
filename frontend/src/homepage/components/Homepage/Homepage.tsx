@@ -16,7 +16,7 @@ export const Homepage = (_: Homepage): React.ReactElement => {
 
   return (
     <PageLayout>
-      <div css={containerCss}>
+      <Box sx={containerCss}>
         <Box
           sx={{
             my: 4,
@@ -51,7 +51,7 @@ export const Homepage = (_: Homepage): React.ReactElement => {
             <Link>{t('registration')}</Link>
           </NextLink>
         </Box>
-      </div>
+      </Box>
     </PageLayout>
   )
 }

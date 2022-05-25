@@ -1,5 +1,6 @@
 import { css } from '@emotion/react'
 
+// because 'next/image' does not accept sx prop we use here css
 export const imageCss = css`
   display: block;
   position: absolute;

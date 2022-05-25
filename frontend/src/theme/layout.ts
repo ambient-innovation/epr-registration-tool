@@ -1,14 +1,8 @@
-import { css } from '@emotion/react'
 import { Breakpoint } from '@mui/system/createTheme/createBreakpoints'
 
-import { breakpoints } from './breakpoints'
-import { pxToRem, pxToRemAsString } from './utils'
+import { pxToRemAsString, SxStyleFunc, SxStyleObject } from './utils'
 
 export const layout = {
-  maxWidth: {
-    md: pxToRemAsString(1024),
-    hero: pxToRemAsString(1600),
-  },
   paddingX: {
     xs: pxToRemAsString(24),
     sm: pxToRemAsString(24),
@@ -18,42 +12,20 @@ export const layout = {
   },
 }
 
-export const maxWidthCss = css`
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
+export const maxWidthCss: SxStyleFunc = (theme) => ({
+  width: '100%',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  maxWidth: { md: theme.mixins.layout.maxWidth },
+})
 
-  ${breakpoints.up('md')} {
-    max-width: ${layout.maxWidth.md};
-  }
-`
+export const paddedSectionCss: SxStyleObject = {
+  boxSizing: 'border-box',
+  width: '100%',
+  paddingLeft: { ...layout.paddingX },
+  paddingRight: { ...layout.paddingX },
+}
 
-export const paddedSectionCss = css`
-  // xs
-  box-sizing: border-box;
-  width: 100%;
-  padding-left: ${layout.paddingX.xs};
-  padding-right: ${layout.paddingX.xs};
-
-  ${breakpoints.up('sm')} {
-    padding-left: ${layout.paddingX.sm};
-    padding-right: ${layout.paddingX.sm};
-  }
-  ${breakpoints.up('md')} {
-    padding-left: ${layout.paddingX.md};
-    padding-right: ${layout.paddingX.md};
-  }
-
-  ${breakpoints.up('lg')} {
-    padding-left: ${layout.paddingX.lg};
-    padding-right: ${layout.paddingX.lg};
-  }
-
-  ${breakpoints.up('xl')} {
-    padding-left: ${layout.paddingX.xl};
-    padding-right: ${layout.paddingX.xl};
-  }
-`
 interface ColumnConfig {
   columns: number
   columnWidth: string
@@ -88,28 +60,16 @@ export const grid: Record<Breakpoint, ColumnConfig> = {
   },
 }
 
-export const defaultGridCss = css`
-  // xs
-  display: grid;
-  grid-column-gap: ${pxToRem(24)}rem;
-  grid-template-columns: repeat(${grid.xs.columns}, 1fr);
+export const defaultGridSx: SxStyleObject = {
+  display: 'grid',
+  gridColumnGap: pxToRemAsString(24),
+  gridTemplateColumns: {
+    xs: `repeat(${grid.xs.columns}, 1fr)`,
+    sm: `repeat(${grid.sm.columns}, 1fr)`,
+    md: `repeat(${grid.md.columns}, 1fr)`,
+    lg: `repeat(${grid.lg.columns}, 1fr)`,
+    xl: `repeat(${grid.xl.columns}, 1fr)`,
+  },
+}
 
-  ${breakpoints.up('sm')} {
-    grid-template-columns: repeat(${grid.sm.columns}, 1fr);
-  }
-  ${breakpoints.up('md')} {
-    grid-template-columns: repeat(${grid.md.columns}, 1fr);
-  }
-  ${breakpoints.up('lg')} {
-    grid-template-columns: repeat(${grid.lg.columns}, 1fr);
-  }
-  ${breakpoints.up('xl')} {
-    grid-template-columns: repeat(${grid.xl.columns}, 1fr);
-  }
-`
-
-export const defaultSectionCss = css`
-  ${maxWidthCss};
-  ${paddedSectionCss};
-  ${defaultGridCss};
-`
+export const defaultSectionSx = [maxWidthCss, paddedSectionCss, defaultGridSx]

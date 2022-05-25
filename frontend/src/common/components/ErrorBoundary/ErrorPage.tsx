@@ -1,4 +1,3 @@
-import { css } from '@emotion/react'
 import React from 'react'
 
 import { ErrorBoundary } from './ErrorBoundary'
@@ -7,13 +6,14 @@ export interface ErrorPage {
   title: string
 }
 
-const tempCss = css`
-  min-height: 60vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 1.5rem;
-`
+// we use simple style to minmize the error Page dependencies
+const tempStyle = {
+  minHeight: '60vh',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '0 1.5rem',
+}
 
 /**
  * Renders an error message wrapped in the `MainLayout` component
@@ -22,7 +22,7 @@ const tempCss = css`
  * */
 export const ErrorPage = ({ title }: ErrorPage): React.ReactElement => {
   const content = (
-    <div css={tempCss}>
+    <div style={tempStyle}>
       <h1>{title}</h1>
     </div>
   )
