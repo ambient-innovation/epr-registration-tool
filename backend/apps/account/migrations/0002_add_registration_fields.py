@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('company', '0001_add_company_related_models'),
+        ('company', '0001_add_company_and_sector_models'),
         ('account', '0001_add_custom_user_model'),
     ]
 

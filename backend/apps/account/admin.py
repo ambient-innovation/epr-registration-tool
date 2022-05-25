@@ -80,3 +80,12 @@ class CustomUserAdmin(UserAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         return qs.annotate(company_name=F('related_company__name'))
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        # remove inline action buttons of autocomplete input field
+        if 'related_company' in form.base_fields:
+            form.base_fields['related_company'].widget.can_add_related = False
+            form.base_fields['related_company'].widget.can_delete_related = False
+            form.base_fields['related_company'].widget.can_change_related = False
+        return form

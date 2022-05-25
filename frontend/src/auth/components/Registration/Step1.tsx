@@ -5,16 +5,11 @@ import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { SchemaOf } from 'yup'
 
-import {
-  companySectorOptions,
-  companySubSectorsOptions,
-} from '@/auth/components/Registration/mocks'
+import { useCompanySectorsQuery } from '@/api/__types__'
+import { ApolloErrorAlert } from '@/common/components/ApolloErrorAlert'
 import { FormStep } from '@/common/components/FormStep'
 import { DEFAULT_FORM_SPACING } from '@/common/components/FormStep/constants'
-import {
-  companyRegistrationNumberValidator,
-  requiredStringValidator,
-} from '@/utils/form-validation.utils'
+import { requiredStringValidator } from '@/utils/form-validation.utils'
 import { pick } from '@/utils/typescript.utils'
 
 import { useRegistrationContext } from './RegistrationContext'
@@ -22,7 +17,6 @@ import { RegistrationData } from './types'
 
 const FIELD_NAMES = [
   'companyName',
-  'companyRegistrationNumber',
   'companySectorId',
   'companySubSectorIds',
 ] as const
@@ -32,9 +26,8 @@ type FormData = Pick<RegistrationData, FieldName>
 
 export type Step1 = Record<string, never>
 
-const schema: SchemaOf<Record<keyof FormData, unknown>> = yup.object().shape({
+const schema: SchemaOf<Record<FieldName, unknown>> = yup.object().shape({
   companyName: requiredStringValidator(),
-  companyRegistrationNumber: companyRegistrationNumberValidator(),
   companySectorId: requiredStringValidator(),
   companySubSectorIds: yup.array().min(1, 'validations.requiredMultiselect'),
 })
@@ -45,11 +38,20 @@ export const Step1 = (_: Step1) => {
   const { initialData, onSubmit } = useRegistrationContext()
   const { t } = useTranslation()
 
-  const { register, handleSubmit, formState, control } = useForm<FormData>({
-    mode: 'onTouched',
-    resolver,
-    defaultValues: pick(initialData, ...FIELD_NAMES),
-  })
+  const { data: sectorsData, error } = useCompanySectorsQuery()
+
+  const companySectorOptions =
+    sectorsData?.sectors.map((sector) => ({
+      id: sector.id,
+      label: sector.name,
+    })) || []
+
+  const { register, handleSubmit, formState, control, watch, setValue } =
+    useForm<FormData>({
+      mode: 'onTouched',
+      resolver,
+      defaultValues: pick(initialData, ...FIELD_NAMES),
+    })
 
   const errorMsg = (translationKey: string | undefined): string | undefined =>
     translationKey && (t(translationKey) as string)
@@ -63,6 +65,7 @@ export const Step1 = (_: Step1) => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <Stack spacing={DEFAULT_FORM_SPACING}>
+        {error && <ApolloErrorAlert error={error} />}
         <TextField
           autoFocus // autofocus first field
           label={t('registrationForm.companyName')}
@@ -72,15 +75,6 @@ export const Step1 = (_: Step1) => {
           required
           {...register('companyName')}
         />
-        <TextField
-          dir={'ltr'}
-          fullWidth
-          label={t('registrationForm.registrationNumber')}
-          error={!!errors?.companyRegistrationNumber}
-          helperText={errorMsg(errors?.companyRegistrationNumber?.message)}
-          required
-          {...register('companyRegistrationNumber')}
-        />
         <Controller
           control={control}
           name={'companySectorId'}
@@ -88,10 +82,18 @@ export const Step1 = (_: Step1) => {
             return (
               <Autocomplete
                 defaultValue={companySectorOptions.find(
-                  (option) => option.value === initialData.companySectorId
+                  (option) => option.id === initialData.companySectorId
                 )}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
                 options={companySectorOptions}
-                onChange={(_, item) => onChange(item?.value)}
+                onChange={(_, value) => {
+                  onChange(value?.id)
+                  // Reset selected sub sectors when changeing the sector
+                  setValue(
+                    'companySubSectorIds',
+                    initialData.companySubSectorIds
+                  )
+                }}
                 renderInput={(params) => {
                   return (
                     <TextField
@@ -112,19 +114,40 @@ export const Step1 = (_: Step1) => {
         <Controller
           control={control}
           name={'companySubSectorIds'}
-          render={({ field: { onChange, ref }, formState: { errors } }) => {
+          render={({
+            field: { onChange, ref, value: selectedIds },
+            formState: { errors },
+          }) => {
+            const companySectorId = watch('companySectorId')
+            const companySubSectorsOptions =
+              (companySectorId &&
+                sectorsData &&
+                sectorsData.sectors
+                  .find((sector) => sector.id === companySectorId)
+                  ?.subsectors?.map((subsector) => ({
+                    id: subsector.id,
+                    label: subsector.name,
+                  }))) ||
+              []
+
+            const selectedValues = companySubSectorsOptions.filter(
+              (option) => selectedIds.indexOf(option.id) !== -1
+            )
+
             return (
               <Autocomplete
                 multiple
                 options={companySubSectorsOptions}
+                noOptionsText={'Please select a sector first'}
                 disableCloseOnSelect
+                value={selectedValues}
                 renderTags={(items, getTagProps) => {
-                  return items.map(({ value, label }, index) => {
+                  return items.map(({ id, label }, index) => {
                     return (
                       <Chip
                         {...getTagProps({ index })}
                         color={'secondary'}
-                        key={value}
+                        key={id}
                         sx={{
                           color: 'white',
                           '& .MuiChip-deleteIcon': {
@@ -137,7 +160,7 @@ export const Step1 = (_: Step1) => {
                   })
                 }}
                 onChange={(_, items) => {
-                  onChange(items.map(({ value }) => value))
+                  onChange(items.map(({ id }) => id))
                 }}
                 getOptionLabel={(option) => option.label}
                 renderOption={(props, option, { selected }) => (

@@ -1,4 +1,5 @@
 {
+  "somethingUnexpectedHappened": "Sorry, something unexpected happened ...",
   "welcome": "Welcome!",
   "registration": "Registration",
   "register": "Register",
@@ -14,24 +15,10 @@
     "step1Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
     "companyName": "Name of company",
     "contactPerson": "Contact person",
-    "registrationNumber": "Company registration number",
     "sector": "Sector",
     "subsector": "Subsectors",
-    "step2Title": "Enter your company address",
+    "step2Title": "Provide a contact person",
     "step2Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
-    "companyAddress": "Company address",
-    "streetAndNumber": "Street, building number",
-    "postalCode": "Postal code (optional)",
-    "city": "City",
-    "country": "Country",
-    "province": "Province",
-    "additionalAddressInfo": "Additional address info (optional)",
-    "companyEmail": "Company e-mail",
-    "companyPhoneNumber": "Company phone number (optional)",
-    "companyMobileNumber": "Company mobile number (optional)",
-    "companyFaxNumber": "Company fax number (optional)",
-    "step3Title": "Provide a contact person",
-    "step3Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
     "emailHelpText": "Attention: This is the E-mail your company will use to log in to the EPR Registration Tool.",
     "title": "Title",
     "mr": "Mr.",
@@ -39,18 +26,24 @@
     "fullName": "Full name",
     "position": "Position",
     "phoneMobileNumber": "Phone / mobile number",
-    "step4Title": "Choose a password",
-    "step4Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
+    "step3Title": "Choose a password",
+    "step3Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
   },
   "validations": {
     "required": "This field is required",
     "requiredMultiselect": "Please select at least one item",
     "emailInvalid": "Please enter a valid e-mail address",
-    "registrationNumberLength": "The registration number must consist of 9 digits",
+    "passwordTooShort": "The password must consist of at least 8 characters",
     "passwordMustHaveUppercase": "The password must contain at least one uppercase letter",
     "passwordMustHaveLowercase": "The password must contain at least one lowercase letter",
     "passwordMustHaveOneNumber": "The password must contain at least one number",
-    "passwordMustHaveSpecialCharacter": "The password must contain at least one special character, e.g., ! @ # ? ]",
-    "passwordLength": "The password must be longer than 8 characters"
+    "passwordMustHaveSpecialCharacter": "The password must contain at least one special character, e.g., ! @ # ? ]"
+  },
+  "serverErrors": {
+    "unknownError":  "The server failed to handle your request. Please reload and try again.",
+    "genericNetworkError":  "The server could not be reached. Please check your internet connection and try again.",
+    "permissionDenied": "You have no permission to perform this action.",
+    "validationError": "There seems to be a validation issue with your submitted data.",
+    "userEmailDoesAlreadyExist": "A user with this email address has already been registered with an existing company."
   }
 }

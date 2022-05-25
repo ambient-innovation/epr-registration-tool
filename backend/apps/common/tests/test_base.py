@@ -68,7 +68,7 @@ class BaseApiTestCase(BaseTestCase):
         Take care: Even with errors, GraphQL returns status 200!
         """
         content = asdict(resp)
-        self.assertNotEqual(content['errors'], None)
+        self.assertNotEqual(content['errors'], None, 'Response does not contain errors')
         error_messages = [error.message for error in content['errors']]
         self.assertIn(message, error_messages)
 

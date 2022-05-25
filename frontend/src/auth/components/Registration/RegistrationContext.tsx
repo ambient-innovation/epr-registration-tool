@@ -1,3 +1,4 @@
+import { ApolloError } from '@apollo/client'
 import { useRouter } from 'next/router'
 import React, {
   useCallback,
@@ -7,44 +8,34 @@ import React, {
   useEffect,
 } from 'react'
 
+import { useRegisterCompanyMutation } from '@/api/__types__'
 import { ROUTES } from '@/routes'
 
 import { RegistrationData } from './types'
 
-const stepNumbers = [0, 1, 2, 3] as const
+const stepNumbers = [0, 1, 2] as const
 
 export type StepNumber = typeof stepNumbers[number]
 
 export const LAST_STEP_NUMBER = stepNumbers[stepNumbers.length - 1]
 
-export interface RegistrationContextType {
+export interface RegistrationContextValue {
   data: RegistrationData
   initialData: RegistrationData
   goToPrevStep: () => void
   onSubmit: (data: Partial<RegistrationData>) => void
   activeStep: StepNumber
-  isLoading: boolean
+  error?: ApolloError
 }
 
 export const RegistrationContext =
-  React.createContext<RegistrationContextType | null>(null)
+  React.createContext<RegistrationContextValue | null>(null)
 RegistrationContext.displayName = 'RegsitrationContext'
 
 export const initialData: RegistrationData = {
   companyName: '',
-  companyRegistrationNumber: '',
   companySectorId: '',
   companySubSectorIds: [],
-  companyStreet: '',
-  companyAddressInfo: '',
-  companyZipCode: '',
-  companyCity: '',
-  companyCountry: '',
-  companyProvince: '',
-  companyEmail: '',
-  companyPhone: '',
-  companyMobile: '',
-  companyFax: '',
   // user
   userEmail: '',
   userTitle: '',
@@ -60,21 +51,41 @@ export const RegistrationProvider: React.FC<{
   const router = useRouter()
   const [data, setData] = useState<RegistrationData>(initialData)
   const [activeStep, setActiveStep] = useState<StepNumber>(0)
-  const [isLoading, setIsLoading] = useState(false)
 
-  const onSubmit: RegistrationContextType['onSubmit'] = useCallback(
+  const [registerCompany, { error }] = useRegisterCompanyMutation()
+
+  const onSubmit: RegistrationContextValue['onSubmit'] = useCallback(
     (updatedData) => {
-      setData((prevData) => ({ ...prevData, ...updatedData }))
       if (activeStep < LAST_STEP_NUMBER) {
+        setData((prevData) => ({ ...prevData, ...updatedData }))
         setActiveStep((prevStep) => (prevStep + 1) as StepNumber)
       } else {
-        setIsLoading(true)
-        new Promise((res) => setTimeout(res, 2000)).then(() => {
-          router.push(ROUTES.registrationSuccess)
-        })
+        const finalData = { ...data, ...updatedData }
+        // important: return promise
+        return (
+          registerCompany({
+            variables: {
+              companyName: finalData.companyName,
+              subsectorIds: finalData.companySubSectorIds.map((subsectorId) =>
+                parseInt(subsectorId)
+              ),
+              userEmail: finalData.userEmail,
+              userTitle: finalData.userTitle,
+              userFullName: finalData.userFullName,
+              userPosition: finalData.userPosition,
+              userPhoneOrMobile: finalData.userPhone,
+              password: finalData.password,
+            },
+          })
+            .then(() => {
+              router.push(ROUTES.registrationSuccess)
+            })
+            // handle error via error object returned by useMutation
+            .catch(() => null)
+        )
       }
     },
-    [activeStep, router]
+    [activeStep, router, data, registerCompany]
   )
 
   const goToPrevStep = useCallback(() => {
@@ -83,16 +94,16 @@ export const RegistrationProvider: React.FC<{
     }
   }, [activeStep])
 
-  const contextValue = useMemo(
+  const contextValue = useMemo<RegistrationContextValue>(
     () => ({
       onSubmit,
       goToPrevStep,
       activeStep,
       data,
-      isLoading,
       initialData,
+      error,
     }),
-    [onSubmit, goToPrevStep, activeStep, data, isLoading]
+    [onSubmit, goToPrevStep, activeStep, data, error]
   )
 
   useEffect(() => {

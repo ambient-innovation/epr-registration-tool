@@ -39,17 +39,22 @@ class Company(CreatedAtInfo):
         verbose_name_plural = _('Companies')
 
     name = models.CharField(verbose_name=_('Name'), max_length=255)
-    email = models.EmailField(verbose_name=_('Email address'), unique=True, validators=[EmailValidator])
-    registration_number = models.CharField(verbose_name=_('Registration Number'), max_length=20, unique=True)
+    email = models.EmailField(
+        verbose_name=_('Email address'), null=True, unique=True, validators=[EmailValidator], blank=True
+    )
+    registration_number = models.CharField(
+        verbose_name=_('Registration Number'), null=True, unique=True, max_length=20, blank=True
+    )
     street_and_house_number = models.CharField(
         verbose_name=_('Street and House Number'),
         max_length=255,
         validators=[validate_street_contains_number],
+        blank=True,
     )
-    zip_code = models.CharField(_('Postal Code'), max_length=255, validators=[validate_zip_code])
-    city = models.CharField(verbose_name=_('City'), max_length=255)
-    province = models.CharField(verbose_name=_('Province'), max_length=255)
-    country = models.CharField(verbose_name=_('Country'), max_length=255)
+    zip_code = models.CharField(_('Postal Code'), max_length=255, validators=[validate_zip_code], blank=True)
+    city = models.CharField(verbose_name=_('City'), max_length=255, blank=True)
+    province = models.CharField(verbose_name=_('Province'), max_length=255, blank=True)
+    country = models.CharField(verbose_name=_('Country'), max_length=255, blank=True)
     additional_address_info = models.CharField(
         verbose_name=_('Additional Adress Information'), max_length=255, blank=True
     )

@@ -28,25 +28,14 @@ export type Mutation = {
 }
 
 export type MutationRegisterCompanyArgs = {
-  additionalAddressInfo: Scalars['String']
-  city: Scalars['String']
-  companyEmail: Scalars['String']
-  country: Scalars['String']
-  fax?: InputMaybe<Scalars['String']>
-  fullName: Scalars['String']
-  mobile?: InputMaybe<Scalars['String']>
-  name: Scalars['String']
+  companyName: Scalars['String']
   password: Scalars['String']
-  phone: Scalars['String']
-  phoneOrMobile: Scalars['String']
-  position: Scalars['String']
-  province: Scalars['String']
-  registrationNumber: Scalars['Int']
-  streetAndNumber: Scalars['String']
   subsectorIds: Array<Scalars['Int']>
-  title?: InputMaybe<Scalars['String']>
   userEmail: Scalars['String']
-  zipCode?: InputMaybe<Scalars['Int']>
+  userFullName: Scalars['String']
+  userPhoneOrMobile: Scalars['String']
+  userPosition: Scalars['String']
+  userTitle: Scalars['String']
 }
 
 export type Query = {
@@ -68,10 +57,136 @@ export type SubsectorType = {
   name: Scalars['String']
 }
 
+export type RegisterCompanyMutationVariables = Exact<{
+  companyName: Scalars['String']
+  subsectorIds: Array<Scalars['Int']> | Scalars['Int']
+  userEmail: Scalars['String']
+  userTitle: Scalars['String']
+  userFullName: Scalars['String']
+  userPosition: Scalars['String']
+  userPhoneOrMobile: Scalars['String']
+  password: Scalars['String']
+}>
+
+export type RegisterCompanyMutation = {
+  __typename?: 'Mutation'
+  registerCompany: string
+}
+
+export type CompanySectorsQueryVariables = Exact<{ [key: string]: never }>
+
+export type CompanySectorsQuery = {
+  __typename?: 'Query'
+  sectors: Array<{
+    __typename?: 'SectorType'
+    id: string
+    name: string
+    subsectors: Array<{
+      __typename?: 'SubsectorType'
+      id: string
+      name: string
+    }>
+  }>
+}
+
 export type ExampleQueryVariables = Exact<{ [key: string]: never }>
 
 export type ExampleQuery = { __typename?: 'Query'; helloWorld: string }
 
+export const RegisterCompanyDocument = gql`
+  mutation registerCompany(
+    $companyName: String!
+    $subsectorIds: [Int!]!
+    $userEmail: String!
+    $userTitle: String!
+    $userFullName: String!
+    $userPosition: String!
+    $userPhoneOrMobile: String!
+    $password: String!
+  ) {
+    registerCompany(
+      companyName: $companyName
+      subsectorIds: $subsectorIds
+      userEmail: $userEmail
+      userTitle: $userTitle
+      userFullName: $userFullName
+      userPosition: $userPosition
+      userPhoneOrMobile: $userPhoneOrMobile
+      password: $password
+    )
+  }
+`
+export type RegisterCompanyMutationFn = Apollo.MutationFunction<
+  RegisterCompanyMutation,
+  RegisterCompanyMutationVariables
+>
+export function useRegisterCompanyMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    RegisterCompanyMutation,
+    RegisterCompanyMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    RegisterCompanyMutation,
+    RegisterCompanyMutationVariables
+  >(RegisterCompanyDocument, options)
+}
+export type RegisterCompanyMutationHookResult = ReturnType<
+  typeof useRegisterCompanyMutation
+>
+export type RegisterCompanyMutationResult =
+  Apollo.MutationResult<RegisterCompanyMutation>
+export type RegisterCompanyMutationOptions = Apollo.BaseMutationOptions<
+  RegisterCompanyMutation,
+  RegisterCompanyMutationVariables
+>
+export const CompanySectorsDocument = gql`
+  query companySectors {
+    sectors {
+      id
+      name
+      subsectors {
+        id
+        name
+      }
+    }
+  }
+`
+export function useCompanySectorsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    CompanySectorsQuery,
+    CompanySectorsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<CompanySectorsQuery, CompanySectorsQueryVariables>(
+    CompanySectorsDocument,
+    options
+  )
+}
+export function useCompanySectorsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    CompanySectorsQuery,
+    CompanySectorsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<CompanySectorsQuery, CompanySectorsQueryVariables>(
+    CompanySectorsDocument,
+    options
+  )
+}
+export type CompanySectorsQueryHookResult = ReturnType<
+  typeof useCompanySectorsQuery
+>
+export type CompanySectorsLazyQueryHookResult = ReturnType<
+  typeof useCompanySectorsLazyQuery
+>
+export type CompanySectorsQueryResult = Apollo.QueryResult<
+  CompanySectorsQuery,
+  CompanySectorsQueryVariables
+>
 export const ExampleDocument = gql`
   query example {
     helloWorld

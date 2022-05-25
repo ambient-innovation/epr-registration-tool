@@ -1,42 +1,12 @@
 import { TFunction } from 'next-i18next'
 
-export const companySectorOptions = [
-  {
-    value: 'sector1',
-    label: 'Sector1',
-  },
-  {
-    value: 'sector2',
-    label: 'Sector2',
-  },
-  {
-    value: 'sector3',
-    label: 'Sector3',
-  },
-  {
-    value: 'sector4',
-    label: 'Sector4',
-  },
-]
-
-export const companySubSectorsOptions = [
-  {
-    value: 'subsector1',
-    label: 'SubSector1',
-  },
-  {
-    value: 'subsector2',
-    label: 'SubSector2',
-  },
-  {
-    value: 'subsector3',
-    label: 'SubSector3',
-  },
-  {
-    value: 'subsector4',
-    label: 'SubSector4',
-  },
-]
+import {
+  CompanySectorsDocument,
+  CompanySectorsQuery,
+  CompanySectorsQueryVariables,
+  SectorType,
+} from '@/api/__types__'
+import { ApolloMock } from '@/utils/typescript.utils'
 
 export const companyCountryOptions = [
   {
@@ -80,3 +50,45 @@ export const titleOptions = (t: TFunction) => [
   { value: 'mr', label: t('registrationForm.mr') },
   { value: 'mrs', label: t('registrationForm.mrs') },
 ]
+
+const companySector1: SectorType = {
+  id: '1',
+  name: 'Food',
+  subsectors: [
+    { id: '1', name: 'Beverage' },
+    { id: '2', name: 'Fruits and vegetables' },
+    { id: '3', name: 'Frozen stuff' },
+  ],
+}
+const companySector2: SectorType = {
+  id: '2',
+  name: 'Non Food',
+  subsectors: [
+    { id: '4', name: 'Shoes' },
+    { id: '5', name: 'Hats' },
+    { id: '6', name: 'Shirts' },
+  ],
+}
+const companySector3: SectorType = {
+  id: '3',
+  name: 'Other',
+  subsectors: [
+    { id: '7', name: 'Cars' },
+    { id: '8', name: 'Airplanes' },
+  ],
+}
+
+export const companySectorsMock: ApolloMock<
+  CompanySectorsQuery,
+  CompanySectorsQueryVariables
+> = {
+  request: {
+    query: CompanySectorsDocument,
+    variables: {},
+  },
+  result: {
+    data: {
+      sectors: [companySector1, companySector2, companySector3],
+    },
+  },
+}

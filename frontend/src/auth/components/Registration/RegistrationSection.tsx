@@ -16,7 +16,6 @@ import {
 import { Step1 } from './Step1'
 import { Step2 } from './Step2'
 import { Step3 } from './Step3'
-import { Step4 } from './Step4'
 
 export const RegistrationStepper = () => {
   const { activeStep } = useRegistrationContext()
@@ -31,21 +30,15 @@ export const RegistrationStepper = () => {
         </StepContent>
       </Step>
       <Step>
-        <StepLabel>{t('registrationForm.companyAddress')}</StepLabel>
+        <StepLabel>{t('registrationForm.contactPerson')}</StepLabel>
         <StepContent TransitionProps={{ unmountOnExit: false }}>
           <Step2 />
         </StepContent>
       </Step>
       <Step>
-        <StepLabel>{t('registrationForm.contactPerson')}</StepLabel>
-        <StepContent TransitionProps={{ unmountOnExit: false }}>
-          <Step3 />
-        </StepContent>
-      </Step>
-      <Step>
         <StepLabel>{t('password')}</StepLabel>
         <StepContent TransitionProps={{ unmountOnExit: false }}>
-          <Step4 />
+          <Step3 />
         </StepContent>
       </Step>
     </Stepper>
