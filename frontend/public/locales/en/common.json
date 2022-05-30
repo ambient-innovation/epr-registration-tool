@@ -12,6 +12,7 @@
   "loading": "Loading...",
   "pleaseWait": "Please wait ...",
   "eprTool": "EPR Registration Tool",
+  "kg": "kg",
   "registrationForm": {
     "createNewAccount": "Create new account",
     "generalCompanyInformation": "General company information",
@@ -37,6 +38,38 @@
     "step3Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
     "registrationFailed": "Registration failed"
   },
+  "timeframe": {
+    "month_one": "1 month",
+    "month_plural": "{{count}} months"
+  },
+  "reportForm": {
+    "createSubPageTitle": "Create new Report",
+    "successSubPageTitle": "Report successful",
+    "formLabel": "Submit packaging report",
+    "timeframe": "Timeframe",
+    "packagingDetails": "Packaging details",
+    "estimatedFees": "Estimated fees",
+    "step1Title": "Timeframe of report",
+    "step1Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+    "startDate": "Forecast start date",
+    "packagingEntryNum": "Packaging entry {{num}}",
+    "packagingEntryDescription": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
+    "deleteEntry": "Delete entry",
+    "addEntry": "Add new entry",
+    "selectPackagingGroup": "Please select a packaging group",
+    "packagingGroup": "Packaging group",
+    "step3Title": "Estimated fees",
+    "step3Description": "Based on your information we have calculated the following fee.",
+    "netPricePlusVat": "Net price plus statutory VAT",
+    "material": "Material",
+    "addMaterial": "Add another material",
+    "createReportSuccessTitle": "Thank you for reporting",
+    "createReportSuccessDescription": "A Forecast Report is created successfully and you can find it in your dashboard.",
+    "createAnotherReport": "Submit another Report",
+    "proceedToHomepage": "Proceed to homepage",
+    "estimatedFeesResult": "Price {{fees}} JD",
+    "reportSuccessful": "Report Successful"
+  },
   "validations": {
     "required": "This field is required",
     "emailInvalid": "Please enter a valid email address",
@@ -44,12 +77,20 @@
     "passwordMustHaveUppercase": "The password must contain at least one uppercase letter",
     "passwordMustHaveLowercase": "The password must contain at least one lowercase letter",
     "passwordMustHaveOneNumber": "The password must contain at least one number",
-    "passwordMustHaveSpecialCharacter": "The password must contain at least one special character, e.g., ! @ # ? ]"
+    "passwordMustHaveSpecialCharacter": "The password must contain at least one special character, e.g., ! @ # ? ]",
+    "reportStartDateValid": "please select valid date in format of Month Year: Jan 2024",
+    "startDateMin": "Date cannot be before start of next month",
+    "numberType": "please enter valid number",
+    "greaterThanZero": "must be bigger than zero or remove it.",
+    "forecastShouldBeInSameYear": "Forecast should start and end in same year",
+    "atLeastOnPackagingGroup": "at least one Packaging group required",
+    "atLeastOnPackagingMaterial": "at least one Material required",
+    "notUniqueGroups": "packaging groups should be unique across entries"
   },
   "serverErrors": {
-    "unknownError":  "The server failed to handle your request. Please reload and try again.",
+    "unknownError": "The server failed to handle your request. Please reload and try again.",
     "generic403": "Request failed with status code 403 (permission denied).",
-    "genericNetworkError":  "The server could not be reached. Please check your internet connection and try again.",
+    "genericNetworkError": "The server could not be reached. Please check your internet connection and try again.",
     "permissionDenied": "You have no permission to perform this action.",
     "validationError": "There seems to be a validation issue with your submitted data.",
     "userEmailDoesAlreadyExist": "A user with this email address has already been registered with an existing company.",
@@ -57,7 +98,9 @@
     "inactiveCompany": "You company account has not been activated yet. You will be notified via email once this is done.",
     "missingCompanyRelation": "You cannot login because your account is not associated with a company.",
     "alreadyAuthenticated": "You are signed in with another account. Please log out and try again.",
-    "inactiveUser": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link."
+    "inactiveUser": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link.",
+    "packagingGroupDoesNotExist": "One of the selected Packaging group does not exist",
+    "materialDoesNotExist": "One of the selected Material does not exist"
   },
   "internalErrors": {
     "unknownError": "Something unexpected happened. Please reload and try again."
@@ -107,8 +150,8 @@
     "distributorType": "Company distributor type",
     "createdAt": "Date of registration",
     "lastmodifiedAt": "Last base data update",
-    "pleaseLogin": "Please Log In",
     "noCompanyAssigned": "You have not been assigned to any company",
+    "pleaseLogin": "Please Log In",
     "completionAlert": {
       "link": "Complete Now",
       "completeYourProfile": "Please complete your profile",

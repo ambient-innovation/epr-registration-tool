@@ -1,27 +1,10 @@
-import decimal
-
 from django.db import models
 from django.db.models import UniqueConstraint
 from django.utils.translation import gettext_lazy as _
 
 from ai_django_core.models import CommonInfo
 
-from packaging.price_utils import get_material_price_at
-
-
-class Month(models.IntegerChoices):
-    JANUARY = 1, _("January")
-    FEBRUARY = 2, _("February")
-    MARCH = 3, _("March")
-    APRIL = 4, _("April")
-    MAY = 5, _("May")
-    JUNE = 6, _("June")
-    JULY = 7, _("July")
-    AUGUST = 8, _("August")
-    SEPTEMBER = 9, _("September")
-    OCTOBER = 10, _("October")
-    NOVEMBER = 11, _("November")
-    DECEMBER = 12, _("December")
+from common.models import Month
 
 
 class PackagingGroup(CommonInfo):
@@ -36,14 +19,6 @@ class Material(CommonInfo):
 
     def __str__(self):
         return self.name
-
-    def latest_price(self) -> decimal.Decimal:
-        from django.utils import timezone
-
-        now = timezone.now()
-        material_price = get_material_price_at(self.id, now.year, now.month)
-
-        return material_price.price_per_kg
 
 
 class MaterialPrice(CommonInfo):

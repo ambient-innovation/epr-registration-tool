@@ -25,3 +25,9 @@ export const passwordValidator = () =>
 
 export const requiredStringValidator = () =>
   yup.string().required('validations.required')
+
+export const requiredDateValidator = () =>
+  yup
+    .date()
+
+    .required('validations.required')

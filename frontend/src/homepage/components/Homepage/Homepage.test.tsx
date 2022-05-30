@@ -24,8 +24,6 @@ describe('Homepage', () => {
       </MockedProvider>
     )
     const appTitle = 'Welcome!'
-    const registration = 'Registration'
     expect(getByText(appTitle)).toBeInTheDocument()
-    expect(getByText(registration)).toBeInTheDocument()
   })
 })

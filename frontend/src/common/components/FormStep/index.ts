@@ -1,1 +1,4 @@
-export { FormStep } from 'src/common/components/FormStep/FormStep'
+export {
+  FormStep,
+  FormStepContainer,
+} from 'src/common/components/FormStep/FormStep'

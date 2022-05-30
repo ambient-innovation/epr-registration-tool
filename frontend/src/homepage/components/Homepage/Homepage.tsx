@@ -47,8 +47,8 @@ export const Homepage = (_: Homepage): React.ReactElement => {
           >
             {'Work in progress'}
           </Typography>
-          <NextLink href={ROUTES.registration} passHref>
-            <Link>{t('registration')}</Link>
+          <NextLink href={ROUTES.forecast} passHref>
+            <Link>{'create new forecast'}</Link>
           </NextLink>
         </Box>
       </Box>

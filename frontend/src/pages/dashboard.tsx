@@ -3,6 +3,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 
 import { PageLayout } from '@/common/components/PageLayout'
+import { ProtectedPage } from '@/common/components/PageProtection'
 import { Dashboard } from '@/dashboard/components/Dashboard'
 import { ROUTES } from '@/routes'
 
@@ -18,7 +19,9 @@ const DashboardPage: NextPage = () => {
         <link rel={'canonical'} href={ROUTES.dashboard} />
       </Head>
       <PageLayout>
-        <Dashboard />
+        <ProtectedPage>
+          <Dashboard />
+        </ProtectedPage>
       </PageLayout>
     </>
   )

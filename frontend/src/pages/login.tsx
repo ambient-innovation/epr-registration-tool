@@ -5,6 +5,7 @@ import Head from 'next/head'
 
 import { LoginSection } from '@/auth/components/Login'
 import { PageLayout } from '@/common/components/PageLayout/PageLayout'
+import { NotLoggedInPage } from '@/common/components/PageProtection'
 
 const LoginPage: NextPage = () => {
   const { t } = useTranslation()
@@ -16,7 +17,9 @@ const LoginPage: NextPage = () => {
         <link rel={'canonical'} href={'/'} />
       </Head>
       <PageLayout>
-        <LoginSection />
+        <NotLoggedInPage>
+          <LoginSection />
+        </NotLoggedInPage>
       </PageLayout>
     </>
   )

@@ -18,7 +18,6 @@ class PackagingBaseDataTestCase(BaseApiTestCase):
             packagingMaterials {
               id
               name
-              price
             }
           }
     """
@@ -43,7 +42,6 @@ class PackagingBaseDataTestCase(BaseApiTestCase):
         self.assertIsNotNone(content['packagingMaterials'])
         self.assertEqual(1, len(content['packagingMaterials']))
         self.assertEqual("MATERIAL_1", content['packagingMaterials'][0]['name'])
-        self.assertEqual("10", content['packagingMaterials'][0]['price'])
 
     def test_get_packaging_groups_api(self):
         content = self.query_and_load_data(self.PACKAGING_GROUPS_QUERY)

@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { SchemaOf } from 'yup'
 
-import { FormStep } from '@/common/components/FormStep'
+import { FormStep, FormStepContainer } from '@/common/components/FormStep'
 import { passwordValidator } from '@/utils/form-validation.utils'
 
 import { useRegistrationContext } from './RegistrationContext'
@@ -41,8 +41,6 @@ export const Step3 = (_: Step3) => {
 
   return (
     <FormStep
-      title={t('registrationForm.step3Title')}
-      description={t('registrationForm.step3Description')}
       onSubmit={handleSubmit(onSubmit)}
       onClickBack={goToPrevStep}
       isLoading={
@@ -52,17 +50,22 @@ export const Step3 = (_: Step3) => {
       apolloError={error}
       errorTitle={t('registrationForm.registrationFailed')}
     >
-      <TextField
-        autoFocus
-        label={t('password')}
-        error={!!errors?.password}
-        helperText={errorMsg(errors?.password?.message)}
-        type={'password'}
-        autoComplete={'new-password'} // let the browser give suggestions
-        required
-        fullWidth
-        {...register('password')}
-      />
+      <FormStepContainer
+        title={t('registrationForm.step3Title')}
+        description={t('registrationForm.step3Description')}
+      >
+        <TextField
+          autoFocus
+          label={t('password')}
+          error={!!errors?.password}
+          helperText={errorMsg(errors?.password?.message)}
+          type={'password'}
+          autoComplete={'new-password'} // let the browser give suggestions
+          required
+          fullWidth
+          {...register('password')}
+        />
+      </FormStepContainer>
     </FormStep>
   )
 }

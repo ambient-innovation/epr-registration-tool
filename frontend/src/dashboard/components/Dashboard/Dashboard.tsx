@@ -4,7 +4,6 @@ import { Fragment } from 'react'
 
 import { CompanyType, useCompanyDetailsQuery } from '@/api/__types__'
 import { useUser } from '@/auth/hooks/useUser'
-import { PageLayout } from '@/common/components/PageLayout'
 import { CompletionAlert } from '@/dashboard/components/Dashboard/CompletionAltert'
 import { DashboardHeader } from '@/dashboard/components/Dashboard/DashboardHeader'
 import { containerCss } from '@/homepage/components/Homepage/Homepage.styles'
@@ -56,18 +55,11 @@ export const Dashboard = (_: Dashboard): React.ReactElement => {
   const companyDetails = data && data.companyDetails
   const { user } = useUser()
 
-  if (!user) {
-    return (
-      <PageLayout>
-        <Typography variant={'h1'}>{t('dashboard.pleaseLogin')}</Typography>
-      </PageLayout>
-    )
-  }
   return (
     <Box sx={containerCss}>
       <CompletionAlert />
       <DashboardHeader
-        userName={`${user.title} ${user.fullName}`}
+        userName={`${user?.title} ${user?.fullName}`}
         isReportButtonEnabled={true}
       />
       {loading ? (

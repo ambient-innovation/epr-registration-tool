@@ -6,7 +6,7 @@ import * as yup from 'yup'
 import { SchemaOf } from 'yup'
 
 import { getDistributorTypeOptions } from '@/auth/components/Registration/constants'
-import { FormStep } from '@/common/components/FormStep'
+import { FormStep, FormStepContainer } from '@/common/components/FormStep'
 import { DEFAULT_FORM_SPACING } from '@/common/components/FormStep/constants'
 import { requiredStringValidator } from '@/utils/form-validation.utils'
 import { pick } from '@/utils/typescript.utils'
@@ -44,62 +44,65 @@ export const Step1 = (_: Step1) => {
   const { errors } = formState
 
   return (
-    <FormStep
-      title={t('registrationForm.step1Title')}
-      description={t('registrationForm.step1Description')}
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <Stack spacing={DEFAULT_FORM_SPACING}>
-        <TextField
-          autoFocus // autofocus first field
-          label={t('registrationForm.companyName')}
-          error={!!errors?.companyName}
-          helperText={errorMsg(errors?.companyName?.message)}
-          fullWidth
-          required
-          {...register('companyName')}
-        />
-        <Controller
-          control={control}
-          name={'companyDistributorType'}
-          render={({ field: { onChange, ref }, formState: { errors } }) => {
-            const distributorOptions = getDistributorTypeOptions(t)
-            return (
-              <Autocomplete
-                defaultValue={
-                  initialData.companyDistributorType &&
-                  distributorOptions.find(
-                    (option) =>
-                      option.value === initialData.companyDistributorType
-                  )
-                }
-                isOptionEqualToValue={(option, value) =>
-                  option.value === value.value
-                }
-                options={distributorOptions}
-                onChange={(_, value) => {
-                  onChange(value?.value)
-                }}
-                renderInput={(params) => {
-                  return (
-                    <TextField
-                      {...params}
-                      inputRef={ref}
-                      label={t('registrationForm.companyDistributorType.label')}
-                      error={!!errors?.companyDistributorType}
-                      helperText={errorMsg(
-                        errors?.companyDistributorType?.message
-                      )}
-                      fullWidth
-                      required
-                    />
-                  )
-                }}
-              />
-            )
-          }}
-        />
-      </Stack>
+    <FormStep onSubmit={handleSubmit(onSubmit)}>
+      <FormStepContainer
+        title={t('registrationForm.step1Title')}
+        description={t('registrationForm.step1Description')}
+      >
+        <Stack spacing={DEFAULT_FORM_SPACING}>
+          <TextField
+            autoFocus // autofocus first field
+            label={t('registrationForm.companyName')}
+            error={!!errors?.companyName}
+            helperText={errorMsg(errors?.companyName?.message)}
+            fullWidth
+            required
+            {...register('companyName')}
+          />
+          <Controller
+            control={control}
+            name={'companyDistributorType'}
+            render={({ field: { onChange, ref }, formState: { errors } }) => {
+              const distributorOptions = getDistributorTypeOptions(t)
+              return (
+                <Autocomplete
+                  defaultValue={
+                    initialData.companyDistributorType &&
+                    distributorOptions.find(
+                      (option) =>
+                        option.value === initialData.companyDistributorType
+                    )
+                  }
+                  isOptionEqualToValue={(option, value) =>
+                    option.value === value.value
+                  }
+                  options={distributorOptions}
+                  onChange={(_, value) => {
+                    onChange(value?.value)
+                  }}
+                  renderInput={(params) => {
+                    return (
+                      <TextField
+                        {...params}
+                        inputRef={ref}
+                        label={t(
+                          'registrationForm.companyDistributorType.label'
+                        )}
+                        error={!!errors?.companyDistributorType}
+                        helperText={errorMsg(
+                          errors?.companyDistributorType?.message
+                        )}
+                        fullWidth
+                        required
+                      />
+                    )
+                  }}
+                />
+              )
+            }}
+          />
+        </Stack>
+      </FormStepContainer>
     </FormStep>
   )
 }
