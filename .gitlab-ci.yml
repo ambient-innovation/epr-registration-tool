@@ -334,7 +334,7 @@ e2e:test:
   stage: post-build
   needs: ['frontend:build-and-push', 'backend:build-and-push']
   tags:
-    - normal-load
+    - high-load
   variables:
     BACKEND_CONTAINER_NAME: epr_backend_test_e2e
     FRONTEND_CONTAINER_NAME: epr_frontend_test_e2e

@@ -1,5 +1,5 @@
 // playwright.config.ts
-import { PlaywrightTestConfig, devices } from '@playwright/test';
+import { PlaywrightTestConfig, devices } from "@playwright/test";
 import * as os from "os";
 
 const config: PlaywrightTestConfig = {
@@ -9,31 +9,31 @@ const config: PlaywrightTestConfig = {
   workers: Math.min(os.cpus().length, 4),
   expect: {
     /**
-    * Maximum time expect() should wait for the condition to be met.
-    * For example in `await expect(locator).toHaveText();`
-    */
-    timeout: 100000,
+     * Maximum time expect() should wait for the condition to be met.
+     * For example in `await expect(locator).toHaveText();`
+     */
+    timeout: 10000,
   },
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: process.env.CI
-    ? [['junit', { outputFile: 'test-results/junit.xml' }], ['list']]
-    : 'list',
+    ? [["junit", { outputFile: "test-results/junit.xml" }], ["list"]]
+    : "list",
   use: {
-    trace: 'on-first-retry',
+    trace: "on-first-retry",
     actionTimeout: 30 * 1000,
   },
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      name: "firefox",
+      use: { ...devices["Desktop Firefox"] },
     },
     {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      name: "webkit",
+      use: { ...devices["Desktop Safari"] },
     },
   ],
 };
