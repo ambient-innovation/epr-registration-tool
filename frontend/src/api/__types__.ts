@@ -22,56 +22,100 @@ export type Scalars = {
   Float: number
 }
 
+export enum DistributorType {
+  IMPORTER = 'IMPORTER',
+  LOCAL_PRODUCER = 'LOCAL_PRODUCER',
+}
+
 export type Mutation = {
   __typename?: 'Mutation'
   registerCompany: Scalars['String']
 }
 
 export type MutationRegisterCompanyArgs = {
-  additionalAddressInfo: Scalars['String']
-  city: Scalars['String']
-  companyEmail: Scalars['String']
-  country: Scalars['String']
-  fax?: InputMaybe<Scalars['String']>
-  fullName: Scalars['String']
-  mobile?: InputMaybe<Scalars['String']>
-  name: Scalars['String']
+  companyDistributorType: DistributorType
+  companyName: Scalars['String']
   password: Scalars['String']
-  phone: Scalars['String']
-  phoneOrMobile: Scalars['String']
-  position: Scalars['String']
-  province: Scalars['String']
-  registrationNumber: Scalars['Int']
-  streetAndNumber: Scalars['String']
-  subsectorIds: Array<Scalars['Int']>
-  title?: InputMaybe<Scalars['String']>
   userEmail: Scalars['String']
-  zipCode?: InputMaybe<Scalars['Int']>
+  userFullName: Scalars['String']
+  userPhoneOrMobile: Scalars['String']
+  userPosition: Scalars['String']
+  userTitle: Scalars['String']
 }
 
 export type Query = {
   __typename?: 'Query'
   helloWorld: Scalars['String']
-  sectors: Array<SectorType>
 }
 
-export type SectorType = {
-  __typename?: 'SectorType'
-  id: Scalars['ID']
-  name: Scalars['String']
-  subsectors: Array<SubsectorType>
-}
+export type RegisterCompanyMutationVariables = Exact<{
+  companyName: Scalars['String']
+  companyDistributorType: DistributorType
+  userEmail: Scalars['String']
+  userTitle: Scalars['String']
+  userFullName: Scalars['String']
+  userPosition: Scalars['String']
+  userPhoneOrMobile: Scalars['String']
+  password: Scalars['String']
+}>
 
-export type SubsectorType = {
-  __typename?: 'SubsectorType'
-  id: Scalars['ID']
-  name: Scalars['String']
+export type RegisterCompanyMutation = {
+  __typename?: 'Mutation'
+  registerCompany: string
 }
 
 export type ExampleQueryVariables = Exact<{ [key: string]: never }>
 
 export type ExampleQuery = { __typename?: 'Query'; helloWorld: string }
 
+export const RegisterCompanyDocument = gql`
+  mutation registerCompany(
+    $companyName: String!
+    $companyDistributorType: DistributorType!
+    $userEmail: String!
+    $userTitle: String!
+    $userFullName: String!
+    $userPosition: String!
+    $userPhoneOrMobile: String!
+    $password: String!
+  ) {
+    registerCompany(
+      companyName: $companyName
+      companyDistributorType: $companyDistributorType
+      userEmail: $userEmail
+      userTitle: $userTitle
+      userFullName: $userFullName
+      userPosition: $userPosition
+      userPhoneOrMobile: $userPhoneOrMobile
+      password: $password
+    )
+  }
+`
+export type RegisterCompanyMutationFn = Apollo.MutationFunction<
+  RegisterCompanyMutation,
+  RegisterCompanyMutationVariables
+>
+export function useRegisterCompanyMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    RegisterCompanyMutation,
+    RegisterCompanyMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    RegisterCompanyMutation,
+    RegisterCompanyMutationVariables
+  >(RegisterCompanyDocument, options)
+}
+export type RegisterCompanyMutationHookResult = ReturnType<
+  typeof useRegisterCompanyMutation
+>
+export type RegisterCompanyMutationResult =
+  Apollo.MutationResult<RegisterCompanyMutation>
+export type RegisterCompanyMutationOptions = Apollo.BaseMutationOptions<
+  RegisterCompanyMutation,
+  RegisterCompanyMutationVariables
+>
 export const ExampleDocument = gql`
   query example {
     helloWorld

@@ -1,7 +1,10 @@
+import { ApolloError } from '@apollo/client'
 import { Box, Button, Typography } from '@mui/material'
 import { useTranslation } from 'next-i18next'
 import React, { memo } from 'react'
 import { FormEventHandler } from 'react'
+
+import { ApolloErrorAlert } from '@/common/components/ApolloErrorAlert'
 
 import { backgroundSx, buttonWrapperSx } from './FormStep.styles'
 
@@ -13,6 +16,7 @@ export interface FormStep {
   children: React.ReactNode
   isFinalStep?: boolean
   isLoading?: boolean
+  apolloError?: ApolloError
 }
 
 export const FormStep = memo(
@@ -24,6 +28,7 @@ export const FormStep = memo(
     title,
     description,
     isLoading,
+    apolloError,
   }: FormStep) => {
     const { t } = useTranslation()
     return (
@@ -38,6 +43,12 @@ export const FormStep = memo(
             )}
             <Box marginTop={{ xs: 9, md: 10 }}>{children}</Box>
           </Box>
+          {apolloError && (
+            <ApolloErrorAlert
+              error={apolloError}
+              sx={{ marginTop: 4, borderRadius: 3 }}
+            />
+          )}
           <Box component={'footer'} sx={buttonWrapperSx}>
             <Button
               variant={'text'}

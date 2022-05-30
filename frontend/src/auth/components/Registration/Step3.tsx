@@ -1,54 +1,37 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Divider, Stack, TextField } from '@mui/material'
+import { TextField } from '@mui/material'
 import { useTranslation } from 'next-i18next'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { SchemaOf } from 'yup'
 
-import { titleOptions } from '@/auth/components/Registration/mocks'
 import { FormStep } from '@/common/components/FormStep'
-import { DEFAULT_FORM_SPACING } from '@/common/components/FormStep/constants'
-import { SelectField } from '@/common/components/SelectField'
-import { pxToRemAsString } from '@/theme/utils'
-import {
-  emailValidator,
-  requiredStringValidator,
-} from '@/utils/form-validation.utils'
-import { pick } from '@/utils/typescript.utils'
+import { passwordValidator } from '@/utils/form-validation.utils'
 
 import { useRegistrationContext } from './RegistrationContext'
 import { RegistrationData } from './types'
 
-const FIELD_NAMES = [
-  'userEmail',
-  'userTitle',
-  'userFullName',
-  'userPosition',
-  'userPhone',
-] as const
+const FIELD_NAMES = ['password'] as const
 type FieldName = typeof FIELD_NAMES[number]
 type FormData = Pick<RegistrationData, FieldName>
 
 export type Step3 = Record<string, never>
 
-const schema: SchemaOf<Record<keyof FormData, unknown>> = yup.object({
-  userEmail: emailValidator(),
-  userTitle: requiredStringValidator(),
-  userFullName: requiredStringValidator(),
-  userPosition: requiredStringValidator(),
-  userPhone: requiredStringValidator(),
+const schema: SchemaOf<Record<FieldName, unknown>> = yup.object({
+  password: passwordValidator(),
 })
-
 const resolver = yupResolver(schema)
 
 export const Step3 = (_: Step3) => {
-  const { initialData, goToPrevStep, onSubmit } = useRegistrationContext()
+  const { data, goToPrevStep, onSubmit, error } = useRegistrationContext()
   const { t } = useTranslation()
 
   const { register, handleSubmit, formState } = useForm<FormData>({
     mode: 'onTouched',
     resolver,
-    defaultValues: pick(initialData, ...FIELD_NAMES),
+    defaultValues: {
+      password: data.password,
+    },
   })
 
   const errorMsg = (translationKey: string | undefined): string | undefined =>
@@ -62,63 +45,23 @@ export const Step3 = (_: Step3) => {
       description={t('registrationForm.step3Description')}
       onSubmit={handleSubmit(onSubmit)}
       onClickBack={goToPrevStep}
+      isLoading={
+        formState.isSubmitting || (formState.isSubmitSuccessful && !error)
+      }
+      isFinalStep
+      apolloError={error}
     >
-      <Stack spacing={DEFAULT_FORM_SPACING}>
-        <TextField
-          autoFocus // autofocus first field
-          label={t('email')}
-          error={!!errors?.userEmail}
-          helperText={
-            errorMsg(errors?.userEmail?.message) ||
-            (t('registrationForm.emailHelpText') as string)
-          }
-          type={'email'}
-          required
-          {...register('userEmail')}
-        />
-        <Divider />
-        <Stack
-          // for some reason the spacing does not work when only defining `sm`
-          direction={{ xs: 'column', sm: 'row', md: 'row' }}
-          spacing={DEFAULT_FORM_SPACING}
-        >
-          <SelectField
-            sx={{
-              width: { sm: pxToRemAsString(120) },
-            }}
-            label={t('registrationForm.title')}
-            error={!!errors?.userTitle}
-            helperText={errorMsg(errors?.userTitle?.message)}
-            defaultValue={initialData.userTitle}
-            options={titleOptions(t)}
-            fullWidth
-            required
-            {...register('userTitle')}
-          />
-          <TextField
-            label={t('registrationForm.fullName')}
-            error={!!errors?.userFullName}
-            helperText={errorMsg(errors?.userFullName?.message)}
-            fullWidth
-            required
-            {...register('userFullName')}
-          />
-        </Stack>
-        <TextField
-          label={t('registrationForm.position')}
-          error={!!errors?.userPosition}
-          helperText={errorMsg(errors?.userPosition?.message)}
-          required
-          {...register('userPosition')}
-        />
-        <TextField
-          label={t('registrationForm.phoneMobileNumber')}
-          error={!!errors?.userPhone}
-          helperText={errorMsg(errors?.userPhone?.message)}
-          required
-          {...register('userPhone')}
-        />
-      </Stack>
+      <TextField
+        autoFocus
+        label={t('password')}
+        error={!!errors?.password}
+        helperText={errorMsg(errors?.password?.message)}
+        type={'password'}
+        autoComplete={'new-password'} // let the browser give suggestions
+        required
+        fullWidth
+        {...register('password')}
+      />
     </FormStep>
   )
 }

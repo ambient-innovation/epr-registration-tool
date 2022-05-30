@@ -1,18 +1,8 @@
+import { DistributorType } from '@/api/__types__'
+
 export interface RegistrationData {
   companyName: string
-  companyRegistrationNumber: string
-  companySectorId: string
-  companySubSectorIds: string[]
-  companyStreet: string
-  companyAddressInfo: string
-  companyZipCode: string
-  companyCity: string
-  companyCountry: string
-  companyProvince: string
-  companyEmail: string
-  companyPhone: string
-  companyMobile: string
-  companyFax: string
+  companyDistributorType: null | DistributorType
   // user
   userEmail: string
   userTitle: string

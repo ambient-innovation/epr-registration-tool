@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/react'
 import {
   initialData,
   RegistrationContext,
-  RegistrationContextType,
+  RegistrationContextValue,
 } from './RegistrationContext'
 import { RegistrationSection, RegistrationStepper } from './RegistrationSection'
 
@@ -19,7 +19,7 @@ const Template: Story<RegistrationSection> = (args) => {
 export const Default = Template.bind({})
 Default.args = {}
 
-export const Step1: Story<RegistrationContextType> = (args) => {
+export const Step1: Story<RegistrationContextValue> = (args) => {
   return (
     <RegistrationContext.Provider value={args}>
       <RegistrationStepper />
@@ -34,7 +34,7 @@ Step1.args = {
   goToPrevStep: undefined,
 }
 
-export const Step2: Story<RegistrationContextType> = (args) => {
+export const Step2: Story<RegistrationContextValue> = (args) => {
   return (
     <RegistrationContext.Provider value={args}>
       <RegistrationStepper />
@@ -49,7 +49,7 @@ Step2.args = {
   goToPrevStep: undefined,
 }
 
-export const Step3: Story<RegistrationContextType> = (args) => {
+export const Step3: Story<RegistrationContextValue> = (args) => {
   return (
     <RegistrationContext.Provider value={args}>
       <RegistrationStepper />
@@ -58,21 +58,6 @@ export const Step3: Story<RegistrationContextType> = (args) => {
 }
 Step3.args = {
   activeStep: 2,
-  data: initialData,
-  initialData,
-  onSubmit: () => null,
-  goToPrevStep: undefined,
-}
-
-export const Step4: Story<RegistrationContextType> = (args) => {
-  return (
-    <RegistrationContext.Provider value={args}>
-      <RegistrationStepper />
-    </RegistrationContext.Provider>
-  )
-}
-Step4.args = {
-  activeStep: 3,
   data: initialData,
   initialData,
   onSubmit: () => null,

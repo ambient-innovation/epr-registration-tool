@@ -1,42 +1,29 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Autocomplete, Checkbox, Chip, Stack, TextField } from '@mui/material'
+import { Autocomplete, Stack, TextField } from '@mui/material'
 import { useTranslation } from 'next-i18next'
 import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { SchemaOf } from 'yup'
 
-import {
-  companySectorOptions,
-  companySubSectorsOptions,
-} from '@/auth/components/Registration/mocks'
+import { getDistributorTypeOptions } from '@/auth/components/Registration/constants'
 import { FormStep } from '@/common/components/FormStep'
 import { DEFAULT_FORM_SPACING } from '@/common/components/FormStep/constants'
-import {
-  companyRegistrationNumberValidator,
-  requiredStringValidator,
-} from '@/utils/form-validation.utils'
+import { requiredStringValidator } from '@/utils/form-validation.utils'
 import { pick } from '@/utils/typescript.utils'
 
 import { useRegistrationContext } from './RegistrationContext'
 import { RegistrationData } from './types'
 
-const FIELD_NAMES = [
-  'companyName',
-  'companyRegistrationNumber',
-  'companySectorId',
-  'companySubSectorIds',
-] as const
+const FIELD_NAMES = ['companyName', 'companyDistributorType'] as const
 
 type FieldName = typeof FIELD_NAMES[number]
 type FormData = Pick<RegistrationData, FieldName>
 
 export type Step1 = Record<string, never>
 
-const schema: SchemaOf<Record<keyof FormData, unknown>> = yup.object().shape({
+const schema: SchemaOf<Record<FieldName, unknown>> = yup.object().shape({
   companyName: requiredStringValidator(),
-  companyRegistrationNumber: companyRegistrationNumberValidator(),
-  companySectorId: requiredStringValidator(),
-  companySubSectorIds: yup.array().min(1, 'validations.requiredMultiselect'),
+  companyDistributorType: requiredStringValidator().nullable(),
 })
 
 const resolver = yupResolver(schema)
@@ -72,97 +59,42 @@ export const Step1 = (_: Step1) => {
           required
           {...register('companyName')}
         />
-        <TextField
-          dir={'ltr'}
-          fullWidth
-          label={t('registrationForm.registrationNumber')}
-          error={!!errors?.companyRegistrationNumber}
-          helperText={errorMsg(errors?.companyRegistrationNumber?.message)}
-          required
-          {...register('companyRegistrationNumber')}
-        />
         <Controller
           control={control}
-          name={'companySectorId'}
+          name={'companyDistributorType'}
           render={({ field: { onChange, ref }, formState: { errors } }) => {
+            const distributorOptions = getDistributorTypeOptions(t)
             return (
               <Autocomplete
-                defaultValue={companySectorOptions.find(
-                  (option) => option.value === initialData.companySectorId
-                )}
-                options={companySectorOptions}
-                onChange={(_, item) => onChange(item?.value)}
+                defaultValue={
+                  initialData.companyDistributorType &&
+                  distributorOptions.find(
+                    (option) =>
+                      option.value === initialData.companyDistributorType
+                  )
+                }
+                isOptionEqualToValue={(option, value) =>
+                  option.value === value.value
+                }
+                options={distributorOptions}
+                onChange={(_, value) => {
+                  onChange(value?.value)
+                }}
                 renderInput={(params) => {
                   return (
                     <TextField
                       {...params}
                       inputRef={ref}
-                      label={t('registrationForm.sector')}
-                      error={!!errors?.companySectorId}
-                      helperText={errorMsg(errors?.companySectorId?.message)}
+                      label={t('registrationForm.companyDistributorType.label')}
+                      error={!!errors?.companyDistributorType}
+                      helperText={errorMsg(
+                        errors?.companyDistributorType?.message
+                      )}
                       fullWidth
                       required
                     />
                   )
                 }}
-              />
-            )
-          }}
-        />
-        <Controller
-          control={control}
-          name={'companySubSectorIds'}
-          render={({ field: { onChange, ref }, formState: { errors } }) => {
-            return (
-              <Autocomplete
-                multiple
-                options={companySubSectorsOptions}
-                disableCloseOnSelect
-                renderTags={(items, getTagProps) => {
-                  return items.map(({ value, label }, index) => {
-                    return (
-                      <Chip
-                        {...getTagProps({ index })}
-                        color={'secondary'}
-                        key={value}
-                        sx={{
-                          color: 'white',
-                          '& .MuiChip-deleteIcon': {
-                            display: 'none',
-                          },
-                        }}
-                        label={label}
-                      />
-                    )
-                  })
-                }}
-                onChange={(_, items) => {
-                  onChange(items.map(({ value }) => value))
-                }}
-                getOptionLabel={(option) => option.label}
-                renderOption={(props, option, { selected }) => (
-                  <li {...props}>
-                    <Checkbox
-                      style={{ marginRight: 8 }}
-                      color={'secondary'}
-                      checked={selected}
-                    />
-                    {option.label}
-                  </li>
-                )}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label={t('registrationForm.subsector')}
-                    inputRef={ref}
-                    error={!!errors?.companySubSectorIds}
-                    helperText={errorMsg(
-                      (errors?.companySubSectorIds as any)?.message
-                    )}
-                    fullWidth
-                    required
-                  />
-                )}
               />
             )
           }}

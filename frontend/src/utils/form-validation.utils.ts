@@ -17,16 +17,10 @@ export const passwordValidator = () =>
       /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/,
       'validations.passwordMustHaveSpecialCharacter'
     )
-    .test('len', 'validations.passwordLength', (val) => !val || val.length > 9)
-
-export const companyRegistrationNumberValidator = () =>
-  yup
-    .string()
-    .required('validations.required')
     .test(
       'len',
-      'validations.registrationNumberLength',
-      (val) => val?.length === 9
+      'validations.passwordTooShort',
+      (val) => !val || val.length > 9
     )
 
 export const requiredStringValidator = () =>

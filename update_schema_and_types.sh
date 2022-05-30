@@ -6,4 +6,4 @@ cd ./backend/ || exit
 bash ./scripts/export_graphql_schema.sh || exit
 
 cd ../frontend || exit
-yarn gql:codegen
+yarn generate-types

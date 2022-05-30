@@ -1,11 +1,10 @@
 import strawberry
 
 from company.api.mutations import RegisterCompanyMutation
-from company.api.query import Query as CompanyQuery
 
 
 @strawberry.type
-class Query(CompanyQuery):
+class Query:
     @strawberry.field
     def hello_world(self) -> str:
         return 'Hello World'
