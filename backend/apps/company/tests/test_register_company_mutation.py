@@ -2,14 +2,14 @@ from model_bakery import baker
 
 from account.models import User
 from apps.common.tests.test_base import BaseApiTestCase
-from company.models import CompaniesSubsectors, Company
+from company.models import Company
 
 
 class RegisterCompanyMutationTestCase(BaseApiTestCase):
     MUTATION = """
         mutation registerCompany(
             $companyName: String!,
-            $subsectorIds: [Int!]!,
+            $companyDistributorType: DistributorType!
             $userEmail: String!,
             $userTitle: String!,
             $userFullName: String!,
@@ -19,7 +19,7 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
         ) {
             registerCompany(
                 companyName: $companyName,
-                subsectorIds: $subsectorIds,
+                companyDistributorType: $companyDistributorType,
                 userEmail: $userEmail,
                 userTitle: $userTitle,
                 userFullName: $userFullName,
@@ -33,23 +33,9 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        cls.sector1, cls.sector2 = baker.make_recipe(
-            'company.tests.sector',
-            _quantity=2,
-        )
-        cls.subsector1, cls.subsector2 = baker.make_recipe(
-            'company.tests.subsector',
-            related_sector=cls.sector1,
-            _quantity=2,
-        )
-        cls.subsector3, cls.subsector4 = baker.make_recipe(
-            'company.tests.subsector',
-            related_sector=cls.sector2,
-            _quantity=2,
-        )
         cls.mutation_params = {
             "companyName": "Farwell Co",
-            "subsectorIds": [cls.subsector1.pk, cls.subsector2.pk],
+            "companyDistributorType": "IMPORTER",
             "userTitle": "Mr.",
             "userEmail": "helmut@local.invalid",
             "userFullName": "Helmut Karsten",
@@ -60,41 +46,43 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
 
     def test_register_a_company_should_create_company_and_user(self):
         content = self.query_and_load_data(self.MUTATION, variable_values=self.mutation_params)
-        self.assertEqual(content['registerCompany'], 'Company successfully created!')
+        self.assertEqual(content['registerCompany'], 'CREATED')
         self.assertEqual(Company.objects.count(), 1)
         self.assertTrue(User.objects.filter(email='helmut@local.invalid').exists())
-        self.assertEqual(CompaniesSubsectors.objects.count(), 2)
 
     def test_register_a_company_with_invalid_company_name(self):
         self.mutation_params['companyName'] = '  '
-        self.query_and_assert_error(self.MUTATION, variable_values=self.mutation_params, message='validationError')
+        self.query_and_assert_error(
+            self.MUTATION,
+            variable_values=self.mutation_params,
+            message='validationError',
+        )
+
+    def test_register_a_company_with_invalid_distributor_type(self):
+        self.mutation_params['companyDistributorType'] = 'INVALID'
+        self.query_and_assert_error(
+            self.MUTATION,
+            variable_values=self.mutation_params,
+            message=(
+                "Variable '$companyDistributorType' got invalid value 'INVALID'; "
+                "Value 'INVALID' does not exist in 'DistributorType' enum."
+            ),
+        )
 
     def test_register_a_company_with_invalid_email(self):
         self.mutation_params['userEmail'] = 'hemlut@invalid'
-        self.query_and_assert_error(self.MUTATION, variable_values=self.mutation_params, message='validationError')
+        self.query_and_assert_error(
+            self.MUTATION,
+            variable_values=self.mutation_params,
+            message='validationError',
+        )
 
     def test_register_a_company_with_bad_password(self):
         self.mutation_params['password'] = 'abc'
-        self.query_and_assert_error(self.MUTATION, variable_values=self.mutation_params, message='passwordTooShort')
-
-    def test_register_a_company_with_invalid_subsections(self):
-        self.mutation_params['subsectorIds'] = [
-            # subsectors of different sectors
-            self.subsector1.pk,
-            self.subsector3.pk,
-        ]
         self.query_and_assert_error(
             self.MUTATION,
             variable_values=self.mutation_params,
-            message='invalidSubsectorSelection',
-        )
-
-    def test_register_a_company_with_without_subsectors(self):
-        self.mutation_params['subsectorIds'] = []
-        self.query_and_assert_error(
-            self.MUTATION,
-            variable_values=self.mutation_params,
-            message='invalidSubsectorSelection',
+            message='passwordTooShort',
         )
 
     def test_register_a_company_with_duplicated_user_email(self):

@@ -6,12 +6,12 @@ import strawberry
 from graphql import GraphQLError
 
 from account.models import User
-from company.models import Company, Subsector
+from company.models import Company, DistributorType
 
 
 def register_company(
     company_name: str,
-    subsector_ids: list[int],
+    company_distributor_type: strawberry.enum(DistributorType),
     user_email: str,
     user_title: str,
     user_full_name: str,
@@ -21,6 +21,7 @@ def register_company(
 ) -> str:
     company = Company(
         name=company_name.strip(),
+        distributor_type=company_distributor_type,
     )
     user = User(
         email=user_email.strip(),
@@ -37,22 +38,18 @@ def register_company(
         company.full_clean()
         user.full_clean()
     except ValidationError as e:
-        if 'email' in e.message_dict:
-            error_code = 'userEmailDoesAlreadyExist'
+        if 'email' in e.error_dict:
+            code = e.error_dict['email'][0].code
+            if code == "unique":
+                # email uniqueness constraint violated
+                error_code = 'userEmailDoesAlreadyExist'
+            else:
+                # email is invalid
+                error_code = 'validationError'
         else:
+            # other validation errors
             error_code = 'validationError'
         raise GraphQLError(error_code, original_error=e)
-
-    # check subsectors
-    subsectors = Subsector.objects.filter(id__in=subsector_ids).only('id', 'related_sector_id')
-    sector_ids_set = {subsector.related_sector_id for subsector in subsectors}
-    if len(sector_ids_set) > 1:
-        # all subsectors must belong to the same sector
-        raise GraphQLError('invalidSubsectorSelection')
-    existing_subsector_ids = [subsector.id for subsector in subsectors]
-    if len(existing_subsector_ids) == 0:
-        # at least one subsector must be selected
-        raise GraphQLError('invalidSubsectorSelection')
 
     # check password
     try:
@@ -63,9 +60,8 @@ def register_company(
     with transaction.atomic():
         company.save()
         user.save()
-        company.related_subsector.set(subsector_ids)
 
-    return 'Company successfully created!'
+    return 'CREATED'
 
 
 @strawberry.type

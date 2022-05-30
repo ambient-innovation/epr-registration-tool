@@ -14,6 +14,11 @@
     "step1Title": "Enter general company information",
     "step1Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
     "companyName": "Name of company",
+    "companyDistributorType": {
+      "label": "Type of distributor",
+      "importer": "Importer",
+      "localProducer": "Local producer"
+    },
     "contactPerson": "Contact person",
     "sector": "Sector",
     "subsector": "Subsectors",
@@ -31,7 +36,6 @@
   },
   "validations": {
     "required": "This field is required",
-    "requiredMultiselect": "Please select at least one item",
     "emailInvalid": "Please enter a valid e-mail address",
     "passwordTooShort": "The password must consist of at least 8 characters",
     "passwordMustHaveUppercase": "The password must contain at least one uppercase letter",

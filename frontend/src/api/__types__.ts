@@ -22,15 +22,20 @@ export type Scalars = {
   Float: number
 }
 
+export enum DistributorType {
+  IMPORTER = 'IMPORTER',
+  LOCAL_PRODUCER = 'LOCAL_PRODUCER',
+}
+
 export type Mutation = {
   __typename?: 'Mutation'
   registerCompany: Scalars['String']
 }
 
 export type MutationRegisterCompanyArgs = {
+  companyDistributorType: DistributorType
   companyName: Scalars['String']
   password: Scalars['String']
-  subsectorIds: Array<Scalars['Int']>
   userEmail: Scalars['String']
   userFullName: Scalars['String']
   userPhoneOrMobile: Scalars['String']
@@ -41,25 +46,11 @@ export type MutationRegisterCompanyArgs = {
 export type Query = {
   __typename?: 'Query'
   helloWorld: Scalars['String']
-  sectors: Array<SectorType>
-}
-
-export type SectorType = {
-  __typename?: 'SectorType'
-  id: Scalars['ID']
-  name: Scalars['String']
-  subsectors: Array<SubsectorType>
-}
-
-export type SubsectorType = {
-  __typename?: 'SubsectorType'
-  id: Scalars['ID']
-  name: Scalars['String']
 }
 
 export type RegisterCompanyMutationVariables = Exact<{
   companyName: Scalars['String']
-  subsectorIds: Array<Scalars['Int']> | Scalars['Int']
+  companyDistributorType: DistributorType
   userEmail: Scalars['String']
   userTitle: Scalars['String']
   userFullName: Scalars['String']
@@ -73,22 +64,6 @@ export type RegisterCompanyMutation = {
   registerCompany: string
 }
 
-export type CompanySectorsQueryVariables = Exact<{ [key: string]: never }>
-
-export type CompanySectorsQuery = {
-  __typename?: 'Query'
-  sectors: Array<{
-    __typename?: 'SectorType'
-    id: string
-    name: string
-    subsectors: Array<{
-      __typename?: 'SubsectorType'
-      id: string
-      name: string
-    }>
-  }>
-}
-
 export type ExampleQueryVariables = Exact<{ [key: string]: never }>
 
 export type ExampleQuery = { __typename?: 'Query'; helloWorld: string }
@@ -96,7 +71,7 @@ export type ExampleQuery = { __typename?: 'Query'; helloWorld: string }
 export const RegisterCompanyDocument = gql`
   mutation registerCompany(
     $companyName: String!
-    $subsectorIds: [Int!]!
+    $companyDistributorType: DistributorType!
     $userEmail: String!
     $userTitle: String!
     $userFullName: String!
@@ -106,7 +81,7 @@ export const RegisterCompanyDocument = gql`
   ) {
     registerCompany(
       companyName: $companyName
-      subsectorIds: $subsectorIds
+      companyDistributorType: $companyDistributorType
       userEmail: $userEmail
       userTitle: $userTitle
       userFullName: $userFullName
@@ -140,52 +115,6 @@ export type RegisterCompanyMutationResult =
 export type RegisterCompanyMutationOptions = Apollo.BaseMutationOptions<
   RegisterCompanyMutation,
   RegisterCompanyMutationVariables
->
-export const CompanySectorsDocument = gql`
-  query companySectors {
-    sectors {
-      id
-      name
-      subsectors {
-        id
-        name
-      }
-    }
-  }
-`
-export function useCompanySectorsQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    CompanySectorsQuery,
-    CompanySectorsQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useQuery<CompanySectorsQuery, CompanySectorsQueryVariables>(
-    CompanySectorsDocument,
-    options
-  )
-}
-export function useCompanySectorsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    CompanySectorsQuery,
-    CompanySectorsQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useLazyQuery<CompanySectorsQuery, CompanySectorsQueryVariables>(
-    CompanySectorsDocument,
-    options
-  )
-}
-export type CompanySectorsQueryHookResult = ReturnType<
-  typeof useCompanySectorsQuery
->
-export type CompanySectorsLazyQueryHookResult = ReturnType<
-  typeof useCompanySectorsLazyQuery
->
-export type CompanySectorsQueryResult = Apollo.QueryResult<
-  CompanySectorsQuery,
-  CompanySectorsQueryVariables
 >
 export const ExampleDocument = gql`
   query example {

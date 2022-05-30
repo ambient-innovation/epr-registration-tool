@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { SchemaOf } from 'yup'
 
-import { titleOptions } from '@/auth/components/Registration/mocks'
+import { getTitleOptions } from '@/auth/components/Registration/constants'
 import { FormStep } from '@/common/components/FormStep'
 import { DEFAULT_FORM_SPACING } from '@/common/components/FormStep/constants'
 import { SelectField } from '@/common/components/SelectField'
@@ -90,7 +90,7 @@ export const Step2 = (_: Step2) => {
             error={!!errors?.userTitle}
             helperText={errorMsg(errors?.userTitle?.message)}
             defaultValue={initialData.userTitle}
-            options={titleOptions(t)}
+            options={getTitleOptions(t)}
             fullWidth
             required
             {...register('userTitle')}

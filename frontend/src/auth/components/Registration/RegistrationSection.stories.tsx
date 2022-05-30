@@ -6,16 +6,10 @@ import {
   RegistrationContextValue,
 } from './RegistrationContext'
 import { RegistrationSection, RegistrationStepper } from './RegistrationSection'
-import { companySectorsMock } from './mocks'
 
 export default {
   title: 'Auth/RegistrationSection',
   component: RegistrationSection,
-  parameters: {
-    apolloClient: {
-      mocks: [companySectorsMock],
-    },
-  },
 } as Meta<RegistrationSection>
 
 const Template: Story<RegistrationSection> = (args) => {

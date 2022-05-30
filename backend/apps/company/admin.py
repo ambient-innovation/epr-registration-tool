@@ -2,10 +2,8 @@ from django.contrib import admin
 from django.db.models import OuterRef, Subquery
 from django.utils.translation import gettext_lazy as _
 
-from modeltranslation.admin import TranslationAdmin, TranslationStackedInline
-
 from account.models import User
-from company.models import Company, Sector, Subsector
+from company.models import Company
 
 
 class CompanyUserInline(admin.StackedInline):
@@ -21,17 +19,6 @@ class CompanyUserInline(admin.StackedInline):
     )
 
 
-class SubsectorInline(TranslationStackedInline):
-    model = Subsector
-    extra = 0
-
-
-@admin.register(Sector)
-class SectorAdmin(TranslationAdmin):
-    inlines = (SubsectorInline,)
-    fields = ('name',)
-
-
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
     inlines = (CompanyUserInline,)
@@ -39,16 +26,7 @@ class CompanyAdmin(admin.ModelAdmin):
         'name',
         'contact_person_email',
     )
-    list_filter = (
-        'city',
-        'related_subsector',
-    )
-    search_fields = (
-        'name',
-        'email',
-        'registration_number',
-        'related_subsector',
-    )
+    search_fields = ('name',)
     fieldsets = (
         (
             _('General Information'),

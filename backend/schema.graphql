@@ -1,19 +1,12 @@
+enum DistributorType {
+  IMPORTER
+  LOCAL_PRODUCER
+}
+
 type Mutation {
-  registerCompany(companyName: String!, subsectorIds: [Int!]!, userEmail: String!, userTitle: String!, userFullName: String!, userPosition: String!, userPhoneOrMobile: String!, password: String!): String!
+  registerCompany(companyName: String!, companyDistributorType: DistributorType!, userEmail: String!, userTitle: String!, userFullName: String!, userPosition: String!, userPhoneOrMobile: String!, password: String!): String!
 }
 
 type Query {
-  sectors: [SectorType!]!
   helloWorld: String!
-}
-
-type SectorType {
-  id: ID!
-  name: String!
-  subsectors: [SubsectorType!]!
-}
-
-type SubsectorType {
-  id: ID!
-  name: String!
 }

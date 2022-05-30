@@ -34,8 +34,7 @@ RegistrationContext.displayName = 'RegsitrationContext'
 
 export const initialData: RegistrationData = {
   companyName: '',
-  companySectorId: '',
-  companySubSectorIds: [],
+  companyDistributorType: null,
   // user
   userEmail: '',
   userTitle: '',
@@ -61,14 +60,14 @@ export const RegistrationProvider: React.FC<{
         setActiveStep((prevStep) => (prevStep + 1) as StepNumber)
       } else {
         const finalData = { ...data, ...updatedData }
-        // important: return promise
+        // important: return promise,
+        // so react-hook-form `isSubmitting` state works correctly
         return (
           registerCompany({
             variables: {
               companyName: finalData.companyName,
-              subsectorIds: finalData.companySubSectorIds.map((subsectorId) =>
-                parseInt(subsectorId)
-              ),
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              companyDistributorType: finalData.companyDistributorType!,
               userEmail: finalData.userEmail,
               userTitle: finalData.userTitle,
               userFullName: finalData.userFullName,

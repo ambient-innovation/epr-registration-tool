@@ -5,8 +5,7 @@
     "fields": {
       "created_at": "2022-05-17T06:50:04.959Z",
       "name": "Testing company",
-      "sector": 2,
-      "subsector": 8
+      "distributorType": "IMPORTER"
     }
   }
 ]

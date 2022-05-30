@@ -3,7 +3,7 @@ import { gql } from '@apollo/client'
 export const REGISTER_MUTATION = gql`
   mutation registerCompany(
     $companyName: String!
-    $subsectorIds: [Int!]!
+    $companyDistributorType: DistributorType!
     $userEmail: String!
     $userTitle: String!
     $userFullName: String!
@@ -13,7 +13,7 @@ export const REGISTER_MUTATION = gql`
   ) {
     registerCompany(
       companyName: $companyName
-      subsectorIds: $subsectorIds
+      companyDistributorType: $companyDistributorType
       userEmail: $userEmail
       userTitle: $userTitle
       userFullName: $userFullName
