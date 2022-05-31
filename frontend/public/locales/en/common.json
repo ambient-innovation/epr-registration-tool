@@ -59,5 +59,10 @@
     "rememberMe": "Remember Me",
     "signIn": "Sign in",
     "registerLink": "No Account Yet? Register Now."
+  },
+  "logout": "Logout",
+  "paigeHeader": {
+    "languageSwitch": "Language switcher",
+    "userMenu": "User menu"
   }
 }

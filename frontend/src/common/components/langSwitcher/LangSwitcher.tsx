@@ -15,8 +15,11 @@ import { useRouter } from 'next/router'
 import { MouseEvent, useState } from 'react'
 
 import { useUser } from '@/auth/hooks/useUser'
+import { UserMenu } from '@/common/components/UserMenu'
 import { ROUTES } from '@/routes'
 import { theme } from '@/theme'
+
+const menuId = 'account-menu'
 
 export const LangSwitcher = () => {
   const { locale, pathname, query } = useRouter()
@@ -36,7 +39,7 @@ export const LangSwitcher = () => {
   return (
     <>
       <Stack spacing={10} direction={'row'}>
-        {!loggedIn && (
+        {!loggedIn ? (
           <>
             <NextLink href={ROUTES.login} passHref>
               <Button
@@ -60,22 +63,24 @@ export const LangSwitcher = () => {
               </Button>
             </NextLink>
           </>
+        ) : (
+          <UserMenu />
         )}
-        <Tooltip title={'language switcher'}>
+        <Tooltip title={t('paigeHeader.languageSwitch')}>
           <IconButton
             onClick={handleClick}
             size={'small'}
             sx={{ ml: 2 }}
-            aria-controls={open ? 'account-menu' : undefined}
+            aria-controls={open ? menuId : undefined}
             aria-haspopup={'true'}
             aria-expanded={open ? 'true' : undefined}
           >
-            <Language sx={{ color: 'common.white' }} />
+            <Language sx={{ color: 'common.white', width: 33, height: 33 }} />
           </IconButton>
         </Tooltip>
       </Stack>
       <Menu
-        id={'basic-menu'}
+        id={menuId}
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
@@ -83,12 +88,10 @@ export const LangSwitcher = () => {
           'aria-labelledby': 'basic-button',
         }}
         PaperProps={{
-          elevation: 0,
+          elevation: 5,
           sx: {
-            borderRadius: 3,
-            overflow: 'visible',
-            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-            mt: 1,
+            borderRadius: 2,
+            mt: 2,
           },
         }}
       >
