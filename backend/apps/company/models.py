@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from ai_django_core.models import CreatedAtInfo
+from ai_django_core.models import CommonInfo
 
 
 class DistributorType(models.TextChoices):
@@ -9,7 +9,7 @@ class DistributorType(models.TextChoices):
     LOCAL_PRODUCER = 'LOCAL_PRODUCER', _('Local producer')
 
 
-class Company(CreatedAtInfo):
+class Company(CommonInfo):
     class Meta:
         verbose_name = _('Company')
         verbose_name_plural = _('Companies')

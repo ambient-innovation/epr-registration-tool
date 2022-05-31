@@ -67,7 +67,7 @@ export const LoginSection = (): React.ReactElement => {
 
   const onSubmit = ({ email, password, rememberMe }: FormData) => {
     return login(email, password, rememberMe)
-      .then(() => router.push(ROUTES.home))
+      .then(() => router.push(ROUTES.dashboard))
       .catch((error: AxiosError) => {
         const nonFieldErrors = (error.response?.data as AxiosErrorData)
           .nonFieldErrors || ['unknownError']

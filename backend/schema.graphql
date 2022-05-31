@@ -1,3 +1,15 @@
+type CompanyType {
+  id: ID!
+  name: String!
+  distributorType: String!
+  lastmodifiedAt: DateTime!
+  createdAt: DateTime!
+  registrationNumber: String!
+}
+
+"""Date with time (isoformat)"""
+scalar DateTime
+
 enum DistributorType {
   IMPORTER
   LOCAL_PRODUCER
@@ -9,10 +21,13 @@ type Mutation {
 
 type Query {
   me: UserType
+  companyDetails: CompanyType
   helloWorld: String!
 }
 
 type UserType {
   id: ID!
   email: String!
+  title: String!
+  fullName: String!
 }
