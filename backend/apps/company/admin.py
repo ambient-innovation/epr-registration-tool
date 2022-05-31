@@ -30,7 +30,12 @@ class CompanyAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             _('General Information'),
-            {'fields': ('name',)},
+            {
+                'fields': (
+                    'name',
+                    'distributor_type',
+                )
+            },
         ),
     )
 
