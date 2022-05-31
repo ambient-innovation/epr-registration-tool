@@ -1,0 +1,12 @@
+- model: account.user
+  pk: 1
+  fields:
+    password: pbkdf2_sha256$320000$DOYgJRPsCJ8m5m9slYBNkt$Uf7BUQ+qnpcYQ6A8BnehJyFGwcCJxjOCAST1B6KjmxQ= #Admin1234
+    last_login: null
+    is_superuser: false
+    full_name: Regular User
+    email: regular@epr.local
+    is_active: true
+    date_joined: 2022-05-09T09:33:31.483Z
+    groups: []
+    user_permissions: []

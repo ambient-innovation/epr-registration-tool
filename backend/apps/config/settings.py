@@ -46,6 +46,8 @@ env = environ.Env(
     AXES_LOCK_OUT_BY_COMBINATION_USER_AND_IP=(bool, True),
     AXES_USE_USER_AGENT=(bool, True),
     AXES_ONLY_ADMIN_SITE=(bool, True),
+    # Graphql
+    DJANGO_GRAPHQL_CSRF_EXEMPT=(bool, False),
     # Security
     DJANGO_COOKIE_DOMAIN=(str, 'localhost'),
     DJANGO_CORS_ORIGIN_WHITELIST=(list, []),
@@ -83,8 +85,10 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     'axes',
     'strawberry.django',
+    'rest_framework',
     'corsheaders',
     'ai_django_core',
+    'ai_kit_auth',
     'modeltranslation',
 ]
 
@@ -224,14 +228,19 @@ ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
 CORS_ORIGIN_WHITELIST = env.list('DJANGO_CORS_ORIGIN_WHITELIST')
 CORS_ALLOWED_ORIGINS = (f'{FRONTEND_URL}',)
 CORS_ALLOW_METHODS = default_methods
+CORS_ALLOW_CREDENTIALS = True
 
 # store csrf token in a cookie instead of the user session
 # --> this is needed so next.js can receive the csrf token directly from the browser
 CSRF_USE_SESSIONS = False
+
 CSRF_FAILURE_VIEW = 'account.views.csrf_failure'
 CSRF_COOKIE_DOMAIN = env.str('DJANGO_COOKIE_DOMAIN')
 CSRF_TRUSTED_ORIGINS = env.list('DJANGO_CSRF_TRUSTED_ORIGINS')
 
+GRAPHQL_CSRF_EXEMPT = env.bool('DJANGO_GRAPHQL_CSRF_EXEMPT')
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_DOMAIN = env.str('DJANGO_COOKIE_DOMAIN')
 
 # configuration for the django-axes package to log the login-attempts
@@ -280,3 +289,23 @@ LANGUAGES = (
     ('en', 'English'),
     ('ar', 'Arabic'),
 )
+
+# django-ai-auth-kit settings
+AI_KIT_AUTH = {
+    "FRONTEND": {
+        "URL": FRONTEND_URL,
+    },
+    "USE_AI_KIT_AUTH_ADMIN": False,
+    "USERNAME_REQUIRED": False,
+    "ENABLE_ENDPOINTS": {
+        "LOGIN": True,
+        "LOGOUT": True,
+        "ME": False,
+        "VALIDATE_PASSWORD": False,
+        "ACTIVATE_EMAIL": False,
+        "SEND_PW_RESET_MAIL": False,
+        "RESET_PASSWORD": False,
+        "REGISTER": False,
+    },
+    "USER_IDENTITY_FIELDS": ('email',),
+}

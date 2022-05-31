@@ -3,11 +3,13 @@
   "welcome": "اهلا و سهلا!",
   "registration": "تسجيل",
   "register": "تسجيل",
+  "login": "تسجيل دخول",
   "next": "التالي",
   "prev": "السابق",
   "submit": "إرسال",
   "email": "البريد الإلكتروني",
   "password": "كلمه المرور",
+  "loading": "يرجى الانتظار",
   "registrationForm": {
     "createNewAccount": "انشاء حساب جديد",
     "generalCompanyInformation": "معلومات عامة عن الشركة",
@@ -46,6 +48,14 @@
     "genericNetworkError":  "لا يمكن الوصول إلى الخادم. يرجى التحقق من اتصالك بالإنترنت وحاول مرة أخرى.",
     "permissionDenied": "ليس لديك إذن للقيام بهذا العمل.",
     "validationError": "يبدو أن هناك مشكلة في التحقق من صحة البيانات المقدمة.",
-    "userEmailDoesAlreadyExist": "مستخدم بعنوان البريد الإلكتروني هذا مسجل بالفعل لشركة قائمة."
+    "userEmailDoesAlreadyExist": "مستخدم بعنوان البريد الإلكتروني هذا مسجل بالفعل لشركة قائمة.",
+    "invalidCredentials": "بيانات غير صالحة"
+  },
+  "loginForm": {
+    "title": "تسجيل الدخول إلى أداة التسجيل EPR",
+    "description": "Lorem impsum dolor sit...",
+    "rememberMe": "تذكرني",
+    "signIn": "تسجيل الدخول",
+    "registerLink": ""
   }
 }

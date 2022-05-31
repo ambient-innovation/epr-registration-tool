@@ -38,6 +38,18 @@ export const components: ThemeOptions['components'] = {
         }),
       },
       {
+        props: { variant: 'outlined', color: 'primary' },
+        style: ({ theme }) => ({
+          color: theme.palette.common.white,
+          backgroundColor: theme.palette.primary.main,
+          border: `2px solid ${theme.palette.common.white}`,
+          '&:hover': {
+            backgroundColor: theme.palette.primary.dark,
+            border: `2px solid ${theme.palette.common.white}`,
+          },
+        }),
+      },
+      {
         props: { variant: 'inverted', color: 'secondary' },
         style: ({ theme }) => ({
           color: theme.palette.secondary.main,

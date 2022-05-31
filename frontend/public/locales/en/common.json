@@ -3,11 +3,13 @@
   "welcome": "Welcome!",
   "registration": "Registration",
   "register": "Register",
+  "login": "Login",
   "next": "Next",
   "prev": "Prev",
   "submit": "Submit",
   "email": "Email",
   "password": "Password",
+  "loading": "Loading...",
   "registrationForm": {
     "createNewAccount": "Create new account",
     "generalCompanyInformation": "General company information",
@@ -48,6 +50,14 @@
     "genericNetworkError":  "The server could not be reached. Please check your internet connection and try again.",
     "permissionDenied": "You have no permission to perform this action.",
     "validationError": "There seems to be a validation issue with your submitted data.",
-    "userEmailDoesAlreadyExist": "A user with this email address has already been registered with an existing company."
+    "userEmailDoesAlreadyExist": "A user with this email address has already been registered with an existing company.",
+    "invalidCredentials": "The credentials you provided are invalid."
+  },
+  "loginForm": {
+    "title": "Login to the EPR Registration Tool",
+    "description": "Lorem impsum dolor sit...",
+    "rememberMe": "Remember Me",
+    "signIn": "Sign in",
+    "registerLink": "No Account Yet? Register Now."
   }
 }
