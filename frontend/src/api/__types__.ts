@@ -46,6 +46,13 @@ export type MutationRegisterCompanyArgs = {
 export type Query = {
   __typename?: 'Query'
   helloWorld: Scalars['String']
+  me?: Maybe<UserType>
+}
+
+export type UserType = {
+  __typename?: 'UserType'
+  email: Scalars['String']
+  id: Scalars['ID']
 }
 
 export type RegisterCompanyMutationVariables = Exact<{
@@ -62,6 +69,13 @@ export type RegisterCompanyMutationVariables = Exact<{
 export type RegisterCompanyMutation = {
   __typename?: 'Mutation'
   registerCompany: string
+}
+
+export type MeQueryVariables = Exact<{ [key: string]: never }>
+
+export type MeQuery = {
+  __typename?: 'Query'
+  me?: { __typename?: 'UserType'; id: string; email: string } | null
 }
 
 export type ExampleQueryVariables = Exact<{ [key: string]: never }>
@@ -116,6 +130,29 @@ export type RegisterCompanyMutationOptions = Apollo.BaseMutationOptions<
   RegisterCompanyMutation,
   RegisterCompanyMutationVariables
 >
+export const MeDocument = gql`
+  query me {
+    me {
+      id
+      email
+    }
+  }
+`
+export function useMeQuery(
+  baseOptions?: Apollo.QueryHookOptions<MeQuery, MeQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<MeQuery, MeQueryVariables>(MeDocument, options)
+}
+export function useMeLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<MeQuery, MeQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, options)
+}
+export type MeQueryHookResult = ReturnType<typeof useMeQuery>
+export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>
+export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>
 export const ExampleDocument = gql`
   query example {
     helloWorld

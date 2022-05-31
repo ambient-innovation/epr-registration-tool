@@ -14,11 +14,14 @@ import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { MouseEvent, useState } from 'react'
 
+import { useUser } from '@/auth/hooks/useUser'
 import { ROUTES } from '@/routes'
+import { theme } from '@/theme'
 
 export const LangSwitcher = () => {
   const { locale, pathname, query } = useRouter()
   const { t } = useTranslation()
+  const { loggedIn } = useUser()
 
   const [anchorEl, setAnchorEl] = useState<(EventTarget & Element) | null>(null)
   const open = Boolean(anchorEl)
@@ -33,11 +36,31 @@ export const LangSwitcher = () => {
   return (
     <>
       <Stack spacing={10} direction={'row'}>
-        <NextLink href={ROUTES.registration} passHref>
-          <Button component={'a'} variant={'inverted'}>
-            {t('register')}
-          </Button>
-        </NextLink>
+        {!loggedIn && (
+          <>
+            <NextLink href={ROUTES.login} passHref>
+              <Button
+                component={'a'}
+                sx={{
+                  color: theme.palette.common.white,
+                  backgroundColor: theme.palette.primary.main,
+                  border: `2px solid ${theme.palette.common.white}`,
+                  '&:hover': {
+                    backgroundColor: theme.palette.primary.dark,
+                    border: `2px solid ${theme.palette.common.white}`,
+                  },
+                }}
+              >
+                {t('login')}
+              </Button>
+            </NextLink>
+            <NextLink href={ROUTES.registration} passHref>
+              <Button component={'a'} variant={'inverted'}>
+                {t('register')}
+              </Button>
+            </NextLink>
+          </>
+        )}
         <Tooltip title={'language switcher'}>
           <IconButton
             onClick={handleClick}

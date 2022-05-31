@@ -1,21 +1,23 @@
 import type { GetStaticProps, NextPage } from 'next'
+import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 
-import { Homepage } from '@/homepage/components/Homepage'
+import { LoginSection } from '@/auth/components/Login'
+import { PageLayout } from '@/common/components/PageLayout/PageLayout'
 
-const Home: NextPage = () => {
+const LoginPage: NextPage = () => {
+  const { t } = useTranslation()
   return (
     <>
       <Head>
-        <title>{'EPR Registration Tool Home page'}</title>
-        <meta
-          name={'description'}
-          content={'EPR Registration Tool Home page'}
-        />
+        <title>{t('loginForm.title')}</title>
+        <meta name={'description'} content={t('loginForm.title')} />
         <link rel={'canonical'} href={'/'} />
       </Head>
-      <Homepage />
+      <PageLayout>
+        <LoginSection />
+      </PageLayout>
     </>
   )
 }
@@ -24,9 +26,8 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
       ...(await serverSideTranslations(locale as string, ['common'])),
-      // Will be passed to the page component as props
     },
   }
 }
 
-export default Home
+export default LoginPage

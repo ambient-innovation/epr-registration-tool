@@ -1,10 +1,11 @@
 import strawberry
 
+from account.api.queries import UserQuery
 from company.api.mutations import RegisterCompanyMutation
 
 
 @strawberry.type
-class Query:
+class Query(UserQuery):
     @strawberry.field
     def hello_world(self) -> str:
         return 'Hello World'

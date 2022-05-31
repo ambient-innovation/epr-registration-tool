@@ -6,6 +6,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
+import { UserProvider } from '@/auth/hooks/useUser'
 import { useApollo } from '@/config/apolloClient'
 import { initSentry } from '@/config/sentry'
 import { theme, EmotionCacheProvider } from '@/theme'
@@ -15,7 +16,6 @@ initSentry()
 
 function MyApp({ Component, pageProps }: AppProps) {
   const apolloClient = useApollo(pageProps)
-
   const { locale } = useRouter()
 
   useEffect(() => {
@@ -26,19 +26,21 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ApolloProvider client={apolloClient}>
-      <EmotionCacheProvider>
-        <Head>
-          <meta
-            name={'viewport'}
-            content={'minimum-scale=1, initial-scale=1, width=device-width'}
-          />
-        </Head>
-        <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </EmotionCacheProvider>
+      <UserProvider>
+        <EmotionCacheProvider>
+          <Head>
+            <meta
+              name={'viewport'}
+              content={'minimum-scale=1, initial-scale=1, width=device-width'}
+            />
+          </Head>
+          <ThemeProvider theme={theme}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </EmotionCacheProvider>
+      </UserProvider>
     </ApolloProvider>
   )
 }

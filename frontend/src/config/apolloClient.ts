@@ -6,9 +6,11 @@ import {
   NormalizedCacheObject,
   InMemoryCacheConfig,
 } from '@apollo/client'
+import { setContext } from '@apollo/client/link/context'
 import { onError } from '@apollo/client/link/error'
+import cookie from 'cookie'
 import merge from 'deepmerge'
-import isEqual from 'lodash/isEqual'
+import { isEqual } from 'lodash'
 import { useMemo } from 'react'
 
 import { handleError } from '@/utils/error.utils'
@@ -17,6 +19,7 @@ import { joinUrl } from '@/utils/urls.utils'
 import config from './config'
 
 export const GRAPHQL_URI = joinUrl(config.API_URL, 'graphql/')
+export const AUTH_URI = joinUrl(config.API_URL, 'csrf/')
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_CACHE__'
 
 type ApolloClientType = ApolloClient<NormalizedCacheObject>
@@ -36,6 +39,32 @@ export const cacheOptions: InMemoryCacheConfig = {
   },
 }
 
+const getCsrfToken = async (): Promise<string> => {
+  // pass CSRF token from cookie to request header or fetch one if not exist
+  let csrfToken = cookie.parse(document.cookie).csrftoken
+  if (!csrfToken) {
+    await fetch(AUTH_URI, { credentials: 'include' })
+    csrfToken = cookie.parse(document.cookie).csrftoken
+  }
+  return csrfToken
+}
+
+const authLink = setContext(async (_, { headers }) => {
+  return {
+    credentials: 'include',
+    headers: {
+      ...headers,
+      'X-CSRFToken': await getCsrfToken(),
+      'Accept-Language': localStorage.getItem('i18nextLng'),
+    },
+  }
+})
+
+const httpLink = new HttpLink({
+  // absolute server url
+  uri: GRAPHQL_URI,
+})
+
 /**
  * A "middleware" that handles graphql errors:
  * - graphQLErrors --> report to sentry
@@ -51,14 +80,9 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 })
 
 function createApolloClient() {
-  const httpLink = new HttpLink({
-    // absolute server url
-    uri: GRAPHQL_URI,
-  })
-
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
-    link: ApolloLink.from([errorLink, httpLink]),
+    link: ApolloLink.from([authLink, errorLink, httpLink]),
     cache: new InMemoryCache(cacheOptions),
   })
 }
@@ -70,10 +94,7 @@ function createApolloClient() {
 export const createApolloClientSsr = (): ApolloClientType => {
   return new ApolloClient({
     ssrMode: true,
-    link: new HttpLink({
-      // absolute server url
-      uri: GRAPHQL_URI,
-    }),
+    link: httpLink,
     cache: new InMemoryCache(cacheOptions),
   })
 }

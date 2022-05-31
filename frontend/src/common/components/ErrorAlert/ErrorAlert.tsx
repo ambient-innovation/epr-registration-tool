@@ -9,7 +9,7 @@ export type ErrorAlert = Omit<AlertProps, 'children' | 'severity'> & {
   title?: string
   // "autoFocus" is a reserved attribute --> "shouldAutoFocus"
   shouldAutoFocus?: boolean
-  children: React.ReactElement | string
+  children?: React.ReactElement | string
 }
 
 export const ErrorAlert = ({
@@ -17,7 +17,7 @@ export const ErrorAlert = ({
   shouldAutoFocus = true,
   title,
   ...props
-}: ErrorAlert & { children: string | number }): React.ReactElement => {
+}: ErrorAlert): React.ReactElement => {
   const ref = useRef<HTMLDivElement>(null)
 
   const { t } = useTranslation()
