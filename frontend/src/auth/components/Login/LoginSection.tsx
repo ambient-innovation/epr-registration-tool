@@ -62,6 +62,9 @@ export const LoginSection = (): React.ReactElement => {
 
   const { errors } = formState
 
+  const errorMsg = (translationKey: string | undefined): string | undefined =>
+    translationKey && (t(translationKey) as string)
+
   const onSubmit = ({ email, password, rememberMe }: FormData) => {
     login(email, password, rememberMe)
       .then(() => router.push(ROUTES.home))
@@ -94,7 +97,7 @@ export const LoginSection = (): React.ReactElement => {
                   autoFocus // autofocus first field
                   label={t('email')}
                   error={!!errors?.email}
-                  helperText={errors?.email?.message}
+                  helperText={errorMsg(errors?.email?.message)}
                   fullWidth
                   required
                   {...register('email')}
@@ -102,7 +105,7 @@ export const LoginSection = (): React.ReactElement => {
                 <TextField
                   label={t('password')}
                   error={!!errors?.password}
-                  helperText={errors?.password?.message}
+                  helperText={errorMsg(errors?.password?.message)}
                   type={'password'}
                   required
                   fullWidth
