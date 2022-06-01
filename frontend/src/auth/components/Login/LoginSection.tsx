@@ -66,7 +66,7 @@ export const LoginSection = (): React.ReactElement => {
     translationKey && (t(translationKey) as string)
 
   const onSubmit = ({ email, password, rememberMe }: FormData) => {
-    login(email, password, rememberMe)
+    return login(email, password, rememberMe)
       .then(() => router.push(ROUTES.home))
       .catch((error: AxiosError) => {
         const nonFieldErrors = (error.response?.data as AxiosErrorData)
