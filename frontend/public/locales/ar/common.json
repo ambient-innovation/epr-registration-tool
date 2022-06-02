@@ -57,5 +57,10 @@
     "rememberMe": "تذكرني",
     "signIn": "تسجيل الدخول",
     "registerLink": ""
+  },
+  "logout": "تسجيل خروج",
+  "paigeHeader": {
+    "languageSwitch": "محوّل اللغة",
+    "userMenu": "قائمة المستخدم"
   }
 }
