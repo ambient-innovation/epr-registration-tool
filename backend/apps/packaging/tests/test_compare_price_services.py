@@ -60,6 +60,7 @@ class PriceServiceTestCase(TestCase):
         end = time.time()
 
         print(f'PriceService took {end - start}s to compute {computations} prices')
+        print(f'Average computation time per price: {"{0:.5f}".format((end - start) / computations * 1000, 10)}ms')
 
     def test_measure_get_price(self):
         year = 2001
@@ -80,6 +81,7 @@ class PriceServiceTestCase(TestCase):
         end = time.time()
 
         print(f'get_price() took {end - start}s to compute {computations} prices')
+        print(f'Average computation time per price: {"{0:.5f}".format((end - start) / computations * 1000, 10)}ms')
 
     # def test_get_price_happy_path(self):
     #
