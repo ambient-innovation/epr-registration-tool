@@ -4,18 +4,20 @@ from django.contrib import admin
 from django.db.models import F
 from django.utils.translation import gettext_lazy as _
 
+from modeltranslation.admin import TranslationAdmin
+
 from packaging.models import Material, MaterialPrice, PackagingGroup
 from packaging.price_service import PriceService
 
 
 @admin.register(PackagingGroup)
-class PackagingGroupAdmin(admin.ModelAdmin):
+class PackagingGroupAdmin(TranslationAdmin):
     list_display = ('name',)
     fields = ('name',)
 
 
 @admin.register(Material)
-class MaterialAdmin(admin.ModelAdmin):
+class MaterialAdmin(TranslationAdmin):
     list_display = (
         'name',
         'current_price',

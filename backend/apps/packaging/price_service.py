@@ -5,10 +5,6 @@ from typing import Optional, Tuple
 from packaging.models import Material, MaterialPrice
 
 
-def get_date_key(year: int, month: int) -> int:
-    return year * 100 + month
-
-
 class PriceService:
     prices_history = {}
     latest_prices = {}

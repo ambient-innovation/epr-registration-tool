@@ -53,9 +53,15 @@ class Price(CommonInfo):
         verbose_name=_("Price (Kg)"),
     )
 
-    @property
-    def start_date_key(self):
-        return self.start_year * 10 + self.start_month
+    sort_key = models.PositiveIntegerField(verbose_name=_('Sort key'), db_index=True)
+
+    @staticmethod
+    def get_sort_key(year: int, month: int) -> int:
+        return year * 100 + month
+
+    def save(self, *args, **kwargs):
+        self.sort_key = self.get_sort_key(self.start_year, self.start_month)
+        super().save(*args, **kwargs)
 
 
 class MaterialPrice(Price):
