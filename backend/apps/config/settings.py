@@ -96,6 +96,7 @@ LOCAL_APPS = [
     'config.admin.CustomAdminConfig',
     'common',
     'packaging',
+    'packaging_report',
     'account',
     'company',
 ]

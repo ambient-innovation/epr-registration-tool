@@ -26,6 +26,7 @@ pyyaml = "*"                                                            # to be 
 django-modeltranslation = "==0.18.2"
 django-ai-kit-auth = "~=2.0.0"
 djangorestframework = "~=3.13.1"
+time-machine = "==2.7.0"
 
 [dev-packages]
 flake8 = "==4.0.1"

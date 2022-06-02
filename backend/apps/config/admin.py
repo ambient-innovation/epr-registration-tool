@@ -13,7 +13,9 @@ ADMIN_ORDERING = OrderedDict(
     (
         ('account', ()),
         ('company', ()),
+        ('packaging_report', ()),
         ('packaging', ()),
+        ('axes', ()),
     )
 )
 APP_ORDERING = list(ADMIN_ORDERING.keys())

@@ -1,7 +1,7 @@
 from model_bakery import baker
 
 from account.models import User
-from apps.common.tests.test_base import BaseApiTestCase
+from common.tests.test_base import BaseApiTestCase
 from company.models import Company
 
 
@@ -45,7 +45,7 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
         }
 
     def test_register_a_company_should_create_company_and_user(self):
-        content = self.query_and_load_data(self.MUTATION, variable_values=self.mutation_params)
+        content = self.query_and_load_data(self.MUTATION, variables=self.mutation_params)
         self.assertEqual(content['registerCompany'], 'CREATED')
         self.assertEqual(Company.objects.count(), 1)
         self.assertTrue(User.objects.filter(email='helmut@local.invalid').exists())
@@ -54,7 +54,7 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
         self.mutation_params['companyName'] = '  '
         self.query_and_assert_error(
             self.MUTATION,
-            variable_values=self.mutation_params,
+            variables=self.mutation_params,
             message='validationError',
         )
 
@@ -62,7 +62,7 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
         self.mutation_params['companyDistributorType'] = 'INVALID'
         self.query_and_assert_error(
             self.MUTATION,
-            variable_values=self.mutation_params,
+            variables=self.mutation_params,
             message=(
                 "Variable '$companyDistributorType' got invalid value 'INVALID'; "
                 "Value 'INVALID' does not exist in 'DistributorType' enum."
@@ -73,7 +73,7 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
         self.mutation_params['userEmail'] = 'hemlut@invalid'
         self.query_and_assert_error(
             self.MUTATION,
-            variable_values=self.mutation_params,
+            variables=self.mutation_params,
             message='validationError',
         )
 
@@ -81,7 +81,7 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
         self.mutation_params['password'] = 'abc'
         self.query_and_assert_error(
             self.MUTATION,
-            variable_values=self.mutation_params,
+            variables=self.mutation_params,
             message='passwordTooShort',
         )
 
@@ -89,6 +89,6 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
         baker.make_recipe('account.tests.user', email='helmut@local.invalid')
         self.query_and_assert_error(
             self.MUTATION,
-            variable_values=self.mutation_params,
+            variables=self.mutation_params,
             message='userEmailDoesAlreadyExist',
         )

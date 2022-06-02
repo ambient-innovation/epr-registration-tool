@@ -10,19 +10,52 @@ type CompanyType {
 """Date with time (isoformat)"""
 scalar DateTime
 
+"""Decimal (fixed-point)"""
+scalar Decimal
+
 enum DistributorType {
   IMPORTER
   LOCAL_PRODUCER
 }
 
+input MaterialInput {
+  materialId: ID!
+  quantity: Decimal!
+}
+
+type MaterialType {
+  id: ID!
+  name: String!
+  price: Decimal!
+}
+
 type Mutation {
   registerCompany(companyName: String!, companyDistributorType: DistributorType!, userEmail: String!, userTitle: String!, userFullName: String!, userPosition: String!, userPhoneOrMobile: String!, password: String!): String!
+  packagingReportSubmit(timeframe: TimeframeType!, year: Int!, startMonth: Int!, tzInfo: String!, packagingRecords: [PackagingGroupInput!]!): String!
+}
+
+input PackagingGroupInput {
+  packagingGroupId: ID!
+  materialRecords: [MaterialInput!]!
+}
+
+type PackagingGroupType {
+  id: ID!
+  name: String!
 }
 
 type Query {
   me: UserType
   companyDetails: CompanyType
+  packagingGroups: [PackagingGroupType!]!
+  packagingMaterials: [MaterialType!]!
   helloWorld: String!
+}
+
+enum TimeframeType {
+  MONTH
+  THREE_MONTHS
+  TWELVE_MONTHS
 }
 
 type UserType {

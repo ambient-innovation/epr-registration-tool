@@ -20,5 +20,4 @@ class ExampleTestCase(BaseApiTestCase):
         self.assertEqual(content['helloWorld'], 'Hello World')
 
     def test_api_with_error(self):
-        content = self.query_and_assert_error(self.ERROR_QUERY, "Cannot query field 'holaMundo' on type 'Query'.")
-        self.assertIsNone(content['data'])
+        self.query_and_assert_error(self.ERROR_QUERY, message="Cannot query field 'holaMundo' on type 'Query'.")

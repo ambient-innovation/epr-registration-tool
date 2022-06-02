@@ -7,7 +7,18 @@ from django.utils.translation import gettext_lazy as _
 from modeltranslation.admin import TranslationAdmin
 
 from packaging.models import Material, MaterialPrice, PackagingGroup
-from packaging.price_service import PriceService
+from packaging.price_utils import get_material_price_at
+
+
+class MaterialPriceInline(admin.StackedInline):
+    model = MaterialPrice
+    extra = 0
+    min_num = 1
+    fields = (
+        'start_year',
+        'start_month',
+        'price_per_kg',
+    )
 
 
 @admin.register(PackagingGroup)
@@ -23,11 +34,12 @@ class MaterialAdmin(TranslationAdmin):
         'current_price',
     )
     fields = ('name',)
+    inlines = (MaterialPriceInline,)
 
     @admin.display(description=_('Current price (kg)'))
     def current_price(self, obj):
         today = datetime.date.today()
-        material_price = PriceService.get_instance().get_price(obj.id, year=today.year, month=today.month)
+        material_price = get_material_price_at(obj.id, year=today.year, month=today.month)
         return (
             f'{material_price.price_per_kg} ({material_price.start_month}.{material_price.start_year})'
             if material_price
@@ -58,15 +70,3 @@ class MaterialPriceAdmin(admin.ModelAdmin):
     @admin.display(description='Material', ordering='material_name')
     def material_name(self, obj):
         return obj.material_name
-
-    def save_model(self, request, obj, form, change):
-        super().save_model(request, obj, form, change)
-        # reset prices for material
-        material_id = obj.related_material_id
-        PriceService.get_instance().reset_material(material_id=material_id)
-
-    def delete_model(self, request, obj):
-        material_id = obj.related_material_id
-        super().delete_model(request, obj)
-        # reset prices for material
-        PriceService.get_instance().reset_material(material_id=material_id)
