@@ -62,5 +62,17 @@
   "paigeHeader": {
     "languageSwitch": "محوّل اللغة",
     "userMenu": "قائمة المستخدم"
+  },
+  "dashboard": {
+    "main": "لوحة القيادة",
+    "header": {
+      "greeting": "{{userName}}, مرحبًا بك في لوحة تحكم EPR"
+    },
+    "registrationNumber": "رقم التسجيل",
+    "distributorType": "نوع موزع الشركة",
+    "createdAt": "تاريخ التسجيل",
+    "lastmodifiedAt": "آخر تحديث لبيانات القاعدة",
+    "pleaseLogin": "الرجاء تسجيل الدخول",
+    "noCompanyAssigned": "لم يتم تعيينك لأية شركة"
   }
 }

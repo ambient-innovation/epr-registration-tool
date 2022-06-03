@@ -8,3 +8,5 @@ from account.models import User
 class UserType:
     id: auto
     email: auto
+    title: auto
+    full_name: auto

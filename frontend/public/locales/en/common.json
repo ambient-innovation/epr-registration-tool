@@ -64,5 +64,17 @@
   "paigeHeader": {
     "languageSwitch": "Language switcher",
     "userMenu": "User menu"
+  },
+  "dashboard": {
+    "main": "Dashboard",
+    "header": {
+      "greeting": "{{userName}}, welcome to your EPR dashboard"
+    },
+    "registrationNumber": "Registration number",
+    "distributorType": "Company distributor type",
+    "createdAt": "Date of registration",
+    "lastmodifiedAt": "Last base data update",
+    "pleaseLogin": "Please Log In",
+    "noCompanyAssigned": "You have not been assigned to any company"
   }
 }

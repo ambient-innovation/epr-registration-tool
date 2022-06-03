@@ -20,6 +20,18 @@ export type Scalars = {
   Boolean: boolean
   Int: number
   Float: number
+  /** Date with time (isoformat) */
+  DateTime: any
+}
+
+export type CompanyType = {
+  __typename?: 'CompanyType'
+  createdAt: Scalars['DateTime']
+  distributorType: Scalars['String']
+  id: Scalars['ID']
+  lastmodifiedAt: Scalars['DateTime']
+  name: Scalars['String']
+  registrationNumber: Scalars['String']
 }
 
 export enum DistributorType {
@@ -45,6 +57,7 @@ export type MutationRegisterCompanyArgs = {
 
 export type Query = {
   __typename?: 'Query'
+  companyDetails?: Maybe<CompanyType>
   helloWorld: Scalars['String']
   me?: Maybe<UserType>
 }
@@ -52,7 +65,9 @@ export type Query = {
 export type UserType = {
   __typename?: 'UserType'
   email: Scalars['String']
+  fullName: Scalars['String']
   id: Scalars['ID']
+  title: Scalars['String']
 }
 
 export type RegisterCompanyMutationVariables = Exact<{
@@ -75,7 +90,28 @@ export type MeQueryVariables = Exact<{ [key: string]: never }>
 
 export type MeQuery = {
   __typename?: 'Query'
-  me?: { __typename?: 'UserType'; id: string; email: string } | null
+  me?: {
+    __typename?: 'UserType'
+    id: string
+    email: string
+    title: string
+    fullName: string
+  } | null
+}
+
+export type CompanyDetailsQueryVariables = Exact<{ [key: string]: never }>
+
+export type CompanyDetailsQuery = {
+  __typename?: 'Query'
+  companyDetails?: {
+    __typename?: 'CompanyType'
+    id: string
+    name: string
+    distributorType: string
+    registrationNumber: string
+    createdAt: any
+    lastmodifiedAt: any
+  } | null
 }
 
 export type ExampleQueryVariables = Exact<{ [key: string]: never }>
@@ -135,6 +171,8 @@ export const MeDocument = gql`
     me {
       id
       email
+      title
+      fullName
     }
   }
 `
@@ -153,6 +191,52 @@ export function useMeLazyQuery(
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>
+export const CompanyDetailsDocument = gql`
+  query companyDetails {
+    companyDetails {
+      id
+      name
+      distributorType
+      registrationNumber
+      createdAt
+      lastmodifiedAt
+    }
+  }
+`
+export function useCompanyDetailsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    CompanyDetailsQuery,
+    CompanyDetailsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<CompanyDetailsQuery, CompanyDetailsQueryVariables>(
+    CompanyDetailsDocument,
+    options
+  )
+}
+export function useCompanyDetailsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    CompanyDetailsQuery,
+    CompanyDetailsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<CompanyDetailsQuery, CompanyDetailsQueryVariables>(
+    CompanyDetailsDocument,
+    options
+  )
+}
+export type CompanyDetailsQueryHookResult = ReturnType<
+  typeof useCompanyDetailsQuery
+>
+export type CompanyDetailsLazyQueryHookResult = ReturnType<
+  typeof useCompanyDetailsLazyQuery
+>
+export type CompanyDetailsQueryResult = Apollo.QueryResult<
+  CompanyDetailsQuery,
+  CompanyDetailsQueryVariables
+>
 export const ExampleDocument = gql`
   query example {
     helloWorld

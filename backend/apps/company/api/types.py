@@ -8,3 +8,10 @@ from company.models import Company
 class CompanyType:
     id: auto
     name: auto
+    distributor_type: auto
+    lastmodified_at: auto
+    created_at: auto
+
+    @strawberry.field
+    def registration_number(self) -> str:
+        return ""
