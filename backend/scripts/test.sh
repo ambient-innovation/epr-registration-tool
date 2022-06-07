@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python manage.py test -v3
+python manage.py test -v3 apps
