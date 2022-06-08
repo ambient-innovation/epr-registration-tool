@@ -13,12 +13,12 @@ export const pxToRemAsString = (px: number): string => {
   return px / 16 + 'rem'
 }
 
-export const defaultFocusSx: SxStyles = {
+export const defaultFocusSx: SxStyleObject = {
   boxShadow: '0 0 0 0 #4299E1',
   '&:focus': {
     outline: 'none',
   },
-  '.Mui-focusVisible': {
-    boxShadow: '0.125rem solid #4299E1',
+  '&.Mui-focusVisible': {
+    boxShadow: '0 0 0 0.1875rem #4299E1',
   },
 }
