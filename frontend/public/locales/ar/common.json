@@ -66,7 +66,8 @@
   "dashboard": {
     "main": "لوحة القيادة",
     "header": {
-      "greeting": "{{userName}}, مرحبًا بك في لوحة تحكم EPR"
+      "greeting": "{{userName}}, مرحبًا بك في لوحة تحكم EPR",
+      "submitNewReport": "إرسال تقرير جديد"
     },
     "registrationNumber": "رقم التسجيل",
     "distributorType": "نوع موزع الشركة",

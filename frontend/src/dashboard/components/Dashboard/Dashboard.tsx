@@ -1,5 +1,6 @@
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import { useTranslation } from 'next-i18next'
+import { Fragment } from 'react'
 
 import { CompanyType, useCompanyDetailsQuery } from '@/api/__types__'
 import { useUser } from '@/auth/hooks/useUser'
@@ -8,7 +9,7 @@ import { DashboardHeader } from '@/dashboard/components/Dashboard/DashboardHeade
 import { containerCss } from '@/homepage/components/Homepage/Homepage.styles'
 import { fontWeights } from '@/theme/typography'
 
-import { dateFormat, distributorTypes } from './constants'
+import { distributorTypes } from './constants'
 
 export type Dashboard = Record<string, never>
 export interface BaseData {
@@ -18,44 +19,32 @@ export interface BaseData {
 const BaseData = ({ companyInformation }: BaseData): React.ReactElement => {
   const { t } = useTranslation()
   const { name, ...companyBaseData } = companyInformation
-  const preparedData = [
-    {
-      registrationNumber: companyBaseData.registrationNumber
-        ? companyBaseData.registrationNumber
-        : 'Not set',
-      distributorType: distributorTypes(t)[companyBaseData.distributorType],
-    },
-    {
-      createdAt: new Date(companyBaseData.createdAt).toLocaleString(
-        'en-GB',
-        dateFormat
-      ),
-      lastmodifiedAt: new Date(companyBaseData.lastmodifiedAt).toLocaleString(
-        'en-GB',
-        dateFormat
-      ),
-    },
-  ]
+  const preparedData = {
+    registrationNumber: companyBaseData.registrationNumber
+      ? companyBaseData.registrationNumber
+      : 'Not set',
+    distributorType: distributorTypes(t)[companyBaseData.distributorType],
+    createdAt: new Date(companyBaseData.createdAt).toLocaleDateString(),
+    lastmodifiedAt: new Date(
+      companyBaseData.lastmodifiedAt
+    ).toLocaleDateString(),
+  }
+
   return (
     <Box sx={{ marginTop: 11 }}>
       <Typography variant={'h5'}>{name}</Typography>
-      <Stack direction={'row'} sx={{ marginTop: 6 }} spacing={15}>
-        {preparedData.map((column) => (
-          <Box key={column.toString()}>
-            {Object.entries(column).map(([key, value]) => (
-              <Stack
-                sx={{ minWidth: '25vw' }}
-                justifyContent={'space-between'}
-                key={key}
-                direction={'row'}
-              >
-                <Typography>{`${t(`dashboard.${key}`)}:`}</Typography>
-                <Typography fontWeight={fontWeights.bold}>{value}</Typography>
-              </Stack>
-            ))}
-          </Box>
+      <Grid container sx={{ mt: 6 }}>
+        {Object.entries(preparedData).map(([key, value]) => (
+          <Fragment key={key}>
+            <Grid item xs={6} md={3}>
+              <Typography>{`${t(`dashboard.${key}`)}:`}</Typography>
+            </Grid>
+            <Grid item xs={6} md={3}>
+              <Typography fontWeight={fontWeights.bold}>{value}</Typography>
+            </Grid>
+          </Fragment>
         ))}
-      </Stack>
+      </Grid>
     </Box>
   )
 }
