@@ -19,6 +19,7 @@ auth_patterns = (
     [
         path('login/', views.RememberMeLoginView.as_view(), name='login'),
         path('logout/', ai_kit_views.LogoutView.as_view(), name='logout'),
+        path('activate_email/', views.ActivateUser.as_view(), name='activate'),
     ],
     'ai_kit_auth',
 )

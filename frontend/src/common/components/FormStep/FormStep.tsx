@@ -17,6 +17,7 @@ export interface FormStep {
   isFinalStep?: boolean
   isLoading?: boolean
   apolloError?: ApolloError
+  errorTitle?: string
 }
 
 export const FormStep = memo(
@@ -29,6 +30,7 @@ export const FormStep = memo(
     description,
     isLoading,
     apolloError,
+    errorTitle,
   }: FormStep) => {
     const { t } = useTranslation()
     return (
@@ -44,10 +46,9 @@ export const FormStep = memo(
             <Box marginTop={{ xs: 9, md: 10 }}>{children}</Box>
           </Box>
           {apolloError && (
-            <ApolloErrorAlert
-              error={apolloError}
-              sx={{ marginTop: 4, borderRadius: 3 }}
-            />
+            <Box mt={4}>
+              <ApolloErrorAlert error={apolloError} title={errorTitle} />
+            </Box>
           )}
           <Box component={'footer'} sx={buttonWrapperSx}>
             <Button

@@ -1,0 +1,13 @@
+Welcome to the EPR Registration Tool
+
+Please confirm your email address below to proceed with creating your new account.
+
+{{ url }}
+
+The EPR registration tool requires a verified email address to make use of all reporting features.
+Also, a verified email address helps with future account recovery.
+
+If you have not tried to create a new account using this email address recently, you can safely ignore this email.
+
+This notification was sent to the email address associated with your EPR account.
+Please do not reply to this automatically generated email.

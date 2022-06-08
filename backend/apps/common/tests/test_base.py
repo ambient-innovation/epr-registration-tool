@@ -38,6 +38,7 @@ class BaseTestCase(TestCase):
         self._client.logout()
 
     def login_superuser(self):
+        assert self.super_user is not None, 'Superuser does not exist, consider AUTO_CREATE_USERS=True'
         self._client.login(
             email=self.super_user.email,
             password=SUPER_USER_PASSWORD,
@@ -45,6 +46,7 @@ class BaseTestCase(TestCase):
         )
 
     def login_normal_user(self):
+        assert self.user is not None, 'User does not exist, consider AUTO_CREATE_USERS=True'
         self._client.login(
             email=self.user.email,
             password=SOME_USER_PASSWORD,

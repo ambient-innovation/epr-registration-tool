@@ -4,4 +4,5 @@ company = Recipe(
     'company.Company',
     name='Farwell Co',
     distributor_type='IMPORTER',
+    is_active=True,
 )

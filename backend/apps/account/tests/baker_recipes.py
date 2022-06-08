@@ -17,4 +17,5 @@ user = Recipe(
     'account.User',
     email=seq('user', suffix='@local.local'),
     password=make_password(SOME_USER_PASSWORD),
+    is_active=True,
 )

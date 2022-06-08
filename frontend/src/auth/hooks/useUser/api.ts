@@ -6,7 +6,7 @@ import axios, {
 import camelcaseKeys from 'camelcase-keys'
 import cookie from 'cookie'
 
-import { CsrfResponse, LoginResponseData } from '@/auth/hooks/useUser/api.types'
+import { CsrfResponse, LoginResponseData } from './api.types'
 
 const authApiUrl = process.env.NEXT_PUBLIC_API_URL + 'api/v1/auth'
 
@@ -65,3 +65,13 @@ export const logoutAPI = (): Promise<unknown> =>
   camelCaseError(
     axios.post<CsrfResponse>(makeUrl(authApiUrl, 'logout/'), {}, axiosConfig)
   ).then(({ data }) => camelcaseKeys(data))
+
+export const activateEmailAddressAPI = (
+  ident: string,
+  token: string
+): Promise<unknown> =>
+  axios.post(
+    makeUrl(authApiUrl, 'activate_email/'),
+    { ident, token },
+    axiosConfig
+  )

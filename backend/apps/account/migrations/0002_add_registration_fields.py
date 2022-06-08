@@ -58,7 +58,7 @@ class Migration(migrations.Migration):
             name='title',
             field=models.CharField(
                 blank=True,
-                choices=[('mr', 'Mr.'), ('ms', 'Ms')],
+                choices=[('mr', 'Mr.'), ('mrs', 'Mrs.')],
                 max_length=20,
                 verbose_name='Title',
             ),

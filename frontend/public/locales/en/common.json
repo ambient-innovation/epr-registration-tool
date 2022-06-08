@@ -10,6 +10,8 @@
   "email": "Email",
   "password": "Password",
   "loading": "Loading...",
+  "pleaseWait": "Please wait ...",
+  "eprTool": "EPR Registration Tool",
   "registrationForm": {
     "createNewAccount": "Create new account",
     "generalCompanyInformation": "General company information",
@@ -22,11 +24,9 @@
       "localProducer": "Local producer"
     },
     "contactPerson": "Contact person",
-    "sector": "Sector",
-    "subsector": "Subsectors",
     "step2Title": "Provide a contact person",
     "step2Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
-    "emailHelpText": "Attention: This is the E-mail your company will use to log in to the EPR Registration Tool.",
+    "emailHelpText": "Attention: This is the Email your company will use to log in to the EPR Registration Tool.",
     "title": "Title",
     "mr": "Mr.",
     "mrs": "Mrs.",
@@ -34,11 +34,12 @@
     "position": "Position",
     "phoneMobileNumber": "Phone / mobile number",
     "step3Title": "Choose a password",
-    "step3Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
+    "step3Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+    "registrationFailed": "Registration failed"
   },
   "validations": {
     "required": "This field is required",
-    "emailInvalid": "Please enter a valid e-mail address",
+    "emailInvalid": "Please enter a valid email address",
     "passwordTooShort": "The password must consist of at least 8 characters",
     "passwordMustHaveUppercase": "The password must contain at least one uppercase letter",
     "passwordMustHaveLowercase": "The password must contain at least one lowercase letter",
@@ -47,18 +48,49 @@
   },
   "serverErrors": {
     "unknownError":  "The server failed to handle your request. Please reload and try again.",
+    "generic403": "Request failed with status code 403 (permission denied).",
     "genericNetworkError":  "The server could not be reached. Please check your internet connection and try again.",
     "permissionDenied": "You have no permission to perform this action.",
     "validationError": "There seems to be a validation issue with your submitted data.",
     "userEmailDoesAlreadyExist": "A user with this email address has already been registered with an existing company.",
-    "invalidCredentials": "The credentials you provided are invalid."
+    "invalidCredentials": "The credentials you provided are invalid.",
+    "inactiveCompany": "You company account has not been activated yet. You will be notified via email once this is done.",
+    "missingCompanyRelation": "You cannot login because your account is not associated with a company.",
+    "alreadyAuthenticated": "You are signed in with another account. Please log out and try again.",
+    "inactiveUser": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link."
+  },
+  "internalErrors": {
+    "unknownError": "Something unexpected happened. Please reload and try again."
   },
   "loginForm": {
     "title": "Login to the EPR Registration Tool",
     "description": "Lorem impsum dolor sit...",
     "rememberMe": "Remember Me",
     "signIn": "Sign in",
-    "registerLink": "No Account Yet? Register Now."
+    "registerLink": "No Account Yet? Register Now.",
+    "loginFailed": "Login failed"
+  },
+  "activation": {
+    "activation": "Activation",
+    "emailConfirmation": "Email confirmation",
+    "confirmationFailed": "Confirmation failed",
+    "invalidToken": "The link you followed does not seem to be a valid confirmation link.",
+    "registration": "Registration",
+    "registrationComplete": "Registration complete",
+    "serverErrors": {
+      "activationLinkInvalid": "The confirmation link you followed is not valid anymore."
+    },
+    "success": {
+      "title": "Thank you!",
+      "message": "Your email address has been successfully confirmed!"
+    },
+    "nextStepActivation": {
+      "title": "⏳ One step left ...",
+      "body": "Before you can log in, your account must first be activated. A staff member will now check your registration information. You will receive an email as soon as you account has been activate."
+    },
+    "accountHasBeenActivated": "Your account has been activated!",
+    "accountIsReady": "🚀 Your account is ready",
+    "youCanLoginNow": "Everything has been set up and you can now log in."
   },
   "logout": "Logout",
   "paigeHeader": {

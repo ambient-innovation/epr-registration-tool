@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 
 import { defaultFocusSx } from '@/theme/utils'
 
-export type ErrorAlert = Omit<AlertProps, 'children' | 'severity'> & {
+export type ErrorAlert = Omit<AlertProps, 'children' | 'severity' | 'sx'> & {
   id?: string
   title?: string
   // "autoFocus" is a reserved attribute --> "shouldAutoFocus"
@@ -33,7 +33,7 @@ export const ErrorAlert = ({
       severity={'error'}
       tabIndex={-1}
       ref={ref}
-      sx={defaultFocusSx}
+      sx={[defaultFocusSx, { borderRadius: 3 }]}
       {...props}
     >
       <AlertTitle>

@@ -10,6 +10,8 @@
   "email": "البريد الإلكتروني",
   "password": "كلمه المرور",
   "loading": "يرجى الانتظار",
+  "pleaseWait": "Please wait ...",
+  "eprTool": "EPR Registration Tool",
   "registrationForm": {
     "createNewAccount": "انشاء حساب جديد",
     "generalCompanyInformation": "معلومات عامة عن الشركة",
@@ -32,7 +34,8 @@
     "position": "منصب",
     "phoneMobileNumber": "رقم الهاتف / الجوال",
     "step3Title": "اختر كلمة مرور",
-    "step4Description": "أيضًا ، لا يوجد من يحب الألم نفسه أو يسعى إليه أو يرغب فيه لمجرد أنه ألم ، ما لم تكن هناك ظروف عرضية يمكن أن يجلب فيها الكدح والألم متعة كبيرة له. لنأخذ مثالاً تافهًا ، من منا يشارك في أي وقت مضى في تمرين شاق إلا للاستفادة منه."
+    "step3Description": "أيضًا ، لا يوجد من يحب الألم نفسه أو يسعى إليه أو يرغب فيه لمجرد أنه ألم ، ما لم تكن هناك ظروف عرضية يمكن أن يجلب فيها الكدح والألم متعة كبيرة له. لنأخذ مثالاً تافهًا ، من منا يشارك في أي وقت مضى في تمرين شاق إلا للاستفادة منه.",
+    "registrationFailed": "Registration failed"
   },
   "validations": {
     "required": "هذه الخانة مطلوبه",
@@ -45,20 +48,51 @@
   },
   "serverErrors": {
     "unknownError":  "فشل الخادم في معالجة طلبك. يرجى إعادة التحميل وحاول مرة أخرى.",
+    "generic403": "Request failed with status code 403 (permission denied).",
     "genericNetworkError":  "لا يمكن الوصول إلى الخادم. يرجى التحقق من اتصالك بالإنترنت وحاول مرة أخرى.",
     "permissionDenied": "ليس لديك إذن للقيام بهذا العمل.",
     "validationError": "يبدو أن هناك مشكلة في التحقق من صحة البيانات المقدمة.",
     "userEmailDoesAlreadyExist": "مستخدم بعنوان البريد الإلكتروني هذا مسجل بالفعل لشركة قائمة.",
-    "invalidCredentials": "بيانات غير صالحة"
+    "invalidCredentials": "بيانات غير صالحة",
+    "inactiveCompany": "You company account has not been activated yet. You will be notified via email once this is done.",
+    "missingCompanyRelation": "You cannot login because your account is not associated with a company.",
+    "alreadyAuthenticated": "You are signed in with another account. Please log out and try again.",
+    "inactiveUser": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link."
+  },
+  "internalErrors": {
+    "unknownError": "Something unexpected happened. Please reload and try again."
   },
   "loginForm": {
     "title": "تسجيل الدخول إلى أداة التسجيل EPR",
     "description": "Lorem impsum dolor sit...",
     "rememberMe": "تذكرني",
     "signIn": "تسجيل الدخول",
-    "registerLink": ""
+    "registerLink": "No Account Yet? Register Now.",
+    "loginFailed": "Login failed"
   },
-  "logout": "تسجيل خروج",
+  "activation": {
+    "activation": "Activation",
+    "emailConfirmation": "Email confirmation",
+    "confirmationFailed": "Confirmation failed",
+    "invalidToken": "The link you followed does not seem to be a valid confirmation link.",
+    "registration": "Registration",
+    "registrationComplete": "Registration complete",
+    "serverErrors": {
+      "activationLinkInvalid": "The confirmation link you followed is not valid anymore."
+    },
+    "success": {
+      "title": "Thank you!",
+      "message": "Your email address has been successfully confirmed!"
+    },
+    "nextStepActivation": {
+      "title": "⏳ One step left ...",
+      "body": "Before you can log in, your account must first be activated. A staff member will now check your registration information. You will receive an email as soon as you account has been activate."
+    },
+    "accountHasBeenActivated": "Your account has been activated!",
+    "accountIsReady": "🚀 Your account is ready",
+    "youCanLoginNow": "Everything has been set up and you can now log in."
+  },
+  "logout": "Logout",
   "paigeHeader": {
     "languageSwitch": "محوّل اللغة",
     "userMenu": "قائمة المستخدم"

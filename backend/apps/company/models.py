@@ -20,6 +20,12 @@ class Company(CommonInfo):
         max_length=20,
         choices=DistributorType.choices,
     )
+    is_active = models.BooleanField(
+        verbose_name=_("Active"),
+        default=False,
+        blank=True,
+        help_text=_('No user of the company will be able to log in as long the company is inactive.'),
+    )
 
     def __str__(self):
         return self.name

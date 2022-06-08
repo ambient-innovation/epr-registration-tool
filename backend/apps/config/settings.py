@@ -313,7 +313,7 @@ AI_KIT_AUTH = {
         "LOGOUT": True,
         "ME": False,
         "VALIDATE_PASSWORD": False,
-        "ACTIVATE_EMAIL": False,
+        "ACTIVATE_EMAIL": True,
         "SEND_PW_RESET_MAIL": False,
         "RESET_PASSWORD": False,
         "REGISTER": False,
@@ -328,6 +328,8 @@ if env('AWS_ACCESS_KEY_ID') and env('AWS_SECRET_ACCESS_KEY'):
     AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 
 # --- EMAIL settings --- #
+
+DEFAULT_FROM_EMAIL = env.str('DJANGO_DEFAULT_FROM_EMAIL')
 
 if env.bool('DJANGO_AWS_SES_ENABLED') and env('AWS_ACCESS_KEY_ID') and env('AWS_SECRET_ACCESS_KEY'):
     EMAIL_BACKEND = 'django_ses.SESBackend'

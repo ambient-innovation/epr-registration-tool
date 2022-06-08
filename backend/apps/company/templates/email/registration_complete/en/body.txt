@@ -1,0 +1,3 @@
+Your EPR account has been successfully activated.
+
+Login now: {{ url }}

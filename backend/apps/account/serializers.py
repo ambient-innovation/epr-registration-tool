@@ -1,10 +1,8 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth.backends import UserModel
-from django.db.models import EmailField
 
 from ai_kit_auth.serializers import LoginSerializer as OldLoginSerializer
 from ai_kit_auth.serializers import raise_validation
-from ai_kit_auth.settings import api_settings
 from rest_framework import serializers
 
 
@@ -25,24 +23,36 @@ class LoginSerializer(OldLoginSerializer):
 
     def validate(self, attrs):
         # overwritten to return camelcase error, as we use in ours APIs only camelcase
-        ident = attrs.get("ident")
+        email = attrs.get("ident")
         password = attrs.get("password")
-        # find a unique identity
-        for field_name in api_settings.USER_IDENTITY_FIELDS:
-            field = UserModel._meta.get_field(field_name)
-            filter_key = field.name
-            if isinstance(field, EmailField):
-                filter_key += "__iexact"
-            try:
-                ident = UserModel.objects.get(**{filter_key: ident}).get_username()
-            except (UserModel.DoesNotExist, UserModel.MultipleObjectsReturned):
-                continue
-            break
+        request = self.context["request"]
 
-        user = authenticate(self.context["request"], username=ident, password=password)
+        if request.user.is_authenticated:
+            raise_validation('alreadyAuthenticated')
 
-        if not user:
+        # query user to provide more detailed error messages
+        user = UserModel.objects.filter(email=email).first()
+
+        if not user or not user.check_password(password):
             raise_validation("invalidCredentials")
 
-        attrs["user"] = user
+        if not user.is_active:
+            raise_validation("inactiveUser")
+
+        if not user.is_staff:
+            company_id = user.related_company_id
+            if not company_id:
+                raise_validation("missingCompanyRelation")
+
+            from company.models import Company
+
+            if not Company.objects.filter(id=company_id, is_active=True).exists():
+                raise_validation("inactiveCompany")
+
+        authenticated_user = authenticate(request, username=email, password=password)
+
+        if authenticated_user is None:
+            raise_validation("unknownLoginError")
+
+        attrs["user"] = authenticated_user
         return attrs
