@@ -22,6 +22,8 @@ export type Scalars = {
   Float: number
   /** Date with time (isoformat) */
   DateTime: any
+  /** Decimal (fixed-point) */
+  Decimal: any
 }
 
 export type CompanyType = {
@@ -39,9 +41,30 @@ export enum DistributorType {
   LOCAL_PRODUCER = 'LOCAL_PRODUCER',
 }
 
+export type MaterialInput = {
+  materialId: Scalars['ID']
+  quantity: Scalars['Decimal']
+}
+
+export type MaterialType = {
+  __typename?: 'MaterialType'
+  id: Scalars['ID']
+  name: Scalars['String']
+  price: Scalars['Decimal']
+}
+
 export type Mutation = {
   __typename?: 'Mutation'
+  packagingReportSubmit: Scalars['String']
   registerCompany: Scalars['String']
+}
+
+export type MutationPackagingReportSubmitArgs = {
+  packagingRecords: Array<PackagingGroupInput>
+  startMonth: Scalars['Int']
+  timeframe: TimeframeType
+  tzInfo: Scalars['String']
+  year: Scalars['Int']
 }
 
 export type MutationRegisterCompanyArgs = {
@@ -55,11 +78,30 @@ export type MutationRegisterCompanyArgs = {
   userTitle: Scalars['String']
 }
 
+export type PackagingGroupInput = {
+  materialRecords: Array<MaterialInput>
+  packagingGroupId: Scalars['ID']
+}
+
+export type PackagingGroupType = {
+  __typename?: 'PackagingGroupType'
+  id: Scalars['ID']
+  name: Scalars['String']
+}
+
 export type Query = {
   __typename?: 'Query'
   companyDetails?: Maybe<CompanyType>
   helloWorld: Scalars['String']
   me?: Maybe<UserType>
+  packagingGroups: Array<PackagingGroupType>
+  packagingMaterials: Array<MaterialType>
+}
+
+export enum TimeframeType {
+  MONTH = 'MONTH',
+  THREE_MONTHS = 'THREE_MONTHS',
+  TWELVE_MONTHS = 'TWELVE_MONTHS',
 }
 
 export type UserType = {
