@@ -5,6 +5,7 @@ import { Fragment } from 'react'
 import { CompanyType, useCompanyDetailsQuery } from '@/api/__types__'
 import { useUser } from '@/auth/hooks/useUser'
 import { PageLayout } from '@/common/components/PageLayout'
+import { CompletionAlert } from '@/dashboard/components/Dashboard/CompletionAltert'
 import { DashboardHeader } from '@/dashboard/components/Dashboard/DashboardHeader'
 import { containerCss } from '@/homepage/components/Homepage/Homepage.styles'
 import { fontWeights } from '@/theme/typography'
@@ -64,7 +65,11 @@ export const Dashboard = (_: Dashboard): React.ReactElement => {
   }
   return (
     <Box sx={containerCss}>
-      <DashboardHeader userName={`${user.title} ${user.fullName}`} />
+      <CompletionAlert />
+      <DashboardHeader
+        userName={`${user.title} ${user.fullName}`}
+        isReportButtonEnabled={true}
+      />
       {loading ? (
         <Typography>{'loading...'}</Typography>
       ) : companyDetails ? (

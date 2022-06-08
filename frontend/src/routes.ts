@@ -4,4 +4,5 @@ export const ROUTES = {
   registration: '/registration',
   registrationSuccess: '/registration/success',
   dashboard: '/dashboard',
+  dashboardComplete: 'dashboard/complete',
 }
