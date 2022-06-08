@@ -76,6 +76,11 @@
     "createdAt": "Date of registration",
     "lastmodifiedAt": "Last base data update",
     "pleaseLogin": "Please Log In",
-    "noCompanyAssigned": "You have not been assigned to any company"
+    "noCompanyAssigned": "You have not been assigned to any company",
+    "completionAlert": {
+      "link": "Complete Now",
+      "completeYourProfile": "Please complete your profile",
+      "dataNeeded": "Before you can submit a forecast, we still need some data from you. Please click here to complete your profile."
+    }
   }
 }
