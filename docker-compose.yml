@@ -8,6 +8,7 @@ services:
       target: dev
     depends_on:
       - db
+      - mailhog
     container_name: epr_tool_backend
     env_file: ./backend/.env.development
     volumes:
@@ -43,6 +44,13 @@ services:
     ports:
       - "5432:5432"
     restart: "no"
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    container_name: epr_tool_mailhog
+    ports:
+      - "8025:8025"  # email inbox interface
+      - "1025:1025"  # smtp
 
 volumes:
   postgres_data:

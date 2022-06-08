@@ -33,6 +33,7 @@ backend: # Do NOT run database migrations within your backend deployment. Use in
     bucketName: ""
     accessKeyId: ""
     secretAccessKey: ""
+    sesEnabled: true
   axes:
     enabled: true
     reset: false

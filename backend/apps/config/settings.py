@@ -55,6 +55,15 @@ env = environ.Env(
     # Sentry
     DJANGO_SENTRY_DSN=(str, ''),
     DJANGO_SENTRY_ENV=(str, 'local'),
+    # AWS
+    AWS_ACCESS_KEY_ID=(str, None),
+    AWS_SECRET_ACCESS_KEY=(str, None),
+    # Email
+    DJANGO_EMAIL_BACKEND=(str, 'django.core.mail.backends.console.EmailBackend'),
+    DJANGO_EMAIL_HOST=(str, None),
+    DJANGO_EMAIL_PORT=(str, None),
+    DJANGO_AWS_SES_ENABLED=(bool, False),
+    DJANGO_DEFAULT_FROM_EMAIL=(str, 'noreply@ambient.digital'),
     # dev
     ENABLE_DEBUG_TOOLBAR=(bool, False),
 )
@@ -311,3 +320,20 @@ AI_KIT_AUTH = {
     },
     "USER_IDENTITY_FIELDS": ('email',),
 }
+
+# --- AWS --- #
+
+if env('AWS_ACCESS_KEY_ID') and env('AWS_SECRET_ACCESS_KEY'):
+    AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+
+# --- EMAIL settings --- #
+
+if env.bool('DJANGO_AWS_SES_ENABLED') and env('AWS_ACCESS_KEY_ID') and env('AWS_SECRET_ACCESS_KEY'):
+    EMAIL_BACKEND = 'django_ses.SESBackend'
+    AWS_SES_REGION_NAME = 'eu-central-1'
+    AWS_SES_REGION_ENDPOINT = 'email.eu-central-1.amazonaws.com'
+else:
+    EMAIL_BACKEND = env.str('DJANGO_EMAIL_BACKEND')
+    EMAIL_HOST = env.str('DJANGO_EMAIL_HOST')
+    EMAIL_PORT = env.str('DJANGO_EMAIL_PORT')
