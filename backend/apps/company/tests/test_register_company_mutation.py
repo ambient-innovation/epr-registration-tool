@@ -36,7 +36,7 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
         cls.mutation_params = {
             "companyName": "Farwell Co",
             "companyDistributorType": "IMPORTER",
-            "userTitle": "Mr.",
+            "userTitle": "mr",
             "userEmail": "helmut@local.invalid",
             "userFullName": "Helmut Karsten",
             "userPosition": "Da Bozz",

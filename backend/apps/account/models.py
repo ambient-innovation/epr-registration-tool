@@ -8,6 +8,11 @@ from django.utils.translation import gettext_lazy as _
 from account.managers import UserManager
 
 
+class UserTitle(models.TextChoices):
+    MR = 'mr', _('Mr.')
+    MRS = 'ms', _('Ms')
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     """
     An abstract base class implementing a fully featured User model with
@@ -20,7 +25,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     full_name = models.CharField(verbose_name=_('Full name'), max_length=150)
     # blank=True to be able to create admins without this field
-    title = models.CharField(verbose_name=_('Title'), max_length=20, blank=True)
+    title = models.CharField(verbose_name=_('Title'), max_length=20, blank=True, choices=UserTitle.choices)
     # blank=True to be able to create admins without this field
     position = models.CharField(verbose_name=_('Position'), max_length=255, blank=True)
     # blank=True to be able to create admins without this field
