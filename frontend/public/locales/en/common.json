@@ -68,7 +68,8 @@
   "dashboard": {
     "main": "Dashboard",
     "header": {
-      "greeting": "{{userName}}, welcome to your EPR dashboard"
+      "greeting": "{{userName}}, welcome to your EPR dashboard",
+      "submitNewReport": "Submit new report"
     },
     "registrationNumber": "Registration number",
     "distributorType": "Company distributor type",
