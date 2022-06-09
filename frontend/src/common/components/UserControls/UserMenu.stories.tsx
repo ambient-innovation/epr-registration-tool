@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import { Story } from '@storybook/react'
 
-import { UserMenu } from '@/common/components/UserMenu/UserMenu'
+import { UserMenu } from './UserMenu'
 
 export default {
   title: 'Common/UserMenu',

@@ -1,7 +1,8 @@
-import { Box, SxProps, Theme, Typography } from '@mui/material'
+import { Box, Stack, SxProps, Theme, Typography } from '@mui/material'
 import Link from 'next/link'
 
-import { LangSwitcher } from '@/common/components/langSwitcher'
+import { LangSwitcher } from '@/common/components/LangSwitcher'
+import { UserControls } from '@/common/components/UserControls'
 import { ROUTES } from '@/routes'
 import { pxToRemAsString } from '@/theme/utils'
 
@@ -38,7 +39,10 @@ export const PageLayout = ({ children }: PageLayout): React.ReactElement => {
             </Typography>
           </Link>
           <Box>
-            <LangSwitcher />
+            <Stack spacing={10} direction={'row'}>
+              <UserControls />
+              <LangSwitcher />
+            </Stack>
           </Box>
         </Box>
       </Box>
