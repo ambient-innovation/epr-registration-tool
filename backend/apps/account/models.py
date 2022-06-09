@@ -5,7 +5,12 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from account.managers import UserManager
+from account.managers import UserManager, UserQuerySet
+
+
+class UserTitle(models.TextChoices):
+    MR = 'mr', _('Mr.')
+    MRS = 'mrs', _('Mrs.')
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -20,7 +25,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     full_name = models.CharField(verbose_name=_('Full name'), max_length=150)
     # blank=True to be able to create admins without this field
-    title = models.CharField(verbose_name=_('Title'), max_length=20, blank=True)
+    title = models.CharField(verbose_name=_('Title'), max_length=20, blank=True, choices=UserTitle.choices)
     # blank=True to be able to create admins without this field
     position = models.CharField(verbose_name=_('Position'), max_length=255, blank=True)
     # blank=True to be able to create admins without this field
@@ -36,15 +41,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
 
     is_active = models.BooleanField(
-        verbose_name=_('active'),
+        verbose_name=_('Email confirmed'),
         default=True,
-        help_text=_(
-            'Designates whether this user should be treated as active. ' 'Unselect this instead of deleting accounts.'
-        ),
+        help_text=_('Designates whether a user has confirmed his email address'),
     )
     date_joined = models.DateTimeField(verbose_name=_('date joined'), default=timezone.now)
 
-    objects = UserManager()
+    objects = UserManager.from_queryset(UserQuerySet)()
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
@@ -67,3 +70,26 @@ class User(AbstractBaseUser, PermissionsMixin):
         Designates whether the user can log into this admin site.
         """
         return self.is_superuser
+
+
+class NotificationSettings(models.Model):
+    class Meta:
+        verbose_name = _('Notification setting')
+        verbose_name_plural = _('Notification settings')
+
+    related_user = models.OneToOneField(
+        'account.User',
+        verbose_name=_("User"),
+        primary_key=True,
+        on_delete=models.CASCADE,
+        related_name='notification_settings',
+    )
+
+    company_registration = models.BooleanField(
+        verbose_name=_('Company registration'),
+        help_text=_('Receive notifications to review a newly registered company account'),
+        default=True,
+    )
+
+    def __str__(self):
+        return f'Notification settings for user ID={self.related_user_id}'

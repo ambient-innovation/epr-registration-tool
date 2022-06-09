@@ -18,6 +18,7 @@ export interface AuthContextValue {
   loggedIn: boolean
   setLoggedIn: (loggedIn: boolean) => Promise<unknown>
   logout: () => Promise<unknown>
+  activate: (ident: string, token: string) => Promise<unknown>
 }
 
 export const AuthContext = React.createContext<AuthContextValue>({
@@ -26,6 +27,7 @@ export const AuthContext = React.createContext<AuthContextValue>({
   loggedIn: false,
   setLoggedIn: ErrorPromise,
   logout: ErrorPromise,
+  activate: ErrorPromise,
 })
 
 export const UserContext = createContext<UserContextValue>({

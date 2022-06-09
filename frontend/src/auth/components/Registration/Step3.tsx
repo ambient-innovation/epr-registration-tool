@@ -50,6 +50,7 @@ export const Step3 = (_: Step3) => {
       }
       isFinalStep
       apolloError={error}
+      errorTitle={t('registrationForm.registrationFailed')}
     >
       <TextField
         autoFocus

@@ -31,6 +31,7 @@ export const MockUserProvider: FC<MockUserProps> = ({
           loggedIn: !!user,
           setLoggedIn: DontResolvePromise,
           logout: DontResolvePromise,
+          activate: DontResolvePromise,
           ...context,
         }}
       >

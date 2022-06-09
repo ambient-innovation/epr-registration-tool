@@ -1,9 +1,13 @@
-from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.base_user import BaseUserManager
+from django.db.models import QuerySet
+
+
+class UserQuerySet(QuerySet):
+    def staff(self):
+        return self.filter(is_superuser=True)
 
 
 class UserManager(BaseUserManager):
-    use_in_migrations = True
-
     def create_user(self, email, password=None):
         """
         Creates and saves a User with the given email and password.

@@ -19,6 +19,7 @@ import { SchemaOf } from 'yup'
 import * as yup from 'yup'
 
 import { useUser } from '@/auth/hooks/useUser'
+import { getAxiosErrorMessage, handleAxiosError } from '@/auth/utils'
 import { ErrorAlert } from '@/common/components/ErrorAlert'
 import { FormLayout } from '@/common/components/FormLayout'
 import { backgroundSx } from '@/common/components/FormStep/FormStep.styles'
@@ -44,11 +45,13 @@ const schema: SchemaOf<Record<keyof FormData, unknown>> = yup.object().shape({
 
 const resolver = yupResolver(schema)
 
+type LoginError = AxiosError<{ nonFieldErrors?: string[] }>
+
 export const LoginSection = (): React.ReactElement => {
   const { t } = useTranslation()
   const router = useRouter()
   const { login } = useUser()
-  const [nonFieldErrors, setNonFieldErrors] = useState<string[]>([])
+  const [serverError, setServerError] = useState<null | LoginError>(null)
 
   const { register, handleSubmit, formState } = useForm<FormData>({
     mode: 'onTouched',
@@ -68,10 +71,9 @@ export const LoginSection = (): React.ReactElement => {
   const onSubmit = ({ email, password, rememberMe }: FormData) => {
     return login(email, password, rememberMe)
       .then(() => router.push(ROUTES.dashboard))
-      .catch((error: AxiosError) => {
-        const nonFieldErrors = (error.response?.data as AxiosErrorData)
-          .nonFieldErrors || ['unknownError']
-        setNonFieldErrors(nonFieldErrors)
+      .catch((error: LoginError) => {
+        handleAxiosError(error)
+        setServerError(error)
       })
   }
 
@@ -86,11 +88,13 @@ export const LoginSection = (): React.ReactElement => {
       </Typography>
       <section>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <Box component={'header'} sx={backgroundSx}>
-            <Typography variant={'h6'}>{t('loginForm.title')}</Typography>
-            <Typography variant={'body1'} mt={{ xs: 5, sm: 6 }}>
-              {t('loginForm.description')}
-            </Typography>
+          <Box sx={backgroundSx}>
+            <header>
+              <Typography variant={'h6'}>{t('loginForm.title')}</Typography>
+              <Typography variant={'body1'} mt={{ xs: 5, sm: 6 }}>
+                {t('loginForm.description')}
+              </Typography>
+            </header>
             <Box marginTop={{ xs: 9, md: 10 }}>
               <Stack spacing={DEFAULT_FORM_SPACING}>
                 <TextField
@@ -119,6 +123,19 @@ export const LoginSection = (): React.ReactElement => {
               </Stack>
             </Box>
           </Box>
+          {serverError && (
+            <Box mt={5}>
+              <ErrorAlert title={t('loginForm.loginFailed')}>
+                {getAxiosErrorMessage(
+                  serverError,
+                  (data) =>
+                    data.nonFieldErrors &&
+                    `serverErrors.${data.nonFieldErrors[0]}`,
+                  t
+                )}
+              </ErrorAlert>
+            </Box>
+          )}
           <Box component={'footer'} sx={footerSx}>
             <NextLink href={ROUTES.registration} passHref>
               <Link>{t('loginForm.registerLink')}</Link>
@@ -132,14 +149,6 @@ export const LoginSection = (): React.ReactElement => {
               {formState.isSubmitting ? t('loading') : t('loginForm.signIn')}
             </Button>
           </Box>
-          {nonFieldErrors.length > 0 &&
-            nonFieldErrors.map((error) => (
-              <ErrorAlert
-                title={t(`common:serverErrors.${error}`)}
-                key={error}
-                sx={{ marginTop: 4, borderRadius: 3 }}
-              />
-            ))}
         </form>
       </section>
     </FormLayout>

@@ -3,8 +3,6 @@
 import django.utils.timezone
 from django.db import migrations, models
 
-import account.managers
-
 
 class Migration(migrations.Migration):
 
@@ -44,9 +42,8 @@ class Migration(migrations.Migration):
                     'is_active',
                     models.BooleanField(
                         default=True,
-                        help_text='Designates whether this user should be treated as active. '
-                        'Unselect this instead of deleting accounts.',
-                        verbose_name='active',
+                        help_text='Designates whether a user has confirmed his email address',
+                        verbose_name='Email confirmed',
                     ),
                 ),
                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),
@@ -78,8 +75,6 @@ class Migration(migrations.Migration):
                 'verbose_name': 'user',
                 'verbose_name_plural': 'users',
             },
-            managers=[
-                ('objects', account.managers.UserManager()),
-            ],
+            managers=[],
         ),
     ]

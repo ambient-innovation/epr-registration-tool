@@ -1,3 +1,5 @@
+from django.core import mail
+
 from model_bakery import baker
 
 from account.models import User
@@ -36,7 +38,7 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
         cls.mutation_params = {
             "companyName": "Farwell Co",
             "companyDistributorType": "IMPORTER",
-            "userTitle": "Mr.",
+            "userTitle": "mr",
             "userEmail": "helmut@local.invalid",
             "userFullName": "Helmut Karsten",
             "userPosition": "Da Bozz",
@@ -47,8 +49,15 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
     def test_register_a_company_should_create_company_and_user(self):
         content = self.query_and_load_data(self.MUTATION, variables=self.mutation_params)
         self.assertEqual(content['registerCompany'], 'CREATED')
-        self.assertEqual(Company.objects.count(), 1)
-        self.assertTrue(User.objects.filter(email='helmut@local.invalid').exists())
+        company = Company.objects.filter(is_active=False, name="Farwell Co").first()
+        self.assertIsNotNone(company)
+        self.assertTrue(
+            User.objects.filter(email='helmut@local.invalid', is_active=False, related_company__id=company.id).exists()
+        )
+        # assert activation email to be sent
+        self.assertEqual(1, len(mail.outbox))
+        self.assertEqual(['helmut@local.invalid'], mail.outbox[0].to)
+        self.assertEqual('noreply@ambient.digital', mail.outbox[0].from_email)
 
     def test_register_a_company_with_invalid_company_name(self):
         self.mutation_params['companyName'] = '  '

@@ -32,3 +32,5 @@ data:
   DATABASE_HOST: {{.Values.backend.db.host | quote }}
   DATABASE_PORT: {{.Values.backend.db.port | quote }}
   DATABASE_USERNAME: {{.Values.backend.db.username | quote }}
+  # email
+  DJANGO_AWS_SES_ENABLED: {{ .Values.backend.aws.sesEnabled | quote }}

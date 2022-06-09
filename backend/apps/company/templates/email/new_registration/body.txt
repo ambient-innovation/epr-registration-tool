@@ -1,0 +1,8 @@
+A newly registered company is waiting for activation.
+
+Check and confirm company details:
+
+{{ url }}
+
+Newly registered companies must be confirmed by a staff member.
+Before that the company will not be able to log into their account and create reports.

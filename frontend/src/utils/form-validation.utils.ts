@@ -20,7 +20,7 @@ export const passwordValidator = () =>
     .test(
       'len',
       'validations.passwordTooShort',
-      (val) => !val || val.length > 9
+      (val) => !val || val.length >= 8
     )
 
 export const requiredStringValidator = () =>

@@ -9,7 +9,7 @@ stages:
 
 # When using dind, it's wise to use the overlays driver for improved performance.
 variables:
-  TEST_HELM_CHART_VERSION: "0.3.0"
+  TEST_HELM_CHART_VERSION: "0.4.0"
   DOCKER_DRIVER: overlay2
   IMAGE_TAG_BACKEND: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_REF_SLUG
   IMAGE_TAG_FRONTEND: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_REF_SLUG
@@ -143,6 +143,8 @@ backend:test:
     --set backend.django.secretKey=$DJANGO_SECRET
     --set backend.image.tag=$CI_COMMIT_SHORT_SHA
     --set frontend.image.tag=$CI_COMMIT_SHORT_SHA
+    --set backend.aws.accessKeyId=$AWS_ACCESS_KEY_ID
+    --set backend.aws.secretAccessKey=$AWS_SECRET_ACCESS_KEY
     --version $HELM_CHART_VERSION
     --no-prompt $RANCHER2_PROJECT_ID:$CATALOG_NAME-$HELM_CHART_NAME $RANCHER_APP_NAME
 

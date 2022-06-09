@@ -5,7 +5,7 @@ import { useMeQuery } from '@/api/__types__'
 import { handleError } from '@/utils/error.utils'
 
 import { AuthContext, UserContext } from './UserContext'
-import { loginAPI, logoutAPI } from './api'
+import { loginAPI, logoutAPI, activateEmailAddressAPI } from './api'
 
 export interface UserProvider {
   children: React.ReactNode
@@ -61,6 +61,7 @@ export const UserProvider = ({
           loggedIn: !!user || loggedIn,
           logout,
           setLoggedIn: _setLoggedIn,
+          activate: activateEmailAddressAPI,
         }}
       >
         {children}

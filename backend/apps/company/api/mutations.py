@@ -4,7 +4,9 @@ from django.db import transaction
 
 import strawberry
 from graphql import GraphQLError
+from sentry_sdk import capture_exception
 
+from account.email import send_user_activation_notification
 from account.models import User
 from company.models import Company, DistributorType
 
@@ -22,6 +24,7 @@ def register_company(
     company = Company(
         name=company_name.strip(),
         distributor_type=company_distributor_type,
+        is_active=False,
     )
     user = User(
         email=user_email.strip(),
@@ -30,6 +33,7 @@ def register_company(
         position=user_position.strip(),
         phone_or_mobile=user_phone_or_mobile.strip(),
         related_company=company,
+        is_active=False,
     )
     user.set_password(password)
 
@@ -60,6 +64,12 @@ def register_company(
     with transaction.atomic():
         company.save()
         user.save()
+
+    try:
+        send_user_activation_notification(user)
+    except Exception as e:
+        # failing emails should not break the registration
+        capture_exception(e)
 
     return 'CREATED'
 

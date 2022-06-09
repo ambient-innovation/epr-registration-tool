@@ -56,7 +56,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='user',
             name='title',
-            field=models.CharField(blank=True, max_length=20, verbose_name='Title'),
+            field=models.CharField(
+                blank=True,
+                choices=[('mr', 'Mr.'), ('mrs', 'Mrs.')],
+                max_length=20,
+                verbose_name='Title',
+            ),
         ),
         migrations.AlterField(
             model_name='user',

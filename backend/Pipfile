@@ -20,6 +20,7 @@ django-axes = "*"                                                       # preven
 gunicorn = "==20.1.0"
 whitenoise = "==6.0.0"
 # other
+django-ses = "~=3.0.1"                                                  # AWS SES mailing
 sentry-sdk = "~=1.5.4"                                                  # loggin / reporting
 ai-django-core = "==5.14.1"                                             # various useful helper functions    
 pyyaml = "*"                                                            # to be able to load yaml fixtures

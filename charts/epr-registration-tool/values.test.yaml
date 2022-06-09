@@ -28,6 +28,7 @@ backend:
     bucketName: ""
     accessKeyId: ""
     secretAccessKey: ""
+    sesEnabled: true
   axes:
     enabled: true
     reset: false
