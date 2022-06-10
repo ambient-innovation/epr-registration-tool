@@ -24,7 +24,7 @@ backend:
     trustedCORSOrigins: "https://api.epr-tool.ambient.digital,https://epr-tool.ambient.digital,http://0.0.0.0:8000,http://localhost:8000,http://localhost:3000,http://127.0.0.1:3000"
     trustedCSRFOrigins: "https://api.epr-tool.ambient.digital,https://epr-tool.ambient.digital,http://0.0.0.0:8000,http://localhost:8000,http://localhost:3000,http://127.0.0.1:3000"
   aws:
-    enabled: false
+    enabled: true
     bucketName: ""
     accessKeyId: ""
     secretAccessKey: ""
