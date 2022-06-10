@@ -1,7 +1,9 @@
 import { useApolloClient } from '@apollo/client'
+import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 
 import { useMeQuery } from '@/api/__types__'
+import { ROUTES } from '@/routes'
 import { handleError } from '@/utils/error.utils'
 
 import { AuthContext, UserContext } from './UserContext'
@@ -16,6 +18,7 @@ export const UserProvider = ({
   children,
 }: UserProvider): React.ReactElement => {
   const client = useApolloClient()
+  const router = useRouter()
 
   const [loggedIn, setLoggedIn] = useState(false)
   const { data: userData, loading: userLoading } = useMeQuery()
@@ -41,6 +44,7 @@ export const UserProvider = ({
   const logout = () => {
     setLoggedIn(false)
     return logoutAPI()
+      .then(() => router.push(ROUTES.login))
       .catch((error) => handleError(error))
       .finally(() => {
         return client.resetStore()
