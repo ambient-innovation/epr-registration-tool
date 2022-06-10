@@ -93,7 +93,7 @@
     "youCanLoginNow": "Everything has been set up and you can now log in."
   },
   "logout": "Logout",
-  "paigeHeader": {
+  "pageHeader": {
     "languageSwitch": "Language switcher",
     "userMenu": "User menu"
   },

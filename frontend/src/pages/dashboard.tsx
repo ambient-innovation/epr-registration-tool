@@ -4,6 +4,7 @@ import Head from 'next/head'
 
 import { PageLayout } from '@/common/components/PageLayout'
 import { Dashboard } from '@/dashboard/components/Dashboard'
+import { ROUTES } from '@/routes'
 
 const DashboardPage: NextPage = () => {
   return (
@@ -14,7 +15,7 @@ const DashboardPage: NextPage = () => {
           name={'description'}
           content={'Dashboard | EPR Registration Tool'}
         />
-        <link rel={'canonical'} href={'/'} />
+        <link rel={'canonical'} href={ROUTES.dashboard} />
       </Head>
       <PageLayout>
         <Dashboard />

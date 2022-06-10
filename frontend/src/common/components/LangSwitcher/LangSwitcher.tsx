@@ -31,7 +31,7 @@ export const LangSwitcher = () => {
 
   return (
     <>
-      <Tooltip title={t('paigeHeader.languageSwitch')}>
+      <Tooltip title={t('pageHeader.languageSwitch')}>
         <IconButton
           id={BUTTON_ID}
           onClick={handleClick}

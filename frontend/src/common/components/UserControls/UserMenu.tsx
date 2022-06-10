@@ -1,4 +1,5 @@
 import { Logout } from '@mui/icons-material'
+import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import {
   Avatar,
@@ -11,9 +12,11 @@ import {
   Typography,
 } from '@mui/material'
 import { useTranslation } from 'next-i18next'
+import NextLink from 'next/link'
 import { MouseEvent, useState } from 'react'
 
 import { useUser } from '@/auth/hooks/useUser'
+import { ROUTES } from '@/routes'
 import { fontWeights } from '@/theme/typography'
 
 const menuId = 'account-menu'
@@ -34,7 +37,7 @@ export const UserMenu = () => {
   return (
     <>
       <Box>
-        <Tooltip title={t('paigeHeader.userMenu')}>
+        <Tooltip title={t('pageHeader.userMenu')}>
           <IconButton
             onClick={handleClick}
             size={'small'}
@@ -70,6 +73,27 @@ export const UserMenu = () => {
           },
         }}
       >
+        <NextLink href={ROUTES.dashboard}>
+          <MenuItem>
+            <ListItemIcon>
+              <DashboardCustomizeIcon
+                fontSize={'small'}
+                sx={{
+                  marginRight: '2rem',
+                  color: 'primary.main',
+                }}
+              />
+            </ListItemIcon>
+            <Typography
+              variant={'body1'}
+              component={'span'}
+              fontWeight={fontWeights.regular}
+              color={'primary.main'}
+            >
+              {t('dashboard.main')}
+            </Typography>
+          </MenuItem>
+        </NextLink>
         <MenuItem onClick={() => logout()}>
           <ListItemIcon>
             <Logout
