@@ -25,7 +25,12 @@ def packaging_report_submit(
     packaging_records: typing.List[PackagingGroupInput],
 ) -> str:
     current_user: User = info.context.request.user
-    # todo check if company is active
+    related_company = current_user.related_company
+    if not related_company:
+        raise GraphQLError('noCompanyAssigned')
+    if not related_company.is_active:
+        raise GraphQLError('inactiveCompany')
+
     report = PackagingReport(
         timeframe=timeframe, year=year, start_month=start_month, timezone_info=tz_info, created_by=current_user
     )
