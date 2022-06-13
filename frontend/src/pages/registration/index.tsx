@@ -4,6 +4,7 @@ import Head from 'next/head'
 
 import { RegistrationSection } from '@/auth/components/Registration'
 import { PageLayout } from '@/common/components/PageLayout/PageLayout'
+import { NotLoggedInPage } from '@/common/components/PageProtection'
 
 const RegistrationPage: NextPage = () => {
   return (
@@ -17,7 +18,9 @@ const RegistrationPage: NextPage = () => {
         <link rel={'canonical'} href={'/'} />
       </Head>
       <PageLayout>
-        <RegistrationSection />
+        <NotLoggedInPage>
+          <RegistrationSection />
+        </NotLoggedInPage>
       </PageLayout>
     </>
   )

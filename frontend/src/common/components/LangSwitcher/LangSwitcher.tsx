@@ -1,4 +1,5 @@
 import { Language } from '@mui/icons-material'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import {
   Menu,
   ListItemIcon,
@@ -42,6 +43,7 @@ export const LangSwitcher = () => {
           aria-expanded={open ? 'true' : undefined}
         >
           <Language sx={{ color: 'common.white', width: 33, height: 33 }} />
+          <KeyboardArrowDownIcon sx={{ color: 'common.white' }} />
         </IconButton>
       </Tooltip>
       <Menu

@@ -7,13 +7,17 @@ import Head from 'next/head'
 import { EmailConfirmation } from '@/auth/components/Activation'
 import { DefaultPageHead } from '@/common/components/DefaultPageHead'
 import { PageLayout } from '@/common/components/PageLayout'
+import { ROUTES } from '@/routes'
 
 const ActivationPage: NextPage = () => {
   const { t } = useTranslation()
   return (
     <>
       <Head>
-        <DefaultPageHead subPageTitle={t('activation.activation')} />
+        <DefaultPageHead
+          subPageTitle={t('activation.activation')}
+          relativePath={ROUTES.accountActivation}
+        />
       </Head>
       <PageLayout>
         <EmailConfirmation />

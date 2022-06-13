@@ -26,7 +26,6 @@ input MaterialInput {
 type MaterialType {
   id: ID!
   name: String!
-  price: Decimal!
 }
 
 type Mutation {
@@ -49,6 +48,7 @@ type Query {
   companyDetails: CompanyType
   packagingGroups: [PackagingGroupType!]!
   packagingMaterials: [MaterialType!]!
+  packagingReportFeesEstimation(timeframe: TimeframeType!, year: Int!, startMonth: Int!, packagingRecords: [PackagingGroupInput!]!): Decimal!
   helloWorld: String!
 }
 

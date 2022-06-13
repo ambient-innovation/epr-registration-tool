@@ -36,6 +36,7 @@ class PackagingReportAdmin(admin.ModelAdmin):
         'timeframe',
         'year',
         'start_month',
+        'timezone_info',
         'lastmodified_by',
         'created_by',
         'created_at',

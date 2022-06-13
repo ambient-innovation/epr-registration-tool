@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 
 from ai_django_core.models import CommonInfo
 
+from common.models import Month
 from common.validators import validate_greater_than_zero
 
 
@@ -57,7 +58,9 @@ class PackagingReport(CommonInfo):
         choices=TimeframeType.choices,
     )
     year = models.PositiveIntegerField(verbose_name=_('Year'), validators=[validate_report_year])
-    start_month = models.PositiveIntegerField(verbose_name=_('Start Month'), validators=[validate_report_month])
+    start_month = models.PositiveIntegerField(
+        verbose_name=_('Start Month'), validators=[validate_report_month], choices=Month.choices
+    )
     timezone_info = models.CharField(
         verbose_name=_('Timezone info'), max_length=32, validators=[validate_report_timezone]
     )

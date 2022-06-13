@@ -6,7 +6,7 @@ import * as yup from 'yup'
 import { SchemaOf } from 'yup'
 
 import { getTitleOptions } from '@/auth/components/Registration/constants'
-import { FormStep } from '@/common/components/FormStep'
+import { FormStep, FormStepContainer } from '@/common/components/FormStep'
 import { DEFAULT_FORM_SPACING } from '@/common/components/FormStep/constants'
 import { SelectField } from '@/common/components/SelectField'
 import { pxToRemAsString } from '@/theme/utils'
@@ -31,7 +31,7 @@ type FormData = Pick<RegistrationData, FieldName>
 
 export type Step2 = Record<string, never>
 
-const schema: SchemaOf<Record<keyof FormData, unknown>> = yup.object({
+const schema: SchemaOf<Record<FieldName, unknown>> = yup.object({
   userEmail: emailValidator(),
   userTitle: requiredStringValidator(),
   userFullName: requiredStringValidator(),
@@ -57,68 +57,69 @@ export const Step2 = (_: Step2) => {
   const { errors } = formState
 
   return (
-    <FormStep
-      title={t('registrationForm.step2Title')}
-      description={t('registrationForm.step2Description')}
-      onSubmit={handleSubmit(onSubmit)}
-      onClickBack={goToPrevStep}
-    >
-      <Stack spacing={DEFAULT_FORM_SPACING}>
-        <TextField
-          autoFocus // autofocus first field
-          label={t('email')}
-          error={!!errors?.userEmail}
-          helperText={
-            errorMsg(errors?.userEmail?.message) ||
-            (t('registrationForm.emailHelpText') as string)
-          }
-          type={'email'}
-          required
-          {...register('userEmail')}
-        />
-        <Divider />
-        <Stack
-          // for some reason the spacing does not work when only defining `sm`
-          direction={{ xs: 'column', sm: 'row', md: 'row' }}
-          spacing={DEFAULT_FORM_SPACING}
-        >
-          <SelectField
-            sx={{
-              width: { sm: pxToRemAsString(120) },
-            }}
-            label={t('registrationForm.title')}
-            error={!!errors?.userTitle}
-            helperText={errorMsg(errors?.userTitle?.message)}
-            defaultValue={initialData.userTitle}
-            options={getTitleOptions(t)}
-            fullWidth
+    <FormStep onSubmit={handleSubmit(onSubmit)} onClickBack={goToPrevStep}>
+      <FormStepContainer
+        title={t('registrationForm.step2Title')}
+        description={t('registrationForm.step2Description')}
+      >
+        <Stack spacing={DEFAULT_FORM_SPACING}>
+          <TextField
+            autoFocus // autofocus first field
+            label={t('email')}
+            error={!!errors?.userEmail}
+            helperText={
+              errorMsg(errors?.userEmail?.message) ||
+              (t('registrationForm.emailHelpText') as string)
+            }
+            type={'email'}
             required
-            {...register('userTitle')}
+            dir={'ltr'} // email always written from left
+            {...register('userEmail')}
+          />
+          <Divider />
+          <Stack
+            // for some reason the spacing does not work when only defining `sm`
+            direction={{ xs: 'column', sm: 'row', md: 'row' }}
+            spacing={DEFAULT_FORM_SPACING}
+          >
+            <SelectField
+              sx={{
+                width: { sm: pxToRemAsString(120) },
+              }}
+              label={t('registrationForm.title')}
+              error={!!errors?.userTitle}
+              helperText={errorMsg(errors?.userTitle?.message)}
+              defaultValue={initialData.userTitle}
+              options={getTitleOptions(t)}
+              fullWidth
+              required
+              {...register('userTitle')}
+            />
+            <TextField
+              label={t('registrationForm.fullName')}
+              error={!!errors?.userFullName}
+              helperText={errorMsg(errors?.userFullName?.message)}
+              fullWidth
+              required
+              {...register('userFullName')}
+            />
+          </Stack>
+          <TextField
+            label={t('registrationForm.position')}
+            error={!!errors?.userPosition}
+            helperText={errorMsg(errors?.userPosition?.message)}
+            required
+            {...register('userPosition')}
           />
           <TextField
-            label={t('registrationForm.fullName')}
-            error={!!errors?.userFullName}
-            helperText={errorMsg(errors?.userFullName?.message)}
-            fullWidth
+            label={t('registrationForm.phoneMobileNumber')}
+            error={!!errors?.userPhone}
+            helperText={errorMsg(errors?.userPhone?.message)}
             required
-            {...register('userFullName')}
+            {...register('userPhone')}
           />
         </Stack>
-        <TextField
-          label={t('registrationForm.position')}
-          error={!!errors?.userPosition}
-          helperText={errorMsg(errors?.userPosition?.message)}
-          required
-          {...register('userPosition')}
-        />
-        <TextField
-          label={t('registrationForm.phoneMobileNumber')}
-          error={!!errors?.userPhone}
-          helperText={errorMsg(errors?.userPhone?.message)}
-          required
-          {...register('userPhone')}
-        />
-      </Stack>
+      </FormStepContainer>
     </FormStep>
   )
 }

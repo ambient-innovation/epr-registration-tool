@@ -19,10 +19,6 @@ class MaterialType:
     id: auto
     name: auto
 
-    @strawberry.field
-    def price(self: Material) -> decimal.Decimal:
-        return self.latest_price()
-
 
 @strawberry.input
 class MaterialInput:

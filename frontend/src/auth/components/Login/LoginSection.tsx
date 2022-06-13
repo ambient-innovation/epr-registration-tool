@@ -105,6 +105,7 @@ export const LoginSection = (): React.ReactElement => {
                   fullWidth
                   required
                   {...register('email')}
+                  dir={'ltr'} // email always written from left
                 />
                 <TextField
                   label={t('password')}

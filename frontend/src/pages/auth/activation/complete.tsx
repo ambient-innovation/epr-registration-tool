@@ -7,13 +7,17 @@ import Head from 'next/head'
 import { ActivationComplete } from '@/auth/components/Activation'
 import { DefaultPageHead } from '@/common/components/DefaultPageHead'
 import { PageLayout } from '@/common/components/PageLayout'
+import { ROUTES } from '@/routes'
 
 const ActivationCompletePage: NextPage = () => {
   const { t } = useTranslation()
   return (
     <>
       <Head>
-        <DefaultPageHead subPageTitle={t('activation.registrationComplete')} />
+        <DefaultPageHead
+          subPageTitle={t('activation.registrationComplete')}
+          relativePath={ROUTES.dashboardComplete}
+        />
       </Head>
       <PageLayout>
         <ActivationComplete />

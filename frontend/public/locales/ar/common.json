@@ -12,6 +12,7 @@
   "loading": "يرجى الانتظار",
   "pleaseWait": "Please wait ...",
   "eprTool": "EPR Registration Tool",
+  "kg": "كلغ",
   "registrationForm": {
     "createNewAccount": "انشاء حساب جديد",
     "generalCompanyInformation": "معلومات عامة عن الشركة",
@@ -37,6 +38,38 @@
     "step3Description": "أيضًا ، لا يوجد من يحب الألم نفسه أو يسعى إليه أو يرغب فيه لمجرد أنه ألم ، ما لم تكن هناك ظروف عرضية يمكن أن يجلب فيها الكدح والألم متعة كبيرة له. لنأخذ مثالاً تافهًا ، من منا يشارك في أي وقت مضى في تمرين شاق إلا للاستفادة منه.",
     "registrationFailed": "Registration failed"
   },
+  "timeframe": {
+    "month_one": "1 شهر",
+    "month_plural": "{{count}} اشهر"
+  },
+  "reportForm": {
+    "createSubPageTitle": "إنشاء تقرير جديد",
+    "successSubPageTitle": "تم الإبلاغ بنجاح",
+    "formLabel": "إرسال تقرير التعبئة والتغليف",
+    "timeframe": "الإطار الزمني",
+    "packagingDetails": "تفاصيل التعبئة",
+    "estimatedFees": "الرسوم المقدرة",
+    "step1Title": "الإطار الزمني للتقرير",
+    "step1Description": "لا يوجد من يحب الألم نفسه أو يسعى إليه أو يرغب فيه لمجرد أنه ألم ، ما لم تكن هناك ظروف عرضية.",
+    "startDate": "تاريخ بدء التوقعات",
+    "packagingEntryNum": "إدخال التغليف {{num}}",
+    "packagingEntryDescription": "لا يوجد من يحب الألم نفسه أو يسعى إليه أو يرغب فيه لمجرد أنه ألم ، ما لم تكن هناك ظروف عرضية.",
+    "deleteEntry": "حذف المدخل",
+    "addEntry": "أضف مدخل جديد",
+    "selectPackagingGroup": "الرجاء تحديد مجموعة حزم",
+    "packagingGroup": "مجموعة التعبئة والتغليف",
+    "step3Title": "الرسوم المقدرة",
+    "step3Description": "بناءً على معلوماتك ، قمنا بحساب الرسوم التالية.",
+    "netPricePlusVat": "السعر الصافي بالإضافة إلى ضريبة القيمة المضافة القانونية",
+    "material": "مواد",
+    "addMaterial": "أضف مادة أخرى",
+    "createReportSuccessTitle": "شكرا لك على  التقرير",
+    "createReportSuccessDescription": "تم إنشاء تقرير التنبؤ بنجاح ويمكنك العثور عليه في لوحة المعلومات.",
+    "createAnotherReport": "إرسال تقرير آخر",
+    "proceedToHomepage": "انتقل إلى الصفحة الرئيسية",
+    "estimatedFeesResult": "السعر {{fees}} د.أ",
+    "reportSuccessful": "تم الإبلاغ عن النجاح"
+  },
   "validations": {
     "required": "هذه الخانة مطلوبه",
     "emailInvalid": "يرجى إدخال عنوان بريد إلكتروني صالح",
@@ -44,12 +77,20 @@
     "passwordMustHaveUppercase": "يجب أن تحتوي كلمة المرور على حرف واحد كبير على الأقل",
     "passwordMustHaveLowercase": "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل",
     "passwordMustHaveOneNumber": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل",
-    "passwordMustHaveSpecialCharacter": "يجب أن تحتوي كلمة المرور على حرف خاص واحد على الأقل, على سبيل المثال., ! @ # ? ]"
+    "passwordMustHaveSpecialCharacter": "يجب أن تحتوي كلمة المرور على حرف خاص واحد على الأقل, على سبيل المثال., ! @ # ? ]",
+    "reportStartDateValid": "يرجى تحديد تاريخ صالح على شكل شهر سنة: Jan 2024",
+    "startDateMin": "لا يمكن أن يكون التاريخ قبل بداية الشهر المقبل",
+    "numberType": "الرجاء إدخال رقم صحيح",
+    "greaterThanZero": "يجب أن يكون أكبر من الصفر أو إزالته.",
+    "forecastShouldBeInSameYear": "يجب أن تبدأ التوقعات وتنتهي في نفس العام",
+    "atLeastOnPackagingGroup": "مطلوب مجموعة تغليف واحدة على الأقل",
+    "atLeastOnPackagingMaterial": "مطلوب مادة واحدة على الأقل",
+    "notUniqueGroups": "يجب أن تكون مجموعات الحزم فريدة عبر الإدخالات"
   },
   "serverErrors": {
-    "unknownError":  "فشل الخادم في معالجة طلبك. يرجى إعادة التحميل وحاول مرة أخرى.",
+    "unknownError": "فشل الخادم في معالجة طلبك. يرجى إعادة التحميل وحاول مرة أخرى.",
     "generic403": "Request failed with status code 403 (permission denied).",
-    "genericNetworkError":  "لا يمكن الوصول إلى الخادم. يرجى التحقق من اتصالك بالإنترنت وحاول مرة أخرى.",
+    "genericNetworkError": "لا يمكن الوصول إلى الخادم. يرجى التحقق من اتصالك بالإنترنت وحاول مرة أخرى.",
     "permissionDenied": "ليس لديك إذن للقيام بهذا العمل.",
     "validationError": "يبدو أن هناك مشكلة في التحقق من صحة البيانات المقدمة.",
     "userEmailDoesAlreadyExist": "مستخدم بعنوان البريد الإلكتروني هذا مسجل بالفعل لشركة قائمة.",
@@ -57,7 +98,9 @@
     "inactiveCompany": "You company account has not been activated yet. You will be notified via email once this is done.",
     "missingCompanyRelation": "You cannot login because your account is not associated with a company.",
     "alreadyAuthenticated": "You are signed in with another account. Please log out and try again.",
-    "inactiveUser": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link."
+    "inactiveUser": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link.",
+    "packagingGroupDoesNotExist": "إحدى مجموعات الحزم المحددة غير موجودة",
+    "materialDoesNotExist": "إحدى المواد المختارة غير موجودة"
   },
   "internalErrors": {
     "unknownError": "Something unexpected happened. Please reload and try again."
@@ -107,8 +150,8 @@
     "distributorType": "نوع موزع الشركة",
     "createdAt": "تاريخ التسجيل",
     "lastmodifiedAt": "آخر تحديث لبيانات القاعدة",
-    "pleaseLogin": "الرجاء تسجيل الدخول",
     "noCompanyAssigned": "لم يتم تعيينك لأية شركة",
+    "pleaseLogin": "الرجاء تسجيل الدخول",
     "completionAlert": {
       "link": "أكمل الآن",
       "completeYourProfile": "يرجى استكمال ملف التعريف الخاص بك",

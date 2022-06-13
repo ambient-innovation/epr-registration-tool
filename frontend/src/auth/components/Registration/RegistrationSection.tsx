@@ -49,6 +49,7 @@ export type RegistrationSection = Record<string, never>
 
 export const RegistrationSection = () => {
   const { t } = useTranslation()
+
   return (
     <FormLayout>
       <Typography

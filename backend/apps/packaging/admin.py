@@ -1,5 +1,3 @@
-import datetime
-
 from django.contrib import admin
 from django.db.models import F
 from django.utils.translation import gettext_lazy as _
@@ -7,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from modeltranslation.admin import TranslationAdmin
 
 from packaging.models import Material, MaterialPrice, PackagingGroup
-from packaging.price_utils import get_material_price_at
+from packaging.price_utils import get_material_latest_price
 
 
 class MaterialPriceInline(admin.StackedInline):
@@ -38,8 +36,7 @@ class MaterialAdmin(TranslationAdmin):
 
     @admin.display(description=_('Current price (kg)'))
     def current_price(self, obj):
-        today = datetime.date.today()
-        material_price = get_material_price_at(obj.id, year=today.year, month=today.month)
+        material_price = get_material_latest_price(obj.id)
         return (
             f'{material_price.price_per_kg} ({material_price.start_month}.{material_price.start_year})'
             if material_price
