@@ -16,7 +16,7 @@ data:
   DJANGO_COOKIE_DOMAIN: {{ .Values.ingress.host.frontend | quote }}
   DJANGO_SENTRY_DSN: {{ .Values.backend.sentry.dsn | quote }}
   DJANGO_SENTRY_ENV: {{ .Values.backend.sentry.environment | quote }}
-  DJANGO_BASE_URL:  "https://{{ .Values.ingress.host.backend}}"
+  DJANGO_SERVER_URL:  "https://{{ .Values.ingress.host.backend}}"
   DJANGO_FRONTEND_URL: "https://{{ .Values.ingress.host.frontend}}"
   AWS_BUCKET_NAME: {{ .Values.backend.aws.bucketName | quote }}
   PYTHONUNBUFFERED: "1"
