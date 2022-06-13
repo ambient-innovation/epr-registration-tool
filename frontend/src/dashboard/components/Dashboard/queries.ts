@@ -6,9 +6,10 @@ export const COMPANY_DETAILS = gql`
       id
       name
       distributorType
-      registrationNumber
+      identificationNumber
       createdAt
       lastmodifiedAt
+      isProfileCompleted
     }
   }
 `

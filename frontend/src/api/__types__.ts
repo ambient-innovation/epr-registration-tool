@@ -26,14 +26,25 @@ export type Scalars = {
   Decimal: any
 }
 
+export type CompanyProfileInputType = {
+  additionalAddressInfo?: InputMaybe<Scalars['String']>
+  city: Scalars['String']
+  country: Scalars['String']
+  phoneNumber: Scalars['String']
+  postalCode?: InputMaybe<Scalars['String']>
+  street: Scalars['String']
+  streetNumber?: InputMaybe<Scalars['String']>
+}
+
 export type CompanyType = {
   __typename?: 'CompanyType'
   createdAt: Scalars['DateTime']
   distributorType: Scalars['String']
   id: Scalars['ID']
+  identificationNumber?: Maybe<Scalars['String']>
+  isProfileCompleted: Scalars['Boolean']
   lastmodifiedAt: Scalars['DateTime']
   name: Scalars['String']
-  registrationNumber: Scalars['String']
 }
 
 export enum DistributorType {
@@ -54,8 +65,14 @@ export type MaterialType = {
 
 export type Mutation = {
   __typename?: 'Mutation'
+  createCompanyProfile: Scalars['String']
   packagingReportSubmit: Scalars['String']
   registerCompany: Scalars['String']
+}
+
+export type MutationCreateCompanyProfileArgs = {
+  identificationNumber: Scalars['String']
+  profileData: CompanyProfileInputType
 }
 
 export type MutationPackagingReportSubmitArgs = {
@@ -148,6 +165,16 @@ export type MeQuery = {
   } | null
 }
 
+export type CreateCompanyProfileMutationVariables = Exact<{
+  profileData: CompanyProfileInputType
+  identificationNumber: Scalars['String']
+}>
+
+export type CreateCompanyProfileMutation = {
+  __typename?: 'Mutation'
+  createCompanyProfile: string
+}
+
 export type CompanyDetailsQueryVariables = Exact<{ [key: string]: never }>
 
 export type CompanyDetailsQuery = {
@@ -157,9 +184,10 @@ export type CompanyDetailsQuery = {
     id: string
     name: string
     distributorType: string
-    registrationNumber: string
+    identificationNumber?: string | null
     createdAt: any
     lastmodifiedAt: any
+    isProfileCompleted: boolean
   } | null
 }
 
@@ -281,15 +309,52 @@ export function useMeLazyQuery(
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>
+export const CreateCompanyProfileDocument = gql`
+  mutation createCompanyProfile(
+    $profileData: CompanyProfileInputType!
+    $identificationNumber: String!
+  ) {
+    createCompanyProfile(
+      profileData: $profileData
+      identificationNumber: $identificationNumber
+    )
+  }
+`
+export type CreateCompanyProfileMutationFn = Apollo.MutationFunction<
+  CreateCompanyProfileMutation,
+  CreateCompanyProfileMutationVariables
+>
+export function useCreateCompanyProfileMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateCompanyProfileMutation,
+    CreateCompanyProfileMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    CreateCompanyProfileMutation,
+    CreateCompanyProfileMutationVariables
+  >(CreateCompanyProfileDocument, options)
+}
+export type CreateCompanyProfileMutationHookResult = ReturnType<
+  typeof useCreateCompanyProfileMutation
+>
+export type CreateCompanyProfileMutationResult =
+  Apollo.MutationResult<CreateCompanyProfileMutation>
+export type CreateCompanyProfileMutationOptions = Apollo.BaseMutationOptions<
+  CreateCompanyProfileMutation,
+  CreateCompanyProfileMutationVariables
+>
 export const CompanyDetailsDocument = gql`
   query companyDetails {
     companyDetails {
       id
       name
       distributorType
-      registrationNumber
+      identificationNumber
       createdAt
       lastmodifiedAt
+      isProfileCompleted
     }
   }
 `

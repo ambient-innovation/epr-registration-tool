@@ -20,8 +20,8 @@ const BaseData = ({ companyInformation }: BaseData): React.ReactElement => {
   const { t } = useTranslation()
   const { name, ...companyBaseData } = companyInformation
   const preparedData = {
-    registrationNumber: companyBaseData.registrationNumber
-      ? companyBaseData.registrationNumber
+    registrationNumber: companyBaseData.identificationNumber
+      ? companyBaseData.identificationNumber
       : 'Not set',
     distributorType: distributorTypes(t)[companyBaseData.distributorType],
     createdAt: new Date(companyBaseData.createdAt).toLocaleDateString(),
@@ -57,10 +57,14 @@ export const Dashboard = (_: Dashboard): React.ReactElement => {
 
   return (
     <Box sx={containerCss}>
-      <CompletionAlert />
+      {companyDetails && !companyDetails.isProfileCompleted && (
+        <CompletionAlert />
+      )}
       <DashboardHeader
         userName={`${user?.title} ${user?.fullName}`}
-        isReportButtonEnabled={true}
+        isReportButtonEnabled={Boolean(
+          companyDetails && companyDetails.isProfileCompleted
+        )}
       />
       {loading ? (
         <Typography>{'loading...'}</Typography>

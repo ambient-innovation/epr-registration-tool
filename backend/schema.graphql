@@ -1,10 +1,21 @@
+input CompanyProfileInputType {
+  country: String!
+  postalCode: String
+  city: String!
+  street: String!
+  streetNumber: String
+  phoneNumber: String!
+  additionalAddressInfo: String
+}
+
 type CompanyType {
   id: ID!
   name: String!
   distributorType: String!
   lastmodifiedAt: DateTime!
   createdAt: DateTime!
-  registrationNumber: String!
+  identificationNumber: String
+  isProfileCompleted: Boolean!
 }
 
 """Date with time (isoformat)"""
@@ -30,6 +41,7 @@ type MaterialType {
 
 type Mutation {
   registerCompany(companyName: String!, companyDistributorType: DistributorType!, userEmail: String!, userTitle: String!, userFullName: String!, userPosition: String!, userPhoneOrMobile: String!, password: String!): String!
+  createCompanyProfile(profileData: CompanyProfileInputType!, identificationNumber: String!): String!
   packagingReportSubmit(timeframe: TimeframeType!, year: Int!, startMonth: Int!, tzInfo: String!, packagingRecords: [PackagingGroupInput!]!): String!
 }
 

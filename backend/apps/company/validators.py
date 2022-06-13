@@ -20,3 +20,12 @@ def validate_street_contains_number(value):
             params={'value': value},
             code='missing_house_number',
         )
+
+
+def validate_string_without_whitespaces(value):
+    if " " in value:
+        raise ValidationError(
+            _('%(value)s whitespaces are not allowed'),
+            params={'value': value},
+            code='whitespacesNotAllowed',
+        )

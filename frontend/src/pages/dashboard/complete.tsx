@@ -2,6 +2,10 @@ import type { GetStaticProps, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 
+import { PageLayout } from '@/common/components/PageLayout'
+import { CompanyProfileSection } from '@/dashboard/components/CompanyProfileCompletion'
+import { ROUTES } from '@/routes'
+
 const Complete: NextPage = () => {
   return (
     <>
@@ -11,9 +15,11 @@ const Complete: NextPage = () => {
           name={'description'}
           content={'Complete company data | EPR Registration Tool'}
         />
-        <link rel={'canonical'} href={'/dashboard'} />
+        <link rel={'canonical'} href={ROUTES.dashboardComplete} />
       </Head>
-      <p>{'Home of the Company Complete Form'}</p>
+      <PageLayout>
+        <CompanyProfileSection />
+      </PageLayout>
     </>
   )
 }

@@ -5,6 +5,7 @@ import { defaultSectionSx } from '@/theme/layout'
 import {
   containerCss,
   contentColumnSx,
+  contentColumnWithHeroSx,
   imageWrapperSx,
 } from './FormLayout.styles'
 import { HeroImage } from './HeroImage'
@@ -21,16 +22,24 @@ export const FormLayoutContent = ({
 
 export type FormLayout = {
   children: React.ReactNode
+  showHeroImage?: boolean
 }
 
-export const FormLayout = ({ children }: FormLayout): React.ReactElement => {
+export const FormLayout = ({
+  children,
+  showHeroImage = true,
+}: FormLayout): React.ReactElement => {
   return (
     <Box sx={containerCss}>
-      <Box sx={imageWrapperSx}>
-        <HeroImage />
-      </Box>
+      {showHeroImage && (
+        <Box sx={imageWrapperSx}>
+          <HeroImage />
+        </Box>
+      )}
       <Box sx={defaultSectionSx}>
-        <Box sx={contentColumnSx}>{children}</Box>
+        <Box sx={showHeroImage ? contentColumnWithHeroSx : contentColumnSx}>
+          {children}
+        </Box>
       </Box>
     </Box>
   )

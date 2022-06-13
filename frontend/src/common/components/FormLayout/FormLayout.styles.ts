@@ -51,10 +51,23 @@ export const imageWrapperSx: SxStyleFunc = (theme) => ({
   },
 })
 
-export const contentColumnSx: SxStyleObject = {
+const contentColumnBaseSx: SxStyleObject = {
   paddingTop: 11,
   paddingBottom: 11,
   display: 'flex',
   flexDirection: 'column',
-  gridColumn: { xs: '1 / -1', md: '6/-1', lg: '6/-2' },
 }
+
+export const contentColumnWithHeroSx: SxStyles = [
+  contentColumnBaseSx,
+  {
+    gridColumn: { xs: '1 / -1', md: '6/-1', lg: '6/-2' },
+  },
+]
+
+export const contentColumnSx: SxStyles = [
+  contentColumnBaseSx,
+  {
+    gridColumn: { xs: '1 / -1' },
+  },
+]
