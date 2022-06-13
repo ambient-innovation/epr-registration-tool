@@ -12,6 +12,7 @@ import {
   TimeframeType,
   usePackagingReportSubmitMutation,
 } from '@/api/__types__'
+import { PACKAGING_REPORTS_QUERY } from '@/dashboard/components/ReportListSection/queries'
 import { ROUTES } from '@/routes'
 import { startOfNextMonth } from '@/utils/utils.date'
 
@@ -54,7 +55,9 @@ export const ForecastProvider: React.FC<{
   const router = useRouter()
   const [data, setData] = useState<ForecastData>(initialData)
   const [activeStep, setActiveStep] = useState<StepNumber>(0)
-  const [packagingReportSubmit, { error }] = usePackagingReportSubmitMutation()
+  const [packagingReportSubmit, { error }] = usePackagingReportSubmitMutation({
+    refetchQueries: [PACKAGING_REPORTS_QUERY],
+  })
 
   const onSubmit: ForecastContextValue['onSubmit'] = useCallback(
     (updatedData) => {

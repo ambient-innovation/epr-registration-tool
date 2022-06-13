@@ -45,13 +45,16 @@ class BaseTestCase(TestCase):
             request=HttpRequest(),
         )
 
-    def login_normal_user(self):
-        assert self.user is not None, 'User does not exist, consider AUTO_CREATE_USERS=True'
+    def login(self, user):
         self._client.login(
-            email=self.user.email,
+            email=user.email,
             password=SOME_USER_PASSWORD,
             request=HttpRequest(),
         )
+
+    def login_normal_user(self):
+        assert self.user is not None, 'User does not exist, consider AUTO_CREATE_USERS=True'
+        self.login(self.user)
 
     def logout_user(self):
         self._client.logout()

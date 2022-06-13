@@ -1,14 +1,25 @@
-import { Box, Divider, Typography, Button, Stack } from '@mui/material'
+import {
+  Box,
+  Divider,
+  Typography,
+  Button,
+  Stack,
+  Skeleton,
+} from '@mui/material'
 import { useTranslation } from 'next-i18next'
+import Link from 'next/link'
+
+import { UserType } from '@/api/__types__'
+import { ROUTES } from '@/routes'
 
 export type DashboardHeader = {
-  userName: string
-  isReportButtonEnabled: boolean
+  user: null | Pick<UserType, 'fullName' | 'title'>
+  canAddReport: boolean
 }
 
 export const DashboardHeader = ({
-  userName,
-  isReportButtonEnabled,
+  user,
+  canAddReport,
 }: DashboardHeader): React.ReactElement => {
   const { t } = useTranslation()
 
@@ -20,14 +31,28 @@ export const DashboardHeader = ({
       >
         <Box>
           <Typography variant={'h4'}>{t('dashboard.main')}</Typography>
-          <Typography variant={'overline'}>
-            {t('dashboard.header.greeting', { userName: userName })}
-          </Typography>
+          {user ? (
+            <Typography variant={'overline'}>
+              {t('dashboard.header.greeting', {
+                userName: `${user.title} ${user.fullName}`,
+              })}
+            </Typography>
+          ) : (
+            <Skeleton width={250} />
+          )}
         </Box>
         <Box sx={{ mt: { xs: 6, sm: 0 } }}>
-          <Button disabled={!isReportButtonEnabled} variant={'contained'}>
-            {t('dashboard.header.submitNewReport')}
-          </Button>
+          {canAddReport ? (
+            <Link href={ROUTES.forecast}>
+              <Button component={'a'} variant={'contained'}>
+                {t('dashboard.header.submitNewReport')}
+              </Button>
+            </Link>
+          ) : (
+            <Button variant={'contained'} disabled>
+              {t('dashboard.header.submitNewReport')}
+            </Button>
+          )}
         </Box>
       </Stack>
       <Divider sx={{ mt: 6 }} />

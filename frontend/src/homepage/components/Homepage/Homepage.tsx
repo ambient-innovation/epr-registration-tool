@@ -1,12 +1,9 @@
-import { Box, Link, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useTranslation } from 'next-i18next'
-import NextLink from 'next/link'
 
 import { useExampleQuery } from '@/api/__types__'
 import { PageLayout } from '@/common/components/PageLayout'
-import { ROUTES } from '@/routes'
-
-import { containerCss } from './Homepage.styles'
+import { defaultContainerSx } from '@/theme/layout'
 
 export type Homepage = Record<string, never>
 
@@ -16,7 +13,7 @@ export const Homepage = (_: Homepage): React.ReactElement => {
 
   return (
     <PageLayout>
-      <Box sx={containerCss}>
+      <Box sx={defaultContainerSx}>
         <Box
           sx={{
             my: 4,
@@ -47,9 +44,6 @@ export const Homepage = (_: Homepage): React.ReactElement => {
           >
             {'Work in progress'}
           </Typography>
-          <NextLink href={ROUTES.forecast} passHref>
-            <Link>{'create new forecast'}</Link>
-          </NextLink>
         </Box>
       </Box>
     </PageLayout>

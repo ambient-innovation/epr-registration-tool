@@ -3,6 +3,7 @@ from django.db.models import OuterRef, Subquery
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
+from ai_django_core.admin.model_admins.mixins import CommonInfoAdminMixin
 from sentry_sdk import capture_exception
 
 from account.models import User
@@ -43,7 +44,7 @@ class CompanyContactInfoInline(admin.StackedInline):
 
 
 @admin.register(Company)
-class CompanyAdmin(admin.ModelAdmin):
+class CompanyAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
     change_form_template = 'company/change_view.html'
     inlines = (
         CompanyUserInline,

@@ -50,10 +50,12 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
         content = self.query_and_load_data(self.MUTATION, variables=self.mutation_params)
         self.assertEqual(content['registerCompany'], 'CREATED')
         company = Company.objects.filter(is_active=False, name="Farwell Co").first()
+        user = User.objects.filter(
+            email='helmut@local.invalid', is_active=False, related_company__id=company.id
+        ).first()
         self.assertIsNotNone(company)
-        self.assertTrue(
-            User.objects.filter(email='helmut@local.invalid', is_active=False, related_company__id=company.id).exists()
-        )
+        self.assertIsNotNone(user)
+        self.assertEqual(user.id, company.created_by_id)
         # assert activation email to be sent
         self.assertEqual(1, len(mail.outbox))
         self.assertEqual(['helmut@local.invalid'], mail.outbox[0].to)

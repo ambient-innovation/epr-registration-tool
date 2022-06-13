@@ -33,16 +33,18 @@ class PackagingReportAdmin(admin.ModelAdmin):
         'start_month',
     )
     fields = (
-        'timeframe',
+        'related_company',
         'year',
         'start_month',
         'timezone_info',
+        'timeframe',
         'lastmodified_by',
         'created_by',
         'created_at',
         'lastmodified_at',
         'related_forecast',
     )
+    autocomplete_fields = ('related_company',)
     list_filter = ('timeframe',)
     readonly_fields = (
         'related_forecast',

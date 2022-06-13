@@ -40,7 +40,7 @@ const ReportSuccssPage: NextPage = () => {
               </NextLink>
             </Grid>
             <Grid>
-              <NextLink href={ROUTES.home} passHref>
+              <NextLink href={ROUTES.dashboard} passHref>
                 <Button variant={'contained'} color={'primary'} sx={{ ml: 5 }}>
                   {t('reportForm.proceedToHomepage')}
                 </Button>

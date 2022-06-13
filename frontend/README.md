@@ -48,7 +48,7 @@ This requires three steps:
 
 1. Generate/update `schema.graphql` in backend: 
 
-         backend/scripts/extract_graphql_schema.sh
+         backend/scripts/export_graphql_schema.sh 
 
 2. Write your GraphQL queries
 3. Generate Typescript Types:

@@ -69,6 +69,8 @@ def register_company(
     with transaction.atomic():
         company.save()
         user.save()
+        company.created_by_id = user.id
+        company.save()
 
     try:
         send_user_activation_notification(user)
