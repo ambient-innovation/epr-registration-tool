@@ -1,19 +1,23 @@
 import type { GetStaticProps, NextPage } from 'next'
+import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Head from 'next/head'
+
+import { DefaultPageHead } from '@/common/components/DefaultPageHead'
+import { PageLayout } from '@/common/components/PageLayout'
+import { CompanyProfileSection } from '@/dashboard/components/CompanyProfileCompletion'
+import { ROUTES } from '@/routes'
 
 const Complete: NextPage = () => {
+  const { t } = useTranslation()
   return (
     <>
-      <Head>
-        <title>{'Complete company data | EPR Registration Tool'}</title>
-        <meta
-          name={'description'}
-          content={'Complete company data | EPR Registration Tool'}
-        />
-        <link rel={'canonical'} href={'/dashboard'} />
-      </Head>
-      <p>{'Home of the Company Complete Form'}</p>
+      <DefaultPageHead
+        subPageTitle={t('companyCompletionForm.completeAccount')}
+        relativePath={ROUTES.dashboardComplete}
+      />
+      <PageLayout>
+        <CompanyProfileSection />
+      </PageLayout>
     </>
   )
 }
