@@ -1,0 +1,66 @@
+- model: packaging.packaginggroup
+  pk: 1
+  fields:
+    created_at: 2022-06-08 13:48:28.097483+00:00
+    created_by: null
+    lastmodified_at: 2022-06-08 13:48:28.097772+00:00
+    lastmodified_by: null
+    name: Group 1
+    name_en: Group 1
+    name_ar: Group 1 Ar
+- model: packaging.packaginggroup
+  pk: 2
+  fields:
+    created_at: 2022-06-10 07:40:58.203711+00:00
+    created_by: null
+    lastmodified_at: 2022-06-10 07:40:58.204115+00:00
+    lastmodified_by: null
+    name: Group 2
+    name_en: Group 2
+    name_ar: Group 2 ar
+
+- model: packaging.material
+  pk: 1
+  fields:
+    created_at: 2022-06-08 13:48:22.799131+00:00
+    created_by: null
+    lastmodified_at: 2022-06-08 14:29:42.493966+00:00
+    lastmodified_by: null
+    name: Material 1
+    name_en: Material 1
+    name_ar: Group 1 Ar
+- model: packaging.material
+  pk: 2
+  fields:
+    created_at: 2022-06-10 07:41:17.617824+00:00
+    created_by: null
+    lastmodified_at: 2022-06-10 07:41:17.619318+00:00
+    lastmodified_by: null
+    name: Material 2
+    name_en: Material 2
+    name_ar: Material 2 ar
+
+- model: packaging.materialprice
+  pk: 1
+  fields:
+    created_at: 2022-06-08 13:48:22.800511+00:00
+    created_by: null
+    lastmodified_at: 2022-06-08 14:29:42.496571+00:00
+    lastmodified_by: null
+    start_year: 2000
+    start_month: 2
+    price_per_kg: 11
+    sort_key: 200002
+    related_material: 1
+- model: packaging.materialprice
+  pk: 2
+  fields:
+    created_at: 2022-06-10 07:41:17.618842+00:00
+    created_by: null
+    lastmodified_at: 2022-06-10 07:41:17.621098+00:00
+    lastmodified_by: null
+    start_year: 2001
+    start_month: 3
+    price_per_kg: 150
+    sort_key: 200103
+    related_material: 2
