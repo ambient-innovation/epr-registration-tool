@@ -85,7 +85,8 @@
     "forecastShouldBeInSameYear": "يجب أن تبدأ التوقعات وتنتهي في نفس العام",
     "atLeastOnPackagingGroup": "مطلوب مجموعة تغليف واحدة على الأقل",
     "atLeastOnPackagingMaterial": "مطلوب مادة واحدة على الأقل",
-    "notUniqueGroups": "يجب أن تكون مجموعات الحزم فريدة عبر الإدخالات"
+    "notUniqueGroups": "يجب أن تكون مجموعات الحزم فريدة عبر الإدخالات",
+    "noWhitespaceAllowed": "لا يسمح بالمسافات"
   },
   "serverErrors": {
     "unknownError": "فشل الخادم في معالجة طلبك. يرجى إعادة التحميل وحاول مرة أخرى.",
@@ -156,6 +157,25 @@
       "link": "أكمل الآن",
       "completeYourProfile": "يرجى استكمال ملف التعريف الخاص بك",
       "dataNeeded": "قبل أن تتمكن من إرسال توقعات ، ما زلنا بحاجة إلى بعض البيانات منك. الرجاء الضغط هنا لإكمال ملف التعريف الخاص بك."
+    }
+  },
+  "companyCompletionForm": {
+    "stepTitles": {
+      "identification": "Identification"
+    },
+    "completeAccount": "Complete your account",
+    "step1Title": "Company Data",
+    "companyCountry": "Country",
+    "companyPostalCode": "Postal Code (optional)",
+    "companyCity": "City",
+    "companyStreet": "Street",
+    "companyStreetNumber": "Street number (optional)",
+    "companyAdditionalAddressInfo": "Additional address info (optional)",
+    "companyPhoneNumber": "Phone number",
+    "companyIdentificationNumber": {
+      "title": "National identification number",
+      "description": "Please enter (without spaces) the correct VAT number / tax number of your company (may differ from the country where your company is located).",
+      "fieldName": "VAT number / tax number"
     }
   }
 }

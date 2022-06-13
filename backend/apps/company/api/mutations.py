@@ -5,10 +5,15 @@ from django.db import transaction
 import strawberry
 from graphql import GraphQLError
 from sentry_sdk import capture_exception
+from strawberry.types import Info
+from strawberry_django.mutations.fields import get_input_data
 
 from account.email import send_user_activation_notification
 from account.models import User
-from company.models import Company, DistributorType
+from common.api.permissions import IsAuthenticated
+from company.api.types import CompanyProfileInputType
+from company.models import Company, CompanyContactInfo, DistributorType
+from company.validators import validate_string_without_whitespaces
 
 
 def register_company(
@@ -74,6 +79,44 @@ def register_company(
     return 'CREATED'
 
 
+def create_company_profile(info: Info, profile_data: CompanyProfileInputType, identification_number: str) -> str:
+    user = info.context.request.user
+    company = user.related_company
+
+    if not company:
+        raise GraphQLError('userHasNoCompany')
+
+    profile_data_dict = {
+        key: value and value.strip() for key, value in get_input_data(CompanyProfileInputType, profile_data).items()
+    }
+
+    # for edit case this can be removed and this can be used as edit directly
+    if hasattr(company, 'related_contact_info'):
+        raise GraphQLError('profileAlreadyCompleted')
+
+    try:
+        validate_string_without_whitespaces(identification_number)
+    except ValidationError as e:
+        raise GraphQLError(e.error_list[0].code, original_error=e)
+
+    company_contact_info = CompanyContactInfo(**profile_data_dict, related_company_id=company.id)
+
+    try:
+        company.full_clean()
+    except ValidationError as e:
+        raise GraphQLError('validationError', original_error=e)
+
+    with transaction.atomic():
+        company_contact_info.save()
+        company.identification_number = identification_number
+        company.save()
+
+    return 'CREATED'
+
+
 @strawberry.type
 class RegisterCompanyMutation:
     register_company: str = strawberry.field(resolver=register_company)
+    create_company_profile: str = strawberry.field(
+        resolver=create_company_profile, permission_classes=[IsAuthenticated]
+    )

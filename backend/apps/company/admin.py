@@ -7,7 +7,7 @@ from sentry_sdk import capture_exception
 
 from account.models import User
 from company.email import send_user_registration_complete_notification
-from company.models import Company
+from company.models import Company, CompanyContactInfo
 
 
 class CompanyUserInline(admin.StackedInline):
@@ -28,14 +28,32 @@ class CompanyUserInline(admin.StackedInline):
     )
 
 
+class CompanyContactInfoInline(admin.StackedInline):
+    model = CompanyContactInfo
+    extra = 0
+    fields = (
+        'country',
+        'postal_code',
+        'city',
+        'street',
+        'street_number',
+        'phone_number',
+        'additional_address_info',
+    )
+
+
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
     change_form_template = 'company/change_view.html'
-    inlines = (CompanyUserInline,)
+    inlines = (
+        CompanyUserInline,
+        CompanyContactInfoInline,
+    )
     list_display = (
         'name',
         'contact_person_email',
         'is_active',
+        'is_profile_completed',
     )
     list_filter = ('is_active',)
     search_fields = ('name',)
@@ -65,16 +83,22 @@ class CompanyAdmin(admin.ModelAdmin):
         return (
             super()
             .get_queryset(request)
+            .select_related('related_contact_info')
             .annotate(
                 contact_person_email=(
                     Subquery(User.objects.filter(related_company_id=OuterRef('pk')).values('email')[:1])
                 )
             )
+            .annotate_is_profile_completed()
         )
 
     @admin.display(description='Contact person', ordering='contact_person_email')
     def contact_person_email(self, obj):
         return obj.contact_person_email
+
+    @admin.display(description='Profile completed', boolean=True)
+    def is_profile_completed(self, obj):
+        return obj.is_profile_completed
 
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)

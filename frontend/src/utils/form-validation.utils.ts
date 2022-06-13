@@ -31,3 +31,11 @@ export const requiredDateValidator = () =>
     .date()
 
     .required('validations.required')
+
+export const requiredStringWithoutWhitespace = () =>
+  yup
+    .string()
+    .required('validations.required')
+    .test('whitespaces', 'validations.noWhitespaceAllowed', (val) =>
+      !!val ? !/\s/.test(val) : true
+    )

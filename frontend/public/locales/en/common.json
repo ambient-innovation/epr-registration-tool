@@ -85,7 +85,8 @@
     "forecastShouldBeInSameYear": "Forecast should start and end in same year",
     "atLeastOnPackagingGroup": "at least one Packaging group required",
     "atLeastOnPackagingMaterial": "at least one Material required",
-    "notUniqueGroups": "packaging groups should be unique across entries"
+    "notUniqueGroups": "packaging groups should be unique across entries",
+    "noWhitespaceAllowed": "No whitespaces allowed"
   },
   "serverErrors": {
     "unknownError": "The server failed to handle your request. Please reload and try again.",
@@ -156,6 +157,25 @@
       "link": "Complete Now",
       "completeYourProfile": "Please complete your profile",
       "dataNeeded": "Before you can submit a forecast, we still need some data from you. Please click here to complete your profile."
+    }
+  },
+  "companyCompletionForm": {
+    "stepTitles": {
+      "identification": "Identification"
+    },
+    "completeAccount": "Complete your account",
+    "step1Title": "Company Data",
+    "companyCountry": "Country",
+    "companyPostalCode": "Postal Code (optional)",
+    "companyCity": "City",
+    "companyStreet": "Street",
+    "companyStreetNumber": "Street number (optional)",
+    "companyAdditionalAddressInfo": "Additional address info (optional)",
+    "companyPhoneNumber": "Phone number",
+    "companyIdentificationNumber": {
+      "title": "National identification number",
+      "description": "Please enter (without spaces) the correct VAT number / tax number of your company (may differ from the country where your company is located).",
+      "fieldName": "VAT number / tax number"
     }
   }
 }

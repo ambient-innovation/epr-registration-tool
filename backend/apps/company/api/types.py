@@ -1,7 +1,9 @@
+from typing import Optional
+
 import strawberry
 from strawberry.django import auto
 
-from company.models import Company
+from company.models import Company, CompanyContactInfo
 
 
 @strawberry.django.type(Company)
@@ -11,7 +13,20 @@ class CompanyType:
     distributor_type: auto
     lastmodified_at: auto
     created_at: auto
+    identification_number: auto
+    is_profile_completed: bool
 
-    @strawberry.field
-    def registration_number(self) -> str:
-        return ""
+    @strawberry.django.field
+    def is_profile_completed(self, root: Company) -> bool:
+        return getattr(root, 'is_profile_completed', False)
+
+
+@strawberry.django.input(CompanyContactInfo)
+class CompanyProfileInputType:
+    country: str
+    postal_code: Optional[str]
+    city: str
+    street: str
+    street_number: Optional[str]
+    phone_number: str
+    additional_address_info: Optional[str]
