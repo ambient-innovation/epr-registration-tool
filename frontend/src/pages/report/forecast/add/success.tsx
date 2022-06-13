@@ -3,7 +3,6 @@ import type { NextPage } from 'next'
 import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Head from 'next/head'
 import NextLink from 'next/link'
 
 import { DefaultPageHead } from '@/common/components/DefaultPageHead'
@@ -15,12 +14,10 @@ const ReportSuccssPage: NextPage = () => {
   const { t } = useTranslation()
   return (
     <>
-      <Head>
-        <DefaultPageHead
-          subPageTitle={t('reportForm.successSubPageTitle')}
-          relativePath={ROUTES.forecastSuccess}
-        />
-      </Head>
+      <DefaultPageHead
+        subPageTitle={t('reportForm.successSubPageTitle')}
+        relativePath={ROUTES.forecastSuccess}
+      />
       <PageLayout>
         <FormLayout>
           <Typography component={'h1'} variant={'h2'}>

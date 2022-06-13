@@ -2,7 +2,6 @@ import type { NextPage } from 'next'
 import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Head from 'next/head'
 
 import { ActivationComplete } from '@/auth/components/Activation'
 import { DefaultPageHead } from '@/common/components/DefaultPageHead'
@@ -13,12 +12,10 @@ const ActivationCompletePage: NextPage = () => {
   const { t } = useTranslation()
   return (
     <>
-      <Head>
-        <DefaultPageHead
-          subPageTitle={t('activation.registrationComplete')}
-          relativePath={ROUTES.dashboardComplete}
-        />
-      </Head>
+      <DefaultPageHead
+        subPageTitle={t('activation.registrationComplete')}
+        relativePath={ROUTES.dashboardComplete}
+      />
       <PageLayout>
         <ActivationComplete />
       </PageLayout>

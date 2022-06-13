@@ -2,7 +2,6 @@ import type { NextPage } from 'next'
 import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Head from 'next/head'
 
 import { EmailConfirmation } from '@/auth/components/Activation'
 import { DefaultPageHead } from '@/common/components/DefaultPageHead'
@@ -13,12 +12,10 @@ const ActivationPage: NextPage = () => {
   const { t } = useTranslation()
   return (
     <>
-      <Head>
-        <DefaultPageHead
-          subPageTitle={t('activation.activation')}
-          relativePath={ROUTES.accountActivation}
-        />
-      </Head>
+      <DefaultPageHead
+        subPageTitle={t('activation.activation')}
+        relativePath={ROUTES.accountActivation}
+      />
       <PageLayout>
         <EmailConfirmation />
       </PageLayout>

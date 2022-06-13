@@ -1,7 +1,6 @@
 import type { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Head from 'next/head'
 
 import { DefaultPageHead } from '@/common/components/DefaultPageHead'
 import { PageLayout } from '@/common/components/PageLayout/PageLayout'
@@ -14,12 +13,10 @@ const ForecastPage: NextPage = () => {
 
   return (
     <>
-      <Head>
-        <DefaultPageHead
-          subPageTitle={t('reportForm.createSubPageTitle')}
-          relativePath={ROUTES.forecast}
-        />
-      </Head>
+      <DefaultPageHead
+        subPageTitle={t('reportForm.createSubPageTitle')}
+        relativePath={ROUTES.forecast}
+      />
       <PageLayout>
         <ProtectedPage>
           <ForecastSection />

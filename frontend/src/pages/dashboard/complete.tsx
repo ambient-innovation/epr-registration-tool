@@ -1,7 +1,6 @@
 import type { GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Head from 'next/head'
 
 import { DefaultPageHead } from '@/common/components/DefaultPageHead'
 import { PageLayout } from '@/common/components/PageLayout'
@@ -12,12 +11,10 @@ const Complete: NextPage = () => {
   const { t } = useTranslation()
   return (
     <>
-      <Head>
-        <DefaultPageHead
-          subPageTitle={t('companyCompletionForm.completeAccount')}
-          relativePath={ROUTES.dashboardComplete}
-        />
-      </Head>
+      <DefaultPageHead
+        subPageTitle={t('companyCompletionForm.completeAccount')}
+        relativePath={ROUTES.dashboardComplete}
+      />
       <PageLayout>
         <CompanyProfileSection />
       </PageLayout>
