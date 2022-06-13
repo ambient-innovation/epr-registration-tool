@@ -9,20 +9,21 @@ stages:
 
 # When using dind, it's wise to use the overlays driver for improved performance.
 variables:
-  TEST_HELM_CHART_VERSION: "0.4.0"
+  TEST_HELM_CHART_VERSION: "0.4.1"  # <-- helm chart version for test server
   DOCKER_DRIVER: overlay2
   IMAGE_TAG_BACKEND: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_REF_SLUG
   IMAGE_TAG_FRONTEND: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_REF_SLUG
   IMAGE_TAG_BACKEND_SHA: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_SHORT_SHA
   IMAGE_TAG_FRONTEND_SHA: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_SHORT_SHA
   FF_ENABLE_BASH_EXIT_CODE_CHECK: "true"
-  POSTGRES_CONTAINER_NAME: epr_tool_db
-  POSTGRES_DB: epr-tool
-  POSTGRES_USERNAME: epr-tool
-  POSTGRES_PASSWORD: top-secret
-  POSTGRES_PORT: 5432
   DOCKER_HOST: tcp://localhost:2375
   DOCKER_API_VERSION: "1.39"
+  # variables for backend test
+  TEST_POSTGRES_CONTAINER_NAME: epr_tool_db
+  TEST_POSTGRES_DB: epr-tool
+  TEST_POSTGRES_USERNAME: epr-tool
+  TEST_POSTGRES_PASSWORD: top-secret
+  TEST_POSTGRES_PORT: 5432
 
 services:
   - ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:18.09-dind
@@ -100,11 +101,11 @@ backend:test:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     # start DB container
     - docker run
-      --name $POSTGRES_CONTAINER_NAME
+      --name $TEST_POSTGRES_CONTAINER_NAME
       -d
-      -e POSTGRES_DB=$POSTGRES_DB
-      -e POSTGRES_USER=$POSTGRES_USERNAME
-      -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      -e POSTGRES_DB=$TEST_POSTGRES_DB
+      -e POSTGRES_USER=$TEST_POSTGRES_USERNAME
+      -e POSTGRES_PASSWORD=$TEST_POSTGRES_PASSWORD
       library/postgres:11.8-alpine
   script:
     # wait for db
@@ -113,12 +114,12 @@ backend:test:
       --rm
       --entrypoint=/bin/sh
       -e DATABASE_NAME=ptp
-      -e DATABASE_USERNAME=$POSTGRES_USERNAME
-      -e DATABASE_PASSWORD=$POSTGRES_PASSWORD
-      -e DATABASE_HOST=$POSTGRES_CONTAINER_NAME
-      -e DATABASE_PORT=$POSTGRES_PORT
+      -e DATABASE_USERNAME=$TEST_POSTGRES_USERNAME
+      -e DATABASE_PASSWORD=$TEST_POSTGRES_PASSWORD
+      -e DATABASE_HOST=$TEST_POSTGRES_CONTAINER_NAME
+      -e DATABASE_PORT=$TEST_POSTGRES_PORT
       -e DJANGO_SESSION_COOKIE_SECURE=False
-      --link $POSTGRES_CONTAINER_NAME
+      --link $TEST_POSTGRES_CONTAINER_NAME
       $IMAGE_TAG_BACKEND
       ./scripts/test.sh
   after_script:
