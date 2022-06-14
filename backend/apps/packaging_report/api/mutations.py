@@ -16,7 +16,7 @@ from packaging_report.models import ForecastSubmission, MaterialRecord, Packagin
 utc = pytz.UTC
 
 
-def packaging_report_submit(
+def packaging_report_forecast_submit(
     info: Info,
     timeframe: strawberry.enum(TimeframeType),
     year: int,
@@ -67,6 +67,6 @@ def packaging_report_submit(
 
 @strawberry.type
 class PackagingReportMutation:
-    packaging_report_submit: str = strawberry.field(
-        resolver=packaging_report_submit, permission_classes=[IsAuthenticated, IsActivated]
+    packaging_report_forecast_submit: str = strawberry.field(
+        resolver=packaging_report_forecast_submit, permission_classes=[IsAuthenticated, IsActivated]
     )

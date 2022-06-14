@@ -10,7 +10,7 @@ import React, {
 
 import {
   TimeframeType,
-  usePackagingReportSubmitMutation,
+  usePackagingReportForecastSubmitMutation,
 } from '@/api/__types__'
 import { PACKAGING_REPORTS_QUERY } from '@/dashboard/components/ReportListSection/queries'
 import { ROUTES } from '@/routes'
@@ -55,7 +55,7 @@ export const ForecastProvider: React.FC<{
   const router = useRouter()
   const [data, setData] = useState<ForecastData>(initialData)
   const [activeStep, setActiveStep] = useState<StepNumber>(0)
-  const [packagingReportSubmit, { error }] = usePackagingReportSubmitMutation({
+  const [packagingReportSubmit, { error }] = usePackagingReportForecastSubmitMutation({
     refetchQueries: [PACKAGING_REPORTS_QUERY],
   })
 

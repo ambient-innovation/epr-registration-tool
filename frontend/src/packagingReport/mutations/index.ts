@@ -1,14 +1,14 @@
 import { gql } from '@apollo/client'
 
 export const PACKAGING_REPORT_SUBMIT = gql`
-  mutation packagingReportSubmit(
+  mutation packagingReportForecastSubmit(
     $year: Int!
     $startMonth: Int!
     $tzInfo: String!
     $timeframe: TimeframeType!
     $packagingRecords: [PackagingGroupInput!]!
   ) {
-    packagingReportSubmit(
+    packagingReportForecastSubmit(
       year: $year
       startMonth: $startMonth
       tzInfo: $tzInfo
