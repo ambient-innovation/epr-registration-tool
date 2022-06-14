@@ -54,7 +54,7 @@ backend:security-check:
 
 backend:build-and-push:
   stage: build
-  needs: []
+  needs: [ ]
   tags:
     - normal-load
   script:
@@ -73,7 +73,7 @@ backend:build-and-push:
 
 backend:post-build-checks:
   stage: post-build
-  needs: ["backend:build-and-push"]
+  needs: [ "backend:build-and-push" ]
   tags:
     - normal-load
   variables:
@@ -91,7 +91,7 @@ backend:post-build-checks:
 
 backend:test:
   stage: post-build
-  needs: ["backend:build-and-push"]
+  needs: [ "backend:build-and-push" ]
   tags:
     - normal-load
   variables:
@@ -233,10 +233,9 @@ frontend:security-check:
 
 frontend:build-and-push:
   stage: build
-  needs:
-    - frontend:lint
+  needs: [ ]
   tags:
-    - normal-load
+    - high-load
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker build
@@ -337,7 +336,7 @@ check:deploy:test:
 
 e2e:test:
   stage: post-build
-  needs: ['frontend:build-and-push', 'backend:build-and-push']
+  needs: [ 'frontend:build-and-push', 'backend:build-and-push' ]
   tags:
     - high-load
   variables:
