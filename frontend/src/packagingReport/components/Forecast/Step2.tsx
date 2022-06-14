@@ -46,23 +46,48 @@ const schema: SchemaOf<Record<keyof FormData, unknown>> = yup
   .test({
     message: 'unique',
     test: function ({ packagingRecords }) {
-      const valueArr = packagingRecords?.map(function (item) {
+      // check if groups are duplicated
+      const groupsArr = packagingRecords?.map(function (item) {
         return item.packagingGroupId
       })
-      let duplicatedGroupIndex = 0
-      const isDuplicate = valueArr?.some(function (item, idx) {
-        const duplicated = valueArr.indexOf(item) != idx
+      let duplicatedGroupIndex = -1
+      const isGroupDuplicate = groupsArr?.some(function (item, idx) {
+        const duplicated = groupsArr.indexOf(item) != idx
         if (duplicated) {
           duplicatedGroupIndex = idx
         }
         return duplicated
       })
-      return isDuplicate
-        ? this.createError({
-            path: `packagingRecords.${duplicatedGroupIndex}.packagingGroupId`,
-            message: 'validations.notUniqueGroups',
-          })
-        : true
+      if (isGroupDuplicate) {
+        return this.createError({
+          path: `packagingRecords.${duplicatedGroupIndex}.packagingGroupId`,
+          message: 'validations.notUniqueGroups',
+        })
+      }
+      // check if group materials are duplicated
+      let duplicatedMaterialIndex = -1
+      const isMaterialDuplicate = packagingRecords?.some((group, index) => {
+        const materialArr = group.materialRecords?.map(function (item) {
+          return item.materialId
+        })
+        duplicatedGroupIndex = index
+
+        return materialArr?.some(function (item, idx) {
+          const duplicated = materialArr.indexOf(item) != idx
+          if (duplicated) {
+            duplicatedMaterialIndex = idx
+          }
+          return duplicated
+        })
+      })
+
+      if (isMaterialDuplicate) {
+        return this.createError({
+          path: `packagingRecords.${duplicatedGroupIndex}.materialRecords.${duplicatedMaterialIndex}.materialId`,
+          message: 'validations.notUniqueGroupsMaterials',
+        })
+      }
+      return true
     },
   })
 

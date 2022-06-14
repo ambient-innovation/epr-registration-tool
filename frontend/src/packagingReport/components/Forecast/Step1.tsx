@@ -107,6 +107,9 @@ export const Step1 = (_: Step1) => {
                     (option) => option.value === initialData.timeframe
                   )}
                   options={forecastTimeframeOptions(t)}
+                  isOptionEqualToValue={(option, value) =>
+                    option.value === value.value
+                  }
                   onChange={(_, item) => onChange(item?.value)}
                   renderInput={(params) => {
                     return (

@@ -85,7 +85,8 @@
     "forecastShouldBeInSameYear": "Forecast should start and end in same year",
     "atLeastOnPackagingGroup": "at least one Packaging group required",
     "atLeastOnPackagingMaterial": "at least one Material required",
-    "notUniqueGroups": "packaging groups should be unique across entries",
+    "notUniqueGroups": "this packaging group is duplicated",
+    "notUniqueGroupsMaterials": "this material is duplicated in this packaging group",
     "noWhitespaceAllowed": "No whitespaces allowed"
   },
   "serverErrors": {
@@ -101,7 +102,9 @@
     "alreadyAuthenticated": "You are signed in with another account. Please log out and try again.",
     "inactiveUser": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link.",
     "packagingGroupDoesNotExist": "One of the selected Packaging group does not exist",
-    "materialDoesNotExist": "One of the selected Material does not exist"
+    "materialDoesNotExist": "One of the selected Material does not exist",
+    "noCompanyAssignedORInactiveCompany": "You have not been assigned to any company or You company account has not been activated yet.",
+    "noCompanyAssigned": "You have not been assigned to any company"
   },
   "internalErrors": {
     "unknownError": "Something unexpected happened. Please reload and try again."
