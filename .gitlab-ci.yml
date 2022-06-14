@@ -54,7 +54,7 @@ backend:security-check:
 
 backend:build-and-push:
   stage: build
-  needs: [ ]
+  needs: []
   tags:
     - normal-load
   script:
@@ -73,7 +73,7 @@ backend:build-and-push:
 
 backend:post-build-checks:
   stage: post-build
-  needs: [ "backend:build-and-push" ]
+  needs: ["backend:build-and-push"]
   tags:
     - normal-load
   variables:
@@ -91,7 +91,7 @@ backend:post-build-checks:
 
 backend:test:
   stage: post-build
-  needs: [ "backend:build-and-push" ]
+  needs: ["backend:build-and-push"]
   tags:
     - normal-load
   variables:
@@ -233,18 +233,21 @@ frontend:security-check:
 
 frontend:build-and-push:
   stage: build
-  needs: [ ]
+  needs: []
   tags:
     - high-load
+  before_script:
+    - docker login -u $CI_DEPENDENCY_PROXY_USER -p $CI_DEPENDENCY_PROXY_PASSWORD $CI_DEPENDENCY_PROXY_SERVER
   script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker build
       --compress
       --cache-from $CI_REGISTRY_IMAGE/frontend:develop
       -t $IMAGE_TAG_FRONTEND
       -t $IMAGE_TAG_FRONTEND_SHA
       --build-arg BUILDKIT_INLINE_CACHE=1
+      --build-arg DOCKER_IMAGE_PREFIX=${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/
       ./frontend
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker push $IMAGE_TAG_FRONTEND
     - docker push $IMAGE_TAG_FRONTEND_SHA
   except:
@@ -336,7 +339,7 @@ check:deploy:test:
 
 e2e:test:
   stage: post-build
-  needs: [ 'frontend:build-and-push', 'backend:build-and-push' ]
+  needs: ['frontend:build-and-push', 'backend:build-and-push']
   tags:
     - high-load
   variables:
