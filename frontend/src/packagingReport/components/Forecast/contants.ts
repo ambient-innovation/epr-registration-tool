@@ -14,6 +14,12 @@ export const timeframeDisplayValue = (
   }) as string,
 })
 
+export const timeframeNumberValue = {
+  [TimeframeType.MONTH]: 1,
+  [TimeframeType.THREE_MONTHS]: 3,
+  [TimeframeType.TWELVE_MONTHS]: 12,
+}
+
 export const forecastTimeframeOptions = (
   t: TFunction
 ): Array<{

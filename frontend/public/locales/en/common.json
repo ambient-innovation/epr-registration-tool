@@ -87,7 +87,8 @@
     "atLeastOnPackagingMaterial": "at least one Material required",
     "notUniqueGroups": "this packaging group is duplicated",
     "notUniqueGroupsMaterials": "this material is duplicated in this packaging group",
-    "noWhitespaceAllowed": "No whitespaces allowed"
+    "noWhitespaceAllowed": "no whitespaces allowed",
+    "reportExceedsOneYear": "a report should not exceed a year"
   },
   "serverErrors": {
     "unknownError": "The server failed to handle your request. Please reload and try again.",
