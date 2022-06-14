@@ -103,6 +103,7 @@
     "inactiveUser": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link.",
     "packagingGroupDoesNotExist": "One of the selected Packaging group does not exist",
     "materialDoesNotExist": "One of the selected Material does not exist",
+    "noCompanyAssignedORInactiveCompany": "You have not been assigned to any company or You company account has not been activated yet.",
     "noCompanyAssigned": "You have not been assigned to any company"
   },
   "internalErrors": {

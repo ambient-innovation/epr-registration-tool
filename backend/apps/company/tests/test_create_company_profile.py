@@ -54,7 +54,7 @@ class CreateCompanyProfileMutationTestCase(BaseApiTestCase):
         self.query_and_assert_error(
             self.MUTATION,
             variables=self.mutation_params,
-            message='userHasNoCompany',
+            message='noCompanyAssignedORInactiveCompany',
         )
 
     def test_create_company_profile(self):

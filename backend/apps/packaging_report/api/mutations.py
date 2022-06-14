@@ -9,7 +9,7 @@ from graphql import GraphQLError
 from strawberry.types import Info
 
 from account.models import User
-from common.api.permissions import IsAuthenticated
+from common.api.permissions import IsActivated, IsAuthenticated
 from packaging.api.types import PackagingGroupInput
 from packaging_report.models import ForecastSubmission, MaterialRecord, PackagingReport, TimeframeType
 
@@ -25,11 +25,6 @@ def packaging_report_submit(
     packaging_records: typing.List[PackagingGroupInput],
 ) -> str:
     current_user: User = info.context.request.user
-    related_company = current_user.related_company
-    if not related_company:
-        raise GraphQLError('noCompanyAssigned')
-    if not related_company.is_active:
-        raise GraphQLError('inactiveCompany')
 
     report = PackagingReport(
         timeframe=timeframe, year=year, start_month=start_month, timezone_info=tz_info, created_by=current_user
@@ -68,5 +63,5 @@ def packaging_report_submit(
 @strawberry.type
 class PackagingReportMutation:
     packaging_report_submit: str = strawberry.field(
-        resolver=packaging_report_submit, permission_classes=[IsAuthenticated]
+        resolver=packaging_report_submit, permission_classes=[IsAuthenticated, IsActivated]
     )

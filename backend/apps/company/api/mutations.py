@@ -10,7 +10,7 @@ from strawberry_django.mutations.fields import get_input_data
 
 from account.email import send_user_activation_notification
 from account.models import User
-from common.api.permissions import IsAuthenticated
+from common.api.permissions import IsActivated, IsAuthenticated
 from company.api.types import CompanyProfileInputType
 from company.models import Company, CompanyContactInfo, DistributorType
 from company.validators import validate_string_without_whitespaces
@@ -83,9 +83,6 @@ def create_company_profile(info: Info, profile_data: CompanyProfileInputType, id
     user = info.context.request.user
     company = user.related_company
 
-    if not company:
-        raise GraphQLError('userHasNoCompany')
-
     profile_data_dict = {
         key: value and value.strip() for key, value in get_input_data(CompanyProfileInputType, profile_data).items()
     }
@@ -118,5 +115,5 @@ def create_company_profile(info: Info, profile_data: CompanyProfileInputType, id
 class RegisterCompanyMutation:
     register_company: str = strawberry.field(resolver=register_company)
     create_company_profile: str = strawberry.field(
-        resolver=create_company_profile, permission_classes=[IsAuthenticated]
+        resolver=create_company_profile, permission_classes=[IsAuthenticated, IsActivated]
     )
