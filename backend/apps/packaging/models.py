@@ -66,4 +66,4 @@ class MaterialPrice(CommonInfo):
         )
 
     def __str__(self):
-        return f'Price for material {self.related_material_id} [{self.start_month}.{self.start_year}]'
+        return f'Price as of {self.start_month}.{self.start_year}'
