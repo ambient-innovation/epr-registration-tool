@@ -9,6 +9,7 @@ import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { SchemaOf } from 'yup'
 
+import { TimeframeType } from '@/api/__types__'
 import { FormStep, FormStepContainer } from '@/common/components/FormStep'
 import { DEFAULT_FORM_SPACING } from '@/common/components/FormStep/constants'
 import {
@@ -19,7 +20,7 @@ import { pick } from '@/utils/typescript.utils'
 import { startOfNextMonth } from '@/utils/utils.date'
 
 import { useForecastContext } from './ForecastContext'
-import { forecastTimeframeOptions } from './contants'
+import { forecastTimeframeOptions, timeframeNumberValue } from './contants'
 import { ForecastData } from './types'
 
 const FIELD_NAMES = ['startDate', 'timeframe'] as const
@@ -29,13 +30,32 @@ type FormData = Pick<ForecastData, FieldName>
 
 export type Step1 = Record<string, never>
 
-const schema: SchemaOf<Record<keyof FormData, unknown>> = yup.object().shape({
-  startDate: requiredDateValidator()
-    .typeError('validations.reportStartDateValid')
-    .min(startOfNextMonth(), 'validations.startDateMin')
-    .nullable(),
-  timeframe: requiredStringValidator(),
-})
+const schema: SchemaOf<Record<keyof FormData, unknown>> = yup
+  .object()
+  .shape({
+    startDate: requiredDateValidator()
+      .typeError('validations.reportStartDateValid')
+      .min(startOfNextMonth(), 'validations.startDateMin')
+      .nullable(),
+    timeframe: requiredStringValidator(),
+  })
+  .test({
+    name: 'reportNotExceedingOneYear',
+    test: function ({ startDate, timeframe }) {
+      if (startDate && timeframe) {
+        const startMonth = startDate.getMonth() + 1
+        const timeframeValue = timeframeNumberValue[timeframe as TimeframeType]
+
+        if (startMonth + (timeframeValue - 1) > 12) {
+          return this.createError({
+            path: `timeframe`,
+            message: 'validations.reportExceedsOneYear',
+          })
+        }
+      }
+      return true
+    },
+  })
 
 const resolver = yupResolver(schema)
 

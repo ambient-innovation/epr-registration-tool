@@ -87,7 +87,8 @@
     "atLeastOnPackagingMaterial": "مطلوب مادة واحدة على الأقل",
     "notUniqueGroups": "مجموعة الحزم هذه مكررة",
     "notUniqueGroupsMaterials": "يجب أن تكون المواد في مجموعات التعبئة والتغليف فريدة من نوعها",
-    "noWhitespaceAllowed": "لا يسمح بالمسافات"
+    "noWhitespaceAllowed": "لا يسمح بالمسافات",
+    "reportExceedsOneYear": "تقرير يتجاوز سنة واحدة"
   },
   "serverErrors": {
     "unknownError": "فشل الخادم في معالجة طلبك. يرجى إعادة التحميل وحاول مرة أخرى.",
