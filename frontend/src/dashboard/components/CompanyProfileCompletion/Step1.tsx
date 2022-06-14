@@ -133,9 +133,13 @@ export const Step1 = (_: Step1) => {
             {...register('additionalAddressInfo')}
           />
           <TextField
-            label={t('companyCompletionForm.companyPhoneNumber')}
+            label={t('companyCompletionForm.companyPhoneNumber.label')}
             error={!!errors?.phoneNumber}
-            helperText={errorMsg(errors?.phoneNumber?.message)}
+            helperText={
+              !!errors?.phoneNumber
+                ? errorMsg(errors?.phoneNumber?.message)
+                : t('companyCompletionForm.companyPhoneNumber.hint')
+            }
             required
             fullWidth
             {...register('phoneNumber')}

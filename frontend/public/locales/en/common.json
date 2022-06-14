@@ -191,7 +191,10 @@
     "companyStreet": "Street",
     "companyStreetNumber": "Street number (optional)",
     "companyAdditionalAddressInfo": "Additional address info (optional)",
-    "companyPhoneNumber": "Phone number",
+    "companyPhoneNumber": {
+      "label": "Phone number",
+      "hint": "Please enter the phone number with country code prefix (e.g. +44 18081570192 or 44 18081570192)"
+    },
     "companyIdentificationNumber": {
       "title": "National identification number",
       "description": "Please enter (without spaces) the correct VAT number / tax number of your company (may differ from the country where your company is located).",
