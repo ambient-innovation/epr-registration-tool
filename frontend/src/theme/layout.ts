@@ -1,6 +1,6 @@
 import { Breakpoint } from '@mui/system/createTheme/createBreakpoints'
 
-import { pxToRemAsString, SxStyleFunc, SxStyleObject } from './utils'
+import { pxToRemAsString, SxStyleFunc, SxStyleObject, SxStyles } from './utils'
 
 export const layout = {
   paddingX: {
@@ -19,9 +19,13 @@ export const maxWidthCss: SxStyleFunc = (theme) => ({
   maxWidth: { md: theme.mixins.layout.maxWidth },
 })
 
-export const paddedSectionCss: SxStyleObject = {
+export const basePaddedSectionSx: SxStyleObject = {
   boxSizing: 'border-box',
   width: '100%',
+}
+
+export const paddedSectionCss: SxStyleObject = {
+  ...basePaddedSectionSx,
   paddingLeft: { ...layout.paddingX },
   paddingRight: { ...layout.paddingX },
 }
@@ -73,3 +77,12 @@ export const defaultGridSx: SxStyleObject = {
 }
 
 export const defaultSectionSx = [maxWidthCss, paddedSectionCss, defaultGridSx]
+
+export const defaultContainerSx: SxStyles = [
+  ...defaultSectionSx,
+  {
+    '> *': {
+      gridColumn: '1 / -1',
+    },
+  },
+]

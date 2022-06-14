@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@mui/material'
+import { Alert, Box, Grid, Skeleton, Typography } from '@mui/material'
 import { useTranslation } from 'next-i18next'
 import { Fragment } from 'react'
 
@@ -6,7 +6,8 @@ import { CompanyType, useCompanyDetailsQuery } from '@/api/__types__'
 import { useUser } from '@/auth/hooks/useUser'
 import { CompletionAlert } from '@/dashboard/components/Dashboard/CompletionAltert'
 import { DashboardHeader } from '@/dashboard/components/Dashboard/DashboardHeader'
-import { containerCss } from '@/homepage/components/Homepage/Homepage.styles'
+import { ReportListSection } from '@/dashboard/components/ReportListSection'
+import { defaultContainerSx } from '@/theme/layout'
 import { fontWeights } from '@/theme/typography'
 
 import { distributorTypes } from './constants'
@@ -29,7 +30,7 @@ const BaseData = ({ companyInformation }: BaseData): React.ReactElement => {
   }
 
   return (
-    <Box sx={{ marginTop: 11 }}>
+    <>
       <Typography variant={'h5'}>{name}</Typography>
       <Grid container sx={{ mt: 6 }}>
         {Object.entries(preparedData).map(([key, value]) => (
@@ -43,7 +44,7 @@ const BaseData = ({ companyInformation }: BaseData): React.ReactElement => {
           </Fragment>
         ))}
       </Grid>
-    </Box>
+    </>
   )
 }
 
@@ -53,26 +54,31 @@ export const Dashboard = (_: Dashboard): React.ReactElement => {
   const companyDetails = data?.companyDetails
   const { user } = useUser()
 
+  const canAddReport = !!companyDetails?.isProfileCompleted
+
   return (
-    <Box sx={containerCss}>
-      {companyDetails && !companyDetails.isProfileCompleted && (
-        <CompletionAlert />
-      )}
-      <DashboardHeader
-        userName={`${user?.title} ${user?.fullName}`}
-        isReportButtonEnabled={Boolean(
-          companyDetails && companyDetails.isProfileCompleted
-        )}
-      />
-      {loading ? (
-        <Typography>{'loading...'}</Typography>
-      ) : companyDetails ? (
-        <BaseData companyInformation={companyDetails} />
-      ) : (
-        <Typography variant={'h2'}>
-          {t('dashboard.noCompanyAssigned')}
-        </Typography>
-      )}
-    </Box>
+    <>
+      <Box sx={defaultContainerSx}>
+        {!loading && !canAddReport && <CompletionAlert />}
+        <DashboardHeader user={user} canAddReport={canAddReport} />
+        <Box sx={{ marginTop: 11 }}>
+          {loading ? (
+            <Skeleton
+              variant={'rectangular'}
+              sx={{ height: { xs: 140, md: 95 } }}
+            />
+          ) : companyDetails ? (
+            <BaseData companyInformation={companyDetails} />
+          ) : (
+            <Alert severity={'warning'}>
+              {t('dashboard.noCompanyAssigned')}
+            </Alert>
+          )}
+        </Box>
+      </Box>
+      <Box mt={11}>
+        <ReportListSection canAddReport={canAddReport} />
+      </Box>
+    </>
   )
 }

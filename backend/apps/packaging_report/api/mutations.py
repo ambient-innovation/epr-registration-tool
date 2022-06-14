@@ -27,7 +27,12 @@ def packaging_report_submit(
     current_user: User = info.context.request.user
 
     report = PackagingReport(
-        timeframe=timeframe, year=year, start_month=start_month, timezone_info=tz_info, created_by=current_user
+        timeframe=timeframe,
+        year=year,
+        start_month=start_month,
+        timezone_info=tz_info,
+        created_by=current_user,
+        related_company=current_user.related_company,
     )
     try:
         with transaction.atomic():

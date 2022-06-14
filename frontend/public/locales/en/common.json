@@ -160,6 +160,23 @@
       "link": "Complete Now",
       "completeYourProfile": "Please complete your profile",
       "dataNeeded": "Before you can submit a forecast, we still need some data from you. Please click here to complete your profile."
+    },
+    "reportListSection":{
+      "headline": "Packaging data reporting",
+      "description": "Here you can see an overview of your submitted forecasts. You can only submit one forecast per timeframe. Forecasts can be edited as long as the specified timeframe has not yet been reached.",
+      "noReportAddNow": "No Reports available. Add a Report now.",
+      "noReportPleaseComplete": "No Reports available. Complete your profile to submit a Report.",
+      "reportCard": {
+        "title": "Data Report No. {{reportNumber}}",
+        "submittedOn": "Submitted on",
+        "startsAt": "Start of forecast:",
+        "timeframe":  "Timeframe of forecast:",
+        "estimatedF": "Estimated fees:",
+        "entries": "Packaging Entries:",
+        "month": "month",
+        "editable": "Can be edited for another {{days}} days",
+        "forecast": "Forecast"
+      }
     }
   },
   "companyCompletionForm": {

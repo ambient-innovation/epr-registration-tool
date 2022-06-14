@@ -160,6 +160,23 @@
       "link": "أكمل الآن",
       "completeYourProfile": "يرجى استكمال ملف التعريف الخاص بك",
       "dataNeeded": "قبل أن تتمكن من إرسال توقعات ، ما زلنا بحاجة إلى بعض البيانات منك. الرجاء الضغط هنا لإكمال ملف التعريف الخاص بك."
+    },
+    "reportListSection": {
+      "headline": "إعداد تقارير البيانات",
+      "description": "هنا يمكنك الاطلاع على نظرة عامة على توقعاتك المرسلة. يمكنك فقط تقديم توقع واحد لكل إطار زمني. يمكن تعديل التوقعات طالما لم يتم الوصول إلى الإطار الزمني المحدد.",
+      "noReportAddNow": "No Reports available. Add a Report now.",
+      "noReportPleaseComplete": "No Reports available. Complete your profile to submit a Report.",
+      "reportCard": {
+        "title": "رقم تقرير البيانات {{reportNumber}}",
+        "submittedOn": "تم إرساله {{submitDate}}",
+        "startsAt": "بداية التوقعات:",
+        "timeframe": "الإطار الزمني للتنبؤات:",
+        "estimatedF": "الرسوم المقدرة:",
+        "entries": "إدخالات التغليف:",
+        "month": "شهر",
+        "editable": "يمكن تحريره لمدة 193 يومًا أخرى",
+        "forecast": "تنبؤ بالمناخ"
+      }
     }
   },
   "companyCompletionForm": {

@@ -105,6 +105,17 @@ export type PackagingGroupType = {
   name: Scalars['String']
 }
 
+export type PackagingReportType = {
+  __typename?: 'PackagingReportType'
+  createdAt: Scalars['DateTime']
+  id: Scalars['ID']
+  packagingGroupsCount: Scalars['Int']
+  startMonth: Scalars['Int']
+  timeframe: Scalars['Int']
+  timezoneInfo: Scalars['String']
+  year: Scalars['Int']
+}
+
 export type Query = {
   __typename?: 'Query'
   companyDetails?: Maybe<CompanyType>
@@ -113,6 +124,7 @@ export type Query = {
   packagingGroups: Array<PackagingGroupType>
   packagingMaterials: Array<MaterialType>
   packagingReportFeesEstimation: Scalars['Decimal']
+  packagingReports: Array<PackagingReportType>
 }
 
 export type QueryPackagingReportFeesEstimationArgs = {
@@ -189,6 +201,22 @@ export type CompanyDetailsQuery = {
     lastmodifiedAt: any
     isProfileCompleted: boolean
   } | null
+}
+
+export type PackagingReportsQueryVariables = Exact<{ [key: string]: never }>
+
+export type PackagingReportsQuery = {
+  __typename?: 'Query'
+  packagingReports: Array<{
+    __typename?: 'PackagingReportType'
+    createdAt: any
+    id: string
+    startMonth: number
+    year: number
+    timezoneInfo: string
+    timeframe: number
+    packagingGroupsCount: number
+  }>
 }
 
 export type ExampleQueryVariables = Exact<{ [key: string]: never }>
@@ -391,6 +419,53 @@ export type CompanyDetailsLazyQueryHookResult = ReturnType<
 export type CompanyDetailsQueryResult = Apollo.QueryResult<
   CompanyDetailsQuery,
   CompanyDetailsQueryVariables
+>
+export const PackagingReportsDocument = gql`
+  query packagingReports {
+    packagingReports {
+      createdAt
+      id
+      startMonth
+      year
+      timezoneInfo
+      timeframe
+      packagingGroupsCount
+    }
+  }
+`
+export function usePackagingReportsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    PackagingReportsQuery,
+    PackagingReportsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<PackagingReportsQuery, PackagingReportsQueryVariables>(
+    PackagingReportsDocument,
+    options
+  )
+}
+export function usePackagingReportsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    PackagingReportsQuery,
+    PackagingReportsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<
+    PackagingReportsQuery,
+    PackagingReportsQueryVariables
+  >(PackagingReportsDocument, options)
+}
+export type PackagingReportsQueryHookResult = ReturnType<
+  typeof usePackagingReportsQuery
+>
+export type PackagingReportsLazyQueryHookResult = ReturnType<
+  typeof usePackagingReportsLazyQuery
+>
+export type PackagingReportsQueryResult = Apollo.QueryResult<
+  PackagingReportsQuery,
+  PackagingReportsQueryVariables
 >
 export const ExampleDocument = gql`
   query example {

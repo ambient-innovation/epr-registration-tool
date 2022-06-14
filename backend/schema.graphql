@@ -55,12 +55,23 @@ type PackagingGroupType {
   name: String!
 }
 
+type PackagingReportType {
+  id: ID!
+  timeframe: Int!
+  year: Int!
+  startMonth: Int!
+  timezoneInfo: String!
+  createdAt: DateTime!
+  packagingGroupsCount: Int!
+}
+
 type Query {
   me: UserType
   companyDetails: CompanyType
   packagingGroups: [PackagingGroupType!]!
   packagingMaterials: [MaterialType!]!
   packagingReportFeesEstimation(timeframe: TimeframeType!, year: Int!, startMonth: Int!, packagingRecords: [PackagingGroupInput!]!): Decimal!
+  packagingReports: [PackagingReportType!]!
   helloWorld: String!
 }
 

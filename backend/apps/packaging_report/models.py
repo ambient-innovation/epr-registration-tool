@@ -53,6 +53,13 @@ class PackagingReport(CommonInfo):
         verbose_name = _("Packaging Report")
         verbose_name_plural = _("Packaging Reports")
 
+    related_company = models.ForeignKey(
+        'company.Company',
+        verbose_name=_('Company'),
+        related_name="packaging_report_queryset",
+        on_delete=models.CASCADE,
+    )
+
     timeframe = models.PositiveIntegerField(
         verbose_name=_("Timeframe"),
         choices=TimeframeType.choices,
