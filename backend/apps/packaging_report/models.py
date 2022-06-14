@@ -15,9 +15,9 @@ from common.validators import validate_greater_than_zero
 
 def validate_report_year(value):
     current_year = datetime.date.today().year
-    if value < current_year or value > 2100:
+    if value < current_year or value > current_year + 5:
         raise ValidationError(
-            _('%(value)s should be in the future and before 2100'), params={'value': value}, code='invalidYear'
+            _('%(value)s should be in the future and with in 5 years'), params={'value': value}, code='invalidYear'
         )
 
 

@@ -1,4 +1,8 @@
+from django import forms
 from django.contrib import admin
+from django.utils import timezone
+
+from ai_django_core.admin.model_admins.mixins import CommonInfoAdminMixin
 
 from packaging_report.models import ForecastSubmission, MaterialRecord, PackagingReport
 
@@ -24,8 +28,28 @@ class ForecastSubmissionAdmin(admin.ModelAdmin):
         return super().get_queryset(request).select_related('related_report')
 
 
+class PackagingReportForm(forms.ModelForm):
+    YEAR_CHOICES = []
+    now = timezone.now()
+    current_year = now.year
+    for r in range(current_year, current_year + 5):
+        YEAR_CHOICES.append((r, r))
+    year = forms.CharField(
+        max_length=4,
+        widget=forms.Select(choices=YEAR_CHOICES),
+    )
+
+    def __init__(self, *args, **kwargs):
+        if 'instance' not in kwargs:
+            if 'initial' not in kwargs:
+                kwargs['initial'] = {}
+            kwargs['initial'].update({'start_month': self.now.month})
+        super().__init__(*args, **kwargs)
+
+
 @admin.register(PackagingReport)
-class PackagingReportAdmin(admin.ModelAdmin):
+class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
+    form = PackagingReportForm
     list_display = (
         'id',
         'timeframe',
