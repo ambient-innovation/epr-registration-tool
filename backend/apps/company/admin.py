@@ -69,6 +69,7 @@ class CompanyAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
                 'fields': (
                     'name',
                     'distributor_type',
+                    'identification_number',
                 )
             },
         ),
