@@ -83,7 +83,7 @@ class ActivateUser(OldActivateUser):
                 from company.email import send_admin_registration_notification
 
                 try:
-                    send_admin_registration_notification(company_id=company.id)
+                    send_admin_registration_notification(company=company)
                 except Exception as e:
                     # failing email should not break the user activation
                     capture_exception(e)

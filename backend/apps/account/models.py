@@ -71,6 +71,17 @@ class User(AbstractBaseUser, PermissionsMixin):
         """
         return self.is_superuser
 
+    @property
+    def display_name(self):
+        title = self.get_title_display()
+        name = self.full_name
+        if not name:
+            if self.is_staff:
+                name = "Admin"
+            else:
+                name = "Anonymous 🥷"
+        return f'{title} {name}' if title else name
+
 
 class NotificationSettings(models.Model):
     class Meta:

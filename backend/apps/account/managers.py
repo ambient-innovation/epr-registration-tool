@@ -6,6 +6,9 @@ class UserQuerySet(QuerySet):
     def staff(self):
         return self.filter(is_superuser=True)
 
+    def active(self):
+        return self.filter(is_active=True)
+
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):

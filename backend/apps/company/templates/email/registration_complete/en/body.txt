@@ -1,3 +1,5 @@
+Dear {{ user.display_name }}
+
 Your EPR account has been successfully activated.
 
 Login now: {{ url }}
