@@ -1,6 +1,9 @@
 import datetime
+import decimal
+import typing
 from zoneinfo import ZoneInfoNotFoundError
 
+from django.contrib import admin
 from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -98,6 +101,26 @@ class ForecastSubmission(ReportSubmission):
 
     def __str__(self):
         return f'Forecast Report ({self.id})'
+
+    @admin.display(description="Estimated Fees")
+    def estimated_fees(self) -> typing.Optional[decimal.Decimal]:
+        from packaging.price_utils import get_material_price_at
+
+        fees = 0.0
+        timeframe = self.related_report.timeframe
+        start_month = self.related_report.start_month
+        year = self.related_report.year
+        for m in self.material_records_queryset.all():
+            monthly_quantity = m.quantity / timeframe
+            for timeframe_month_index in range(timeframe):
+                month = start_month + timeframe_month_index
+
+                material_price = get_material_price_at(m.related_packaging_material_id, year, month)
+                if not material_price:
+                    return None
+                fees = fees + (material_price.price_per_kg * monthly_quantity)
+
+        return f'{round(fees, 2)} JOD/ {timeframe} month(s)'
 
 
 class MaterialRecord(CommonInfo):
