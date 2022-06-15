@@ -20,7 +20,9 @@ export const ReportListSection = ({
   canAddReport,
 }: ReportListSection): React.ReactElement => {
   const { t } = useTranslation()
-  const { data, loading, error } = usePackagingReportsQuery()
+  const { data, loading, error } = usePackagingReportsQuery({
+    fetchPolicy: 'cache-and-network',
+  })
   const titleId = useId()
   const descriptionId = useId()
   return (
