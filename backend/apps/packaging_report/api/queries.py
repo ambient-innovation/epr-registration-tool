@@ -38,7 +38,7 @@ class PackagingReportQuery:
                     material_price = get_material_price_at(m.material_id, year, month)
                     if not material_price:
                         raise GraphQLError('materialDoesNotExist')
-                    fees = fees + (material_price.price_per_kg * monthly_quantity)
+                    fees = fees + (decimal.Decimal(material_price.price_per_kg) * monthly_quantity)
 
         return round(fees, 2)
 
