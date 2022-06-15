@@ -21,7 +21,11 @@ class MaterialRecordInline(admin.StackedInline):
 @admin.register(ForecastSubmission)
 class ForecastSubmissionAdmin(admin.ModelAdmin):
     list_display = ('id', 'created_at')
-    fields = ('related_report',)
+    fields = (
+        'related_report',
+        'estimated_fees',
+    )
+    readonly_fields = ('estimated_fees',)
     inlines = (MaterialRecordInline,)
 
     def get_queryset(self, request):
