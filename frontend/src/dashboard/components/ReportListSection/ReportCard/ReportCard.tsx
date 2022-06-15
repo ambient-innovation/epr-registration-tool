@@ -88,12 +88,12 @@ export const ReportCard = ({
                 'dashboard.reportListSection.reportCard.entries'
               )} ${packagingGroupsCount}`}
             </Typography>
-            <Typography variant={'body2'}>
+            {/* <Typography variant={'body2'}>
               {`${t('dashboard.reportListSection.reportCard.estimatedF')} `}
               <Typography component={'span'} variant={'subtitle2'}>
-                {'1000 JD'}
+                {'1000 JOD'}
               </Typography>
-            </Typography>
+            </Typography> */}
           </Box>
           <Box
             sx={{
