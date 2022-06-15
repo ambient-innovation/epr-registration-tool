@@ -21,4 +21,16 @@
     Newly registered companies must be confirmed by a staff member.
     Before that the company will not be able to log into their account and create reports.
   </p>
+  <strong>Company information</strong>
+  <p>
+    Name: {{ company.name }}<br>
+    Distributor type: {{ company.get_distributor_type_display }}
+  </p>
+  <strong>Contact person</strong>
+  <p>
+    Email: {{ company_user.email }}<br>
+    Name: {{ company_user.display_name }}<br>
+    Phone: {{ company_user.phone_or_mobile }}<br>
+    Position: {{ company_user.position }}
+  </p>
 {% endblock %}

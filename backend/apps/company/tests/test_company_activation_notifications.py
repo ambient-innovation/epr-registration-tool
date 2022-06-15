@@ -19,8 +19,8 @@ class CompanyActivationNotificationsTestCase(BaseTestCase):
             company_registration=True,
         )
 
-        company_id = 1
-        send_admin_registration_notification(company_id)
+        company = baker.make_recipe('company.tests.company', users_queryset=[user_1, user_2])
+        send_admin_registration_notification(company)
 
         self.assertEqual(1, len(mail.outbox))
         self.assertEqual(['superuser1@local.local'], mail.outbox[0].to)
@@ -34,7 +34,6 @@ class CompanyActivationNotificationsTestCase(BaseTestCase):
 
         send_user_registration_complete_notification(company)
 
-        self.assertEqual(
-            ['user2@local.local', 'user1@local.local'],
-            mail.outbox[0].to,
-        )
+        self.assertEqual(2, len(mail.outbox))
+        self.assertEqual(['user2@local.local'], mail.outbox[0].to)
+        self.assertEqual(['user1@local.local'], mail.outbox[1].to)

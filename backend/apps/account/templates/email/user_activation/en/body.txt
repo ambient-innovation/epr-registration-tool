@@ -1,3 +1,5 @@
+Dear {{ user.display_name }}
+
 Welcome to the EPR Registration Tool
 
 Please confirm your email address below to proceed with creating your new account.

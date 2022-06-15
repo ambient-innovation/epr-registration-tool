@@ -7,52 +7,57 @@ from django.urls import reverse
 from sentry_sdk import capture_message
 
 from common.email import render_email, render_translated_email, send_html_email
+from company.models import Company
 
 UserModel = get_user_model()
 
 
-def send_admin_registration_notification(company_id: int):
-    edit_company_url = reverse('admin:company_company_change', args=(company_id,))
-    url = urljoin(settings.BASE_URL, edit_company_url)
-    context = {
-        'url': url,
-        'frontend_url': settings.FRONTEND_URL,
-    }
+def send_admin_registration_notification(company: Company):
+    assert company is not None
 
-    subject, body_plain, body_html = render_email('new_registration', context)
+    edit_company_url = reverse('admin:company_company_change', args=(company.id,))
+    absolute_edit_company_url = urljoin(settings.BASE_URL, edit_company_url)
 
-    receiver_emails_list = list(
-        UserModel.objects.staff()
-        .filter(notification_settings__company_registration=True)
-        .values_list('email', flat=True)
-    )
+    company = Company.objects.filter(id=company.id).first()
+    company_user = company.users_queryset.first()
+    receiver_list = list(UserModel.objects.staff().filter(notification_settings__company_registration=True))
 
-    if len(receiver_emails_list) > 0:
+    for user in receiver_list:
+        context = {
+            'user': user,
+            'company': company,
+            'company_user': company_user,
+            'url': absolute_edit_company_url,
+            'frontend_url': settings.FRONTEND_URL,
+        }
+        subject, body_plain, body_html = render_email('new_registration', context)
         send_html_email(
             subject=subject,
             body_plain=body_plain,
             body_html=body_html,
-            to=receiver_emails_list,
+            to=[user.email],
         )
     else:
         capture_message('No receivers for company registration notification')
 
 
 def send_user_registration_complete_notification(company):
-    context = {
-        'url': urljoin(settings.FRONTEND_URL, '/login'),
-        'frontend_url': settings.FRONTEND_URL,
-    }
+    assert company is not None
+    receiver_list = company.users_queryset.all().active()
 
-    subject, body_plain, body_html = render_translated_email('registration_complete', context)
-    receiver_emails_list = list(company.users_queryset.values_list('email', flat=True))
+    for user in receiver_list:
+        context = {
+            'user': user,
+            'url': urljoin(settings.FRONTEND_URL, '/login'),
+            'frontend_url': settings.FRONTEND_URL,
+        }
 
-    if len(receiver_emails_list) > 0:
+        subject, body_plain, body_html = render_translated_email('registration_complete', context)
         send_html_email(
             subject=subject,
             body_plain=body_plain,
             body_html=body_html,
-            to=receiver_emails_list,
+            to=[user.email],
         )
     else:
         capture_message(f'No receivers for registration complete notification (company ID={company.id})')
