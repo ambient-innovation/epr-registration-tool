@@ -1,15 +1,14 @@
 import decimal
 import typing
 
-from django.db.models import Count
-
 import strawberry
-from graphql import GraphQLError
+from django.db.models import Count
+from strawberry import ID
 from strawberry.types import Info
 
 from common.api.permissions import IsAuthenticated
 from packaging.api.types import PackagingGroupInput
-from packaging.price_utils import get_material_price_at
+from packaging.price_utils import calculate_material_fees
 from packaging_report.api.types import PackagingReportType
 from packaging_report.models import PackagingReport, TimeframeType
 
@@ -27,15 +26,7 @@ def get_packaging_report_fees_estimation(
     fees = 0
     for packaging in packaging_records:
         for m in packaging.material_records:
-            monthly_quantity = m.quantity / timeframe
-            for timeframe_month_index in range(timeframe):
-                month = start_month + timeframe_month_index
-
-                material_price = get_material_price_at(m.material_id, year, month)
-                if not material_price:
-                    raise GraphQLError('materialDoesNotExist')
-                fees = fees + (decimal.Decimal(material_price.price_per_kg) * monthly_quantity)
-
+            fees = fees + calculate_material_fees(timeframe, year, start_month, m.material_id, m.quantity)
     return round(fees, 2)
 
 

@@ -104,21 +104,16 @@ class ForecastSubmission(ReportSubmission):
 
     @admin.display(description="Estimated Fees")
     def estimated_fees(self) -> typing.Optional[decimal.Decimal]:
-        from packaging.price_utils import get_material_price_at
+        from packaging.price_utils import calculate_material_fees
 
-        fees = 0.0
+        fees = 0
         timeframe = self.related_report.timeframe
         start_month = self.related_report.start_month
         year = self.related_report.year
         for m in self.material_records_queryset.all():
-            monthly_quantity = m.quantity / timeframe
-            for timeframe_month_index in range(timeframe):
-                month = start_month + timeframe_month_index
-
-                material_price = get_material_price_at(m.related_packaging_material_id, year, month)
-                if not material_price:
-                    return None
-                fees = fees + (material_price.price_per_kg * monthly_quantity)
+            fees = fees + calculate_material_fees(
+                timeframe, year, start_month, m.related_packaging_material_id, m.quantity
+            )
 
         return f'{round(fees, 2)} JOD/ {timeframe} month(s)'
 
