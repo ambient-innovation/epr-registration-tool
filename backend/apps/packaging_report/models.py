@@ -14,6 +14,7 @@ from ai_django_core.models import CommonInfo
 
 from common.models import Month
 from common.validators import validate_greater_than_zero
+from packaging_report.managers import PackagingReportQuerySet
 
 
 def validate_report_year(value):
@@ -74,6 +75,8 @@ class PackagingReport(CommonInfo):
     timezone_info = models.CharField(
         verbose_name=_('Timezone info'), max_length=32, validators=[validate_report_timezone]
     )
+
+    objects = PackagingReportQuerySet.as_manager()
 
     def clean(self):
         if self.start_month + (self.timeframe - 1) > 12:

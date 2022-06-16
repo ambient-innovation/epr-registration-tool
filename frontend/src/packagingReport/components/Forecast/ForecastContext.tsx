@@ -50,14 +50,17 @@ export const initialData: ForecastData = {
 }
 
 export const ForecastProvider: React.FC<{
+  defaultData?: ForecastData
+  updateForm?: boolean
   children?: React.ReactNode
-}> = ({ children }) => {
+}> = ({ children, defaultData = initialData, updateForm = false }) => {
   const router = useRouter()
-  const [data, setData] = useState<ForecastData>(initialData)
+  const [data, setData] = useState<ForecastData>(defaultData)
   const [activeStep, setActiveStep] = useState<StepNumber>(0)
-  const [packagingReportSubmit, { error }] = usePackagingReportForecastSubmitMutation({
-    refetchQueries: [PACKAGING_REPORTS_QUERY],
-  })
+  const [packagingReportSubmit, { error }] =
+    usePackagingReportForecastSubmitMutation({
+      refetchQueries: [PACKAGING_REPORTS_QUERY],
+    })
 
   const onSubmit: ForecastContextValue['onSubmit'] = useCallback(
     (updatedData) => {
@@ -67,24 +70,24 @@ export const ForecastProvider: React.FC<{
       } else {
         const { startDate, ...finalDate } = { ...data, ...updatedData }
 
-        return (
-          packagingReportSubmit({
-            variables: {
-              year: startDate.getFullYear(),
-              startMonth: startDate.getMonth() + 1, // months start from 0 in javascript Date Api, they say, that because is copied from java.util.Date
-              tzInfo: Intl.DateTimeFormat().resolvedOptions().timeZone,
-              ...finalDate,
-            },
-          })
-            .then(() => {
-              router.push(ROUTES.forecastSuccess)
+        return updateForm
+          ? true
+          : packagingReportSubmit({
+              variables: {
+                year: startDate.getFullYear(),
+                startMonth: startDate.getMonth() + 1, // months start from 0 in javascript Date Api, they say, that because is copied from java.util.Date
+                tzInfo: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                ...finalDate,
+              },
             })
-            // handle error via error object returned by useMutation
-            .catch(() => null)
-        )
+              .then(() => {
+                router.push(ROUTES.forecastSuccess)
+              })
+              // handle error via error object returned by useMutation
+              .catch(() => null)
       }
     },
-    [activeStep, router, data, packagingReportSubmit]
+    [activeStep, router, data, packagingReportSubmit, updateForm]
   )
 
   const goToPrevStep = useCallback(() => {
@@ -99,10 +102,10 @@ export const ForecastProvider: React.FC<{
       goToPrevStep,
       activeStep,
       data,
-      initialData,
+      initialData: defaultData ?? initialData,
       error,
     }),
-    [onSubmit, goToPrevStep, activeStep, data, error]
+    [onSubmit, goToPrevStep, activeStep, data, error, defaultData]
   )
 
   useEffect(() => {

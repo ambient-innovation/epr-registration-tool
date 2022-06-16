@@ -68,7 +68,8 @@
     "createAnotherReport": "Submit another Report",
     "proceedToHomepage": "Proceed to homepage",
     "estimatedFeesResult": "Price {{fees}} JOD",
-    "reportSuccessful": "Report Successful"
+    "reportSuccessful": "Report Successful",
+    "calculating": "calculating, please wait ..."
   },
   "validations": {
     "required": "This field is required",

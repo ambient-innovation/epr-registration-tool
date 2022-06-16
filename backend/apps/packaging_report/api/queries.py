@@ -48,7 +48,8 @@ def packaging_report_forecast_details(info: Info, packaging_report_id: ID) -> ty
     current_user = info.context.request.user
     related_company_id = current_user.related_company_id
     return (
-        PackagingReport.objects.filter(pk=packaging_report_id, related_company_id=related_company_id)
+        PackagingReport.objects.visible_for(current_user)
+        .filter(pk=packaging_report_id)
         .select_related('related_forecast')
         .prefetch_related(
             'related_forecast__material_records_queryset',

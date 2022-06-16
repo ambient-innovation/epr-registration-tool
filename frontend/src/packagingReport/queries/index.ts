@@ -28,3 +28,31 @@ export const PACKAGING_REPORT_FEED_ESTIMATION = gql`
     )
   }
 `
+
+export const PACKAGING_REPORT_FORECAST_DETAILS = gql`
+  query packagingReportForecastDetails($packagingReportId: ID!) {
+    packagingReport: packagingReportForecastDetails(
+      packagingReportId: $packagingReportId
+    ) {
+      id
+      timeframe
+      year
+      startMonth
+      timezoneInfo
+      forecast: relatedForecast {
+        id
+        materialRecords {
+          quantity
+          packagingGroup: relatedPackagingGroup {
+            id
+            name
+          }
+          packagingMaterial: relatedPackagingMaterial {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+`

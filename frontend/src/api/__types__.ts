@@ -52,9 +52,23 @@ export enum DistributorType {
   LOCAL_PRODUCER = 'LOCAL_PRODUCER',
 }
 
+export type ForecastSubmissionType = {
+  __typename?: 'ForecastSubmissionType'
+  id: Scalars['ID']
+  materialRecords: Array<MaterialRecordType>
+}
+
 export type MaterialInput = {
   materialId: Scalars['ID']
   quantity: Scalars['Decimal']
+}
+
+export type MaterialRecordType = {
+  __typename?: 'MaterialRecordType'
+  id: Scalars['ID']
+  quantity: Scalars['Float']
+  relatedPackagingGroup: PackagingGroupType
+  relatedPackagingMaterial: MaterialType
 }
 
 export type MaterialType = {
@@ -110,8 +124,9 @@ export type PackagingReportType = {
   createdAt: Scalars['DateTime']
   id: Scalars['ID']
   packagingGroupsCount: Scalars['Int']
+  relatedForecast?: Maybe<ForecastSubmissionType>
   startMonth: Scalars['Int']
-  timeframe: Scalars['Int']
+  timeframe: TimeframeType
   timezoneInfo: Scalars['String']
   year: Scalars['Int']
 }
@@ -124,6 +139,7 @@ export type Query = {
   packagingGroups: Array<PackagingGroupType>
   packagingMaterials: Array<MaterialType>
   packagingReportFeesEstimation: Scalars['Decimal']
+  packagingReportForecastDetails?: Maybe<PackagingReportType>
   packagingReports: Array<PackagingReportType>
 }
 
@@ -132,6 +148,10 @@ export type QueryPackagingReportFeesEstimationArgs = {
   startMonth: Scalars['Int']
   timeframe: TimeframeType
   year: Scalars['Int']
+}
+
+export type QueryPackagingReportForecastDetailsArgs = {
+  packagingReportId: Scalars['ID']
 }
 
 export enum TimeframeType {
@@ -214,7 +234,7 @@ export type PackagingReportsQuery = {
     startMonth: number
     year: number
     timezoneInfo: string
-    timeframe: number
+    timeframe: TimeframeType
     packagingGroupsCount: number
   }>
 }
@@ -262,6 +282,40 @@ export type PackagingReportFeesEstimationQueryVariables = Exact<{
 export type PackagingReportFeesEstimationQuery = {
   __typename?: 'Query'
   fees: any
+}
+
+export type PackagingReportForecastDetailsQueryVariables = Exact<{
+  packagingReportId: Scalars['ID']
+}>
+
+export type PackagingReportForecastDetailsQuery = {
+  __typename?: 'Query'
+  packagingReport?: {
+    __typename?: 'PackagingReportType'
+    id: string
+    timeframe: TimeframeType
+    year: number
+    startMonth: number
+    timezoneInfo: string
+    forecast?: {
+      __typename?: 'ForecastSubmissionType'
+      id: string
+      materialRecords: Array<{
+        __typename?: 'MaterialRecordType'
+        quantity: number
+        packagingGroup: {
+          __typename?: 'PackagingGroupType'
+          id: string
+          name: string
+        }
+        packagingMaterial: {
+          __typename?: 'MaterialType'
+          id: string
+          name: string
+        }
+      }>
+    } | null
+  } | null
 }
 
 export const RegisterCompanyDocument = gql`
@@ -633,4 +687,65 @@ export type PackagingReportFeesEstimationLazyQueryHookResult = ReturnType<
 export type PackagingReportFeesEstimationQueryResult = Apollo.QueryResult<
   PackagingReportFeesEstimationQuery,
   PackagingReportFeesEstimationQueryVariables
+>
+export const PackagingReportForecastDetailsDocument = gql`
+  query packagingReportForecastDetails($packagingReportId: ID!) {
+    packagingReport: packagingReportForecastDetails(
+      packagingReportId: $packagingReportId
+    ) {
+      id
+      timeframe
+      year
+      startMonth
+      timezoneInfo
+      forecast: relatedForecast {
+        id
+        materialRecords {
+          quantity
+          packagingGroup: relatedPackagingGroup {
+            id
+            name
+          }
+          packagingMaterial: relatedPackagingMaterial {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+`
+export function usePackagingReportForecastDetailsQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    PackagingReportForecastDetailsQuery,
+    PackagingReportForecastDetailsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<
+    PackagingReportForecastDetailsQuery,
+    PackagingReportForecastDetailsQueryVariables
+  >(PackagingReportForecastDetailsDocument, options)
+}
+export function usePackagingReportForecastDetailsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    PackagingReportForecastDetailsQuery,
+    PackagingReportForecastDetailsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<
+    PackagingReportForecastDetailsQuery,
+    PackagingReportForecastDetailsQueryVariables
+  >(PackagingReportForecastDetailsDocument, options)
+}
+export type PackagingReportForecastDetailsQueryHookResult = ReturnType<
+  typeof usePackagingReportForecastDetailsQuery
+>
+export type PackagingReportForecastDetailsLazyQueryHookResult = ReturnType<
+  typeof usePackagingReportForecastDetailsLazyQuery
+>
+export type PackagingReportForecastDetailsQueryResult = Apollo.QueryResult<
+  PackagingReportForecastDetailsQuery,
+  PackagingReportForecastDetailsQueryVariables
 >

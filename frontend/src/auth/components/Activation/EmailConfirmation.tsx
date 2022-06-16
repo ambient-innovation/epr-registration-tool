@@ -2,8 +2,6 @@ import {
   Alert,
   AlertTitle,
   Box,
-  CircularProgress,
-  Stack,
   Step,
   StepLabel,
   Stepper,
@@ -18,6 +16,7 @@ import { useUser } from '@/auth/hooks/useUser'
 import { getAxiosErrorMessage, handleAxiosError } from '@/auth/utils'
 import { ErrorAlert } from '@/common/components/ErrorAlert'
 import { FormLayout } from '@/common/components/FormLayout'
+import { LoadingState } from '@/common/components/LoadingState'
 
 export type ErrorData = { error?: string }
 export type ActivationError = AxiosError<ErrorData>
@@ -60,22 +59,6 @@ const SuccessState = (): React.ReactElement => {
         </Typography>
       </Box>
     </Box>
-  )
-}
-
-export const LoadingState = (): React.ReactElement => {
-  const { t } = useTranslation()
-
-  return (
-    <Stack
-      mt={'20vh'}
-      justifyContent={'center'}
-      alignItems={'center'}
-      spacing={3}
-    >
-      <CircularProgress aria-hidden={'true'} />
-      <Typography>{t('pleaseWait')}</Typography>
-    </Stack>
   )
 }
 

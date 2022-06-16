@@ -4,7 +4,10 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { SchemaOf } from 'yup'
 
+import { usePackagingBaseDataQuery } from '@/api/__types__'
+import { ApolloErrorAlert } from '@/common/components/ApolloErrorAlert'
 import { FormStep } from '@/common/components/FormStep'
+import { LoadingState } from '@/common/components/LoadingState'
 import { pick } from '@/utils/typescript.utils'
 
 import { useForecastContext } from './ForecastContext'
@@ -96,19 +99,33 @@ const resolver = yupResolver(schema)
 export const Step2 = (_: Step2) => {
   const { initialData, onSubmit, goToPrevStep } = useForecastContext()
   const defaultValues = pick(initialData, ...FIELD_NAMES)
+  const { data, loading, error } = usePackagingBaseDataQuery()
+
+  const packagingGroups = data?.packagingGroups || []
+  const packagingMaterials = data?.packagingMaterials || []
   const { handleSubmit, control } = useForm<FormData>({
     mode: 'onTouched',
     resolver,
     defaultValues,
   })
 
+  if (loading) {
+    return <LoadingState />
+  }
+
   return (
     <FormStep onSubmit={handleSubmit(onSubmit)} onClickBack={goToPrevStep}>
       <Stack spacing={8} role={'list'}>
-        <PackagingArrayField
-          control={control}
-          defaultValues={defaultValues.packagingRecords}
-        />
+        {!!error ? (
+          <ApolloErrorAlert error={error} />
+        ) : (
+          <PackagingArrayField
+            control={control}
+            defaultValues={defaultValues.packagingRecords}
+            packagingGroups={packagingGroups}
+            packagingMaterials={packagingMaterials}
+          />
+        )}
       </Stack>
     </FormStep>
   )

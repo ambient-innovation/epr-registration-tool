@@ -52,6 +52,10 @@ class BaseTestCase(TestCase):
             request=HttpRequest(),
         )
 
+    @staticmethod
+    def create_and_assign_company(user):
+        return baker.make_recipe('company.tests.company', users_queryset=[user])
+
     def login_normal_user(self):
         assert self.user is not None, 'User does not exist, consider AUTO_CREATE_USERS=True'
         self.login(self.user)

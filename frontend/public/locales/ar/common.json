@@ -68,7 +68,8 @@
     "createAnotherReport": "إرسال تقرير آخر",
     "proceedToHomepage": "انتقل إلى الصفحة الرئيسية",
     "estimatedFeesResult": "السعر {{fees}} د.أ",
-    "reportSuccessful": "تم الإبلاغ عن النجاح"
+    "reportSuccessful": "تم الإبلاغ عن النجاح",
+    "calculating": "جاري الحساب ، من فضلك انتظر ..."
   },
   "validations": {
     "required": "هذه الخانة مطلوبه",

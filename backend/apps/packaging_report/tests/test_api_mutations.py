@@ -13,14 +13,14 @@ class PackagingReportSubmissionTestCase(BaseApiTestCase):
     AUTO_CREATE_USERS = True
     ALWAYS_LOGIN_USER = True
     MUTATION = """
-        mutation packagingReportSubmit(
+        mutation packagingReportForecastSubmit(
             $year: Int!,
             $startMonth: Int!,
             $tzInfo: String!,
             $timeframe: TimeframeType!,
             $packagingRecords: [PackagingGroupInput!]!
         ) {
-            packagingReportSubmit(
+            packagingReportForecastSubmit(
                 year: $year,
                 startMonth: $startMonth,
                 tzInfo: $tzInfo,
@@ -53,7 +53,7 @@ class PackagingReportSubmissionTestCase(BaseApiTestCase):
         }
         content = self.query_and_load_data(self.MUTATION, variables=variables)
 
-        self.assertEqual(content['packagingReportSubmit'], 'CREATED')
+        self.assertEqual(content['packagingReportForecastSubmit'], 'CREATED')
         self.assertEqual(1, PackagingReport.objects.count())
         self.assertEqual(2023, PackagingReport.objects.first().year)
         self.assertEqual(9, PackagingReport.objects.first().start_month)

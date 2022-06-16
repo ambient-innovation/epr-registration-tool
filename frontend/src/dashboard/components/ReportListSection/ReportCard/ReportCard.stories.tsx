@@ -1,5 +1,7 @@
 import { Story } from '@storybook/react'
 
+import { TimeframeType } from '@/api/__types__'
+
 import { ReportCard } from './ReportCard'
 
 export default {
@@ -18,7 +20,7 @@ EditableForecast.args = {
   createdAt: '2022-06-01 15:26:20.360428+00',
   startMonth: 9,
   year: 2022,
-  timeframe: 3,
+  timeframe: TimeframeType.THREE_MONTHS,
   packagingGroupsCount: 3,
 }
 
@@ -27,6 +29,6 @@ NonEditableForecast.args = {
   createdAt: '2022-03-01 15:26:20.360428+00',
   startMonth: 5,
   year: 2022,
-  timeframe: 3,
+  timeframe: TimeframeType.TWELVE_MONTHS,
   packagingGroupsCount: 3,
 }
