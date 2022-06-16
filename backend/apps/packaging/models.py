@@ -31,9 +31,7 @@ class MaterialPrice(CommonInfo):
         choices=Month.choices,
         db_index=True,
     )
-    price_per_kg = models.PositiveIntegerField(
-        verbose_name=_("Price (Kg)"),
-    )
+    price_per_kg = models.FloatField(verbose_name=_("Price (Kg)"), help_text=_("price in JOD"))
 
     sort_key = models.PositiveIntegerField(verbose_name=_('Sort key'), db_index=True)
 
