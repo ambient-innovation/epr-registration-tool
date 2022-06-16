@@ -142,7 +142,7 @@ class MaterialRecord(CommonInfo):
         related_name="material_records_queryset",
         on_delete=models.PROTECT,
     )
-    quantity = models.FloatField(verbose_name=_('Quantity'), validators=[validate_greater_than_zero])
+    quantity = models.FloatField(verbose_name=_('Quantity (Kg)'), validators=[validate_greater_than_zero])
     # - this will be the complete quantity divided on the selected timeframe
     # - quantity in month  can be different from month to month in case the quantity changed in the forecast
     #   timeframe (between start and end date)

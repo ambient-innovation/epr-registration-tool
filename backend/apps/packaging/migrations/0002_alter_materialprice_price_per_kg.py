@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('packaging', '0001_initial'),
     ]
@@ -13,6 +12,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='materialprice',
             name='price_per_kg',
-            field=models.FloatField(help_text='price in JOD', verbose_name='Price (Kg)'),
+            field=models.FloatField(help_text='price in JOD per Kg', verbose_name='Price'),
         ),
     ]
