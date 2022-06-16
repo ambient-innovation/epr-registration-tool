@@ -29,9 +29,21 @@ enum DistributorType {
   LOCAL_PRODUCER
 }
 
+type ForecastSubmissionType {
+  id: ID!
+  materialRecords: [MaterialRecordType!]!
+}
+
 input MaterialInput {
   materialId: ID!
   quantity: Decimal!
+}
+
+type MaterialRecordType {
+  id: ID!
+  quantity: Float!
+  relatedPackagingGroup: PackagingGroupType!
+  relatedPackagingMaterial: MaterialType!
 }
 
 type MaterialType {
@@ -57,10 +69,11 @@ type PackagingGroupType {
 
 type PackagingReportType {
   id: ID!
-  timeframe: Int!
+  timeframe: TimeframeType!
   year: Int!
   startMonth: Int!
   timezoneInfo: String!
+  relatedForecast: ForecastSubmissionType
   createdAt: DateTime!
   packagingGroupsCount: Int!
 }
@@ -72,6 +85,7 @@ type Query {
   packagingMaterials: [MaterialType!]!
   packagingReportFeesEstimation(timeframe: TimeframeType!, year: Int!, startMonth: Int!, packagingRecords: [PackagingGroupInput!]!): Decimal!
   packagingReports: [PackagingReportType!]!
+  packagingReportForecastDetails(packagingReportId: ID!): PackagingReportType
   helloWorld: String!
 }
 
