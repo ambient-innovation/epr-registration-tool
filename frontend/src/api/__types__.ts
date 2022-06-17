@@ -81,6 +81,7 @@ export type Mutation = {
   __typename?: 'Mutation'
   createCompanyProfile: Scalars['String']
   packagingReportForecastSubmit: Scalars['String']
+  packagingReportForecastUpdate: Scalars['String']
   registerCompany: Scalars['String']
 }
 
@@ -95,6 +96,11 @@ export type MutationPackagingReportForecastSubmitArgs = {
   timeframe: TimeframeType
   tzInfo: Scalars['String']
   year: Scalars['Int']
+}
+
+export type MutationPackagingReportForecastUpdateArgs = {
+  packagingRecords: Array<PackagingGroupInput>
+  packagingReportId: Scalars['ID']
 }
 
 export type MutationRegisterCompanyArgs = {
@@ -229,8 +235,8 @@ export type PackagingReportsQuery = {
   __typename?: 'Query'
   packagingReports: Array<{
     __typename?: 'PackagingReportType'
-    createdAt: any
     id: string
+    createdAt: any
     startMonth: number
     year: number
     timezoneInfo: string
@@ -254,6 +260,16 @@ export type PackagingReportForecastSubmitMutationVariables = Exact<{
 export type PackagingReportForecastSubmitMutation = {
   __typename?: 'Mutation'
   packagingReportForecastSubmit: string
+}
+
+export type PackagingReportForecastUpdateMutationVariables = Exact<{
+  packagingReportId: Scalars['ID']
+  packagingRecords: Array<PackagingGroupInput> | PackagingGroupInput
+}>
+
+export type PackagingReportForecastUpdateMutation = {
+  __typename?: 'Mutation'
+  packagingReportForecastUpdate: string
 }
 
 export type PackagingBaseDataQueryVariables = Exact<{ [key: string]: never }>
@@ -477,8 +493,8 @@ export type CompanyDetailsQueryResult = Apollo.QueryResult<
 export const PackagingReportsDocument = gql`
   query packagingReports {
     packagingReports {
-      createdAt
       id
+      createdAt
       startMonth
       year
       timezoneInfo
@@ -592,6 +608,43 @@ export type PackagingReportForecastSubmitMutationOptions =
   Apollo.BaseMutationOptions<
     PackagingReportForecastSubmitMutation,
     PackagingReportForecastSubmitMutationVariables
+  >
+export const PackagingReportForecastUpdateDocument = gql`
+  mutation packagingReportForecastUpdate(
+    $packagingReportId: ID!
+    $packagingRecords: [PackagingGroupInput!]!
+  ) {
+    packagingReportForecastUpdate(
+      packagingReportId: $packagingReportId
+      packagingRecords: $packagingRecords
+    )
+  }
+`
+export type PackagingReportForecastUpdateMutationFn = Apollo.MutationFunction<
+  PackagingReportForecastUpdateMutation,
+  PackagingReportForecastUpdateMutationVariables
+>
+export function usePackagingReportForecastUpdateMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    PackagingReportForecastUpdateMutation,
+    PackagingReportForecastUpdateMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    PackagingReportForecastUpdateMutation,
+    PackagingReportForecastUpdateMutationVariables
+  >(PackagingReportForecastUpdateDocument, options)
+}
+export type PackagingReportForecastUpdateMutationHookResult = ReturnType<
+  typeof usePackagingReportForecastUpdateMutation
+>
+export type PackagingReportForecastUpdateMutationResult =
+  Apollo.MutationResult<PackagingReportForecastUpdateMutation>
+export type PackagingReportForecastUpdateMutationOptions =
+  Apollo.BaseMutationOptions<
+    PackagingReportForecastUpdateMutation,
+    PackagingReportForecastUpdateMutationVariables
   >
 export const PackagingBaseDataDocument = gql`
   query packagingBaseData {

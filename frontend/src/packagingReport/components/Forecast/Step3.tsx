@@ -7,8 +7,8 @@ import { usePackagingReportFeesEstimationQuery } from '@/api/__types__'
 import { FormStep, FormStepContainer } from '@/common/components/FormStep'
 import { fontWeights } from '@/theme/typography'
 
+import { timeframeDisplayValue } from '../../../common/contants'
 import { useForecastContext } from './ForecastContext'
-import { timeframeDisplayValue } from './contants'
 
 export type Step3 = Record<string, never>
 

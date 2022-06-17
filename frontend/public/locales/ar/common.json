@@ -13,6 +13,7 @@
   "pleaseWait": "Please wait ...",
   "eprTool": "EPR Registration Tool",
   "kg": "كلغ",
+  "edit": "تعديل",
   "registrationForm": {
     "createNewAccount": "انشاء حساب جديد",
     "generalCompanyInformation": "معلومات عامة عن الشركة",
@@ -106,7 +107,8 @@
     "packagingGroupDoesNotExist": "إحدى مجموعات الحزم المحددة غير موجودة",
     "materialDoesNotExist": "إحدى المواد المختارة غير موجودة",
     "noCompanyAssignedORInactiveCompany": "لم يتم تعيينك لأي شركة أو لم يتم تنشيط حساب شركتك بعد.",
-    "noCompanyAssigned": "لم يتم تعيينك لأية شركة"
+    "noCompanyAssigned": "لم يتم تعيينك لأية شركة",
+    "reportDoesNotExist": "تقرير غير موجود"
   },
   "internalErrors": {
     "unknownError": "Something unexpected happened. Please reload and try again."

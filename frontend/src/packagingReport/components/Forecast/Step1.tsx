@@ -19,8 +19,11 @@ import {
 import { pick } from '@/utils/typescript.utils'
 import { startOfNextMonth } from '@/utils/utils.date'
 
+import {
+  forecastTimeframeOptions,
+  timeframeNumberValue,
+} from '../../../common/contants'
 import { useForecastContext } from './ForecastContext'
-import { forecastTimeframeOptions, timeframeNumberValue } from './contants'
 import { ForecastData } from './types'
 
 const FIELD_NAMES = ['startDate', 'timeframe'] as const
@@ -60,7 +63,7 @@ const schema: SchemaOf<Record<keyof FormData, unknown>> = yup
 const resolver = yupResolver(schema)
 
 export const Step1 = (_: Step1) => {
-  const { initialData, onSubmit } = useForecastContext()
+  const { initialData, onSubmit, isTimeframeEditable } = useForecastContext()
   const { t } = useTranslation()
   const { handleSubmit, control } = useForm<FormData>({
     mode: 'onTouched',
@@ -100,6 +103,7 @@ export const Step1 = (_: Step1) => {
                           )
                         : onChange(value)
                     }}
+                    readOnly={!isTimeframeEditable}
                     value={value}
                     inputRef={ref}
                     renderInput={(params) => (
@@ -130,6 +134,7 @@ export const Step1 = (_: Step1) => {
                   isOptionEqualToValue={(option, value) =>
                     option.value === value.value
                   }
+                  readOnly={!isTimeframeEditable}
                   onChange={(_, item) => onChange(item?.value)}
                   renderInput={(params) => {
                     return (

@@ -38,6 +38,22 @@ class PackagingReportSubmissionTestCase(BaseApiTestCase):
         cls.material = baker.make_recipe('packaging.tests.packaging_material')
 
     @time_machine.travel(make_aware(datetime(year=2022, month=3, day=1)))
+    def test_submit_new_packaging_report_in_the_past(self):
+        variables = {
+            "year": 2022,
+            "startMonth": 3,
+            "tzInfo": 'Europe/Madrid',
+            "timeframe": "THREE_MONTHS",
+            "packagingRecords": [
+                {
+                    "packagingGroupId": self.packaging_group.id,
+                    "materialRecords": {"materialId": self.material.id, "quantity": 9},
+                }
+            ],
+        }
+        self.query_and_assert_error(self.MUTATION, variables=variables, message="validationError")
+
+    @time_machine.travel(make_aware(datetime(year=2022, month=3, day=1)))
     def test_submit_new_packaging_report(self):
         variables = {
             "year": 2023,
@@ -58,15 +74,16 @@ class PackagingReportSubmissionTestCase(BaseApiTestCase):
         self.assertEqual(2023, PackagingReport.objects.first().year)
         self.assertEqual(9, PackagingReport.objects.first().start_month)
         self.assertEqual('Europe/Madrid', PackagingReport.objects.first().timezone_info)
-        self.assertTrue(1, ForecastSubmission.objects.count())
-        self.assertTrue(1, MaterialRecord.objects.count())
+        self.assertEqual(1, ForecastSubmission.objects.count())
+        self.assertEqual(1, MaterialRecord.objects.count())
         material_record = MaterialRecord.objects.first()
-        self.assertTrue(
+        self.assertEqual(
             self.packaging_group.id,
-            material_record.related_packaging_group,
+            material_record.related_packaging_group.id,
         )
-        self.assertTrue(self.material.id, material_record.related_packaging_material)
-        self.assertTrue(ForecastSubmission.objects.first().id, material_record.related_submission)
+        self.assertEqual(self.material.id, material_record.related_packaging_material.id)
+        self.assertEqual(ForecastSubmission.objects.first().id, material_record.related_submission.id)
+        self.assertEqual([3.0, 3.0, 3.0], material_record.monthly_quantities)
 
     def test_submit_new_packaging_report_start_date_validation_year(self):
         variables = {

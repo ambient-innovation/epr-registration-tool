@@ -78,9 +78,10 @@ export const ForecastChangeSection = (
 ): React.ReactElement => {
   const { t } = useTranslation()
   const router = useRouter()
-  const { id } = router.query
+  const { id: packagingReportId } = router.query
   const { data, loading } = usePackagingReportForecastDetailsQuery({
-    variables: { packagingReportId: id as string },
+    variables: { packagingReportId: packagingReportId as string },
+    fetchPolicy: 'cache-and-network',
   })
   const packagingReport = data?.packagingReport ?? undefined
 
@@ -92,6 +93,7 @@ export const ForecastChangeSection = (
   }
 
   // group materials by packagingGroup
+  // todo usememo
   const defaultData: ForecastData = {
     startDate: new Date(
       packagingReport?.year,
@@ -139,7 +141,10 @@ export const ForecastChangeSection = (
       >
         {t('reportForm.formLabel')}
       </Typography>
-      <ForecastProvider defaultData={defaultData} updateForm={true}>
+      <ForecastProvider
+        defaultData={defaultData}
+        packagingReportId={packagingReportId as string}
+      >
         <ForecastStepper />
       </ForecastProvider>
     </FormLayout>

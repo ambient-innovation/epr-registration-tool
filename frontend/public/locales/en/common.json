@@ -13,6 +13,7 @@
   "pleaseWait": "Please wait ...",
   "eprTool": "EPR Registration Tool",
   "kg": "kg",
+  "edit": "Edit",
   "registrationForm": {
     "createNewAccount": "Create new account",
     "generalCompanyInformation": "General company information",
@@ -106,7 +107,8 @@
     "packagingGroupDoesNotExist": "One of the selected Packaging group does not exist",
     "materialDoesNotExist": "One of the selected Material does not exist",
     "noCompanyAssignedORInactiveCompany": "You have not been assigned to any company or your company account has not been activated yet.",
-    "noCompanyAssigned": "You have not been assigned to any company"
+    "noCompanyAssigned": "You have not been assigned to any company",
+    "reportDoesNotExist": "Report does not exist"
   },
   "internalErrors": {
     "unknownError": "Something unexpected happened. Please reload and try again."

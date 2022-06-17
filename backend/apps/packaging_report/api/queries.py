@@ -31,12 +31,12 @@ def get_packaging_report_fees_estimation(
 
 
 def packaging_reports(info: Info) -> typing.List[PackagingReportType]:
-    user = info.context.request.user
+    current_user = info.context.request.user
 
-    if not user.related_company_id:
+    if not current_user.related_company_id:
         return PackagingReport.objects.none()
 
-    all_reports = PackagingReport.objects.filter(related_company_id=user.related_company_id).annotate(
+    all_reports = PackagingReport.objects.visible_for(current_user).annotate(
         packaging_groups_count=Count(
             'related_forecast__material_records_queryset__related_packaging_group', distinct=True
         )
@@ -46,7 +46,7 @@ def packaging_reports(info: Info) -> typing.List[PackagingReportType]:
 
 def packaging_report_forecast_details(info: Info, packaging_report_id: ID) -> typing.Optional[PackagingReportType]:
     current_user = info.context.request.user
-    related_company_id = current_user.related_company_id
+
     return (
         PackagingReport.objects.visible_for(current_user)
         .filter(pk=packaging_report_id)
@@ -63,7 +63,7 @@ class Query:
     packaging_report_fees_estimation = strawberry.field(
         resolver=get_packaging_report_fees_estimation, permission_classes=[IsAuthenticated]
     )
-    packaging_reports = strawberry.field(resolver=packaging_reports, permission_classes=[IsAuthenticated, IsActivated])
+    packaging_reports = strawberry.field(resolver=packaging_reports, permission_classes=[IsAuthenticated])
     packaging_report_forecast_details = strawberry.field(
         resolver=packaging_report_forecast_details, permission_classes=[IsAuthenticated, IsActivated]
     )

@@ -1,7 +1,11 @@
-import { Card, Chip, Typography, Box, Stack } from '@mui/material'
+import { Card, Chip, Typography, Box, Stack, Button } from '@mui/material'
+import { differenceInDays } from 'date-fns'
 import { useTranslation } from 'next-i18next'
+import NextLink from 'next/link'
 
 import { PackagingReportType } from '@/api/__types__'
+import { timeframeDisplayValue } from '@/common/contants'
+import { ROUTES } from '@/routes'
 
 import { cardContentSx, statusChipSx } from './ReportCard.styles'
 
@@ -28,8 +32,9 @@ export const ReportCard = ({
   const formattedStartDate = startDate.toLocaleDateString()
   const formattedSubmitDate = new Date(createdAt).toLocaleDateString()
   // uncomment to display remaining number of days for editing
-  // const daysLeftForEditing = differenceInDays(startDate, new Date())
-  const daysLeftForEditing = 0
+  // todo check if this correct or should be between now and end date
+  const daysLeftForEditing = differenceInDays(startDate, new Date())
+  // const daysLeftForEditing = 0
 
   const statusChip = (
     <Chip
@@ -38,7 +43,14 @@ export const ReportCard = ({
       role={'listitem'}
     />
   )
-  // const editButton = <Button variant={'contained'}>{'Edit'}</Button>
+  const editButton =
+    daysLeftForEditing > 0 ? (
+      <NextLink href={ROUTES.forecastChange(reportId)} passHref>
+        <Button component={'a'} variant={'contained'}>
+          {t('edit')}
+        </Button>
+      </NextLink>
+    ) : null
 
   const reportNumber = reportId
 
@@ -54,7 +66,9 @@ export const ReportCard = ({
             })}
           </Typography>
           <Box sx={{ display: { xs: 'none', md: 'block' } }}>{statusChip}</Box>
-          {/* <ButtonGroup sx={{ ml: 'auto' }}>{editButton}</ButtonGroup> */}
+          <Stack sx={{ ml: 'auto', display: { xs: 'none', md: 'block' } }}>
+            {editButton}
+          </Stack>
         </Box>
         <Typography variant={'caption'}>
           {`${t(
@@ -76,9 +90,7 @@ export const ReportCard = ({
             <Typography variant={'body2'}>
               {`${t('dashboard.reportListSection.reportCard.timeframe')} `}
               <Typography component={'span'} variant={'subtitle2'}>
-                {`${timeframe} ${t(
-                  'dashboard.reportListSection.reportCard.month'
-                )}`}
+                {timeframeDisplayValue(t)[timeframe]}
               </Typography>
             </Typography>
           </Box>
@@ -88,12 +100,6 @@ export const ReportCard = ({
                 'dashboard.reportListSection.reportCard.entries'
               )} ${packagingGroupsCount}`}
             </Typography>
-            {/* <Typography variant={'body2'}>
-              {`${t('dashboard.reportListSection.reportCard.estimatedF')} `}
-              <Typography component={'span'} variant={'subtitle2'}>
-                {'1000 JOD'}
-              </Typography>
-            </Typography> */}
           </Box>
           <Box
             sx={{
@@ -111,9 +117,9 @@ export const ReportCard = ({
             )}
           </Box>
         </Stack>
-        {/* <Stack sx={{ mt: 10, display: { md: 'none' } }} spacing={6}>
+        <Stack sx={{ mt: 10, display: { md: 'none' } }} spacing={6}>
           {editButton}
-        </Stack> */}
+        </Stack>
       </Box>
     </Card>
   )
