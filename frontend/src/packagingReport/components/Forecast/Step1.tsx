@@ -63,11 +63,14 @@ const schema: SchemaOf<Record<keyof FormData, unknown>> = yup
 const resolver = yupResolver(schema)
 
 export const Step1 = (_: Step1) => {
-  const { initialData, onSubmit, isTimeframeEditable } = useForecastContext()
+  const { initialData, onSubmit, isTimeframeReadonly } = useForecastContext()
   const { t } = useTranslation()
   const { handleSubmit, control } = useForm<FormData>({
     mode: 'onTouched',
-    resolver,
+    // in Report edit form, the start date validations is not relevant.
+    // (in create case the start date should be in the future)
+    // we don't send this info in the edit mutation
+    resolver: isTimeframeReadonly ? undefined : resolver,
     defaultValues: pick(initialData, ...FIELD_NAMES),
   })
 
@@ -78,7 +81,11 @@ export const Step1 = (_: Step1) => {
     <FormStep onSubmit={handleSubmit(onSubmit)}>
       <FormStepContainer
         title={t('reportForm.step1Title')}
-        description={t('reportForm.step1Description')}
+        description={
+          isTimeframeReadonly
+            ? t('reportForm.step1ReadonlyDescription')
+            : t('reportForm.step1Description')
+        }
       >
         <Stack spacing={DEFAULT_FORM_SPACING}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -103,7 +110,7 @@ export const Step1 = (_: Step1) => {
                           )
                         : onChange(value)
                     }}
-                    readOnly={!isTimeframeEditable}
+                    readOnly={isTimeframeReadonly}
                     value={value}
                     inputRef={ref}
                     renderInput={(params) => (
@@ -134,7 +141,7 @@ export const Step1 = (_: Step1) => {
                   isOptionEqualToValue={(option, value) =>
                     option.value === value.value
                   }
-                  readOnly={!isTimeframeEditable}
+                  readOnly={isTimeframeReadonly}
                   onChange={(_, item) => onChange(item?.value)}
                   renderInput={(params) => {
                     return (

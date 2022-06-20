@@ -66,9 +66,9 @@ export type MaterialInput = {
 export type MaterialRecordType = {
   __typename?: 'MaterialRecordType'
   id: Scalars['ID']
+  material: MaterialType
+  packagingGroup: PackagingGroupType
   quantity: Scalars['Float']
-  relatedPackagingGroup: PackagingGroupType
-  relatedPackagingMaterial: MaterialType
 }
 
 export type MaterialType = {
@@ -128,9 +128,9 @@ export type PackagingGroupType = {
 export type PackagingReportType = {
   __typename?: 'PackagingReportType'
   createdAt: Scalars['DateTime']
+  forecast: ForecastSubmissionType
   id: Scalars['ID']
   packagingGroupsCount: Scalars['Int']
-  relatedForecast?: Maybe<ForecastSubmissionType>
   startMonth: Scalars['Int']
   timeframe: TimeframeType
   timezoneInfo: Scalars['String']
@@ -313,7 +313,7 @@ export type PackagingReportForecastDetailsQuery = {
     year: number
     startMonth: number
     timezoneInfo: string
-    forecast?: {
+    forecast: {
       __typename?: 'ForecastSubmissionType'
       id: string
       materialRecords: Array<{
@@ -330,7 +330,7 @@ export type PackagingReportForecastDetailsQuery = {
           name: string
         }
       }>
-    } | null
+    }
   } | null
 }
 
@@ -751,15 +751,15 @@ export const PackagingReportForecastDetailsDocument = gql`
       year
       startMonth
       timezoneInfo
-      forecast: relatedForecast {
+      forecast {
         id
         materialRecords {
           quantity
-          packagingGroup: relatedPackagingGroup {
+          packagingGroup {
             id
             name
           }
-          packagingMaterial: relatedPackagingMaterial {
+          packagingMaterial: material {
             id
             name
           }

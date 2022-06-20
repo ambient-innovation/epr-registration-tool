@@ -51,7 +51,7 @@ class PackagingReportSubmissionTestCase(BaseApiTestCase):
                 }
             ],
         }
-        self.query_and_assert_error(self.MUTATION, variables=variables, message="validationError")
+        self.query_and_assert_error(self.MUTATION, variables=variables, message="startDateIsInvalid")
 
     @time_machine.travel(make_aware(datetime(year=2022, month=3, day=1)))
     def test_submit_new_packaging_report(self):
@@ -101,7 +101,7 @@ class PackagingReportSubmissionTestCase(BaseApiTestCase):
         self.query_and_assert_error(
             self.MUTATION,
             variables=variables,
-            message='validationError',
+            message='startDateIsInvalid',
         )
 
     def test_submit_new_packaging_report_start_date_validation_month(self):
@@ -121,6 +121,12 @@ class PackagingReportSubmissionTestCase(BaseApiTestCase):
             self.MUTATION,
             variables=variables,
             message='validationError',
+            message_dict={
+                'start_month': ['Value 20 is not a valid choice.'],
+                'timeframe': [
+                    'report has to start and end in same year',
+                ],
+            },
         )
 
     def test_submit_new_packaging_report_start_date_validation_timeframe(self):
@@ -140,6 +146,7 @@ class PackagingReportSubmissionTestCase(BaseApiTestCase):
             self.MUTATION,
             variables=variables,
             message='validationError',
+            message_dict={'timeframe': ['report has to start and end in same year']},
         )
 
     def test_submit_new_packaging_report_start_date_validation_should_validate_timezone(self):
@@ -158,7 +165,7 @@ class PackagingReportSubmissionTestCase(BaseApiTestCase):
         self.query_and_assert_error(
             self.MUTATION,
             variables=variables,
-            message='validationError',
+            message='startDateIsInvalid',
         )
 
     def test_submit_new_packaging_report_with_not_exist_material(self):
@@ -174,5 +181,5 @@ class PackagingReportSubmissionTestCase(BaseApiTestCase):
         self.query_and_assert_error(
             self.MUTATION,
             variables=variables,
-            message='validationError',
+            message='startDateIsInvalid',
         )

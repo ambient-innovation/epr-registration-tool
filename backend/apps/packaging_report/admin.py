@@ -59,7 +59,8 @@ class PackagingReportForm(forms.ModelForm):
     YEAR_CHOICES = []
     now = timezone.now()
     current_year = now.year
-    for r in range(current_year, current_year + 5):
+    # this project starts on 2022, so it cannot be that there is report before 2021
+    for r in range(2021, current_year + 5):
         YEAR_CHOICES.append((r, r))
     year = forms.CharField(
         max_length=4,

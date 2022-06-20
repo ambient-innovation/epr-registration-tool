@@ -11,8 +11,16 @@ from packaging_report.models import ForecastSubmission, MaterialRecord, Packagin
 class MaterialRecordType:
     id: auto
     quantity: auto
-    related_packaging_group: PackagingGroupType
-    related_packaging_material: MaterialType
+
+    @strawberry.django.field
+    def material(self, root: ForecastSubmission) -> MaterialType:
+        # use prefetched data
+        return getattr(root, 'material')
+
+    @strawberry.django.field
+    def packaging_group(self, root: ForecastSubmission) -> PackagingGroupType:
+        # use prefetched data
+        return getattr(root, 'packaging_group')
 
 
 @strawberry.django.type(ForecastSubmission)
@@ -21,9 +29,8 @@ class ForecastSubmissionType:
 
     @strawberry.django.field
     def material_records(self, root: ForecastSubmission) -> typing.List[MaterialRecordType]:
-        return root.material_records_queryset.select_related(
-            'related_packaging_material', 'related_packaging_group'
-        ).all()
+        # use prefetched data
+        return getattr(root, 'material_records', [])
 
 
 @strawberry.django.type(PackagingReport)
@@ -33,9 +40,14 @@ class PackagingReportType:
     year: auto
     start_month: auto
     timezone_info: auto
-    related_forecast: ForecastSubmissionType
     created_at: auto
 
     @strawberry.django.field
     def packaging_groups_count(self, root: PackagingReport) -> int:
+        # use prefetched data
         return getattr(root, 'packaging_groups_count', 0)
+
+    @strawberry.django.field
+    def forecast(self, root: PackagingReport) -> ForecastSubmissionType:
+        # use prefetched data
+        return getattr(root, 'forecast', None)

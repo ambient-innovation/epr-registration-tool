@@ -1,4 +1,3 @@
-import datetime
 import decimal
 import typing
 from zoneinfo import ZoneInfoNotFoundError
@@ -15,14 +14,6 @@ from ai_django_core.models import CommonInfo
 from common.models import Month
 from common.validators import validate_greater_than_zero
 from packaging_report.managers import PackagingReportQuerySet
-
-
-def validate_report_year(value):
-    current_year = datetime.date.today().year
-    if value < current_year or value > current_year + 5:
-        raise ValidationError(
-            _('%(value)s should be in the future and with in 5 years'), params={'value': value}, code='invalidYear'
-        )
 
 
 def validate_report_month(value):
@@ -68,7 +59,7 @@ class PackagingReport(CommonInfo):
         verbose_name=_("Timeframe"),
         choices=TimeframeType.choices,
     )
-    year = models.PositiveIntegerField(verbose_name=_('Year'), validators=[validate_report_year])
+    year = models.PositiveIntegerField(verbose_name=_('Year'))
     start_month = models.PositiveIntegerField(
         verbose_name=_('Start Month'), validators=[validate_report_month], choices=Month.choices
     )
@@ -80,9 +71,7 @@ class PackagingReport(CommonInfo):
 
     def clean(self):
         if self.start_month + (self.timeframe - 1) > 12:
-            raise ValidationError(
-                {"timeframe", _('%(value)s report has to start and end in same year')}, code="invalidTimeframe"
-            )
+            raise ValidationError({"timeframe": _('report has to start and end in same year')}, code="invalidTimeframe")
 
         super().clean()
 

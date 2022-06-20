@@ -1,10 +1,10 @@
 import { Card, Chip, Typography, Box, Stack, Button } from '@mui/material'
-import { differenceInDays } from 'date-fns'
+import { addMonths, differenceInDays } from 'date-fns'
 import { useTranslation } from 'next-i18next'
 import NextLink from 'next/link'
 
 import { PackagingReportType } from '@/api/__types__'
-import { timeframeDisplayValue } from '@/common/contants'
+import { timeframeDisplayValue, timeframeNumberValue } from '@/common/contants'
 import { ROUTES } from '@/routes'
 
 import { cardContentSx, statusChipSx } from './ReportCard.styles'
@@ -31,10 +31,10 @@ export const ReportCard = ({
   const startDate = new Date(year, startMonth - 1, 1)
   const formattedStartDate = startDate.toLocaleDateString()
   const formattedSubmitDate = new Date(createdAt).toLocaleDateString()
-  // uncomment to display remaining number of days for editing
-  // todo check if this correct or should be between now and end date
-  const daysLeftForEditing = differenceInDays(startDate, new Date())
-  // const daysLeftForEditing = 0
+  // forecast is editable until end date
+  const endDate = addMonths(startDate, timeframeNumberValue[timeframe])
+  const formattedEndDate = endDate.toLocaleDateString()
+  const isEditable = differenceInDays(endDate, new Date()) > 0
 
   const statusChip = (
     <Chip
@@ -43,14 +43,13 @@ export const ReportCard = ({
       role={'listitem'}
     />
   )
-  const editButton =
-    daysLeftForEditing > 0 ? (
-      <NextLink href={ROUTES.forecastChange(reportId)} passHref>
-        <Button component={'a'} variant={'contained'}>
-          {t('edit')}
-        </Button>
-      </NextLink>
-    ) : null
+  const editButton = (
+    <NextLink href={ROUTES.forecastChange(reportId)} passHref>
+      <Button component={'a'} variant={'contained'}>
+        {t('edit')}
+      </Button>
+    </NextLink>
+  )
 
   const reportNumber = reportId
 
@@ -66,9 +65,11 @@ export const ReportCard = ({
             })}
           </Typography>
           <Box sx={{ display: { xs: 'none', md: 'block' } }}>{statusChip}</Box>
-          <Stack sx={{ ml: 'auto', display: { xs: 'none', md: 'block' } }}>
-            {editButton}
-          </Stack>
+          {isEditable && (
+            <Box sx={{ ml: 'auto', display: { xs: 'none', md: 'block' } }}>
+              {editButton}
+            </Box>
+          )}
         </Box>
         <Typography variant={'caption'}>
           {`${t(
@@ -108,18 +109,18 @@ export const ReportCard = ({
               alignSelf: { md: 'flex-end' },
             }}
           >
-            {daysLeftForEditing > 0 && (
+            {isEditable && (
               <Typography variant={'body2'} color={'text.disabled'}>
-                {t('dashboard.reportListSection.reportCard.editable', {
-                  days: daysLeftForEditing,
+                {t('dashboard.reportListSection.reportCard.editableUntil', {
+                  endDate: formattedEndDate,
                 })}
               </Typography>
             )}
           </Box>
         </Stack>
-        <Stack sx={{ mt: 10, display: { md: 'none' } }} spacing={6}>
-          {editButton}
-        </Stack>
+        {isEditable && (
+          <Stack sx={{ mt: 10, display: { md: 'none' } }}>{editButton}</Stack>
+        )}
       </Box>
     </Card>
   )

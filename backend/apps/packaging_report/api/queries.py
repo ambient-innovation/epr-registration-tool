@@ -1,7 +1,7 @@
 import decimal
 import typing
 
-from django.db.models import Count
+from django.db.models import Count, Prefetch
 
 import strawberry
 from strawberry import ID
@@ -50,9 +50,11 @@ def packaging_report_forecast_details(info: Info, packaging_report_id: ID) -> ty
     return (
         PackagingReport.objects.visible_for(current_user)
         .filter(pk=packaging_report_id)
-        .select_related('related_forecast')
         .prefetch_related(
-            'related_forecast__material_records_queryset',
+            Prefetch('related_forecast', to_attr='forecast'),
+            Prefetch('forecast__material_records_queryset', to_attr='material_records'),
+            Prefetch('forecast__material_records__related_packaging_material', to_attr='material'),
+            Prefetch('forecast__material_records__related_packaging_group', to_attr='packaging_group'),
         )
         .first()
     )

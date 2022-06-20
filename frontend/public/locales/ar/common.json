@@ -51,7 +51,8 @@
     "packagingDetails": "تفاصيل التعبئة",
     "estimatedFees": "الرسوم المقدرة",
     "step1Title": "الإطار الزمني للتقرير",
-    "step1Description": "لا يوجد من يحب الألم نفسه أو يسعى إليه أو يرغب فيه لمجرد أنه ألم ، ما لم تكن هناك ظروف عرضية.",
+    "step1Description": "يرجى تحديد تاريخ البدء ومدة التقرير.",
+    "step1ReadonlyDescription": "تقرير الإطار الزمني غير قابل للتحرير.",
     "startDate": "تاريخ بدء التوقعات",
     "packagingEntryNum": "إدخال التغليف {{num}}",
     "packagingEntryDescription": "لا يوجد من يحب الألم نفسه أو يسعى إليه أو يرغب فيه لمجرد أنه ألم ، ما لم تكن هناك ظروف عرضية.",
@@ -66,10 +67,13 @@
     "addMaterial": "أضف مادة أخرى",
     "createReportSuccessTitle": "شكرا لك على  التقرير",
     "createReportSuccessDescription": "تم إنشاء تقرير التنبؤ بنجاح ويمكنك العثور عليه في لوحة المعلومات.",
+    "updateReportSuccessDescription": "تم تحديث تقرير التنبؤ بنجاح.",
     "createAnotherReport": "إرسال تقرير آخر",
     "proceedToHomepage": "انتقل إلى الصفحة الرئيسية",
+    "proceedToDashboard": "انتقل إلى لوحة القيادة",
     "estimatedFeesResult": "السعر {{fees}} د.أ",
-    "reportSuccessful": "تم الإبلاغ عن النجاح",
+    "reportSuccessful": "تم الإبلاغ بنجاح",
+    "reportUpdatedSuccessful": "تم تعديل الإبلاغ عن بنجاح",
     "calculating": "جاري الحساب ، من فضلك انتظر ..."
   },
   "validations": {
@@ -108,7 +112,8 @@
     "materialDoesNotExist": "إحدى المواد المختارة غير موجودة",
     "noCompanyAssignedORInactiveCompany": "لم يتم تعيينك لأي شركة أو لم يتم تنشيط حساب شركتك بعد.",
     "noCompanyAssigned": "لم يتم تعيينك لأية شركة",
-    "reportDoesNotExist": "تقرير غير موجود"
+    "reportDoesNotExist": "تقرير غير موجود",
+    "reportIsNotEditable": "التقرير غير قابل للتحرير"
   },
   "internalErrors": {
     "unknownError": "Something unexpected happened. Please reload and try again."
@@ -178,7 +183,7 @@
         "estimatedF": "الرسوم المقدرة:",
         "entries": "إدخالات التغليف:",
         "month": "شهر",
-        "editable": "يمكن تحريره لمدة 193 يومًا أخرى",
+        "editableUntil": "يمكن التحرير حتى {{endDate}}",
         "forecast": "تنبؤ بالمناخ"
       }
     }

@@ -13,16 +13,16 @@ class PackagingReportDetailsQueriesTestCase(BaseApiTestCase):
             year
             startMonth
             timezoneInfo
-            relatedForecast {
+            forecast {
               id
               materialRecords {
                 id
                 quantity
-                relatedPackagingGroup {
+                packagingGroup {
                   id
                   name
                 }
-                relatedPackagingMaterial {
+                material {
                   id
                   name
                 }
@@ -82,14 +82,18 @@ class PackagingReportDetailsQueriesTestCase(BaseApiTestCase):
 
     def test_user_requesting_company_report_details(self):
         self.login(self.user)
-        data = self.query_and_load_data(self.QUERY, variables=self.variables)
+        with self.assertNumQueries(8):
+            data = self.query_and_load_data(self.QUERY, variables=self.variables)
         packaging_report = data['packagingReportForecastDetails']
         self.assertIsNotNone(packaging_report)
         self.assertEqual(str(self.packaging_report.id), packaging_report['id'])
         self.assertEqual('THREE_MONTHS', packaging_report['timeframe'])
         self.assertEqual(self.packaging_report.start_month, packaging_report['startMonth'])
-        forecast = packaging_report['relatedForecast']
+        forecast = packaging_report['forecast']
         self.assertIsNotNone(forecast)
         self.assertEqual(str(self.forecast_submission.id), forecast['id'])
         material_records = forecast['materialRecords']
         self.assertEqual(3, len(material_records))
+        for material_record in material_records:
+            self.assertIsNotNone(material_record['material'])
+            self.assertIsNotNone(material_record['packagingGroup'])

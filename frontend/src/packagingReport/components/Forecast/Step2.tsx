@@ -115,18 +115,18 @@ export const Step2 = (_: Step2) => {
 
   return (
     <FormStep onSubmit={handleSubmit(onSubmit)} onClickBack={goToPrevStep}>
-      <Stack spacing={8} role={'list'}>
-        {!!error ? (
-          <ApolloErrorAlert error={error} />
-        ) : (
+      {!!error ? (
+        <ApolloErrorAlert error={error} />
+      ) : (
+        <Stack spacing={8} role={'list'}>
           <PackagingArrayField
             control={control}
             defaultValues={defaultValues.packagingRecords}
             packagingGroups={packagingGroups}
             packagingMaterials={packagingMaterials}
-          />
-        )}
-      </Stack>
+          />{' '}
+        </Stack>
+      )}
     </FormStep>
   )
 }

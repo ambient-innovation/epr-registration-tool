@@ -1,3 +1,4 @@
+import datetime
 import functools
 import time
 
@@ -56,3 +57,16 @@ def execution_time_tracker(func):
         return result
 
     return inner_func
+
+
+def make_local_datetime_at(year, month, timezone_info, day=1, hour=0, minute=0):
+    """
+    create datetime in that timezone
+    """
+    import pytz
+
+    naive_time = datetime.time(hour, minute)
+    date = datetime.date(year=year, month=month, day=day)
+    naive_datetime = datetime.datetime.combine(date, naive_time)
+    tz = pytz.timezone(timezone_info)
+    return tz.localize(naive_datetime)

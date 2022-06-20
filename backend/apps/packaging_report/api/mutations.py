@@ -4,7 +4,6 @@ from django.core.exceptions import ValidationError
 from django.db import DatabaseError, transaction
 from django.utils import timezone
 
-import pytz
 import strawberry
 from graphql import GraphQLError
 from strawberry import ID
@@ -12,14 +11,13 @@ from strawberry.types import Info
 
 from account.models import User
 from common.api.permissions import IsActivated, IsAuthenticated
+from common.utils import make_local_datetime_at
 from packaging.api.types import PackagingGroupInput
 from packaging.models import MaterialPrice
 from packaging_report.models import ForecastSubmission, MaterialRecord, PackagingReport, TimeframeType
 
-utc = pytz.UTC
 
-
-def extract_material_records_from_input(
+def clean_material_records_input(
     forecast_id, timeframe, packaging_records_input: typing.List[PackagingGroupInput]
 ) -> typing.List[MaterialRecord]:
     material_records = []
@@ -48,15 +46,12 @@ def packaging_report_forecast_submit(
     packaging_records: typing.List[PackagingGroupInput],
 ) -> str:
     current_user: User = info.context.request.user
-    try:
-        now = timezone.now()
-        report_date_key = MaterialPrice.get_sort_key(year, start_month)
-        now_date_key = MaterialPrice.get_sort_key(now.year, now.month)
-        # report should start at earliest next month
-        if now_date_key >= report_date_key:
-            raise
-    except Exception as e:
-        raise GraphQLError('validationError', original_error=e)
+    now = timezone.now()
+    report_date_key = MaterialPrice.get_sort_key(year, start_month)
+    now_date_key = MaterialPrice.get_sort_key(now.year, now.month)
+    # report should start at earliest next month
+    if now_date_key >= report_date_key:
+        raise GraphQLError('startDateIsInvalid')
 
     report = PackagingReport(
         timeframe=timeframe,
@@ -73,13 +68,13 @@ def packaging_report_forecast_submit(
             forecast_submission = ForecastSubmission(related_report=report)
             forecast_submission.full_clean()
             forecast_submission.save()
-            material_records = extract_material_records_from_input(forecast_submission.id, timeframe, packaging_records)
+            material_records = clean_material_records_input(forecast_submission.id, timeframe, packaging_records)
             MaterialRecord.objects.bulk_create(material_records)
     except (
         ValidationError,
         DatabaseError,
     ) as e:
-        raise GraphQLError('validationError', original_error=e)
+        raise GraphQLError('validationError', extensions={'message_dict': getattr(e, 'message_dict', {})})
 
     return 'CREATED'
 
@@ -91,7 +86,7 @@ def packaging_report_forecast_update(
 ) -> str:
     current_user: User = info.context.request.user
 
-    report = (
+    report: PackagingReport = (
         PackagingReport.objects.visible_for(current_user)
         .filter(pk=packaging_report_id)
         .select_related('related_forecast')
@@ -99,19 +94,29 @@ def packaging_report_forecast_update(
     )
     if not report:
         raise GraphQLError('reportDoesNotExist')
-    # todo check if it is editable at this time
+
+    # check if this report is editable at this time
+    now = timezone.now()
+    aware_end_date = make_local_datetime_at(
+        year=report.year, month=report.start_month, timezone_info=report.timezone_info
+    )
+    if aware_end_date < now:
+        raise GraphQLError('reportIsNotEditable')
+
+    related_forecast = report.related_forecast
+
+    if not related_forecast:
+        raise GraphQLError('reportIsNotEditable')
+
     forecast_submission_id = report.related_forecast.id
     timeframe = report.timeframe
 
     try:
         with transaction.atomic():
             MaterialRecord.objects.filter(related_submission_id=forecast_submission_id).delete()
-            material_records = extract_material_records_from_input(forecast_submission_id, timeframe, packaging_records)
+            material_records = clean_material_records_input(forecast_submission_id, timeframe, packaging_records)
             MaterialRecord.objects.bulk_create(material_records)
-    except (
-        ValidationError,
-        DatabaseError,
-    ) as e:
+    except (ValidationError, DatabaseError) as e:
         raise GraphQLError('validationError', original_error=e)
 
     return 'UPDATED'

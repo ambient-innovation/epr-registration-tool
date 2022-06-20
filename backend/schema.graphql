@@ -42,8 +42,8 @@ input MaterialInput {
 type MaterialRecordType {
   id: ID!
   quantity: Float!
-  relatedPackagingGroup: PackagingGroupType!
-  relatedPackagingMaterial: MaterialType!
+  material: MaterialType!
+  packagingGroup: PackagingGroupType!
 }
 
 type MaterialType {
@@ -74,8 +74,8 @@ type PackagingReportType {
   year: Int!
   startMonth: Int!
   timezoneInfo: String!
-  relatedForecast: ForecastSubmissionType
   createdAt: DateTime!
+  forecast: ForecastSubmissionType!
   packagingGroupsCount: Int!
 }
 

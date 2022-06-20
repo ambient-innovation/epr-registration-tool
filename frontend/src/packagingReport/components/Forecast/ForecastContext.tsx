@@ -28,7 +28,7 @@ export const LAST_STEP_NUMBER = stepNumbers[stepNumbers.length - 1]
 export interface ForecastContextValue {
   data: ForecastData
   initialData: ForecastData
-  isTimeframeEditable: boolean
+  isTimeframeReadonly: boolean
   goToPrevStep: () => void
   onSubmit: (data: Partial<ForecastData>) => void
   activeStep: StepNumber
@@ -84,7 +84,7 @@ export const ForecastProvider: React.FC<{
               },
             })
               .then(() => {
-                router.push(ROUTES.home)
+                router.push(ROUTES.forecastUpdateSuccess(packagingReportId))
               })
               // handle error via error object returned by useMutation
               .catch(() => null)
@@ -128,7 +128,7 @@ export const ForecastProvider: React.FC<{
       data,
       initialData: defaultData ?? initialData,
       // the timeframe is not editable see #12
-      isTimeframeEditable: !packagingReportId,
+      isTimeframeReadonly: !!packagingReportId,
       error: createError || updateError,
     }),
     [

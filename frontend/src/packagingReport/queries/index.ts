@@ -39,15 +39,15 @@ export const PACKAGING_REPORT_FORECAST_DETAILS = gql`
       year
       startMonth
       timezoneInfo
-      forecast: relatedForecast {
+      forecast {
         id
         materialRecords {
           quantity
-          packagingGroup: relatedPackagingGroup {
+          packagingGroup {
             id
             name
           }
-          packagingMaterial: relatedPackagingMaterial {
+          packagingMaterial: material {
             id
             name
           }

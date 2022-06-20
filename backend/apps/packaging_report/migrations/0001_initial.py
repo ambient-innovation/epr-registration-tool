@@ -83,9 +83,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     'year',
-                    models.PositiveIntegerField(
-                        validators=[packaging_report.models.validate_report_year], verbose_name='Year'
-                    ),
+                    models.PositiveIntegerField(verbose_name='Year'),
                 ),
                 (
                     'start_month',
