@@ -36,10 +36,14 @@ def packaging_reports(info: Info) -> typing.List[PackagingReportType]:
     if not current_user.related_company_id:
         return PackagingReport.objects.none()
 
-    all_reports = PackagingReport.objects.visible_for(current_user).annotate(
-        packaging_groups_count=Count(
-            'related_forecast__material_records_queryset__related_packaging_group', distinct=True
+    all_reports = (
+        PackagingReport.objects.visible_for(current_user)
+        .annotate(
+            packaging_groups_count=Count(
+                'related_forecast__material_records_queryset__related_packaging_group', distinct=True
+            ),
         )
+        .order_by('-id')
     )
     return all_reports
 
