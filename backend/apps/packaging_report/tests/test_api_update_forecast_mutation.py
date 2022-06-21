@@ -98,4 +98,3 @@ class PackagingReportUpdateTestCase(BaseApiTestCase):
         self.assertEqual(self.material.id, material_record.related_packaging_material.id)
         self.assertEqual(ForecastSubmission.objects.first().id, material_record.related_submission.id)
         self.assertEqual(20, material_record.quantity)
-        self.assertEqual([6.66666666666667, 6.66666666666667, 6.66666666666667], material_record.monthly_quantities)

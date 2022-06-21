@@ -13,17 +13,9 @@ class MaterialRecordInline(admin.StackedInline):
     min_num = 1
     fields = (
         'quantity',
-        'monthly_quantity',
         'related_packaging_group',
         'related_packaging_material',
     )
-    readonly_fields = ('monthly_quantity',)
-
-    @admin.display(description="Monthly quantity")
-    def monthly_quantity(self, obj: MaterialRecord):
-        if obj.pk and obj.monthly_quantities:
-            return f'{round(obj.monthly_quantities[0], 2)} Kg'
-        return '-'
 
 
 @admin.register(ForecastSubmission)
@@ -38,18 +30,6 @@ class ForecastSubmissionAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('related_report')
-
-    def save_formset(self, request, form, formset, change):
-        forecast = form.save(commit=False)
-        material_records = formset.save(commit=False)
-        timeframe = forecast.related_report.timeframe
-
-        for m in material_records:
-            monthly_quantity = m.quantity / timeframe
-            m.monthly_quantities = [monthly_quantity for i in range(timeframe)]
-            m.save()
-
-        form.save_m2m()
 
     def has_change_permission(self, request, obj=None):
         return False

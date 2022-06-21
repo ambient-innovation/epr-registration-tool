@@ -3,7 +3,6 @@ import typing
 from zoneinfo import ZoneInfoNotFoundError
 
 from django.contrib import admin
-from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import UniqueConstraint
@@ -130,16 +129,6 @@ class MaterialRecord(CommonInfo):
         on_delete=models.PROTECT,
     )
     quantity = models.FloatField(verbose_name=_('Quantity (Kg)'), validators=[validate_greater_than_zero])
-    # - this will be the complete quantity divided on the selected timeframe
-    # - quantity in month  can be different from month to month in case the quantity changed in the forecast
-    #   timeframe (between start and end date)
-    # E.g: if timeframe is 3 months and quantity is 9 this will be [3, 3, 3]
-    monthly_quantities = ArrayField(
-        models.FloatField(verbose_name=_('Quantity per month')),
-        verbose_name=_('Monthly Quantities'),
-        size=12,
-        default=list,
-    )
 
     class Meta:
         verbose_name = _("Material record")

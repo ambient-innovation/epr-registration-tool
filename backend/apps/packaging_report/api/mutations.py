@@ -18,19 +18,16 @@ from packaging_report.models import ForecastSubmission, MaterialRecord, Packagin
 
 
 def clean_material_records_input(
-    forecast_id, timeframe, packaging_records_input: typing.List[PackagingGroupInput]
+    forecast_id, packaging_records_input: typing.List[PackagingGroupInput]
 ) -> typing.List[MaterialRecord]:
     material_records = []
     for group in packaging_records_input:
         for material_record in group.material_records:
-            monthly_quantity = material_record.quantity / timeframe
-            monthly_quantities = [monthly_quantity for i in range(timeframe)]
             material_record = MaterialRecord(
                 related_submission_id=forecast_id,
                 related_packaging_group_id=group.packaging_group_id,
                 related_packaging_material_id=material_record.material_id,
                 quantity=material_record.quantity,
-                monthly_quantities=monthly_quantities,
             )
             material_record.full_clean()
             material_records.append(material_record)
@@ -68,7 +65,7 @@ def packaging_report_forecast_submit(
             forecast_submission = ForecastSubmission(related_report=report)
             forecast_submission.full_clean()
             forecast_submission.save()
-            material_records = clean_material_records_input(forecast_submission.id, timeframe, packaging_records)
+            material_records = clean_material_records_input(forecast_submission.id, packaging_records)
             MaterialRecord.objects.bulk_create(material_records)
     except (
         ValidationError,
@@ -109,12 +106,11 @@ def packaging_report_forecast_update(
         raise GraphQLError('reportIsNotEditable')
 
     forecast_submission_id = report.related_forecast.id
-    timeframe = report.timeframe
 
     try:
         with transaction.atomic():
             MaterialRecord.objects.filter(related_submission_id=forecast_submission_id).delete()
-            material_records = clean_material_records_input(forecast_submission_id, timeframe, packaging_records)
+            material_records = clean_material_records_input(forecast_submission_id, packaging_records)
             MaterialRecord.objects.bulk_create(material_records)
     except (ValidationError, DatabaseError) as e:
         raise GraphQLError('validationError', original_error=e)

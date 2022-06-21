@@ -83,7 +83,6 @@ class PackagingReportSubmissionTestCase(BaseApiTestCase):
         )
         self.assertEqual(self.material.id, material_record.related_packaging_material.id)
         self.assertEqual(ForecastSubmission.objects.first().id, material_record.related_submission.id)
-        self.assertEqual([3.0, 3.0, 3.0], material_record.monthly_quantities)
 
     def test_submit_new_packaging_report_start_date_validation_year(self):
         variables = {
