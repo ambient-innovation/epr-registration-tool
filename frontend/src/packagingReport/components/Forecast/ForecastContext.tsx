@@ -10,7 +10,8 @@ import React, {
 
 import {
   TimeframeType,
-  usePackagingReportSubmitMutation,
+  usePackagingReportForecastSubmitMutation,
+  usePackagingReportForecastUpdateMutation,
 } from '@/api/__types__'
 import { PACKAGING_REPORTS_QUERY } from '@/dashboard/components/ReportListSection/queries'
 import { ROUTES } from '@/routes'
@@ -27,6 +28,7 @@ export const LAST_STEP_NUMBER = stepNumbers[stepNumbers.length - 1]
 export interface ForecastContextValue {
   data: ForecastData
   initialData: ForecastData
+  isTimeframeReadonly: boolean
   goToPrevStep: () => void
   onSubmit: (data: Partial<ForecastData>) => void
   activeStep: StepNumber
@@ -50,14 +52,21 @@ export const initialData: ForecastData = {
 }
 
 export const ForecastProvider: React.FC<{
+  defaultData?: ForecastData
+  packagingReportId?: string
   children?: React.ReactNode
-}> = ({ children }) => {
+}> = ({ children, defaultData = initialData, packagingReportId }) => {
   const router = useRouter()
-  const [data, setData] = useState<ForecastData>(initialData)
+  const [data, setData] = useState<ForecastData>(defaultData)
   const [activeStep, setActiveStep] = useState<StepNumber>(0)
-  const [packagingReportSubmit, { error }] = usePackagingReportSubmitMutation({
-    refetchQueries: [PACKAGING_REPORTS_QUERY],
-  })
+  const [packagingReportSubmit, { error: createError }] =
+    usePackagingReportForecastSubmitMutation({
+      refetchQueries: [PACKAGING_REPORTS_QUERY],
+    })
+  const [packagingReportUpdate, { error: updateError }] =
+    usePackagingReportForecastUpdateMutation({
+      refetchQueries: [PACKAGING_REPORTS_QUERY],
+    })
 
   const onSubmit: ForecastContextValue['onSubmit'] = useCallback(
     (updatedData) => {
@@ -67,24 +76,42 @@ export const ForecastProvider: React.FC<{
       } else {
         const { startDate, ...finalDate } = { ...data, ...updatedData }
 
-        return (
-          packagingReportSubmit({
-            variables: {
-              year: startDate.getFullYear(),
-              startMonth: startDate.getMonth() + 1, // months start from 0 in javascript Date Api, they say, that because is copied from java.util.Date
-              tzInfo: Intl.DateTimeFormat().resolvedOptions().timeZone,
-              ...finalDate,
-            },
-          })
-            .then(() => {
-              router.push(ROUTES.forecastSuccess)
+        return packagingReportId
+          ? packagingReportUpdate({
+              variables: {
+                packagingReportId,
+                packagingRecords: finalDate.packagingRecords,
+              },
             })
-            // handle error via error object returned by useMutation
-            .catch(() => null)
-        )
+              .then(() => {
+                router.push(ROUTES.forecastUpdateSuccess(packagingReportId))
+              })
+              // handle error via error object returned by useMutation
+              .catch(() => null)
+          : packagingReportSubmit({
+              variables: {
+                year: startDate.getFullYear(),
+                // months start from 0 in javascript Date Api, they say, that because is copied from java.util.Date
+                startMonth: startDate.getMonth() + 1,
+                tzInfo: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                ...finalDate,
+              },
+            })
+              .then(() => {
+                router.push(ROUTES.forecastSuccess)
+              })
+              // handle error via error object returned by useMutation
+              .catch(() => null)
       }
     },
-    [activeStep, router, data, packagingReportSubmit]
+    [
+      activeStep,
+      router,
+      data,
+      packagingReportSubmit,
+      packagingReportUpdate,
+      packagingReportId,
+    ]
   )
 
   const goToPrevStep = useCallback(() => {
@@ -99,10 +126,21 @@ export const ForecastProvider: React.FC<{
       goToPrevStep,
       activeStep,
       data,
-      initialData,
-      error,
+      initialData: defaultData ?? initialData,
+      // the timeframe is not editable see #12
+      isTimeframeReadonly: !!packagingReportId,
+      error: createError || updateError,
     }),
-    [onSubmit, goToPrevStep, activeStep, data, error]
+    [
+      onSubmit,
+      packagingReportId,
+      goToPrevStep,
+      activeStep,
+      data,
+      createError,
+      updateError,
+      defaultData,
+    ]
   )
 
   useEffect(() => {

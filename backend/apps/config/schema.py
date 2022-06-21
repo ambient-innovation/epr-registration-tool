@@ -5,7 +5,7 @@ from company.api.mutations import RegisterCompanyMutation
 from company.api.query import Query as CompanyQuery
 from packaging.api.queries import PackagingQuery
 from packaging_report.api.mutations import PackagingReportMutation
-from packaging_report.api.queries import PackagingReportQuery
+from packaging_report.api.queries import Query as PackagingReportQuery
 
 
 @strawberry.type

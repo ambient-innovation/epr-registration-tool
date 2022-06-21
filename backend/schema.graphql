@@ -29,9 +29,21 @@ enum DistributorType {
   LOCAL_PRODUCER
 }
 
+type ForecastSubmissionType {
+  id: ID!
+  materialRecords: [MaterialRecordType!]!
+}
+
 input MaterialInput {
   materialId: ID!
   quantity: Decimal!
+}
+
+type MaterialRecordType {
+  id: ID!
+  quantity: Float!
+  material: MaterialType!
+  packagingGroup: PackagingGroupType!
 }
 
 type MaterialType {
@@ -42,7 +54,8 @@ type MaterialType {
 type Mutation {
   registerCompany(companyName: String!, companyDistributorType: DistributorType!, userEmail: String!, userTitle: String!, userFullName: String!, userPosition: String!, userPhoneOrMobile: String!, password: String!): String!
   createCompanyProfile(profileData: CompanyProfileInputType!, identificationNumber: String!): String!
-  packagingReportSubmit(timeframe: TimeframeType!, year: Int!, startMonth: Int!, tzInfo: String!, packagingRecords: [PackagingGroupInput!]!): String!
+  packagingReportForecastSubmit(timeframe: TimeframeType!, year: Int!, startMonth: Int!, tzInfo: String!, packagingRecords: [PackagingGroupInput!]!): String!
+  packagingReportForecastUpdate(packagingReportId: ID!, packagingRecords: [PackagingGroupInput!]!): String!
 }
 
 input PackagingGroupInput {
@@ -57,11 +70,12 @@ type PackagingGroupType {
 
 type PackagingReportType {
   id: ID!
-  timeframe: Int!
+  timeframe: TimeframeType!
   year: Int!
   startMonth: Int!
   timezoneInfo: String!
   createdAt: DateTime!
+  forecast: ForecastSubmissionType!
   packagingGroupsCount: Int!
 }
 
@@ -72,6 +86,7 @@ type Query {
   packagingMaterials: [MaterialType!]!
   packagingReportFeesEstimation(timeframe: TimeframeType!, year: Int!, startMonth: Int!, packagingRecords: [PackagingGroupInput!]!): Decimal!
   packagingReports: [PackagingReportType!]!
+  packagingReportForecastDetails(packagingReportId: ID!): PackagingReportType
   helloWorld: String!
 }
 

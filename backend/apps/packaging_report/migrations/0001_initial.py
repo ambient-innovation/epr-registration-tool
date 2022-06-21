@@ -83,9 +83,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     'year',
-                    models.PositiveIntegerField(
-                        validators=[packaging_report.models.validate_report_year], verbose_name='Year'
-                    ),
+                    models.PositiveIntegerField(verbose_name='Year'),
                 ),
                 (
                     'start_month',
@@ -161,7 +159,7 @@ class Migration(migrations.Migration):
                 (
                     'quantity',
                     models.FloatField(
-                        validators=[common.validators.validate_greater_than_zero], verbose_name='Quantity'
+                        validators=[common.validators.validate_greater_than_zero], verbose_name='Quantity (Kg)'
                     ),
                 ),
                 (

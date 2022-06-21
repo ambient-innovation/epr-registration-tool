@@ -31,12 +31,16 @@ class ForecastSubmissionAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('related_report')
 
+    def has_change_permission(self, request, obj=None):
+        return False
+
 
 class PackagingReportForm(forms.ModelForm):
     YEAR_CHOICES = []
     now = timezone.now()
     current_year = now.year
-    for r in range(current_year, current_year + 5):
+    # this project starts on 2022, so it cannot be that there is report before 2021
+    for r in range(2021, current_year + 5):
         YEAR_CHOICES.append((r, r))
     year = forms.CharField(
         max_length=4,

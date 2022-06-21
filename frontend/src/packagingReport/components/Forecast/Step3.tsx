@@ -7,8 +7,8 @@ import { usePackagingReportFeesEstimationQuery } from '@/api/__types__'
 import { FormStep, FormStepContainer } from '@/common/components/FormStep'
 import { fontWeights } from '@/theme/typography'
 
+import { timeframeDisplayValue } from '../../../common/contants'
 import { useForecastContext } from './ForecastContext'
-import { timeframeDisplayValue } from './contants'
 
 export type Step3 = Record<string, never>
 
@@ -49,18 +49,29 @@ export const Step3 = (_: Step3) => {
         description={t('reportForm.step3Description')}
       >
         <Grid container justifyContent={'start'} alignItems={'center'}>
-          <Grid item>
-            <Typography variant={'h5'}>
-              {loading
-                ? 'loading...'
-                : t('reportForm.estimatedFeesResult', { fees }) + ' /'}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant={'h5'} sx={{ fontWeight: fontWeights.regular }}>
-              {timeframeDisplayValue(t)[data.timeframe]}
-            </Typography>
-          </Grid>
+          {loading ? (
+            <Grid item>
+              <Typography variant={'h5'}>
+                {t('reportForm.calculating')}
+              </Typography>
+            </Grid>
+          ) : (
+            <>
+              <Grid item>
+                <Typography variant={'h5'}>
+                  {t('reportForm.estimatedFeesResult', { fees }) + ' / '}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography
+                  variant={'h5'}
+                  sx={{ fontWeight: fontWeights.regular }}
+                >
+                  {timeframeDisplayValue(t)[data.timeframe]}
+                </Typography>
+              </Grid>
+            </>
+          )}
         </Grid>
         <Typography
           variant={'subtitle2'}

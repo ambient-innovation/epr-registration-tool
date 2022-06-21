@@ -60,6 +60,7 @@ class PackagingReportQueriesTestCase(BaseApiTestCase):
     def test_packaging_reports_query_without_company(self):
         user = baker.make_recipe('account.tests.user')
         self.login(user)
+        self.create_and_assign_company(user)
         data = self.query_and_load_data(self.QUERY)
         packaging_reports = data['packagingReports']
         self.assertEqual(0, len(packaging_reports))

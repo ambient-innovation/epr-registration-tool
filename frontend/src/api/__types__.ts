@@ -52,9 +52,23 @@ export enum DistributorType {
   LOCAL_PRODUCER = 'LOCAL_PRODUCER',
 }
 
+export type ForecastSubmissionType = {
+  __typename?: 'ForecastSubmissionType'
+  id: Scalars['ID']
+  materialRecords: Array<MaterialRecordType>
+}
+
 export type MaterialInput = {
   materialId: Scalars['ID']
   quantity: Scalars['Decimal']
+}
+
+export type MaterialRecordType = {
+  __typename?: 'MaterialRecordType'
+  id: Scalars['ID']
+  material: MaterialType
+  packagingGroup: PackagingGroupType
+  quantity: Scalars['Float']
 }
 
 export type MaterialType = {
@@ -66,7 +80,8 @@ export type MaterialType = {
 export type Mutation = {
   __typename?: 'Mutation'
   createCompanyProfile: Scalars['String']
-  packagingReportSubmit: Scalars['String']
+  packagingReportForecastSubmit: Scalars['String']
+  packagingReportForecastUpdate: Scalars['String']
   registerCompany: Scalars['String']
 }
 
@@ -75,12 +90,17 @@ export type MutationCreateCompanyProfileArgs = {
   profileData: CompanyProfileInputType
 }
 
-export type MutationPackagingReportSubmitArgs = {
+export type MutationPackagingReportForecastSubmitArgs = {
   packagingRecords: Array<PackagingGroupInput>
   startMonth: Scalars['Int']
   timeframe: TimeframeType
   tzInfo: Scalars['String']
   year: Scalars['Int']
+}
+
+export type MutationPackagingReportForecastUpdateArgs = {
+  packagingRecords: Array<PackagingGroupInput>
+  packagingReportId: Scalars['ID']
 }
 
 export type MutationRegisterCompanyArgs = {
@@ -108,10 +128,11 @@ export type PackagingGroupType = {
 export type PackagingReportType = {
   __typename?: 'PackagingReportType'
   createdAt: Scalars['DateTime']
+  forecast: ForecastSubmissionType
   id: Scalars['ID']
   packagingGroupsCount: Scalars['Int']
   startMonth: Scalars['Int']
-  timeframe: Scalars['Int']
+  timeframe: TimeframeType
   timezoneInfo: Scalars['String']
   year: Scalars['Int']
 }
@@ -124,6 +145,7 @@ export type Query = {
   packagingGroups: Array<PackagingGroupType>
   packagingMaterials: Array<MaterialType>
   packagingReportFeesEstimation: Scalars['Decimal']
+  packagingReportForecastDetails?: Maybe<PackagingReportType>
   packagingReports: Array<PackagingReportType>
 }
 
@@ -132,6 +154,10 @@ export type QueryPackagingReportFeesEstimationArgs = {
   startMonth: Scalars['Int']
   timeframe: TimeframeType
   year: Scalars['Int']
+}
+
+export type QueryPackagingReportForecastDetailsArgs = {
+  packagingReportId: Scalars['ID']
 }
 
 export enum TimeframeType {
@@ -209,12 +235,12 @@ export type PackagingReportsQuery = {
   __typename?: 'Query'
   packagingReports: Array<{
     __typename?: 'PackagingReportType'
-    createdAt: any
     id: string
+    createdAt: any
     startMonth: number
     year: number
     timezoneInfo: string
-    timeframe: number
+    timeframe: TimeframeType
     packagingGroupsCount: number
   }>
 }
@@ -223,7 +249,7 @@ export type ExampleQueryVariables = Exact<{ [key: string]: never }>
 
 export type ExampleQuery = { __typename?: 'Query'; helloWorld: string }
 
-export type PackagingReportSubmitMutationVariables = Exact<{
+export type PackagingReportForecastSubmitMutationVariables = Exact<{
   year: Scalars['Int']
   startMonth: Scalars['Int']
   tzInfo: Scalars['String']
@@ -231,9 +257,19 @@ export type PackagingReportSubmitMutationVariables = Exact<{
   packagingRecords: Array<PackagingGroupInput> | PackagingGroupInput
 }>
 
-export type PackagingReportSubmitMutation = {
+export type PackagingReportForecastSubmitMutation = {
   __typename?: 'Mutation'
-  packagingReportSubmit: string
+  packagingReportForecastSubmit: string
+}
+
+export type PackagingReportForecastUpdateMutationVariables = Exact<{
+  packagingReportId: Scalars['ID']
+  packagingRecords: Array<PackagingGroupInput> | PackagingGroupInput
+}>
+
+export type PackagingReportForecastUpdateMutation = {
+  __typename?: 'Mutation'
+  packagingReportForecastUpdate: string
 }
 
 export type PackagingBaseDataQueryVariables = Exact<{ [key: string]: never }>
@@ -262,6 +298,40 @@ export type PackagingReportFeesEstimationQueryVariables = Exact<{
 export type PackagingReportFeesEstimationQuery = {
   __typename?: 'Query'
   fees: any
+}
+
+export type PackagingReportForecastDetailsQueryVariables = Exact<{
+  packagingReportId: Scalars['ID']
+}>
+
+export type PackagingReportForecastDetailsQuery = {
+  __typename?: 'Query'
+  packagingReport?: {
+    __typename?: 'PackagingReportType'
+    id: string
+    timeframe: TimeframeType
+    year: number
+    startMonth: number
+    timezoneInfo: string
+    forecast: {
+      __typename?: 'ForecastSubmissionType'
+      id: string
+      materialRecords: Array<{
+        __typename?: 'MaterialRecordType'
+        quantity: number
+        packagingGroup: {
+          __typename?: 'PackagingGroupType'
+          id: string
+          name: string
+        }
+        packagingMaterial: {
+          __typename?: 'MaterialType'
+          id: string
+          name: string
+        }
+      }>
+    }
+  } | null
 }
 
 export const RegisterCompanyDocument = gql`
@@ -423,8 +493,8 @@ export type CompanyDetailsQueryResult = Apollo.QueryResult<
 export const PackagingReportsDocument = gql`
   query packagingReports {
     packagingReports {
-      createdAt
       id
+      createdAt
       startMonth
       year
       timezoneInfo
@@ -496,15 +566,15 @@ export type ExampleQueryResult = Apollo.QueryResult<
   ExampleQuery,
   ExampleQueryVariables
 >
-export const PackagingReportSubmitDocument = gql`
-  mutation packagingReportSubmit(
+export const PackagingReportForecastSubmitDocument = gql`
+  mutation packagingReportForecastSubmit(
     $year: Int!
     $startMonth: Int!
     $tzInfo: String!
     $timeframe: TimeframeType!
     $packagingRecords: [PackagingGroupInput!]!
   ) {
-    packagingReportSubmit(
+    packagingReportForecastSubmit(
       year: $year
       startMonth: $startMonth
       tzInfo: $tzInfo
@@ -513,31 +583,69 @@ export const PackagingReportSubmitDocument = gql`
     )
   }
 `
-export type PackagingReportSubmitMutationFn = Apollo.MutationFunction<
-  PackagingReportSubmitMutation,
-  PackagingReportSubmitMutationVariables
+export type PackagingReportForecastSubmitMutationFn = Apollo.MutationFunction<
+  PackagingReportForecastSubmitMutation,
+  PackagingReportForecastSubmitMutationVariables
 >
-export function usePackagingReportSubmitMutation(
+export function usePackagingReportForecastSubmitMutation(
   baseOptions?: Apollo.MutationHookOptions<
-    PackagingReportSubmitMutation,
-    PackagingReportSubmitMutationVariables
+    PackagingReportForecastSubmitMutation,
+    PackagingReportForecastSubmitMutationVariables
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions }
   return Apollo.useMutation<
-    PackagingReportSubmitMutation,
-    PackagingReportSubmitMutationVariables
-  >(PackagingReportSubmitDocument, options)
+    PackagingReportForecastSubmitMutation,
+    PackagingReportForecastSubmitMutationVariables
+  >(PackagingReportForecastSubmitDocument, options)
 }
-export type PackagingReportSubmitMutationHookResult = ReturnType<
-  typeof usePackagingReportSubmitMutation
+export type PackagingReportForecastSubmitMutationHookResult = ReturnType<
+  typeof usePackagingReportForecastSubmitMutation
 >
-export type PackagingReportSubmitMutationResult =
-  Apollo.MutationResult<PackagingReportSubmitMutation>
-export type PackagingReportSubmitMutationOptions = Apollo.BaseMutationOptions<
-  PackagingReportSubmitMutation,
-  PackagingReportSubmitMutationVariables
+export type PackagingReportForecastSubmitMutationResult =
+  Apollo.MutationResult<PackagingReportForecastSubmitMutation>
+export type PackagingReportForecastSubmitMutationOptions =
+  Apollo.BaseMutationOptions<
+    PackagingReportForecastSubmitMutation,
+    PackagingReportForecastSubmitMutationVariables
+  >
+export const PackagingReportForecastUpdateDocument = gql`
+  mutation packagingReportForecastUpdate(
+    $packagingReportId: ID!
+    $packagingRecords: [PackagingGroupInput!]!
+  ) {
+    packagingReportForecastUpdate(
+      packagingReportId: $packagingReportId
+      packagingRecords: $packagingRecords
+    )
+  }
+`
+export type PackagingReportForecastUpdateMutationFn = Apollo.MutationFunction<
+  PackagingReportForecastUpdateMutation,
+  PackagingReportForecastUpdateMutationVariables
 >
+export function usePackagingReportForecastUpdateMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    PackagingReportForecastUpdateMutation,
+    PackagingReportForecastUpdateMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    PackagingReportForecastUpdateMutation,
+    PackagingReportForecastUpdateMutationVariables
+  >(PackagingReportForecastUpdateDocument, options)
+}
+export type PackagingReportForecastUpdateMutationHookResult = ReturnType<
+  typeof usePackagingReportForecastUpdateMutation
+>
+export type PackagingReportForecastUpdateMutationResult =
+  Apollo.MutationResult<PackagingReportForecastUpdateMutation>
+export type PackagingReportForecastUpdateMutationOptions =
+  Apollo.BaseMutationOptions<
+    PackagingReportForecastUpdateMutation,
+    PackagingReportForecastUpdateMutationVariables
+  >
 export const PackagingBaseDataDocument = gql`
   query packagingBaseData {
     packagingGroups {
@@ -632,4 +740,65 @@ export type PackagingReportFeesEstimationLazyQueryHookResult = ReturnType<
 export type PackagingReportFeesEstimationQueryResult = Apollo.QueryResult<
   PackagingReportFeesEstimationQuery,
   PackagingReportFeesEstimationQueryVariables
+>
+export const PackagingReportForecastDetailsDocument = gql`
+  query packagingReportForecastDetails($packagingReportId: ID!) {
+    packagingReport: packagingReportForecastDetails(
+      packagingReportId: $packagingReportId
+    ) {
+      id
+      timeframe
+      year
+      startMonth
+      timezoneInfo
+      forecast {
+        id
+        materialRecords {
+          quantity
+          packagingGroup {
+            id
+            name
+          }
+          packagingMaterial: material {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+`
+export function usePackagingReportForecastDetailsQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    PackagingReportForecastDetailsQuery,
+    PackagingReportForecastDetailsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<
+    PackagingReportForecastDetailsQuery,
+    PackagingReportForecastDetailsQueryVariables
+  >(PackagingReportForecastDetailsDocument, options)
+}
+export function usePackagingReportForecastDetailsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    PackagingReportForecastDetailsQuery,
+    PackagingReportForecastDetailsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<
+    PackagingReportForecastDetailsQuery,
+    PackagingReportForecastDetailsQueryVariables
+  >(PackagingReportForecastDetailsDocument, options)
+}
+export type PackagingReportForecastDetailsQueryHookResult = ReturnType<
+  typeof usePackagingReportForecastDetailsQuery
+>
+export type PackagingReportForecastDetailsLazyQueryHookResult = ReturnType<
+  typeof usePackagingReportForecastDetailsLazyQuery
+>
+export type PackagingReportForecastDetailsQueryResult = Apollo.QueryResult<
+  PackagingReportForecastDetailsQuery,
+  PackagingReportForecastDetailsQueryVariables
 >

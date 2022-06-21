@@ -52,6 +52,10 @@ class BaseTestCase(TestCase):
             request=HttpRequest(),
         )
 
+    @staticmethod
+    def create_and_assign_company(user):
+        return baker.make_recipe('company.tests.company', users_queryset=[user])
+
     def login_normal_user(self):
         assert self.user is not None, 'User does not exist, consider AUTO_CREATE_USERS=True'
         self.login(self.user)
@@ -65,7 +69,7 @@ class BaseApiTestCase(BaseTestCase, GraphQLTestCase):
     def load_content(response):
         return json.loads(response.content)
 
-    def assertResponseHasErrorMessage(self, resp, message):
+    def assertResponseHasErrorMessage(self, resp, message, message_dict=None):
         """
         Assert that the call was failing with a given message.
         Take care: Even with errors, GraphQL returns status 200!
@@ -74,6 +78,8 @@ class BaseApiTestCase(BaseTestCase, GraphQLTestCase):
         self.assertNotEqual(content['errors'], None, 'Response does not contain errors')
         error_messages = [error['message'] for error in content['errors']]
         self.assertIn(message, error_messages)
+        if message_dict:
+            self.assertIn(message_dict, [error['extensions']['message_dict'] for error in content['errors']])
 
     def assertResponseHasErrors(self, resp, msg=None):
         """
@@ -99,10 +105,11 @@ class BaseApiTestCase(BaseTestCase, GraphQLTestCase):
         self.assertResponseNoErrors(response)
         return self.load_content(response)['data']
 
-    def query_and_assert_error(self, *args, message: str = None, **kwargs):
+    def query_and_assert_error(self, *args, message: str = None, message_dict: dict = None, **kwargs):
         response = self.query(*args, **kwargs)
         if message:
-            self.assertResponseHasErrorMessage(response, message=message)
-        else:
+            self.assertResponseHasErrorMessage(response, message=message, message_dict=message_dict)
+
+        if not message and not message_dict:
             self.assertResponseHasErrors(response)
         return response

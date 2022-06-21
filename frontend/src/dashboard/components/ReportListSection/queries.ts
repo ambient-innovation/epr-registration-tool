@@ -3,8 +3,8 @@ import { gql } from '@apollo/client'
 export const PACKAGING_REPORTS_QUERY = gql`
   query packagingReports {
     packagingReports {
-      createdAt
       id
+      createdAt
       startMonth
       year
       timezoneInfo

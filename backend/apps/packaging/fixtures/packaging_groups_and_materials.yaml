@@ -1,0 +1,194 @@
+- model: packaging.material
+  pk: 5
+  fields:
+    created_at: 2022-06-15 09:30:59.718935+00:00
+    created_by: null
+    lastmodified_at: 2022-06-15 11:43:35.176134+00:00
+    lastmodified_by: null
+    name: PET
+    name_en: PET
+    name_ar: PET ar
+- model: packaging.material
+  pk: 6
+  fields:
+    created_at: 2022-06-15 09:31:26.630269+00:00
+    created_by: null
+    lastmodified_at: 2022-06-15 09:31:28.901745+00:00
+    lastmodified_by: null
+    name: Plastic films and bags
+    name_en: Plastic films and bags
+    name_ar: Plastic films and bags ar
+- model: packaging.material
+  pk: 7
+  fields:
+    created_at: 2022-06-15 09:31:54.652508+00:00
+    created_by: null
+    lastmodified_at: 2022-06-15 09:31:55.999183+00:00
+    lastmodified_by: null
+    name: Other plastic packaging
+    name_en: Other plastic packaging
+    name_ar: Other plastic packaging ar
+- model: packaging.material
+  pk: 8
+  fields:
+    created_at: 2022-06-15 09:32:17.089797+00:00
+    created_by: null
+    lastmodified_at: 2022-06-15 09:32:18.823486+00:00
+    lastmodified_by: null
+    name: Beverage cartons
+    name_en: Beverage cartons
+    name_ar: Beverage cartons ar
+- model: packaging.material
+  pk: 9
+  fields:
+    created_at: 2022-06-15 09:32:33.481274+00:00
+    created_by: null
+    lastmodified_at: 2022-06-15 09:32:35.609329+00:00
+    lastmodified_by: null
+    name: Metal cans
+    name_en: Metal cans
+    name_ar: Metal cans ar
+- model: packaging.material
+  pk: 10
+  fields:
+    created_at: 2022-06-15 09:32:55.742594+00:00
+    created_by: null
+    lastmodified_at: 2022-06-15 09:32:55.745569+00:00
+    lastmodified_by: null
+    name: Paper and carton
+    name_en: Paper and carton
+    name_ar: Paper and carton ar
+- model: packaging.material
+  pk: 11
+  fields:
+    created_at: 2022-06-15 09:33:44.174156+00:00
+    created_by: null
+    lastmodified_at: 2022-06-15 09:33:44.176944+00:00
+    lastmodified_by: null
+    name: Glass bottles
+    name_en: Glass bottles
+    name_ar: Glass bottles ar
+- model: packaging.packaginggroup
+  pk: 5
+  fields:
+    created_at: 2022-06-15 09:29:21.942237+00:00
+    created_by: null
+    lastmodified_at: 2022-06-15 09:29:41.749862+00:00
+    lastmodified_by: null
+    name: Food packaging
+    name_en: Food packaging
+    name_ar: Food packaging ar
+- model: packaging.packaginggroup
+  pk: 6
+  fields:
+    created_at: 2022-06-15 09:29:58.852277+00:00
+    created_by: null
+    lastmodified_at: 2022-06-15 09:29:58.852756+00:00
+    lastmodified_by: null
+    name: Beverage packaging
+    name_en: Beverage packaging
+    name_ar: Beverage packaging ar
+- model: packaging.packaginggroup
+  pk: 7
+  fields:
+    created_at: 2022-06-15 09:30:10.670329+00:00
+    created_by: null
+    lastmodified_at: 2022-06-15 09:30:12.481227+00:00
+    lastmodified_by: null
+    name: Service packaging
+    name_en: Service packaging
+    name_ar: Service packaging ar
+- model: packaging.packaginggroup
+  pk: 8
+  fields:
+    created_at: 2022-06-15 09:30:38.527020+00:00
+    created_by: null
+    lastmodified_at: 2022-06-15 09:30:38.527473+00:00
+    lastmodified_by: null
+    name: Packaging or home
+    name_en: Packaging or home
+    name_ar: Packaging or home ar
+- model: packaging.materialprice
+  pk: 8
+  fields:
+    created_at: 2022-06-15 09:30:59.721441+00:00
+    created_by: null
+    lastmodified_at: 2022-06-15 09:30:59.725660+00:00
+    lastmodified_by: null
+    start_year: 2020
+    start_month: 1
+    price_per_kg: 100.0
+    sort_key: 202001
+    related_material: 5
+- model: packaging.materialprice
+  pk: 9
+  fields:
+    created_at: 2022-06-15 09:31:26.633766+00:00
+    created_by: null
+    lastmodified_at: 2022-06-15 09:31:26.643852+00:00
+    lastmodified_by: null
+    start_year: 2020
+    start_month: 1
+    price_per_kg: 150.0
+    sort_key: 202001
+    related_material: 6
+- model: packaging.materialprice
+  pk: 10
+  fields:
+    created_at: 2022-06-15 09:31:54.654450+00:00
+    created_by: null
+    lastmodified_at: 2022-06-15 09:31:54.658534+00:00
+    lastmodified_by: null
+    start_year: 2022
+    start_month: 3
+    price_per_kg: 25.0
+    sort_key: 202203
+    related_material: 7
+- model: packaging.materialprice
+  pk: 11
+  fields:
+    created_at: 2022-06-15 09:32:17.091961+00:00
+    created_by: null
+    lastmodified_at: 2022-06-15 09:32:17.096153+00:00
+    lastmodified_by: null
+    start_year: 2022
+    start_month: 2
+    price_per_kg: 10.0
+    sort_key: 202202
+    related_material: 8
+- model: packaging.materialprice
+  pk: 12
+  fields:
+    created_at: 2022-06-15 09:32:33.483355+00:00
+    created_by: null
+    lastmodified_at: 2022-06-15 09:32:33.487363+00:00
+    lastmodified_by: null
+    start_year: 2020
+    start_month: 8
+    price_per_kg: 36.0
+    sort_key: 202008
+    related_material: 9
+- model: packaging.materialprice
+  pk: 13
+  fields:
+    created_at: 2022-06-15 09:32:55.744416+00:00
+    created_by: null
+    lastmodified_at: 2022-06-15 09:32:55.748615+00:00
+    lastmodified_by: null
+    start_year: 2021
+    start_month: 11
+    price_per_kg: 50.0
+    sort_key: 202111
+    related_material: 10
+- model: packaging.materialprice
+  pk: 14
+  fields:
+    created_at: 2022-06-15 09:33:44.176094+00:00
+    created_by: null
+    lastmodified_at: 2022-06-15 09:33:44.179937+00:00
+    lastmodified_by: null
+    start_year: 2019
+    start_month: 3
+    price_per_kg: 60.0
+    sort_key: 201903
+    related_material: 11

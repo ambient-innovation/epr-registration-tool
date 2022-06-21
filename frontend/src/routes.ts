@@ -8,4 +8,7 @@ export const ROUTES = {
   accountActivation: '/auth/activation',
   forecast: '/report/forecast/add',
   forecastSuccess: '/report/forecast/add/success',
+  forecastChange: (id: string): string => `/report/forecast/${id}/change`,
+  forecastUpdateSuccess: (id: string): string =>
+    `/report/forecast/${id}/change/success`,
 }

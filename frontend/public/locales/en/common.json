@@ -13,6 +13,7 @@
   "pleaseWait": "Please wait ...",
   "eprTool": "EPR Registration Tool",
   "kg": "kg",
+  "edit": "Edit",
   "registrationForm": {
     "createNewAccount": "Create new account",
     "generalCompanyInformation": "General company information",
@@ -50,7 +51,8 @@
     "packagingDetails": "Packaging details",
     "estimatedFees": "Estimated fees",
     "step1Title": "Timeframe of report",
-    "step1Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+    "step1Description": "Please select start date and duration of the Report.",
+    "step1ReadonlyDescription": "Report timeframe is not editable.",
     "startDate": "Forecast start date",
     "packagingEntryNum": "Packaging entry {{num}}",
     "packagingEntryDescription": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
@@ -65,10 +67,14 @@
     "addMaterial": "Add another material",
     "createReportSuccessTitle": "Thank you for reporting",
     "createReportSuccessDescription": "A Forecast Report is created successfully and you can find it in your dashboard.",
+    "updateReportSuccessDescription": "Forecast Report is updated successfully.",
     "createAnotherReport": "Submit another Report",
     "proceedToHomepage": "Proceed to homepage",
+    "proceedToDashboard": "Proceed to Dashboard",
     "estimatedFeesResult": "Price {{fees}} JOD",
-    "reportSuccessful": "Report Successful"
+    "reportSuccessful": "Report Successful",
+    "reportUpdatedSuccessful": "Report Update Successful",
+    "calculating": "calculating, please wait ..."
   },
   "validations": {
     "required": "This field is required",
@@ -105,7 +111,9 @@
     "packagingGroupDoesNotExist": "One of the selected Packaging group does not exist",
     "materialDoesNotExist": "One of the selected Material does not exist",
     "noCompanyAssignedORInactiveCompany": "You have not been assigned to any company or your company account has not been activated yet.",
-    "noCompanyAssigned": "You have not been assigned to any company"
+    "noCompanyAssigned": "You have not been assigned to any company",
+    "reportDoesNotExist": "Report does not exist",
+    "reportIsNotEditable": "Report is not editable"
   },
   "internalErrors": {
     "unknownError": "Something unexpected happened. Please reload and try again."
@@ -175,7 +183,7 @@
         "estimatedF": "Estimated fees:",
         "entries": "Packaging Entries:",
         "month": "month",
-        "editable": "Can be edited for another {{days}} days",
+        "editableUntil": "Can be edited until {{endDate}}",
         "forecast": "Forecast"
       }
     }

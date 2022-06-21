@@ -1,1 +1,1 @@
-export { ForecastSection } from './ForecastSection'
+export { ForecastSection, ForecastChangeSection } from './ForecastSection'

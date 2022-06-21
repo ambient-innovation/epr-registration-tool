@@ -1,10 +1,8 @@
-import datetime
 import decimal
 import typing
 from zoneinfo import ZoneInfoNotFoundError
 
 from django.contrib import admin
-from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import UniqueConstraint
@@ -14,14 +12,7 @@ from ai_django_core.models import CommonInfo
 
 from common.models import Month
 from common.validators import validate_greater_than_zero
-
-
-def validate_report_year(value):
-    current_year = datetime.date.today().year
-    if value < current_year or value > current_year + 5:
-        raise ValidationError(
-            _('%(value)s should be in the future and with in 5 years'), params={'value': value}, code='invalidYear'
-        )
+from packaging_report.managers import PackagingReportQuerySet
 
 
 def validate_report_month(value):
@@ -67,7 +58,7 @@ class PackagingReport(CommonInfo):
         verbose_name=_("Timeframe"),
         choices=TimeframeType.choices,
     )
-    year = models.PositiveIntegerField(verbose_name=_('Year'), validators=[validate_report_year])
+    year = models.PositiveIntegerField(verbose_name=_('Year'))
     start_month = models.PositiveIntegerField(
         verbose_name=_('Start Month'), validators=[validate_report_month], choices=Month.choices
     )
@@ -75,11 +66,11 @@ class PackagingReport(CommonInfo):
         verbose_name=_('Timezone info'), max_length=32, validators=[validate_report_timezone]
     )
 
+    objects = PackagingReportQuerySet.as_manager()
+
     def clean(self):
         if self.start_month + (self.timeframe - 1) > 12:
-            raise ValidationError(
-                {"timeframe", _('%(value)s report has to start and end in same year')}, code="invalidTimeframe"
-            )
+            raise ValidationError({"timeframe": _('report has to start and end in same year')}, code="invalidTimeframe")
 
         super().clean()
 
@@ -104,21 +95,16 @@ class ForecastSubmission(ReportSubmission):
 
     @admin.display(description="Estimated Fees")
     def estimated_fees(self) -> typing.Optional[decimal.Decimal]:
-        from packaging.price_utils import get_material_price_at
+        from packaging.price_utils import calculate_material_fees
 
-        fees = 0.0
+        fees = 0
         timeframe = self.related_report.timeframe
         start_month = self.related_report.start_month
         year = self.related_report.year
         for m in self.material_records_queryset.all():
-            monthly_quantity = m.quantity / timeframe
-            for timeframe_month_index in range(timeframe):
-                month = start_month + timeframe_month_index
-
-                material_price = get_material_price_at(m.related_packaging_material_id, year, month)
-                if not material_price:
-                    return None
-                fees = fees + (material_price.price_per_kg * monthly_quantity)
+            fees = fees + calculate_material_fees(
+                timeframe, year, start_month, m.related_packaging_material_id, m.quantity
+            )
 
         return f'{round(fees, 2)} JOD/ {timeframe} month(s)'
 
@@ -142,17 +128,7 @@ class MaterialRecord(CommonInfo):
         related_name="material_records_queryset",
         on_delete=models.PROTECT,
     )
-    quantity = models.FloatField(verbose_name=_('Quantity'), validators=[validate_greater_than_zero])
-    # - this will be the complete quantity divided on the selected timeframe
-    # - quantity in month  can be different from month to month in case the quantity changed in the forecast
-    #   timeframe (between start and end date)
-    # E.g: if timeframe is 3 months and quantity is 9 this will be [3, 3, 3]
-    monthly_quantities = ArrayField(
-        models.FloatField(verbose_name=_('Quantity per month')),
-        verbose_name=_('Monthly Quantities'),
-        size=12,
-        default=list,
-    )
+    quantity = models.FloatField(verbose_name=_('Quantity (Kg)'), validators=[validate_greater_than_zero])
 
     class Meta:
         verbose_name = _("Material record")

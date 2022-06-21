@@ -2,6 +2,7 @@ import {
   PackagingReportsDocument,
   PackagingReportsQuery,
   PackagingReportsQueryVariables,
+  TimeframeType,
 } from '@/api/__types__'
 import { ApolloMock } from '@/utils/typescript.utils'
 
@@ -12,7 +13,7 @@ export const mockReports: PackagingReportsQuery['packagingReports'] = [
     startMonth: 7,
     year: 2022,
     timezoneInfo: 'Europe/Berlin',
-    timeframe: 1,
+    timeframe: TimeframeType.MONTH,
     packagingGroupsCount: 3,
   },
   {
@@ -21,7 +22,7 @@ export const mockReports: PackagingReportsQuery['packagingReports'] = [
     startMonth: 7,
     year: 2023,
     timezoneInfo: 'Europe/Berlin',
-    timeframe: 3,
+    timeframe: TimeframeType.THREE_MONTHS,
     packagingGroupsCount: 5,
   },
   {
@@ -30,7 +31,7 @@ export const mockReports: PackagingReportsQuery['packagingReports'] = [
     startMonth: 7,
     year: 2021,
     timezoneInfo: 'Europe/Berlin',
-    timeframe: 3,
+    timeframe: TimeframeType.THREE_MONTHS,
     packagingGroupsCount: 1,
   },
 ]
