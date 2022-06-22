@@ -113,7 +113,8 @@
     "noCompanyAssignedORInactiveCompany": "لم يتم تعيينك لأي شركة أو لم يتم تنشيط حساب شركتك بعد.",
     "noCompanyAssigned": "لم يتم تعيينك لأية شركة",
     "reportDoesNotExist": "تقرير غير موجود",
-    "reportIsNotEditable": "التقرير غير قابل للتحرير"
+    "reportIsNotEditable": "التقرير غير قابل للتحرير",
+    "profileAlreadyCompleted": "ملف الشركة مكتمل بالفعل"
   },
   "internalErrors": {
     "unknownError": "Something unexpected happened. Please reload and try again."

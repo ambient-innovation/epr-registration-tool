@@ -113,7 +113,8 @@
     "noCompanyAssignedORInactiveCompany": "You have not been assigned to any company or your company account has not been activated yet.",
     "noCompanyAssigned": "You have not been assigned to any company",
     "reportDoesNotExist": "Report does not exist",
-    "reportIsNotEditable": "Report is not editable"
+    "reportIsNotEditable": "Report is not editable",
+    "profileAlreadyCompleted": "Company Profile already completed"
   },
   "internalErrors": {
     "unknownError": "Something unexpected happened. Please reload and try again."
