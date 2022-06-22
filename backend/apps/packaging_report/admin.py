@@ -2,7 +2,9 @@ from django import forms
 from django.contrib import admin
 from django.utils import timezone
 
+import pytz
 from ai_django_core.admin.model_admins.mixins import CommonInfoAdminMixin
+from dateutil.relativedelta import relativedelta
 
 from packaging_report.models import ForecastSubmission, MaterialRecord, PackagingReport
 
@@ -20,6 +22,8 @@ class MaterialRecordInline(admin.StackedInline):
 
 @admin.register(ForecastSubmission)
 class ForecastSubmissionAdmin(admin.ModelAdmin):
+    change_form_template = 'packaging_report/forecast_change_view.html'
+
     list_display = ('id', 'created_at')
     fields = (
         'related_report',
@@ -32,7 +36,7 @@ class ForecastSubmissionAdmin(admin.ModelAdmin):
         return super().get_queryset(request).select_related('related_report')
 
     def has_change_permission(self, request, obj=None):
-        return False
+        return obj.related_report.is_forecast_editable() if obj else True
 
 
 class PackagingReportForm(forms.ModelForm):
@@ -46,6 +50,9 @@ class PackagingReportForm(forms.ModelForm):
         max_length=4,
         widget=forms.Select(choices=YEAR_CHOICES),
     )
+    timezone_info = forms.ChoiceField(
+        choices=[(timezone, timezone) for timezone in pytz.common_timezones],
+    )
 
     def __init__(self, *args, **kwargs):
         if 'instance' not in kwargs:
@@ -57,6 +64,7 @@ class PackagingReportForm(forms.ModelForm):
 
 @admin.register(PackagingReport)
 class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
+    change_form_template = 'packaging_report/change_view.html'
     form = PackagingReportForm
     list_display = (
         'id',
@@ -75,6 +83,8 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
         'created_at',
         'lastmodified_at',
         'related_forecast',
+        'end_date',
+        'is_forecast_editable',
     )
     autocomplete_fields = ('related_company',)
     list_filter = ('timeframe',)
@@ -88,3 +98,19 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
 
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('related_forecast')
+
+    def has_change_permission(self, request, obj=None):
+        return obj.is_forecast_editable() if obj else True
+
+    @admin.display(description="End date")
+    def end_date(self, obj):
+        """
+        Report end datetime in server timezone
+        """
+        start_date = timezone.datetime(
+            year=obj.year,
+            month=obj.start_month,
+            day=1,
+        )
+        end_date = start_date + relativedelta(months=obj.timeframe)
+        return end_date

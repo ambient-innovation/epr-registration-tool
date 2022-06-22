@@ -74,6 +74,33 @@ class PackagingReport(CommonInfo):
 
         super().clean()
 
+    @admin.display(description="Editable", boolean=True)
+    def is_forecast_editable(self):
+        """
+        Forecast can be edited until the last day in the timeframe
+        """
+        from django.utils import timezone
+
+        import pytz
+        from dateutil.relativedelta import relativedelta
+
+        timezone.activate(self.timezone_info)
+        # timezone.now will return always datetime in utc
+        _now = timezone.now()
+        now_in_that_timezone = timezone.localtime(_now, pytz.timezone(self.timezone_info))
+        start_date = timezone.datetime(
+            year=self.year,
+            month=self.start_month,
+            day=1,
+        )
+        end_date = start_date + relativedelta(months=self.timeframe)
+        # Django will then use the time zone defined by settings.TIME_ZONE.
+        timezone.deactivate()
+        print(end_date.astimezone(pytz.utc), now_in_that_timezone.astimezone(pytz.utc))
+        if end_date.astimezone(pytz.utc) < now_in_that_timezone.astimezone(pytz.utc):
+            return False
+        return True
+
     def __str__(self):
         return f'Packaging Report ({self.id}): {self.timeframe} months from {self.start_month}.{self.year}'
 

@@ -1,0 +1,49 @@
+{% extends "admin/change_form.html" %}
+
+{% load i18n %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <style>
+      .alert {
+          padding: 20px;
+          background: #F3F4F6;
+          max-width: 500px;
+          border-radius: 5px;
+
+          display: flex;
+      }
+
+      .alert .alert__icon {
+          font-size: 1.5em;
+          margin-right: 20px;
+      }
+
+      .alert--info {
+          background: #0288D1;
+          color: #F3F4F6;
+      }
+
+      .alert--info .alert__icon:before {
+          content: '🔔';
+      }
+
+  </style>
+{% endblock %}
+
+{% block object-tools %}{% endblock %}
+
+{% block content %}
+
+  {% if not original.related_report.is_forecast_editable %}
+    <div class='alert alert--info'>
+      <span class='alert__icon'></span>
+      The Forecast is not editable anymore because the deadline is reached.
+    </div>
+
+  {% endif %}
+  {{ block.super }}
+
+{% endblock %}
+
+
