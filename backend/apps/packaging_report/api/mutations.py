@@ -11,7 +11,6 @@ from strawberry.types import Info
 
 from account.models import User
 from common.api.permissions import IsActivated, IsAuthenticated
-from common.utils import make_local_datetime_at
 from packaging.api.types import PackagingGroupInput
 from packaging.models import MaterialPrice
 from packaging_report.models import ForecastSubmission, MaterialRecord, PackagingReport, TimeframeType
@@ -93,11 +92,7 @@ def packaging_report_forecast_update(
         raise GraphQLError('reportDoesNotExist')
 
     # check if this report is editable at this time
-    now = timezone.now()
-    aware_end_date = make_local_datetime_at(
-        year=report.year, month=report.start_month, timezone_info=report.timezone_info
-    )
-    if aware_end_date < now:
+    if not report.is_forecast_editable():
         raise GraphQLError('reportIsNotEditable')
 
     related_forecast = report.related_forecast
