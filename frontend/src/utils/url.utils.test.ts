@@ -1,4 +1,4 @@
-import { joinUrl } from '@/utils/urls.utils'
+import { joinUrl } from '@/utils/url.utils'
 
 describe('joinUrl()', () => {
   it('should combine urls with ensuring a single slash as separator', () => {

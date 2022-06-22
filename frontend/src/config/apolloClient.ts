@@ -14,7 +14,7 @@ import { isEqual } from 'lodash'
 import { useMemo } from 'react'
 
 import { handleError } from '@/utils/error.utils'
-import { joinUrl } from '@/utils/urls.utils'
+import { joinUrl } from '@/utils/url.utils'
 
 import config from './config'
 
