@@ -39,15 +39,49 @@ export const PACKAGING_REPORT_FORECAST_DETAILS = gql`
       year
       startMonth
       timezoneInfo
+      isForecastEditable
+      isFinalReportSubmitted
       forecast {
         id
         materialRecords {
+          id
           quantity
           packagingGroup {
             id
             name
           }
-          packagingMaterial: material {
+          material {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+`
+export const PACKAGING_REPORT_FINAL_DETAILS = gql`
+  query packagingReportFinalDetails($packagingReportId: ID!) {
+    packagingReport: packagingReportFinalDetails(
+      packagingReportId: $packagingReportId
+    ) {
+      id
+      timeframe
+      year
+      startMonth
+      timezoneInfo
+      isForecastEditable
+      isFinalReportSubmitted
+      finalReport {
+        id
+        fees
+        materialRecords {
+          id
+          quantity
+          packagingGroup {
+            id
+            name
+          }
+          material {
             id
             name
           }

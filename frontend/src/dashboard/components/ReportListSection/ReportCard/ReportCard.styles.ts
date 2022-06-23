@@ -10,7 +10,6 @@ export const cardContentSx: SxStyleObject = {
 }
 
 export const statusChipSx: SxStyleObject = {
-  backgroundColor: 'info.main',
   color: 'common.white',
   fontSize: pxToRemAsString(12),
   fontWeight: fontWeights.bold,

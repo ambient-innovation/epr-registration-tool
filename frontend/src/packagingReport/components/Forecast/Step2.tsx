@@ -97,7 +97,8 @@ const schema: SchemaOf<Record<keyof FormData, unknown>> = yup
 const resolver = yupResolver(schema)
 
 export const Step2 = (_: Step2) => {
-  const { initialData, onSubmit, goToPrevStep } = useForecastContext()
+  const { initialData, onSubmit, goToPrevStep, isReadonlyForm } =
+    useForecastContext()
   const defaultValues = pick(initialData, ...FIELD_NAMES)
   const { data, loading, error } = usePackagingBaseDataQuery()
 
@@ -120,11 +121,12 @@ export const Step2 = (_: Step2) => {
       ) : (
         <Stack spacing={8} role={'list'}>
           <PackagingArrayField
+            readOnly={isReadonlyForm}
             control={control}
             defaultValues={defaultValues.packagingRecords}
             packagingGroups={packagingGroups}
             packagingMaterials={packagingMaterials}
-          />{' '}
+          />
         </Stack>
       )}
     </FormStep>

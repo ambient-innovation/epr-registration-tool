@@ -41,6 +41,24 @@ class ReportSubmission(CommonInfo):
         verbose_name_plural = _("Report Submissions")
         abstract = True
 
+    def calculate_fees(self, material_records):
+        from packaging.price_utils import calculate_material_fees
+
+        fees = 0
+        timeframe = self.related_report.timeframe
+        start_month = self.related_report.start_month
+        year = self.related_report.year
+        for m in material_records:
+            fees = fees + calculate_material_fees(
+                timeframe, year, start_month, m.related_packaging_material_id, m.quantity
+            )
+        return round(fees, 2)
+
+    @admin.display(description="Estimated Fees")
+    def estimated_fees_display(self) -> typing.Optional[decimal.Decimal]:
+        fees = self.calculate_fees(self.material_records_queryset.all())
+        return f'{fees} JOD/ {self.related_report.timeframe} month(s)'
+
 
 class PackagingReport(CommonInfo):
     class Meta:
@@ -96,13 +114,12 @@ class PackagingReport(CommonInfo):
         end_date = start_date + relativedelta(months=self.timeframe)
         # Django will then use the time zone defined by settings.TIME_ZONE.
         timezone.deactivate()
-        print(end_date.astimezone(pytz.utc), now_in_that_timezone.astimezone(pytz.utc))
         if end_date.astimezone(pytz.utc) < now_in_that_timezone.astimezone(pytz.utc):
             return False
         return True
 
     def __str__(self):
-        return f'Packaging Report ({self.id}): {self.timeframe} months from {self.start_month}.{self.year}'
+        return f'Data Report No. {self.id}'
 
 
 class ForecastSubmission(ReportSubmission):
@@ -118,30 +135,42 @@ class ForecastSubmission(ReportSubmission):
     )
 
     def __str__(self):
-        return f'Forecast Report ({self.id})'
+        return f'Forecast Report No. {self.id}'
 
-    @admin.display(description="Estimated Fees")
-    def estimated_fees(self) -> typing.Optional[decimal.Decimal]:
-        from packaging.price_utils import calculate_material_fees
 
-        fees = 0
-        timeframe = self.related_report.timeframe
-        start_month = self.related_report.start_month
-        year = self.related_report.year
-        for m in self.material_records_queryset.all():
-            fees = fees + calculate_material_fees(
-                timeframe, year, start_month, m.related_packaging_material_id, m.quantity
-            )
+class FinalSubmission(ReportSubmission):
+    class Meta:
+        verbose_name = _("Final Submission")
+        verbose_name_plural = _("Final Submissions")
 
-        return f'{round(fees, 2)} JOD/ {timeframe} month(s)'
+    related_report = models.OneToOneField(
+        PackagingReport,
+        verbose_name=_('Packaging Report'),
+        related_name='related_final_submission',
+        on_delete=models.CASCADE,
+    )
+    fees = models.FloatField(verbose_name=_("Fees"), default=0.0, help_text=_("Report actual quantities fees"))
+
+    def __str__(self):
+        return f'Final Report No. {self.id}'
 
 
 class MaterialRecord(CommonInfo):
-    related_submission = models.ForeignKey(
+    related_forecast_submission = models.ForeignKey(
         ForecastSubmission,
-        verbose_name=_('Submission'),
+        verbose_name=_('Forecast Submission'),
         related_name="material_records_queryset",
         on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
+    related_final_submission = models.ForeignKey(
+        FinalSubmission,
+        verbose_name=_('Final Submission'),
+        related_name="material_records_queryset",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
     related_packaging_group = models.ForeignKey(
         'packaging.PackagingGroup',
@@ -163,7 +192,12 @@ class MaterialRecord(CommonInfo):
         constraints = (
             (
                 UniqueConstraint(
-                    fields=['related_packaging_group', 'related_packaging_material', 'related_submission'],
+                    fields=[
+                        'related_packaging_group',
+                        'related_packaging_material',
+                        'related_forecast_submission',
+                        'related_final_submission',
+                    ],
                     name='unique_material_record_in_report_submission',
                 )
             ),

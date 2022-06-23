@@ -22,6 +22,9 @@ EditableForecast.args = {
   year: 2022,
   timeframe: TimeframeType.THREE_MONTHS,
   packagingGroupsCount: 3,
+  isForecastEditable: true,
+  isFinalReportSubmitted: false,
+  fees: null,
 }
 
 NonEditableForecast.args = {
@@ -31,4 +34,7 @@ NonEditableForecast.args = {
   year: 2022,
   timeframe: TimeframeType.TWELVE_MONTHS,
   packagingGroupsCount: 3,
+  isForecastEditable: false,
+  isFinalReportSubmitted: true,
+  fees: 99.99,
 }

@@ -14,6 +14,7 @@ import { ForecastData } from './types'
 
 export interface PackagingArrayField {
   control: Control<FormData>
+  readOnly: boolean
   defaultValues: ForecastData['packagingRecords']
   packagingGroups: Array<PackagingGroupType>
   packagingMaterials: Array<MaterialType>
@@ -21,6 +22,7 @@ export interface PackagingArrayField {
 
 export const PackagingArrayField = ({
   control,
+  readOnly,
   defaultValues,
   packagingGroups,
   packagingMaterials,
@@ -50,6 +52,7 @@ export const PackagingArrayField = ({
                   variant={'text'}
                   color={'error'}
                   onClick={() => remove(index)}
+                  disabled={readOnly}
                 >
                   {t('reportForm.deleteEntry')}
                 </Button>
@@ -67,6 +70,7 @@ export const PackagingArrayField = ({
                         (option) =>
                           option.id === defaultValues?.[index]?.packagingGroupId
                       )}
+                      readOnly={readOnly}
                       options={packagingGroups}
                       onChange={(_, option) => onChange(option?.id)}
                       getOptionLabel={(option) => option?.name}
@@ -96,6 +100,7 @@ export const PackagingArrayField = ({
               <Divider />
               <Stack spacing={DEFAULT_FORM_SPACING} role={'list'}>
                 <MaterialArrayField
+                  readOnly={readOnly}
                   packagingMaterials={packagingMaterials}
                   nestIndex={index}
                   {...{ control, defaultValues }}
@@ -107,7 +112,8 @@ export const PackagingArrayField = ({
       ))}
 
       <Button
-        variant={'outlined'}
+        variant={'contained'}
+        disabled={readOnly}
         startIcon={<AddIcon />}
         sx={{ alignSelf: 'start' }}
         onClick={() =>

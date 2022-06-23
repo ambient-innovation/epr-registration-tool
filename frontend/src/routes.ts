@@ -10,7 +10,10 @@ export const ROUTES = {
   resetPassword: '/auth/forget-password/reset',
   forecast: '/report/forecast/add',
   forecastSuccess: '/report/forecast/add/success',
-  forecastChange: (id: string): string => `/report/forecast/${id}/change`,
+  packagingReportChange: (id: string): string => `/report/${id}/change`,
   forecastUpdateSuccess: (id: string): string =>
-    `/report/forecast/${id}/change/success`,
+    `/report/${id}/change/update-success`,
+  finalReportSubmitSuccess: (id: string): string =>
+    `/report/${id}/change/final-success`,
+  dataReportView: (id: string): string => `/report/${id}`,
 }

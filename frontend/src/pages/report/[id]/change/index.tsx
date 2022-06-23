@@ -1,27 +1,26 @@
 import type { GetServerSideProps } from 'next'
-import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import { DefaultPageHead } from '@/common/components/DefaultPageHead'
 import { PageLayout } from '@/common/components/PageLayout/PageLayout'
 import { ProtectedPage } from '@/common/components/PageProtection'
-import { ForecastChangeSection } from '@/packagingReport/components/Forecast'
+import { ReportChangeSection } from '@/packagingReport/components/Forecast'
 import { ROUTES } from '@/routes'
 
 interface ForecastChangePage {
   id: string
 }
-const ForecastChangePage = ({ id }: ForecastChangePage) => {
-  const { t } = useTranslation()
+const SubmitFinalReportPage = ({ id }: ForecastChangePage) => {
+  // const { t } = useTranslation()
   return (
     <>
       <DefaultPageHead
-        subPageTitle={t('reportForm.createSubPageTitle')}
-        relativePath={ROUTES.forecastChange(id as string)}
+        subPageTitle={'Change Packaging Report data'}
+        relativePath={ROUTES.packagingReportChange(id as string)}
       />
       <PageLayout>
         <ProtectedPage>
-          <ForecastChangeSection />
+          <ReportChangeSection />
         </ProtectedPage>
       </PageLayout>
     </>
@@ -41,4 +40,4 @@ export const getServerSideProps: GetServerSideProps = async ({
   }
 }
 
-export default ForecastChangePage
+export default SubmitFinalReportPage

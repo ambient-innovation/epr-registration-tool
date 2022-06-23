@@ -1,5 +1,5 @@
 import { Card, Chip, Typography, Box, Stack, Button } from '@mui/material'
-import { addMonths, differenceInDays } from 'date-fns'
+import { addMonths } from 'date-fns'
 import { useTranslation } from 'next-i18next'
 import NextLink from 'next/link'
 
@@ -17,6 +17,9 @@ export type ReportCard = Pick<
   | 'year'
   | 'timeframe'
   | 'packagingGroupsCount'
+  | 'isForecastEditable'
+  | 'isFinalReportSubmitted'
+  | 'fees'
 >
 
 export const ReportCard = ({
@@ -26,6 +29,9 @@ export const ReportCard = ({
   year,
   timeframe,
   packagingGroupsCount,
+  isForecastEditable,
+  isFinalReportSubmitted,
+  fees,
 }: ReportCard): React.ReactElement => {
   const { t } = useTranslation()
   const startDate = new Date(year, startMonth - 1, 1)
@@ -34,19 +40,40 @@ export const ReportCard = ({
   // forecast is editable until end date
   const endDate = addMonths(startDate, timeframeNumberValue[timeframe])
   const formattedEndDate = endDate.toLocaleDateString()
-  const isEditable = differenceInDays(endDate, new Date()) > 0
 
   const statusChip = (
     <Chip
-      label={t('dashboard.reportListSection.reportCard.forecast')}
-      sx={statusChipSx}
+      label={
+        isForecastEditable || !isFinalReportSubmitted
+          ? t('dashboard.reportListSection.reportCard.forecast')
+          : 'Payment required'
+      }
+      sx={{
+        ...statusChipSx,
+        backgroundColor:
+          isForecastEditable || !isFinalReportSubmitted
+            ? 'info.main'
+            : 'warning.main',
+      }}
       role={'listitem'}
     />
   )
-  const editButton = (
-    <NextLink href={ROUTES.forecastChange(reportId)} passHref>
+  const actionButton = isForecastEditable ? (
+    <NextLink href={ROUTES.packagingReportChange(reportId)} passHref>
       <Button component={'a'} variant={'contained'}>
         {t('edit')}
+      </Button>
+    </NextLink>
+  ) : !isFinalReportSubmitted ? (
+    <NextLink href={ROUTES.packagingReportChange(reportId)} passHref>
+      <Button component={'a'} variant={'contained'}>
+        {'Submit Actual Quantities'}
+      </Button>
+    </NextLink>
+  ) : (
+    <NextLink href={ROUTES.dataReportView(reportId)} passHref>
+      <Button component={'a'} variant={'inverted'}>
+        {'view'}
       </Button>
     </NextLink>
   )
@@ -65,11 +92,9 @@ export const ReportCard = ({
             })}
           </Typography>
           <Box sx={{ display: { xs: 'none', md: 'block' } }}>{statusChip}</Box>
-          {isEditable && (
-            <Box sx={{ ml: 'auto', display: { xs: 'none', md: 'block' } }}>
-              {editButton}
-            </Box>
-          )}
+          <Box sx={{ ml: 'auto', display: { xs: 'none', md: 'block' } }}>
+            {actionButton}
+          </Box>
         </Box>
         <Typography variant={'caption'}>
           {`${t(
@@ -101,6 +126,16 @@ export const ReportCard = ({
                 'dashboard.reportListSection.reportCard.entries'
               )} ${packagingGroupsCount}`}
             </Typography>
+            {fees && (
+              <Typography variant={'body2'}>
+                {`${t(
+                  'dashboard.reportListSection.reportCard.calculatedFees'
+                )} `}
+                <Typography component={'span'} variant={'subtitle2'}>
+                  {`${fees} JOD`}
+                </Typography>
+              </Typography>
+            )}
           </Box>
           <Box
             sx={{
@@ -109,7 +144,7 @@ export const ReportCard = ({
               alignSelf: { md: 'flex-end' },
             }}
           >
-            {isEditable && (
+            {isForecastEditable && (
               <Typography variant={'body2'} color={'text.disabled'}>
                 {t('dashboard.reportListSection.reportCard.editableUntil', {
                   endDate: formattedEndDate,
@@ -118,9 +153,7 @@ export const ReportCard = ({
             )}
           </Box>
         </Stack>
-        {isEditable && (
-          <Stack sx={{ mt: 10, display: { md: 'none' } }}>{editButton}</Stack>
-        )}
+        <Stack sx={{ mt: 10, display: { md: 'none' } }}>{actionButton}</Stack>
       </Box>
     </Card>
   )

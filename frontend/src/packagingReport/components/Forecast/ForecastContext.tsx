@@ -9,7 +9,9 @@ import React, {
 } from 'react'
 
 import {
+  Scalars,
   TimeframeType,
+  usePackagingReportFinalDataSubmitMutation,
   usePackagingReportForecastSubmitMutation,
   usePackagingReportForecastUpdateMutation,
 } from '@/api/__types__'
@@ -29,10 +31,12 @@ export interface ForecastContextValue {
   data: ForecastData
   initialData: ForecastData
   isTimeframeReadonly: boolean
+  isReadonlyForm: boolean
   goToPrevStep: () => void
   onSubmit: (data: Partial<ForecastData>) => void
   activeStep: StepNumber
   error?: ApolloError
+  fees?: Scalars['Float']
 }
 
 export const ForecastContext = React.createContext<ForecastContextValue | null>(
@@ -54,11 +58,22 @@ export const initialData: ForecastData = {
 export const ForecastProvider: React.FC<{
   defaultData?: ForecastData
   packagingReportId?: string
+  isForecastEditable?: boolean
+  isFinalReportSubmitted?: boolean
+  fees?: Scalars['Float']
   children?: React.ReactNode
-}> = ({ children, defaultData = initialData, packagingReportId }) => {
+}> = ({
+  children,
+  defaultData = initialData,
+  isForecastEditable = true,
+  isFinalReportSubmitted = false,
+  fees,
+  packagingReportId,
+}) => {
   const router = useRouter()
   const [data, setData] = useState<ForecastData>(defaultData)
   const [activeStep, setActiveStep] = useState<StepNumber>(0)
+  const readonly = isFinalReportSubmitted
   const [packagingReportSubmit, { error: createError }] =
     usePackagingReportForecastSubmitMutation({
       refetchQueries: [PACKAGING_REPORTS_QUERY],
@@ -68,16 +83,26 @@ export const ForecastProvider: React.FC<{
       refetchQueries: [PACKAGING_REPORTS_QUERY],
     })
 
+  const [packagingReportFinalDataSubmit, { error: submitFinalReportError }] =
+    usePackagingReportFinalDataSubmitMutation({
+      refetchQueries: [PACKAGING_REPORTS_QUERY],
+    })
+
   const onSubmit: ForecastContextValue['onSubmit'] = useCallback(
     (updatedData) => {
       if (activeStep < LAST_STEP_NUMBER) {
         setData((prevData) => ({ ...prevData, ...updatedData }))
         setActiveStep((prevStep) => (prevStep + 1) as StepNumber)
       } else {
+        if (readonly) {
+          // read only form
+          return
+        }
         const { startDate, ...finalDate } = { ...data, ...updatedData }
 
-        return packagingReportId
-          ? packagingReportUpdate({
+        return packagingReportId && isForecastEditable
+          ? // update forecast
+            packagingReportUpdate({
               variables: {
                 packagingReportId,
                 packagingRecords: finalDate.packagingRecords,
@@ -85,6 +110,20 @@ export const ForecastProvider: React.FC<{
             })
               .then(() => {
                 router.push(ROUTES.forecastUpdateSuccess(packagingReportId))
+              })
+              // handle error via error object returned by useMutation
+              .catch(() => null)
+          : packagingReportId && !isFinalReportSubmitted
+          ? // packagingReportId exist and forcast is not editable this mean we are about final report
+            // if final report is submitted this will rais a server error
+            packagingReportFinalDataSubmit({
+              variables: {
+                packagingReportId,
+                packagingRecords: finalDate.packagingRecords,
+              },
+            })
+              .then(() => {
+                router.push(ROUTES.finalReportSubmitSuccess(packagingReportId))
               })
               // handle error via error object returned by useMutation
               .catch(() => null)
@@ -110,7 +149,11 @@ export const ForecastProvider: React.FC<{
       data,
       packagingReportSubmit,
       packagingReportUpdate,
+      packagingReportFinalDataSubmit,
+      isFinalReportSubmitted,
+      isForecastEditable,
       packagingReportId,
+      readonly,
     ]
   )
 
@@ -119,7 +162,6 @@ export const ForecastProvider: React.FC<{
       setActiveStep((prevStep) => (prevStep - 1) as StepNumber)
     }
   }, [activeStep])
-
   const contextValue = useMemo(
     () => ({
       onSubmit,
@@ -129,7 +171,10 @@ export const ForecastProvider: React.FC<{
       initialData: defaultData ?? initialData,
       // the timeframe is not editable see #12
       isTimeframeReadonly: !!packagingReportId,
-      error: createError || updateError,
+      // if both are false this mean it is read only form
+      isReadonlyForm: readonly,
+      error: createError || updateError || submitFinalReportError,
+      fees,
     }),
     [
       onSubmit,
@@ -139,7 +184,10 @@ export const ForecastProvider: React.FC<{
       data,
       createError,
       updateError,
+      submitFinalReportError,
       defaultData,
+      readonly,
+      fees,
     ]
   )
 

@@ -19,6 +19,7 @@ import { ForecastData } from './types'
 
 export interface MaterialArrayField {
   control: Control<FormData>
+  readOnly: boolean
   nestIndex: number
   defaultValues: ForecastData['packagingRecords']
   packagingMaterials: Array<MaterialType>
@@ -26,6 +27,7 @@ export interface MaterialArrayField {
 
 export const MaterialArrayField = ({
   control,
+  readOnly,
   nestIndex,
   defaultValues,
   packagingMaterials,
@@ -55,6 +57,7 @@ export const MaterialArrayField = ({
                       defaultValues?.[nestIndex]?.materialRecords?.[index]
                         ?.materialId
                   )}
+                  readOnly={readOnly}
                   options={packagingMaterials}
                   onChange={(_, option) => onChange(option?.id)}
                   getOptionLabel={(option) => option?.name}
@@ -89,6 +92,7 @@ export const MaterialArrayField = ({
               formState: { errors },
             }) => (
               <TextField
+                disabled={readOnly}
                 label={'Quantity'}
                 inputRef={ref}
                 value={value}
@@ -120,6 +124,7 @@ export const MaterialArrayField = ({
       <Button
         variant={'text'}
         startIcon={<AddIcon />}
+        disabled={readOnly}
         sx={{ alignSelf: 'start' }}
         onClick={() =>
           append({

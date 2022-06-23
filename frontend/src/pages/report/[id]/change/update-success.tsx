@@ -12,6 +12,7 @@ import { ROUTES } from '@/routes'
 
 const ReportChangeSuccessPage: NextPage = () => {
   const { t } = useTranslation()
+
   return (
     <>
       <DefaultPageHead

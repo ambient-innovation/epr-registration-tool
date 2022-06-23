@@ -13,8 +13,15 @@ import { useForecastContext } from './ForecastContext'
 export type Step3 = Record<string, never>
 
 export const Step3 = (_: Step3) => {
-  const { data, goToPrevStep, onSubmit, error, activeStep } =
-    useForecastContext()
+  const {
+    data,
+    goToPrevStep,
+    onSubmit,
+    error,
+    activeStep,
+    isReadonlyForm,
+    fees: finalFees,
+  } = useForecastContext()
   const { startDate, timeframe } = data
   const year = startDate.getFullYear()
   const startMonth = startDate.getMonth() + 1
@@ -26,13 +33,13 @@ export const Step3 = (_: Step3) => {
       timeframe,
       packagingRecords: data.packagingRecords,
     },
-    skip: activeStep !== 2,
+    skip: activeStep !== 2 || !!finalFees,
   })
   const { t } = useTranslation()
   const { handleSubmit, formState } = useForm({
     mode: 'onTouched',
   })
-  const fees = feesData?.fees || undefined
+  const fees = feesData?.fees || finalFees
 
   return (
     <FormStep
@@ -43,6 +50,7 @@ export const Step3 = (_: Step3) => {
       }
       isFinalStep
       apolloError={error}
+      readOnly={isReadonlyForm}
     >
       <FormStepContainer
         title={t('reportForm.step3Title')}

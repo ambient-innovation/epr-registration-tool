@@ -10,6 +10,9 @@ export const PACKAGING_REPORTS_QUERY = gql`
       timezoneInfo
       timeframe
       packagingGroupsCount
+      isForecastEditable
+      isFinalReportSubmitted
+      fees
     }
   }
 `

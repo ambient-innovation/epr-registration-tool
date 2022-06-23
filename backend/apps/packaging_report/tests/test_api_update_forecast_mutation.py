@@ -45,7 +45,7 @@ class PackagingReportUpdateTestCase(BaseApiTestCase):
         # packaging group 1
         cls.material_record_1 = baker.make(
             'packaging_report.MaterialRecord',
-            related_submission=cls.forecast_submission,
+            related_forecast_submission=cls.forecast_submission,
             related_packaging_material=cls.material,
             related_packaging_group=cls.packaging_group,
             quantity=1,
@@ -117,5 +117,5 @@ class PackagingReportUpdateTestCase(BaseApiTestCase):
             material_record.related_packaging_group.id,
         )
         self.assertEqual(self.material.id, material_record.related_packaging_material.id)
-        self.assertEqual(ForecastSubmission.objects.first().id, material_record.related_submission.id)
+        self.assertEqual(ForecastSubmission.objects.first().id, material_record.related_forecast_submission.id)
         self.assertEqual(20, material_record.quantity)

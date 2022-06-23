@@ -45,6 +45,8 @@
   },
   "reportForm": {
     "createSubPageTitle": "Create new Report",
+    "updateSubPageTitle": "Update Report Forecast",
+    "submitFinalReportSubPageTitle": "Update Report Forecast",
     "successSubPageTitle": "Report successful",
     "formLabel": "Submit packaging report",
     "timeframe": "Timeframe",
@@ -67,13 +69,14 @@
     "addMaterial": "Add another material",
     "createReportSuccessTitle": "Thank you for reporting",
     "createReportSuccessDescription": "A Forecast Report is created successfully and you can find it in your dashboard.",
-    "updateReportSuccessDescription": "Forecast Report is updated successfully.",
+    "updateReportSuccessDescription": "Data Report is updated successfully.",
     "createAnotherReport": "Submit another Report",
     "proceedToHomepage": "Proceed to homepage",
     "proceedToDashboard": "Proceed to Dashboard",
     "estimatedFeesResult": "Price {{fees}} JOD",
     "reportSuccessful": "Report Successful",
     "reportUpdatedSuccessful": "Report Update Successful",
+    "finalReportCreateSuccessful": "Final Report Successful",
     "calculating": "calculating, please wait ..."
   },
   "validations": {
@@ -114,7 +117,9 @@
     "noCompanyAssigned": "You have not been assigned to any company",
     "reportDoesNotExist": "Report does not exist",
     "reportIsNotEditable": "Report is not editable",
-    "profileAlreadyCompleted": "Company Profile already completed"
+    "profileAlreadyCompleted": "Company Profile already completed",
+    "finalReportAlreadySubmitted": "Final Report already submitted",
+    "cannotSubmitFinalReportYet": "Final Report cannot be submitted yet"
   },
   "internalErrors": {
     "unknownError": "Something unexpected happened. Please reload and try again."
@@ -199,6 +204,7 @@
         "startsAt": "Start of forecast:",
         "timeframe": "Timeframe of forecast:",
         "estimatedF": "Estimated fees:",
+        "calculatedFees": "Calculated Fees:",
         "entries": "Packaging Entries:",
         "month": "month",
         "editableUntil": "Can be edited until {{endDate}}",

@@ -6,7 +6,7 @@ import pytz
 from ai_django_core.admin.model_admins.mixins import CommonInfoAdminMixin
 from dateutil.relativedelta import relativedelta
 
-from packaging_report.models import ForecastSubmission, MaterialRecord, PackagingReport
+from packaging_report.models import FinalSubmission, ForecastSubmission, MaterialRecord, PackagingReport
 
 
 class MaterialRecordInline(admin.StackedInline):
@@ -24,12 +24,12 @@ class MaterialRecordInline(admin.StackedInline):
 class ForecastSubmissionAdmin(admin.ModelAdmin):
     change_form_template = 'packaging_report/forecast_change_view.html'
 
-    list_display = ('id', 'created_at')
+    list_display = ('__str__', 'created_at')
     fields = (
         'related_report',
-        'estimated_fees',
+        'estimated_fees_display',
     )
-    readonly_fields = ('estimated_fees',)
+    readonly_fields = ('estimated_fees_display',)
     inlines = (MaterialRecordInline,)
 
     def get_queryset(self, request):
@@ -37,6 +37,23 @@ class ForecastSubmissionAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         return obj.related_report.is_forecast_editable() if obj else True
+
+
+@admin.register(FinalSubmission)
+class FinalSubmissionAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'fees', 'created_at')
+    fields = (
+        'related_report',
+        'fees',
+    )
+    readonly_fields = ('fees',)
+    inlines = (MaterialRecordInline,)
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('related_report')
+
+    def has_change_permission(self, request, obj=None):
+        return False
 
 
 class PackagingReportForm(forms.ModelForm):
@@ -67,7 +84,7 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
     change_form_template = 'packaging_report/change_view.html'
     form = PackagingReportForm
     list_display = (
-        'id',
+        '__str__',
         'timeframe',
         'year',
         'start_month',
@@ -85,11 +102,15 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
         'related_forecast',
         'end_date',
         'is_forecast_editable',
+        'related_final_submission',
     )
     autocomplete_fields = ('related_company',)
     list_filter = ('timeframe',)
     readonly_fields = (
         'related_forecast',
+        'end_date',
+        'is_forecast_editable',
+        'related_final_submission',
         'lastmodified_by',
         'created_by',
         'created_at',
@@ -107,10 +128,12 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
         """
         Report end datetime in server timezone
         """
-        start_date = timezone.datetime(
-            year=obj.year,
-            month=obj.start_month,
-            day=1,
-        )
-        end_date = start_date + relativedelta(months=obj.timeframe)
-        return end_date
+        if obj.pk:
+            start_date = timezone.datetime(
+                year=obj.year,
+                month=obj.start_month,
+                day=1,
+            )
+            end_date = start_date + relativedelta(months=obj.timeframe)
+            return end_date
+        return None

@@ -29,6 +29,12 @@ enum DistributorType {
   LOCAL_PRODUCER
 }
 
+type FinalSubmissionType {
+  id: ID!
+  fees: Float!
+  materialRecords: [MaterialRecordType!]!
+}
+
 type ForecastSubmissionType {
   id: ID!
   materialRecords: [MaterialRecordType!]!
@@ -55,6 +61,7 @@ type Mutation {
   registerCompany(companyName: String!, companyDistributorType: DistributorType!, userEmail: String!, userTitle: String!, userFullName: String!, userPosition: String!, userPhoneOrMobile: String!, password: String!): String!
   createCompanyProfile(profileData: CompanyProfileInputType!, identificationNumber: String!): String!
   packagingReportForecastSubmit(timeframe: TimeframeType!, year: Int!, startMonth: Int!, tzInfo: String!, packagingRecords: [PackagingGroupInput!]!): String!
+  packagingReportFinalDataSubmit(packagingReportId: ID!, packagingRecords: [PackagingGroupInput!]!): String!
   packagingReportForecastUpdate(packagingReportId: ID!, packagingRecords: [PackagingGroupInput!]!): String!
 }
 
@@ -75,7 +82,11 @@ type PackagingReportType {
   startMonth: Int!
   timezoneInfo: String!
   createdAt: DateTime!
-  forecast: ForecastSubmissionType!
+  fees: Decimal
+  finalReport: FinalSubmissionType
+  forecast: ForecastSubmissionType
+  isFinalReportSubmitted: Boolean!
+  isForecastEditable: Boolean!
   packagingGroupsCount: Int!
 }
 
@@ -87,6 +98,7 @@ type Query {
   packagingReportFeesEstimation(timeframe: TimeframeType!, year: Int!, startMonth: Int!, packagingRecords: [PackagingGroupInput!]!): Decimal!
   packagingReports: [PackagingReportType!]!
   packagingReportForecastDetails(packagingReportId: ID!): PackagingReportType
+  packagingReportFinalDetails(packagingReportId: ID!): PackagingReportType
   helloWorld: String!
 }
 
