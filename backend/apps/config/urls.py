@@ -20,6 +20,8 @@ auth_patterns = (
         path('login/', views.RememberMeLoginView.as_view(), name='login'),
         path('logout/', ai_kit_views.LogoutView.as_view(), name='logout'),
         path('activate_email/', views.ActivateUser.as_view(), name='activate'),
+        path('reset_password/', ai_kit_views.ResetPassword.as_view(), name='reset_password'),
+        path('send_pw_reset_email/', ai_kit_views.InitiatePasswordResetView.as_view(), name='reset_password'),
     ],
     'ai_kit_auth',
 )

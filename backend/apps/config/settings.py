@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/n
 """
+import os
 import sys
 from pathlib import Path
 
@@ -305,6 +306,7 @@ LANGUAGES = (
 AI_KIT_AUTH = {
     "FRONTEND": {
         "URL": FRONTEND_URL,
+        "RESET_PW_ROUTE": "/auth/forget-password/reset",
     },
     "USE_AI_KIT_AUTH_ADMIN": False,
     "USERNAME_REQUIRED": False,
@@ -314,11 +316,12 @@ AI_KIT_AUTH = {
         "ME": False,
         "VALIDATE_PASSWORD": False,
         "ACTIVATE_EMAIL": True,
-        "SEND_PW_RESET_MAIL": False,
-        "RESET_PASSWORD": False,
+        "SEND_PW_RESET_MAIL": True,
+        "RESET_PASSWORD": True,
         "REGISTER": False,
     },
     "USER_IDENTITY_FIELDS": ('email',),
+    'SEND_RESET_PW_MAIL': 'account.email.send_reset_password_mail',
 }
 
 # --- AWS --- #
@@ -339,3 +342,19 @@ else:
     EMAIL_BACKEND = env.str('DJANGO_EMAIL_BACKEND')
     EMAIL_HOST = env.str('DJANGO_EMAIL_HOST')
     EMAIL_PORT = env.str('DJANGO_EMAIL_PORT')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+    },
+}

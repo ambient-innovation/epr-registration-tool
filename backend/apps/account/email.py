@@ -25,3 +25,23 @@ def send_user_activation_notification(user: UserModel):
         body_html=body_html,
         to=[user.email],
     )
+
+
+def send_reset_password_mail(user, url):
+    """
+    Sends email to reset a password
+    """
+    context = {
+        'user': user,
+        'url': url,
+        'frontend_url': settings.FRONTEND_URL,
+    }
+
+    subject, body_plain, body_html = render_translated_email('reset_password', context)
+
+    send_html_email(
+        subject=subject,
+        body_plain=body_plain,
+        body_html=body_html,
+        to=[user.email],
+    )

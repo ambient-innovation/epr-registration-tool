@@ -1,0 +1,11 @@
+Dear {{ user.display_name }}
+
+EPR Registration Tool | Please reset your password
+
+A request to reset your EPR password has been made. If you did not make this request, simply ignore this email. 
+If you did make this request, please reset your password.
+
+{{ url }}
+
+This notification was sent to the email address associated with your EPR account.
+Please do not reply to this automatically generated email.

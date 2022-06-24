@@ -33,7 +33,7 @@ export const ErrorAlert = ({
       severity={'error'}
       tabIndex={-1}
       ref={ref}
-      sx={[defaultFocusSx, { borderRadius: 3 }]}
+      sx={defaultFocusSx}
       {...props}
     >
       <AlertTitle>

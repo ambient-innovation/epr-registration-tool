@@ -6,6 +6,8 @@ export const ROUTES = {
   dashboard: '/dashboard',
   dashboardComplete: 'dashboard/complete',
   accountActivation: '/auth/activation',
+  forgetPassword: '/auth/forget-password',
+  resetPassword: '/auth/forget-password/reset',
   forecast: '/report/forecast/add',
   forecastSuccess: '/report/forecast/add/success',
   forecastChange: (id: string): string => `/report/forecast/${id}/change`,

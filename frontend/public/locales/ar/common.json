@@ -122,9 +122,12 @@
     "title": "تسجيل الدخول إلى أداة التسجيل EPR",
     "description": "Lorem impsum dolor sit...",
     "rememberMe": "تذكرني",
+    "resetPassword": "إعادة تعيين كلمة المرور",
     "signIn": "تسجيل الدخول",
-    "registerLink": "No Account Yet? Register Now.",
-    "loginFailed": "Login failed"
+    "registerLink": "لا يوجد حساب بعد؟ سجل الان.",
+    "loginFailed": "فشل عملية الدخول",
+    "resetPasswordRequest": "إذا تم استخدام عنوان البريد الإلكتروني هذا لإنشاء حساب ، فسيتم إرسال تعليمات إعادة تعيين كلمة المرور إليك. من فضلك تفقد بريدك الالكتروني.",
+    "resetPasswordComplete": "تم تحديث كلمة المرور بنجاح."
   },
   "activation": {
     "activation": "Activation",
@@ -152,6 +155,20 @@
   "pageHeader": {
     "languageSwitch": "محوّل اللغة",
     "userMenu": "قائمة المستخدم"
+  },
+  "resetPassword": {
+    "title": "إعادة تعيين كلمة المرور",
+    "forgetPasswordTitle": "هل نسيت كلمة السر؟",
+    "forgetPasswordDescription1": "أدخل عنوان البريد الإلكتروني الذي استخدمته عند انضمامك وسنرسل لك تعليمات لإعادة تعيين كلمة المرور الخاصة بك.",
+    "forgetPasswordDescription2": "لأسباب أمنية ، لا نقوم بتخزين كلمة المرور الخاصة بك. لذا كن مطمئنًا إلى أننا لن نرسل كلمة مرورك أبدًا عبر البريد الإلكتروني.",
+    "sendResetInstructions": "إرسال تعليمات إعادة التعيين",
+    "newPasswordTitle": "أدخل كلمة مرور جديدة",
+    "newPasswordDescription": "للتوافق مع سياسة كلمة المرور القوية الخاصة بنا ، يتعين عليك استخدام كلمة مرور قوية بدرجة كافية. يجب أن تتكون كلمة المرور من 8 أحرف على الأقل وأن تحتوي على أحرف كبيرة وصغيرة ورقم وحرف خاص.",
+    "saveNewPassword": "احفظ كلمة المرور الجديدة",
+    "resetPasswordFailed": "فشل إعادة تعيين كلمة المرور",
+    "serverErrors": {
+      "reset_password_link_invalid": "رابط إعادة تعيين كلمة المرور الذي حاولت استخدامه غير صالح. قد يكون هذا بسبب خطأ إملائي ، أو لأنه تم استخدامه بالفعل."
+    }
   },
   "dashboard": {
     "main": "لوحة القيادة",
