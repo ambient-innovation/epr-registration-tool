@@ -47,10 +47,15 @@ export const UserProvider = ({
     })
   }
 
-  const logout = () => {
+  const logout = (alertKey?: string) => {
     setLoggedIn(false)
     return logoutAPI()
-      .then(() => router.push(ROUTES.login))
+      .then(() =>
+        router.push({
+          pathname: ROUTES.login,
+          query: { alert: alertKey },
+        })
+      )
       .catch((error) => handleError(error))
       .finally(() => {
         return client.resetStore()

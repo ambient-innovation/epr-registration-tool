@@ -95,7 +95,8 @@
     "notUniqueGroups": "مجموعة الحزم هذه مكررة",
     "notUniqueGroupsMaterials": "يجب أن تكون المواد في مجموعات التعبئة والتغليف فريدة من نوعها",
     "noWhitespaceAllowed": "لا يسمح بالمسافات",
-    "reportExceedsOneYear": "تقرير يتجاوز سنة واحدة"
+    "reportExceedsOneYear": "تقرير يتجاوز سنة واحدة",
+    "identicalPasswordNotAllowed": "The new password can not be identical with the old password"
   },
   "serverErrors": {
     "unknownError": "فشل الخادم في معالجة طلبك. يرجى إعادة التحميل وحاول مرة أخرى.",
@@ -115,7 +116,8 @@
     "noCompanyAssigned": "لم يتم تعيينك لأية شركة",
     "reportDoesNotExist": "تقرير غير موجود",
     "reportIsNotEditable": "التقرير غير قابل للتحرير",
-    "profileAlreadyCompleted": "ملف الشركة مكتمل بالفعل"
+    "profileAlreadyCompleted": "ملف الشركة مكتمل بالفعل",
+    "identicalPasswordNotAllowed": "The new password can not be identical with the old password."
   },
   "internalErrors": {
     "unknownError": "Something unexpected happened. Please reload and try again."
@@ -129,8 +131,21 @@
     "registerLink": "لا يوجد حساب بعد؟ سجل الان.",
     "loginFailed": "فشل عملية الدخول",
     "resetPasswordRequest": "إذا تم استخدام عنوان البريد الإلكتروني هذا لإنشاء حساب ، فسيتم إرسال تعليمات إعادة تعيين كلمة المرور إليك. من فضلك تفقد بريدك الالكتروني.",
-    "resetPasswordComplete": "تم تحديث كلمة المرور بنجاح."
+    "resetPasswordComplete": "تم تحديث كلمة المرور بنجاح.",
+    "changePasswordComplete": "Password updated. Please sign in with your new password."
   },
+  "accountSettings": {
+    "main": "Account & Settings",
+    "changePasswordForm": {
+    "title": "Password",
+    "description1": "Lorem impsum dolor sit...",
+    "description2": "Lorem impsum dolor sit...",
+    "newPasswordLabel": "New password",
+    "oldPasswordLabel": "Old password",
+    "oldPasswordHelpText": "Please enter your old password for confirmation",
+    "submitChangePassword": "Change Password",
+      "passwordResetFailed": "Password Reset failed"
+  }},
   "activation": {
     "activation": "Activation",
     "emailConfirmation": "Email confirmation",

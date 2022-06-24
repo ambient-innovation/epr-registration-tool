@@ -19,4 +19,6 @@ export const ROUTES = {
   finalReportSubmitSuccess: (id: string): string =>
     `/report/${id}/change/final-success`,
   dataReportView: (id: string): string => `/report/${id}`,
+  accountSettingsChangePassword: '/account-settings/change-password',
+  accountSettingsChangeLanguage: '/account-settings/change-language',
 }

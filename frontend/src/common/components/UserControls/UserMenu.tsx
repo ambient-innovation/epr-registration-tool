@@ -1,10 +1,13 @@
 import { Logout } from '@mui/icons-material'
 import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import SettingsIcon from '@mui/icons-material/Settings'
 import {
   Avatar,
   Box,
+  Divider,
   IconButton,
+  ListItemAvatar,
   ListItemIcon,
   Menu,
   MenuItem,
@@ -75,15 +78,11 @@ export const UserMenu = () => {
       >
         <NextLink href={ROUTES.dashboard}>
           <MenuItem>
-            <ListItemIcon>
-              <DashboardCustomizeIcon
-                fontSize={'small'}
-                sx={{
-                  marginRight: '2rem',
-                  color: 'primary.main',
-                }}
-              />
-            </ListItemIcon>
+            <ListItemAvatar>
+              <Avatar sx={{ bgcolor: 'primary.main' }}>
+                <DashboardCustomizeIcon />
+              </Avatar>
+            </ListItemAvatar>
             <Typography
               variant={'body1'}
               component={'span'}
@@ -94,6 +93,24 @@ export const UserMenu = () => {
             </Typography>
           </MenuItem>
         </NextLink>
+        <NextLink href={ROUTES.accountSettingsChangePassword}>
+          <MenuItem>
+            <ListItemAvatar>
+              <Avatar sx={{ bgcolor: 'primary.main' }}>
+                <SettingsIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <Typography
+              variant={'body1'}
+              component={'span'}
+              fontWeight={fontWeights.regular}
+              color={'primary.main'}
+            >
+              {t('accountSettings.main')}
+            </Typography>
+          </MenuItem>
+        </NextLink>
+        <Divider component={'li'} />
         <MenuItem onClick={() => logout()}>
           <ListItemIcon>
             <Logout
