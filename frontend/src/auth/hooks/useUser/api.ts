@@ -75,3 +75,23 @@ export const activateEmailAddressAPI = (
     { ident, token },
     axiosConfig
   )
+
+export const sendPWResetEmailAPI = (email: string): Promise<unknown> => {
+  // Issue request is only successful with key=ident, with key=email an 500 error is returned.
+  return camelCaseError(
+    axios.post(
+      makeUrl(authApiUrl, 'send_pw_reset_email/'),
+      { ident: email },
+      axiosConfig
+    )
+  ).then(({ data }) => data)
+}
+
+export const resetPasswordAPI = (
+  ident: string,
+  token: string,
+  password: string
+): Promise<unknown> =>
+  camelCaseError(
+    axios.post('reset_password/', { ident, token, password }, axiosConfig)
+  ).then(({ data }) => data)

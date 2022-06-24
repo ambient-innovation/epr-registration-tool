@@ -110,4 +110,11 @@ export const components: ThemeOptions['components'] = {
       },
     },
   },
+  MuiAlert: {
+    styleOverrides: {
+      root: {
+        borderRadius: borderRadius[3],
+      },
+    },
+  },
 }

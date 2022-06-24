@@ -114,9 +114,12 @@
     "title": "Login to the EPR Registration Tool",
     "description": "Lorem impsum dolor sit...",
     "rememberMe": "Remember Me",
+    "resetPassword": "Reset password",
     "signIn": "Sign in",
     "registerLink": "No Account Yet? Register Now.",
-    "loginFailed": "Login failed"
+    "loginFailed": "Login failed",
+    "resetPasswordRequest": "If this email address was used to create an account, instructions to reset your password will be sent to you. Please check your email.",
+    "resetPasswordComplete": "Password successfully updated."
   },
   "activation": {
     "activation": "Activation",
@@ -144,6 +147,20 @@
   "pageHeader": {
     "languageSwitch": "Language switcher",
     "userMenu": "User menu"
+  },
+  "resetPassword": {
+    "title": "Reset password",
+    "forgetPasswordTitle": "Forgot Password?",
+    "forgetPasswordDescription1": "Enter the email address you used when you joined and we'll send you instructions to reset your password.",
+    "forgetPasswordDescription2": "For security reasons, we do NOT store your password. So rest assured that we will never send your password via email.",
+    "sendResetInstructions": "Send Reset Instructions",
+    "newPasswordTitle": "Enter new password",
+    "newPasswordDescription": "To conform with our Strong Password policy, you are required to use a sufficiently strong password. Password must at least 8 characters long and contain upper and lower case letters, a number and a special character.",
+    "saveNewPassword": "Save new password",
+    "resetPasswordFailed": "Reset password failed",
+    "serverErrors": {
+      "reset_password_link_invalid": "The password reset link you tried to use is invalid. This may be due to a typo, or because it has been used already."
+    }
   },
   "dashboard": {
     "main": "Dashboard",

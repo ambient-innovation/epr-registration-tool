@@ -7,7 +7,13 @@ import { ROUTES } from '@/routes'
 import { handleError } from '@/utils/error.utils'
 
 import { AuthContext, UserContext } from './UserContext'
-import { loginAPI, logoutAPI, activateEmailAddressAPI } from './api'
+import {
+  loginAPI,
+  logoutAPI,
+  activateEmailAddressAPI,
+  sendPWResetEmailAPI,
+  resetPasswordAPI,
+} from './api'
 
 export interface UserProvider {
   children: React.ReactNode
@@ -66,6 +72,8 @@ export const UserProvider = ({
           logout,
           setLoggedIn: _setLoggedIn,
           activate: activateEmailAddressAPI,
+          requestPasswordReset: sendPWResetEmailAPI,
+          resetPassword: resetPasswordAPI,
         }}
       >
         {children}

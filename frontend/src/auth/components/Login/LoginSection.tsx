@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import {
+  Alert,
   Box,
   Button,
   Checkbox,
@@ -79,6 +80,20 @@ export const LoginSection = (): React.ReactElement => {
 
   return (
     <FormLayout>
+      {(router.query.alert === 'resetPasswordRequest' ||
+        router.query.alert === 'resetPasswordComplete') && (
+        <Box mb={11}>
+          <Alert
+            sx={{ alignItems: 'center' }}
+            variant={'filled'}
+            severity={'success'}
+          >
+            <Typography variant={'body2'}>
+              {t(`loginForm.${router.query.alert}`)}
+            </Typography>
+          </Alert>
+        </Box>
+      )}
       <Typography
         component={'h1'}
         variant={'h4'}
@@ -116,11 +131,20 @@ export const LoginSection = (): React.ReactElement => {
                   fullWidth
                   {...register('password')}
                 />
-                <FormControlLabel
-                  control={<Checkbox />}
-                  label={t('loginForm.rememberMe')}
-                  {...register('rememberMe')}
-                />
+                <Stack
+                  direction={'row'}
+                  alignItems={'center'}
+                  justifyContent={'space-between'}
+                >
+                  <FormControlLabel
+                    control={<Checkbox />}
+                    label={t('loginForm.rememberMe')}
+                    {...register('rememberMe')}
+                  />
+                  <NextLink href={ROUTES.forgetPassword} passHref>
+                    <Link>{t('loginForm.resetPassword')}</Link>
+                  </NextLink>
+                </Stack>
               </Stack>
             </Box>
           </Box>
