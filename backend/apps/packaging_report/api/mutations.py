@@ -133,6 +133,12 @@ def packaging_report_final_data_submit(
     except (ValidationError, DatabaseError) as e:
         raise GraphQLError('validationError', extensions={'message_dict': getattr(e, 'message_dict', {})})
 
+    def _generate_invoice_file(report_pk, user_pk):
+        file = report.generate_invoice_file(user_pk)
+        report.invoice_file = file
+        report.save()
+
+    _generate_invoice_file(report.pk, current_user.pk)
     return 'CREATED'
 
 

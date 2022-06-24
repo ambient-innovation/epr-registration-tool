@@ -1,0 +1,147 @@
+
+body {
+    font-size: 10px;
+    font-family: Arial;
+    color: #757575;
+    font-weight: 400;
+    line-height: 133%;
+}
+
+@page {
+    size: A4;
+    margin: 1cm 1cm;
+    @bottom-right {
+        border-top: 1px solid #F1F3F5;
+        width: 100%;
+        font-size: 10px;
+        content: "Page " counter(page) " of " counter(pages);
+    }
+}
+
+header {
+    padding: 10px 0;
+    margin-bottom: 30px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+
+.row span {
+    color: #757575;
+    text-align: left;
+    width: 100px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-bottom: 20px;
+    color: #687076
+}
+
+table thead {
+    background-color: #FAFAFA;
+    border-radius: 4px;
+    border: 1px solid #EEEEEE;
+
+}
+
+table th {
+    text-align: left;
+    padding: 16px 0;
+    color: #757575
+}
+
+table td {
+    padding: 16px 0;
+    text-align: left;
+    border-bottom: 1px solid #F1F3F5;
+    white-space: nowrap;
+    font-weight: normal;
+}
+
+h1 {
+    font-weight: 700;
+    font-size: 22px;
+    color: #121212;
+    margin: 0;
+}
+
+h2 {
+    font-weight: 400;
+    font-size: 18px;
+    color: #16284C;
+    margin: 0;
+}
+
+.invoice-no {
+    margin: 8px 0;
+    color: #121212;
+}
+
+.gray {
+    color: #757575
+}
+
+.black {
+    color: #121212;
+}
+
+.timeframe span {
+    color: #121212;
+}
+
+.total {
+    color: #121212;
+    padding-right: 8px;
+    text-align: right;
+}
+
+.counter {
+    color: #121212;
+    padding-left: 8px;
+}
+
+.total-due {
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 700;
+    background-color: #EEEEEE;
+    color: #121212;
+}
+
+.tax {
+    padding: 8px;
+    border-radius: 4px;
+    color: #121212;
+}
+
+.invoice-total {
+    width: 50%;
+    float: right;
+    page-break-inside: avoid;
+}
+
+.payment-details {
+    width: 100%;
+    margin-top: 8px;
+    color: #121212;
+    page-break-inside: avoid;
+}
+
+footer {
+    width: 100%;
+    margin-top: 16px;
+    page-break-inside: avoid;
+    color: #121212;
+}

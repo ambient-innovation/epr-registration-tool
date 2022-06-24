@@ -34,7 +34,7 @@ def query_debugger(func):
 
         print(f"-----> Function : {func.__name__}")
         print(f"Number of Queries : {end_queries - start_queries}")
-        print(f"Finished in : {(end - start):.2f}s")
+        print(f"Finished in : {(end - start):.5f}s")
         return result
 
     return inner_func

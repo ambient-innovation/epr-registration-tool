@@ -125,9 +125,7 @@ export const ReportCard = ({
             </Typography>
             {fees && (
               <Typography variant={'body2'}>
-                {`${t(
-                  'dashboard.reportListSection.reportCard.calculatedFees'
-                )} `}
+                {t('dashboard.reportListSection.reportCard.calculatedFees')}
                 <Typography component={'span'} variant={'subtitle2'}>
                   {`${fees} JOD`}
                 </Typography>

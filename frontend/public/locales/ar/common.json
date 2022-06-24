@@ -199,6 +199,7 @@
         "startsAt": "بداية التوقعات:",
         "timeframe": "الإطار الزمني للتنبؤات:",
         "estimatedF": "الرسوم المقدرة:",
+        "calculatedFees": "الرسوم:",
         "entries": "إدخالات التغليف:",
         "month": "شهر",
         "editableUntil": "يمكن التحرير حتى {{endDate}}",

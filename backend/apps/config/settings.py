@@ -19,6 +19,7 @@ import environ
 from corsheaders.defaults import default_methods
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+ROOT_DIR = environ.Path(__file__) - 2
 
 # To make apps are findable without a prefix
 sys.path.append(str(BASE_DIR / "apps"))
@@ -59,6 +60,7 @@ env = environ.Env(
     # AWS
     AWS_ACCESS_KEY_ID=(str, None),
     AWS_SECRET_ACCESS_KEY=(str, None),
+    AWS_BUCKET_NAME=(str, None),
     # Email
     DJANGO_EMAIL_BACKEND=(str, 'django.core.mail.backends.console.EmailBackend'),
     DJANGO_EMAIL_HOST=(str, None),
@@ -90,6 +92,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 ]
 
 THIRD_PARTY_APPS = [
@@ -100,6 +103,7 @@ THIRD_PARTY_APPS = [
     'ai_django_core',
     'ai_kit_auth',
     'modeltranslation',
+    'storages',
 ]
 
 LOCAL_APPS = [
@@ -135,7 +139,6 @@ MIDDLEWARE = [
 ]
 
 MEDIA_ROOT = env('DJANGO_MEDIA_ROOT')
-MEDIA_URL = '/media/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -149,7 +152,9 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
-STATICFILES_DIRS = ('static',)
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 ROOT_URLCONF = 'config.urls'
 
@@ -331,6 +336,31 @@ AI_KIT_AUTH = {
 if env('AWS_ACCESS_KEY_ID') and env('AWS_SECRET_ACCESS_KEY'):
     AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+
+AWS_PUBLIC_MEDIA_LOCATION = ''
+AWS_PRIVATE_MEDIA_LOCATION = ''
+# We store media files in S3 if available
+if env('AWS_BUCKET_NAME'):
+    AWS_STORAGE_BUCKET_NAME = env('AWS_BUCKET_NAME')
+    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+    AWS_S3_OBJECT_PARAMETERS = {
+        'CacheControl': 'max-age=86400',
+    }
+
+    AWS_S3_REGION_NAME = 'eu-central-1'
+    AWS_S3_SIGNATURE_VERSION = 's3v4'
+
+    # If set to None then all files will inherit the bucket’s ACL
+    AWS_DEFAULT_ACL = 'public-read'
+
+    AWS_LOCATION = 'media'
+    MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+    DEFAULT_FILE_STORAGE = 'aka.core.storage_backends.PublicMediaStorage'
+
+    AWS_PUBLIC_MEDIA_LOCATION = 'media/public'
+    AWS_PRIVATE_MEDIA_LOCATION = 'media/private'
+else:
+    MEDIA_URL = '/media/'
 
 # --- EMAIL settings --- #
 

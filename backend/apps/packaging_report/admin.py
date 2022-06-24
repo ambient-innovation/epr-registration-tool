@@ -47,9 +47,9 @@ class FinalSubmissionAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'fees', 'created_at')
     fields = (
         'related_report',
-        'fees',
+        'estimated_fees_display',
     )
-    readonly_fields = ('fees',)
+    readonly_fields = ('estimated_fees_display',)
     inlines = (MaterialRecordInline,)
 
     def get_queryset(self, request):
@@ -108,6 +108,7 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
         'related_forecast',
         'related_final_submission',
         'status',
+        'invoice_file',
     )
     add_fields = (
         'related_company',

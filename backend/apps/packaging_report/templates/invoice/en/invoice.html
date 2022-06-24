@@ -1,0 +1,144 @@
+{% load i18n %}
+{% load humanize %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head lang="de">
+    <meta charset="UTF-8"/>
+    <title>Invoice</title>
+    <style>
+        {% include 'invoice/en/invoice.css' %}
+    </style>
+
+</head>
+
+<body>
+<header class="clearfix">
+    <div class="row" style="margin-top:8px">
+        <div style="width: 50%">
+            <h1>Invoice</h1>
+            <div class="invoice-no">
+                No: #{{ invoice_no }}
+            </div>
+            <div class="black"><span>Registration no.</span>{{ company.identification_number }}</div>
+            <div class="black"><span>Invoice Date</span>{{ invoice_date|date:"d.m.Y" }}</div>
+            <div class="black"><span>Due Date</span>{{ invoice_due_date|date:"d.m.Y" }}</div>
+        </div>
+        <div style="width: 50%">
+            <h2>Sender Name</h2>
+            <div style="margin:8px 0 4px 0">Address line, Street Address, CityName, State, <br> Country -Pin Code
+            </div>
+            <div style="margin:4px 0">username@epr.com</div>
+            <div style="margin:4px 0">+ (602) 519-0450</div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:33px;">
+        <div class="black" style="width: 50%">
+            <div class="gray" style="font-weight: 700">Customer Details</div>
+            <div style="margin:4px 0">{{ company.name }}</div>
+            <div style="margin:4px 0">{{ contact_person.email }}</div>
+            <div style="margin:4px 0">{{ contact_person.phone_or_mobile }}</div>
+        </div>
+        <div class="black" style="width: 50%;">
+            <div class="gray" style="font-weight: 700">Billing Address</div>
+            <div></div>
+            <div style="margin:8px 0">{{ company_address }}</div>
+        </div>
+    </div>
+</header>
+<main>
+    <table>
+        <thead>
+        <tr>
+            <th style="padding-left: 8px;font-weight: 700">#</th>
+            <th style="font-weight: 700">Material Name</th>
+            <th style="font-weight: 700">Timeframe*</th>
+            <th style="font-weight: 700">Qty (in kg)</th>
+            <th style="font-weight: 700">Fee per Unit</th>
+            <th style="padding-right: 8px; text-align: right;font-weight: 700">Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for m_r in  material_records_frames %}
+            {% if m_r.frames|length == 1 %}
+                <tr>
+                    <td class="counter">{{ forloop.counter }}</td>
+                    <td>
+                        <div class="black">{{ m_r.material_name }}</div>
+                        <div>{{ m_r.packaging_name }}</div>
+                    </td>
+                    <td class="timeframe">
+                        {% for frame in m_r.frames %}
+                            <div>From <span>{{ frame.from }}</span></div>
+                            <div>To <span>{{ frame.to }}</span></div>
+                        {% endfor %}
+                    </td>
+                    <td class="black">{{ m_r.quantity|intcomma }}</td>
+                    {% for frame in m_r.frames %}
+                        <td class="black">{{ frame.fee_per_unit }}</td>
+                    {% endfor %}
+                    <td class="total">{{ m_r.total|intcomma }} {{ currancy }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td class="counter">{{ forloop.counter }}</td>
+                    <td>
+                        <div class="black">{{ m_r.material_name }}</div>
+                        <div>{{ m_r.packaging_name }}</div>
+                    </td>
+                    <td class="timeframe"></td>
+                    <td class="black">{{ m_r.quantity|intcomma }}</td>
+                    <td></td>
+                    <td class="total">{{ m_r.total|intcomma }} {{ currancy }}</td>
+                </tr>
+                {% for frame in m_r.frames %}
+                    <tr style="page-break-inside:avoid">
+                        <td style="padding-left: 8px;"></td>
+                        <td>
+                            <div></div>
+                            <div></div>
+                        </td>
+                        <td class="timeframe">
+                            <div>From <span>{{ frame.from }}</span></div>
+                            <div>To <span>{{ frame.to }}</span></div>
+                        </td>
+                        <td class="qty">{{ frame.quantity|intcomma }}</td>
+                        <td class="fee">{{ frame.fee_per_unit|intcomma }}</td>
+                        <td class="total">{{ frame.total|intcomma }} {{ currancy }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+
+        {% endfor %}
+        </tbody>
+    </table>
+    <div style="page-break-inside:avoid;">
+        <div class="invoice-total">
+            <div class="tax"><span style="font-weight: 700">Tax</span><span style="float: right;">{{ tax }}</span></div>
+            <div class="total-due">
+                <span>Total Due</span><span style="float: right;">{{ total_fees|intcomma }} {{ currancy }}</span></div>
+        </div>
+
+        <div class="payment-details">
+            <div style="font-weight: 700;">Payment details</div>
+            <div style="margin-top: 8px"><span>Account holder:</span>Sender name</div>
+            <div><span>Bank:</span>Jordan bank</div>
+            <div><span>Account number:</span>123456</div>
+            <div><span>IBAN code:</span>JO94 CBJO 0010 0000 0000 0131 0003 02</div>
+            <div><span>BIC/SWIFT code:</span>XXX223XXX</div>
+        </div>
+
+        <footer>
+            <div style="font-weight: 700;">Terms & Conditions / Notes</div>
+            <div class="gray" style="margin-top: 8px">*If there was a price adjustment for the reported materials in
+                the
+                billing period, we display it
+                separately with the corresponding date.
+            </div>
+        </footer>
+    </div>
+</main>
+</body>
+
+</html>
