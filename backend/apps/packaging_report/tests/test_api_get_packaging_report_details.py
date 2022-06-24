@@ -49,14 +49,14 @@ class PackagingReportDetailsQueriesTestCase(BaseApiTestCase):
         # packaging group 2
         cls.material_record_1 = baker.make(
             'packaging_report.MaterialRecord',
-            related_submission=cls.forecast_submission,
+            related_forecast_submission=cls.forecast_submission,
             related_packaging_material=cls.material_1,
             related_packaging_group=cls.packaging_group_1,
             quantity=1,
         )
         cls.material_record_1 = baker.make(
             'packaging_report.MaterialRecord',
-            related_submission=cls.forecast_submission,
+            related_forecast_submission=cls.forecast_submission,
             related_packaging_material=cls.material_2,
             related_packaging_group=cls.packaging_group_1,
             quantity=2,
@@ -64,7 +64,7 @@ class PackagingReportDetailsQueriesTestCase(BaseApiTestCase):
         # packaging group 1
         cls.material_record_1 = baker.make(
             'packaging_report.MaterialRecord',
-            related_submission=cls.forecast_submission,
+            related_forecast_submission=cls.forecast_submission,
             related_packaging_material=cls.material_1,
             related_packaging_group=cls.packaging_group_2,
             quantity=3,
@@ -82,7 +82,7 @@ class PackagingReportDetailsQueriesTestCase(BaseApiTestCase):
 
     def test_user_requesting_company_report_details(self):
         self.login(self.user)
-        with self.assertNumQueries(8):
+        with self.assertNumQueries(9):
             data = self.query_and_load_data(self.QUERY, variables=self.variables)
         packaging_report = data['packagingReportForecastDetails']
         self.assertIsNotNone(packaging_report)

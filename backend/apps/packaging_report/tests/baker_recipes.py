@@ -7,5 +7,5 @@ packaging_report = Recipe(
     related_company=foreign_key('company.tests.company'),
     timeframe=TimeframeType.THREE_MONTHS,
     year=2022,
-    timezone_info='asia/amman',
+    timezone_info='Asia/Amman',
 )

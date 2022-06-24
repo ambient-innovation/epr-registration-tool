@@ -29,3 +29,15 @@ export const PACKAGING_REPORT_FORECAST_UPDATE = gql`
     )
   }
 `
+
+export const PACKAGING_REPORT_FINAL_DATA_SUBMIT = gql`
+  mutation packagingReportFinalDataSubmit(
+    $packagingReportId: ID!
+    $packagingRecords: [PackagingGroupInput!]!
+  ) {
+    packagingReportFinalDataSubmit(
+      packagingReportId: $packagingReportId
+      packagingRecords: $packagingRecords
+    )
+  }
+`

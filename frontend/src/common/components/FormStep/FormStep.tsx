@@ -16,6 +16,7 @@ export interface FormStep {
   isLoading?: boolean
   apolloError?: ApolloError
   errorTitle?: string
+  readOnly?: boolean
 }
 
 export interface FormStepContainer extends BoxProps {
@@ -49,6 +50,7 @@ export const FormStep = memo(
     isLoading,
     apolloError,
     errorTitle,
+    readOnly = false,
   }: FormStep) => {
     const { t } = useTranslation()
     return (
@@ -70,9 +72,19 @@ export const FormStep = memo(
                 {t('prev')}
               </Button>
             )}
-            <Button variant={'contained'} type={'submit'} disabled={isLoading}>
-              {isLoading ? t('loading') : isFinalStep ? t('submit') : t('next')}
-            </Button>
+            {!readOnly && (
+              <Button
+                variant={'contained'}
+                type={'submit'}
+                disabled={isLoading || readOnly}
+              >
+                {isLoading
+                  ? t('loading')
+                  : isFinalStep
+                  ? t('submit')
+                  : t('next')}
+              </Button>
+            )}
           </Box>
         </form>
       </section>

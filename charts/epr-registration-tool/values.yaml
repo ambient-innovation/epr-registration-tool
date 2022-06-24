@@ -15,7 +15,7 @@ backend: # Do NOT run database migrations within your backend deployment. Use in
   replicaCount: 1 # Keeping replica number 1 for test environment is fine if you can tolorate occasional down-times during maintenance and other service disruptions for your test environment.
   image:
     repository: registry.ambient-innovation.com/giz/epr-registration-tool/backend
-    tag: develop # This value will be overwritten by deployment job in gitlab-ci.yml. You do not need to change this.
+    tag: develop # This value will be overwritten by deployment job in gitlab-ci.yml. You do not need to forecast this.
     pullPolicy: Always
   command:
     - ./scripts/run_prod.sh
@@ -51,7 +51,7 @@ backend: # Do NOT run database migrations within your backend deployment. Use in
   sentry:
     dsn: ""
     environment: ""
-  resources: # Please note that, limits and requests should be properly set for your deployment. These values have to be changed accordingly. Comments regarding request and limits below are for a reference only, needs change according to different workloads, but if you have no idea at all, they can be good advice to start with.
+  resources: # Please note that, limits and requests should be properly set for your deployment. These values have to be changed accordingly. Comments regarding request and limits below are for a reference only, needs forecast according to different workloads, but if you have no idea at all, they can be good advice to start with.
     limits:
       cpu: 300m # When there are high number of request served, CPU usage goes much more above your baseline usage. In order to accomodate that, you can set 4 or 6 times of your baseline CPU usage, for example, if your request is 50m, make your limit 300m.  If your request is 200m, go for 800m.
       memory: 800Mi # Most applications more or less have stable memory usage, for that reason limit can be set close to your memory request. As a rule of thumb, you can use 1.5x or 2x of your request as a limit in order to accomodate occasional memory peaks.
@@ -84,20 +84,20 @@ backend: # Do NOT run database migrations within your backend deployment. Use in
     periodSeconds: 15
     successThreshold: 1
     timeoutSeconds: 15
-  nodeSelector: {} # You will most likely will not need to add anything to nodeSelector, tolerations or affinity. These are often used for assigning your workload to specific instance, in most cases it is not needed for your web app.
-  tolerations: []
+  nodeSelector: { } # You will most likely will not need to add anything to nodeSelector, tolerations or affinity. These are often used for assigning your workload to specific instance, in most cases it is not needed for your web app.
+  tolerations: [ ]
   affinity:
-    nodeAffinity: {}
-    podAffinity: {}
+    nodeAffinity: { }
+    podAffinity: { }
 
 frontend:
   replicaCount: 1 # Keeping replica number 1 for test environment is fine if you can tolorate occasional down-times during maintenance and other service disruptions for your test environment.
   image:
     repository: registry.ambient-innovation.com/giz/epr-registration-tool/frontend
-    tag: develop # This value will be overwritten by deployment job in gitlab-ci.yml. You do not need to change this.
+    tag: develop # This value will be overwritten by deployment job in gitlab-ci.yml. You do not need to forecast this.
     pullPolicy: Always
     forceRestartAt: ""
-  resources: # Please note that, limits and requests should be properly set for your deployment. These values have to be changed accordingly. Comments regarding request and limits below are for a reference only, needs change according to different workloads, but if you have no idea at all, they can be good advice to start with.
+  resources: # Please note that, limits and requests should be properly set for your deployment. These values have to be changed accordingly. Comments regarding request and limits below are for a reference only, needs forecast according to different workloads, but if you have no idea at all, they can be good advice to start with.
     limits:
       cpu: 300m # When there are high number of request served, CPU usage goes much more above your baseline usage. In order to accomodate that, you can set 4 or 6 times of your baseline CPU usage, for example, if your request is 50m, make your limit 300m.  If your request is 200m, go for 800m.
       memory: 800Mi # Most applications more or less have stable memory usage, for that reason limit can be set close to your memory request. As a rule of thumb, you can use 1.5x or 2x of your request as a limit in order to accomodate occasional memory peaks.
@@ -124,11 +124,11 @@ frontend:
     periodSeconds: 5
     successThreshold: 1
     timeoutSeconds: 3
-  nodeSelector: {} # You will most likely will not need to add anything to nodeSelector, tolerations or affinity. These are often used for assigning your workload to specific instance, in most cases it is not needed for your web app.
-  tolerations: []
+  nodeSelector: { } # You will most likely will not need to add anything to nodeSelector, tolerations or affinity. These are often used for assigning your workload to specific instance, in most cases it is not needed for your web app.
+  tolerations: [ ]
   affinity:
-    nodeAffinity: {}
-    podAffinity: {}
+    nodeAffinity: { }
+    podAffinity: { }
 
 ingress:
   enabled: true
@@ -144,9 +144,9 @@ ingress:
 # Initjob will use same image as your backend image.
 initjob:
   enabled: true
-  command: ["/bin/migrations.sh"]
-  commandArgs: [""]
-  resources: # Please note that, limits and requests should be properly set for your deployment. These values have to be changed accordingly. Comments regarding request and limits below are for a reference only, needs change according to different workloads, but if you have no idea at all, they can be good advice to start with.
+  command: [ "/bin/migrations.sh" ]
+  commandArgs: [ "" ]
+  resources: # Please note that, limits and requests should be properly set for your deployment. These values have to be changed accordingly. Comments regarding request and limits below are for a reference only, needs forecast according to different workloads, but if you have no idea at all, they can be good advice to start with.
     limits:
       cpu: 300m
       memory: 800Mi
