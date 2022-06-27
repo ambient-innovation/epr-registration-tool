@@ -1,12 +1,14 @@
 from django import forms
+from django.conf.locale.es import formats as es_formats
 from django.contrib import admin
 from django.utils import timezone
 
 import pytz
 from ai_django_core.admin.model_admins.mixins import CommonInfoAdminMixin
-from dateutil.relativedelta import relativedelta
 
 from packaging_report.models import FinalSubmission, ForecastSubmission, MaterialRecord, PackagingReport
+
+es_formats.DATETIME_FORMAT = "d M Y H:i:s"
 
 
 class MaterialRecordInline(admin.StackedInline):
@@ -100,7 +102,7 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
         'created_at',
         'lastmodified_at',
         'related_forecast',
-        'end_date',
+        'end_datetime_display',
         'is_forecast_editable',
         'related_final_submission',
     )
@@ -108,7 +110,7 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
     list_filter = ('timeframe',)
     readonly_fields = (
         'related_forecast',
-        'end_date',
+        'end_datetime_display',
         'is_forecast_editable',
         'related_final_submission',
         'lastmodified_by',
@@ -122,18 +124,3 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         return obj.is_forecast_editable() if obj else True
-
-    @admin.display(description="End date")
-    def end_date(self, obj):
-        """
-        Report end datetime in server timezone
-        """
-        if obj.pk:
-            start_date = timezone.datetime(
-                year=obj.year,
-                month=obj.start_month,
-                day=1,
-            )
-            end_date = start_date + relativedelta(months=obj.timeframe)
-            return end_date
-        return None

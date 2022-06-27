@@ -82,6 +82,7 @@ type PackagingReportType {
   startMonth: Int!
   timezoneInfo: String!
   createdAt: DateTime!
+  endDatetime: DateTime!
   fees: Decimal
   finalReport: FinalSubmissionType
   forecast: ForecastSubmissionType

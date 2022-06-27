@@ -1,10 +1,9 @@
 import { Card, Chip, Typography, Box, Stack, Button } from '@mui/material'
-import { addMonths } from 'date-fns'
 import { useTranslation } from 'next-i18next'
 import NextLink from 'next/link'
 
 import { PackagingReportType } from '@/api/__types__'
-import { timeframeDisplayValue, timeframeNumberValue } from '@/common/contants'
+import { timeframeDisplayValue } from '@/common/contants'
 import { ROUTES } from '@/routes'
 
 import { cardContentSx, statusChipSx } from './ReportCard.styles'
@@ -20,6 +19,7 @@ export type ReportCard = Pick<
   | 'isForecastEditable'
   | 'isFinalReportSubmitted'
   | 'fees'
+  | 'endDatetime'
 >
 
 export const ReportCard = ({
@@ -31,6 +31,7 @@ export const ReportCard = ({
   packagingGroupsCount,
   isForecastEditable,
   isFinalReportSubmitted,
+  endDatetime,
   fees,
 }: ReportCard): React.ReactElement => {
   const { t } = useTranslation()
@@ -38,8 +39,7 @@ export const ReportCard = ({
   const formattedStartDate = startDate.toLocaleDateString()
   const formattedSubmitDate = new Date(createdAt).toLocaleDateString()
   // forecast is editable until end date
-  const endDate = addMonths(startDate, timeframeNumberValue[timeframe])
-  const formattedEndDate = endDate.toLocaleDateString()
+  const formattedEndDate = new Date(endDatetime).toLocaleDateString()
 
   const statusChip = (
     <Chip

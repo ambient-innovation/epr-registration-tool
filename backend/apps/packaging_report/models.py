@@ -1,14 +1,17 @@
+import datetime
 import decimal
 import typing
-from zoneinfo import ZoneInfoNotFoundError
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import UniqueConstraint
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from ai_django_core.models import CommonInfo
+from dateutil.relativedelta import relativedelta
 
 from common.models import Month
 from common.validators import validate_greater_than_zero
@@ -92,31 +95,28 @@ class PackagingReport(CommonInfo):
 
         super().clean()
 
+    @property
+    def end_datetime(self):
+        # the last moment in the timeframe
+        return timezone.make_aware(
+            datetime.datetime(
+                year=self.year,
+                month=self.start_month,
+                day=1,
+            ),
+            ZoneInfo(self.timezone_info),
+        ) + relativedelta(months=self.timeframe, microseconds=-1)
+
+    @admin.display(description="End date time")
+    def end_datetime_display(self):
+        return f'{self.end_datetime.strftime("%d %b %Y %H:%M:%S")} ({self.timezone_info})'
+
     @admin.display(description="Editable", boolean=True)
     def is_forecast_editable(self):
         """
-        Forecast can be edited until the last day in the timeframe
+        Forecast can be edited until the last moment in the timeframe
         """
-        from django.utils import timezone
-
-        import pytz
-        from dateutil.relativedelta import relativedelta
-
-        timezone.activate(self.timezone_info)
-        # timezone.now will return always datetime in utc
-        _now = timezone.now()
-        now_in_that_timezone = timezone.localtime(_now, pytz.timezone(self.timezone_info))
-        start_date = timezone.datetime(
-            year=self.year,
-            month=self.start_month,
-            day=1,
-        )
-        end_date = start_date + relativedelta(months=self.timeframe)
-        # Django will then use the time zone defined by settings.TIME_ZONE.
-        timezone.deactivate()
-        if end_date.astimezone(pytz.utc) < now_in_that_timezone.astimezone(pytz.utc):
-            return False
-        return True
+        return timezone.now() <= self.end_datetime
 
     def __str__(self):
         return f'Data Report No. {self.id}'
