@@ -1,4 +1,5 @@
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 from django.utils.timezone import make_aware
 
@@ -76,20 +77,34 @@ class PackagingReportUpdateTestCase(BaseApiTestCase):
         self.query_and_assert_error(self.MUTATION, variables=variables, message='reportIsNotEditable')
 
     @time_machine.travel(
+        datetime(year=2022, month=3, day=31, hour=23, minute=59, second=0, microsecond=0, tzinfo=ZoneInfo('Asia/Amman'))
+    )
+    def test_update_packaging_report_is_editable_in_last_minutes(self):
+        packaging_report: PackagingReport = baker.make_recipe(
+            'packaging_report.tests.packaging_report',
+            related_company=self.company,
+            start_month=1,
+            year=2022,
+            timezone_info='Asia/Amman',
+            timeframe=TimeframeType.THREE_MONTHS,
+        )
+        self.assertTrue(packaging_report.is_forecast_editable())
+
+    @time_machine.travel(
         datetime(
-            year=2022, month=6, day=1, hour=1, minute=0, second=0, microsecond=0, tzinfo=pytz.timezone('Asia/Amman')
+            year=2022, month=4, day=1, hour=1, minute=0, second=0, microsecond=0, tzinfo=pytz.timezone('Asia/Amman')
         )
     )
     def test_update_packaging_report_is_not_editable_timezone(self):
         packaging_report: PackagingReport = baker.make_recipe(
             'packaging_report.tests.packaging_report',
             related_company=self.company,
-            start_month=3,
+            start_month=1,
             year=2022,
             timezone_info='Asia/Amman',
             timeframe=TimeframeType.THREE_MONTHS,
         )
-        self.assertTrue(packaging_report.is_forecast_editable())
+        self.assertFalse(packaging_report.is_forecast_editable())
 
     @time_machine.travel(make_aware(datetime(year=2022, month=2, day=1)))
     def test_update_packaging_report(self):

@@ -18,6 +18,7 @@ export const mockReports: PackagingReportsQuery['packagingReports'] = [
     isFinalReportSubmitted: true,
     isForecastEditable: false,
     fees: 1500,
+    endDatetime: '2022-08-31T23:59:59.999999+00:00',
   },
   {
     createdAt: '2022-06-10T14:39:18.448143+00:00',
@@ -30,6 +31,7 @@ export const mockReports: PackagingReportsQuery['packagingReports'] = [
     isFinalReportSubmitted: false,
     isForecastEditable: true,
     fees: null,
+    endDatetime: '2022-10-31T23:59:59.999999+00:00',
   },
   {
     createdAt: '2021-06-10T14:42:45.135706+00:00',
@@ -42,6 +44,7 @@ export const mockReports: PackagingReportsQuery['packagingReports'] = [
     isFinalReportSubmitted: false,
     isForecastEditable: false,
     fees: null,
+    endDatetime: '2022-10-31T23:59:59.999999+00:00',
   },
 ]
 

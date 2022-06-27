@@ -1,3 +1,4 @@
+import datetime
 import decimal
 import typing
 
@@ -53,6 +54,10 @@ class PackagingReportType:
     start_month: auto
     timezone_info: auto
     created_at: auto
+
+    @strawberry.django.field
+    def end_datetime(self, root) -> datetime.datetime:
+        return root.end_datetime
 
     @strawberry.django.field
     def packaging_groups_count(self, root: PackagingReport) -> int:

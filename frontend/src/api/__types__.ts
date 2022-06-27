@@ -141,6 +141,7 @@ export type PackagingGroupType = {
 export type PackagingReportType = {
   __typename?: 'PackagingReportType'
   createdAt: Scalars['DateTime']
+  endDatetime: Scalars['DateTime']
   fees?: Maybe<Scalars['Decimal']>
   finalReport?: Maybe<FinalSubmissionType>
   forecast?: Maybe<ForecastSubmissionType>
@@ -266,6 +267,7 @@ export type PackagingReportsQuery = {
     packagingGroupsCount: number
     isForecastEditable: boolean
     isFinalReportSubmitted: boolean
+    endDatetime: any
     fees?: any | null
   }>
 }
@@ -570,6 +572,7 @@ export const PackagingReportsDocument = gql`
       packagingGroupsCount
       isForecastEditable
       isFinalReportSubmitted
+      endDatetime
       fees
     }
   }

@@ -12,6 +12,7 @@ export const PACKAGING_REPORTS_QUERY = gql`
       packagingGroupsCount
       isForecastEditable
       isFinalReportSubmitted
+      endDatetime
       fees
     }
   }
