@@ -43,6 +43,17 @@ class PackagingBaseDataTestCase(BaseApiTestCase):
         self.assertEqual(1, len(content['packagingMaterials']))
         self.assertEqual("MATERIAL_1", content['packagingMaterials'][0]['name'])
 
+    def test_get_materials_api_sending_accepted_language_return_correct_name(self):
+        headers = {'HTTP_ACCEPT_LANGUAGE': 'ar'}
+
+        self.packaging_material.name_ar = 'ARABIC_MATERIAL_1'
+        self.packaging_material.save()
+
+        content = self.query_and_load_data(self.PACKAGING_MATERIALS_QUERY, headers=headers)
+        self.assertIsNotNone(content['packagingMaterials'])
+        self.assertEqual(1, len(content['packagingMaterials']))
+        self.assertEqual('ARABIC_MATERIAL_1', content['packagingMaterials'][0]['name'])
+
     def test_get_packaging_groups_api(self):
         content = self.query_and_load_data(self.PACKAGING_GROUPS_QUERY)
         self.assertIsNotNone(content['packagingGroups'])

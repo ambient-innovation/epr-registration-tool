@@ -1,5 +1,6 @@
 import strawberry
 
+from account.api.mutations import AccountMutation
 from account.api.queries import UserQuery
 from company.api.mutations import RegisterCompanyMutation
 from company.api.query import Query as CompanyQuery
@@ -16,7 +17,7 @@ class Query(UserQuery, CompanyQuery, PackagingQuery, PackagingReportQuery):
 
 
 @strawberry.type
-class Mutation(RegisterCompanyMutation, PackagingReportMutation):
+class Mutation(AccountMutation, RegisterCompanyMutation, PackagingReportMutation):
     pass
 
 

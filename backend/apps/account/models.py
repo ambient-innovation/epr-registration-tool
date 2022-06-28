@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import validate_email
@@ -46,7 +47,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         help_text=_('Designates whether a user has confirmed his email address'),
     )
     date_joined = models.DateTimeField(verbose_name=_('date joined'), default=timezone.now)
-
+    language_preference = models.CharField(
+        verbose_name=_('Language Preference'),
+        max_length=2,
+        blank=True,
+        default=settings.LANGUAGES[0][0],
+        choices=settings.LANGUAGES,
+    )
     objects = UserManager.from_queryset(UserQuerySet)()
 
     EMAIL_FIELD = 'email'

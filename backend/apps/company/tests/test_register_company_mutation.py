@@ -45,9 +45,10 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
             "userPhoneOrMobile": "+49110",
             "password": "Pass123$",
         }
+        cls.headers = {'HTTP_ACCEPT_LANGUAGE': 'en'}
 
     def test_register_a_company_should_create_company_and_user(self):
-        content = self.query_and_load_data(self.MUTATION, variables=self.mutation_params)
+        content = self.query_and_load_data(self.MUTATION, variables=self.mutation_params, headers=self.headers)
         self.assertEqual(content['registerCompany'], 'CREATED')
         company = Company.objects.filter(is_active=False, name="Farwell Co").first()
         user = User.objects.filter(
@@ -61,11 +62,28 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
         self.assertEqual(['helmut@local.invalid'], mail.outbox[0].to)
         self.assertEqual('noreply@ambient.digital', mail.outbox[0].from_email)
 
+    def test_register_a_company_should_save_language_from_header_and_send_correct_email(self):
+        headers = {'HTTP_ACCEPT_LANGUAGE': 'ar'}
+
+        content = self.query_and_load_data(self.MUTATION, variables=self.mutation_params, headers=headers)
+        self.assertEqual(content['registerCompany'], 'CREATED')
+        company = Company.objects.filter(is_active=False, name="Farwell Co").first()
+        user = User.objects.filter(
+            email='helmut@local.invalid', is_active=False, related_company__id=company.id
+        ).first()
+
+        # check language was saved correctly as send in HTTP_ACCEPT_LANGUAGE header
+        self.assertEqual('ar', user.language_preference)
+
+        # check mail was send in correct language as send in user.language_preference
+        self.assertEqual('مرحبًا بك في أداة تسجيل EPR', mail.outbox[0].subject)
+
     def test_register_a_company_with_invalid_company_name(self):
         self.mutation_params['companyName'] = '  '
         self.query_and_assert_error(
             self.MUTATION,
             variables=self.mutation_params,
+            headers=self.headers,
             message='validationError',
         )
 
@@ -103,3 +121,12 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
             variables=self.mutation_params,
             message='userEmailDoesAlreadyExist',
         )
+
+    def test_register_a_company_unsupported_accept_header_language_does_not_fail(self):
+        headers = {'HTTP_ACCEPT_LANGUAGE': 'fr'}
+        response = self.query(self.MUTATION, variables=self.mutation_params, headers=headers)
+        self.assertResponseNoErrors(response)
+
+    def test_register_a_company_not_sending_language_header_does_not_fail(self):
+        response = self.query(self.MUTATION, variables=self.mutation_params)
+        self.assertResponseNoErrors(response)
