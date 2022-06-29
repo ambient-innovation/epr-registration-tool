@@ -44,16 +44,13 @@ export const ReportCard = ({
   const statusChip = (
     <Chip
       label={
-        isForecastEditable || !isFinalReportSubmitted
-          ? t('dashboard.reportListSection.reportCard.forecast')
-          : 'Payment required'
+        isFinalReportSubmitted
+          ? 'Payment required'
+          : t('dashboard.reportListSection.reportCard.forecast')
       }
       sx={{
         ...statusChipSx,
-        backgroundColor:
-          isForecastEditable || !isFinalReportSubmitted
-            ? 'info.main'
-            : 'warning.main',
+        backgroundColor: isFinalReportSubmitted ? 'warning.main' : 'info.main',
       }}
       role={'listitem'}
     />
