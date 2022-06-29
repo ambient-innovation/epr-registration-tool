@@ -31,7 +31,7 @@ const BaseData = ({ companyInformation }: BaseData): React.ReactElement => {
 
   return (
     <>
-      <Typography variant={'h5'}>{name}</Typography>
+      <Typography variant={'h2'}>{name}</Typography>
       <Grid container sx={{ mt: 6 }}>
         {Object.entries(preparedData).map(([key, value]) => (
           <Fragment key={key}>

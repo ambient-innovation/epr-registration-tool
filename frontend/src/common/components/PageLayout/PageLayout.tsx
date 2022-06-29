@@ -29,7 +29,7 @@ export const PageLayout = ({ children }: PageLayout): React.ReactElement => {
           <Link href={ROUTES.home} passHref>
             <Typography
               component={'a'}
-              variant={'h5'}
+              variant={'h2'}
               sx={{
                 color: 'background.paper',
                 textDecoration: 'none',

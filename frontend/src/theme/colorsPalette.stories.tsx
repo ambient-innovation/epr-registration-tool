@@ -17,7 +17,7 @@ export const Palette = (): React.ReactElement => {
         {Object.entries(palette).map(([name, variants]) => (
           <>
             <Grid item xs={12} sx={{ textAlign: 'center' }}>
-              <Typography variant={'h3'} component={'h1'}>
+              <Typography variant={'h1'} component={'h1'}>
                 {name}
               </Typography>
             </Grid>
@@ -38,7 +38,7 @@ export const Palette = (): React.ReactElement => {
                   }}
                 >
                   <Typography
-                    variant={'h4'}
+                    variant={'h1'}
                     component={'h2'}
                     sx={{ color: '#fff' }}
                   >

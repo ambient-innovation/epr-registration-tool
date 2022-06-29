@@ -83,7 +83,7 @@ export const DataReportSection = (_: DataReportSection): React.ReactElement => {
         <>
           <Typography
             component={'h1'}
-            variant={'h4'}
+            variant={'h1'}
             mb={{ xs: 8, sm: 10, md: 11 }}
           >
             {`Data Report No. ${packagingReportId}`}

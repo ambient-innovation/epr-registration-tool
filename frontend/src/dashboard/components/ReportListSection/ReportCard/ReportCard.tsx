@@ -83,7 +83,7 @@ export const ReportCard = ({
         <Box
           sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
         >
-          <Typography variant={'h6'}>
+          <Typography variant={'h3'}>
             {t('dashboard.reportListSection.reportCard.title', {
               reportNumber,
             })}

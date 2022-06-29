@@ -59,20 +59,20 @@ export const Step3 = (_: Step3) => {
         <Grid container justifyContent={'start'} alignItems={'center'}>
           {loading ? (
             <Grid item>
-              <Typography variant={'h5'}>
+              <Typography variant={'h2'}>
                 {t('reportForm.calculating')}
               </Typography>
             </Grid>
           ) : (
             <>
               <Grid item>
-                <Typography variant={'h5'}>
+                <Typography variant={'h2'}>
                   {t('reportForm.estimatedFeesResult', { fees }) + ' / '}
                 </Typography>
               </Grid>
               <Grid item>
                 <Typography
-                  variant={'h5'}
+                  variant={'h2'}
                   sx={{ fontWeight: fontWeights.regular }}
                 >
                   {timeframeDisplayValue(t)[data.timeframe]}

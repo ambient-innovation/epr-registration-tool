@@ -24,7 +24,7 @@ const FinalReportSuccessPage: NextPage = () => {
             {t('reportForm.finalReportCreateSuccessful')}
           </Typography>
           <Box p={8} mt={11} bgcolor={'background.light'} borderRadius={3}>
-            <Typography component={'h2'} variant={'h5'}>
+            <Typography component={'h2'} variant={'h2'}>
               {t('reportForm.createReportSuccessTitle')}
             </Typography>
             <Typography mt={8}>

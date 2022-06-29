@@ -39,7 +39,7 @@ export const CompanyProfileSection = () => {
   const { t } = useTranslation()
   return (
     <FormLayout showHeroImage={false}>
-      <Typography component={'h1'} variant={'h4'} mb={H1_DEFAULT_SPACING}>
+      <Typography component={'h1'} variant={'h1'} mb={H1_DEFAULT_SPACING}>
         {t('companyCompletionForm.completeAccount')}
       </Typography>
       <CompanyProfileProvider>

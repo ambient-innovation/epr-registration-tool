@@ -76,7 +76,7 @@ export const ResetPasswordSection = (): React.ReactElement => {
     <FormLayout>
       <Typography
         component={'h1'}
-        variant={'h4'}
+        variant={'h1'}
         mb={{ xs: 8, sm: 10, md: 11 }}
       >
         {t('resetPassword.title')}
@@ -85,7 +85,7 @@ export const ResetPasswordSection = (): React.ReactElement => {
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <Box sx={backgroundSx}>
             <header>
-              <Typography variant={'h6'}>
+              <Typography variant={'h3'}>
                 {t('resetPassword.newPasswordTitle')}
               </Typography>
               <Typography variant={'body1'} mt={{ xs: 5, sm: 6 }}>

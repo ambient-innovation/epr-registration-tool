@@ -30,7 +30,7 @@ export const DashboardHeader = ({
         justifyContent={'space-between'}
       >
         <Box>
-          <Typography variant={'h4'}>{t('dashboard.main')}</Typography>
+          <Typography variant={'h1'}>{t('dashboard.main')}</Typography>
           {user ? (
             <Typography variant={'overline'}>
               {t('dashboard.header.greeting', {

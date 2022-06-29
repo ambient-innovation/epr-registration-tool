@@ -17,32 +17,6 @@ export const typography: TypographyOptions = {
   fontWeightMedium: 500,
   fontWeightBold: 600,
   h1: {
-    fontSize: pxToRemAsString(60),
-    fontWeight: fontWeights.light,
-    lineHeight: '116.7%',
-    letterSpacing: -1.5,
-    [breakpoints.up('lg')]: {
-      fontSize: pxToRemAsString(96),
-    },
-  },
-  h2: {
-    fontSize: pxToRemAsString(48),
-    fontWeight: fontWeights.light,
-    lineHeight: '120%',
-    letterSpacing: -0.5,
-    [breakpoints.up('lg')]: {
-      fontSize: pxToRemAsString(60),
-    },
-  },
-  h3: {
-    fontSize: pxToRemAsString(36),
-    fontWeight: fontWeights.medium,
-    lineHeight: '116%',
-    [breakpoints.up('lg')]: {
-      fontSize: pxToRemAsString(48),
-    },
-  },
-  h4: {
     fontSize: pxToRemAsString(30),
     fontWeight: fontWeights.medium,
     lineHeight: '123%',
@@ -51,10 +25,29 @@ export const typography: TypographyOptions = {
       fontSize: pxToRemAsString(34),
     },
   },
-  h5: {
+  h2: {
     fontSize: pxToRemAsString(24),
     fontWeight: fontWeights.medium,
     lineHeight: '133%',
+  },
+  h3: {
+    fontSize: pxToRemAsString(20),
+    fontWeight: fontWeights.bold,
+    lineHeight: '160%',
+    letterSpacing: 0.15,
+  },
+  // ------ h4, h5, h6 ARE NOT DEFINED YET -------
+  h4: {
+    fontSize: pxToRemAsString(20),
+    fontWeight: fontWeights.bold,
+    lineHeight: '160%',
+    letterSpacing: 0.15,
+  },
+  h5: {
+    fontSize: pxToRemAsString(20),
+    fontWeight: fontWeights.bold,
+    lineHeight: '160%',
+    letterSpacing: 0.15,
   },
   h6: {
     fontSize: pxToRemAsString(20),
