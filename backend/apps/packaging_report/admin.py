@@ -101,10 +101,21 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
         'created_by',
         'created_at',
         'lastmodified_at',
-        'related_forecast',
         'end_datetime_display',
         'is_forecast_editable',
+        'related_forecast',
         'related_final_submission',
+    )
+    add_fields = (
+        'related_company',
+        'year',
+        'start_month',
+        'timezone_info',
+        'timeframe',
+        'lastmodified_by',
+        'created_by',
+        'created_at',
+        'lastmodified_at',
     )
     autocomplete_fields = ('related_company',)
     list_filter = ('timeframe',)
@@ -118,6 +129,13 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
         'created_at',
         'lastmodified_at',
     )
+
+    def get_fields(self, request, obj=None):
+        # in add form we don't need all fields
+        if not obj:
+            return self.add_fields
+        else:
+            return self.fields
 
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('related_forecast')

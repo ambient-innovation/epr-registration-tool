@@ -66,6 +66,9 @@ def packaging_report_forecast_submit(
     if now_date_key >= report_date_key:
         raise GraphQLError('startDateIsInvalid')
 
+    if not packaging_records:
+        raise GraphQLError('packagingRecordsEmpty')
+
     report = PackagingReport(
         timeframe=timeframe,
         year=year,
@@ -116,6 +119,8 @@ def packaging_report_final_data_submit(
     if getattr(report, 'related_final_submission', None):
         raise GraphQLError('finalReportAlreadySubmitted')
 
+    if not packaging_records:
+        raise GraphQLError('packagingRecordsEmpty')
     try:
         with transaction.atomic():
             final_submission = FinalSubmission(related_report=report)
@@ -153,6 +158,9 @@ def packaging_report_forecast_update(
 
     if not getattr(report, 'related_forecast', None):
         raise GraphQLError('reportIsNotEditable')
+
+    if not packaging_records:
+        raise GraphQLError('packagingRecordsEmpty')
 
     forecast_submission_id = report.related_forecast.id
 

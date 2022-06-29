@@ -12,6 +12,8 @@
           border-radius: 5px;
 
           display: flex;
+          justify-content: center;
+          align-items: center;
       }
 
       .alert .alert__icon {
@@ -35,10 +37,10 @@
 
 {% block content %}
 
-  {% if not original.is_forecast_editable %}
+  {% if original.pk and not original.is_forecast_editable %}
     <div class='alert alert--info'>
       <span class='alert__icon'></span>
-      The Report timeframe and its Forecast is not editable anymore because the deadline is reached.
+        Deadline is reached.
     </div>
 
   {% endif %}
