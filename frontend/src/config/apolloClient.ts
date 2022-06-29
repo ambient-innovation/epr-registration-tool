@@ -11,8 +11,7 @@ import { onError } from '@apollo/client/link/error'
 import cookie from 'cookie'
 import merge from 'deepmerge'
 import { isEqual } from 'lodash'
-import Router from 'next/router'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import { handleError } from '@/utils/error.utils'
 import { joinUrl } from '@/utils/url.utils'
@@ -22,6 +21,8 @@ import config from './config'
 export const GRAPHQL_URI = joinUrl(config.API_URL, 'graphql/')
 export const AUTH_URI = joinUrl(config.API_URL, 'csrf/')
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_CACHE__'
+export const LOCAL_STORAGE_KEY_LOCALE = 'locale'
+export const DEFAULT_LOCALE = 'en'
 
 type ApolloClientType = ApolloClient<NormalizedCacheObject>
 
@@ -50,15 +51,14 @@ const getCsrfToken = async (): Promise<string> => {
   return csrfToken
 }
 
-// we get here our locale value from Router,
-// see this link: https://github.com/vercel/next.js/discussions/19261#discussioncomment-2345721
 const authLink = setContext(async (_, { headers }) => {
   return {
     credentials: 'include',
     headers: {
       ...headers,
       'X-CSRFToken': await getCsrfToken(),
-      'Accept-Language': Router.locale,
+      'Accept-Language':
+        localStorage.getItem(LOCAL_STORAGE_KEY_LOCALE) || DEFAULT_LOCALE,
     },
   }
 })
@@ -160,12 +160,34 @@ export const addApolloState = <T extends { props: Record<string, unknown> }>(
  * merge the incoming server data with it's existing cache, e.g. on page transitions.
  * */
 export const useApollo = (
-  pageProps: Record<string, unknown>
+  pageProps: Record<string, unknown>,
+  locale: string
 ): ApolloClientType => {
   const initialState = pageProps[
     APOLLO_STATE_PROP_NAME
   ] as null | NormalizedCacheObject
-  return useMemo(() => {
+
+  const client = useMemo(() => {
     return initializeApollo(initialState)
   }, [initialState])
+
+  useEffect(() => {
+    // --- update local storage + reset apollo store when language changes ---
+    // get previously saved locale from local storage
+    const previousLocale = localStorage.getItem(LOCAL_STORAGE_KEY_LOCALE)
+    if (previousLocale !== locale) {
+      // only override local storage something if locale has changed
+      localStorage.setItem(LOCAL_STORAGE_KEY_LOCALE, locale)
+      if (previousLocale) {
+        // only reset store if locale has changed + locale was previously set
+        // - previousLocale == null means the app is loaded the first time
+        // - previousLocale == locale means the app is reloaded, but the stored
+        //   language is already correct
+        // in both cases no reset is needed
+        client.resetStore()
+      }
+    }
+  }, [locale, client])
+
+  return client
 }

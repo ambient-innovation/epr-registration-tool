@@ -15,8 +15,8 @@ import { theme, EmotionCacheProvider } from '@/theme'
 initSentry()
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const apolloClient = useApollo(pageProps)
   const { locale } = useRouter()
+  const apolloClient = useApollo(pageProps, locale ? locale : 'en')
 
   useEffect(() => {
     const dir = locale === 'ar' ? 'rtl' : 'ltr'
