@@ -1,6 +1,4 @@
 import datetime
-import decimal
-import typing
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from django.contrib import admin
@@ -44,13 +42,13 @@ class ReportSubmission(CommonInfo):
         verbose_name_plural = _("Report Submissions")
         abstract = True
 
-    def calculate_fees(self, material_records):
+    def calculate_fees(self, packaging_report, material_records):
         from packaging.price_utils import calculate_material_fees
 
         fees = 0
-        timeframe = self.related_report.timeframe
-        start_month = self.related_report.start_month
-        year = self.related_report.year
+        timeframe = packaging_report.timeframe
+        start_month = packaging_report.start_month
+        year = packaging_report.year
         for m in material_records:
             fees = fees + calculate_material_fees(
                 timeframe, year, start_month, m.related_packaging_material_id, m.quantity
@@ -58,8 +56,12 @@ class ReportSubmission(CommonInfo):
         return round(fees, 2)
 
     @admin.display(description="Estimated Fees")
-    def estimated_fees_display(self) -> typing.Optional[decimal.Decimal]:
-        fees = self.calculate_fees(self.material_records_queryset.all())
+    def estimated_fees_display(self) -> str:
+        try:
+            fees = self.calculate_fees(self.related_report, self.material_records_queryset.all())
+        except ValidationError:
+            # possible case: first material price not available at report year
+            return _('n.a. (missing material price)')
         return f'{fees} JOD/ {self.related_report.timeframe} month(s)'
 
 
@@ -98,25 +100,32 @@ class PackagingReport(CommonInfo):
     @property
     def end_datetime(self):
         # the last moment in the timeframe
-        return timezone.make_aware(
-            datetime.datetime(
-                year=self.year,
-                month=self.start_month,
-                day=1,
-            ),
-            ZoneInfo(self.timezone_info),
-        ) + relativedelta(months=self.timeframe, microseconds=-1)
+        return (
+            timezone.make_aware(
+                datetime.datetime(
+                    year=self.year,
+                    month=self.start_month,
+                    day=1,
+                ),
+                ZoneInfo(self.timezone_info),
+            )
+            + relativedelta(months=self.timeframe, microseconds=-1)
+            if self.year and self.start_month
+            else None
+        )
 
     @admin.display(description="End date time")
     def end_datetime_display(self):
-        return f'{self.end_datetime.strftime("%d %b %Y %H:%M:%S")} ({self.timezone_info})'
+        end_datetime = self.end_datetime
+        return f'{end_datetime.strftime("%d %b %Y %H:%M:%S")} ({self.timezone_info})' if end_datetime else '-'
 
     @admin.display(description="Editable", boolean=True)
     def is_forecast_editable(self):
         """
         Forecast can be edited until the last moment in the timeframe
         """
-        return timezone.now() <= self.end_datetime
+        end_datetime = self.end_datetime
+        return timezone.now() <= end_datetime if end_datetime else True
 
     def __str__(self):
         return f'Data Report No. {self.id}'

@@ -128,7 +128,7 @@ def packaging_report_final_data_submit(
             final_submission.save()
             material_records = clean_material_records_input_for_final_report(final_submission.id, packaging_records)
             MaterialRecord.objects.bulk_create(material_records)
-            final_submission.fees = final_submission.calculate_fees(material_records)
+            final_submission.fees = final_submission.calculate_fees(report, material_records)
             final_submission.save()
     except (ValidationError, DatabaseError) as e:
         raise GraphQLError('validationError', extensions={'message_dict': getattr(e, 'message_dict', {})})
