@@ -1,6 +1,7 @@
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.db import transaction
+from django.utils import translation
 
 import strawberry
 from graphql import GraphQLError
@@ -17,6 +18,7 @@ from company.validators import validate_string_without_whitespaces
 
 
 def register_company(
+    info: Info,
     company_name: str,
     company_distributor_type: strawberry.enum(DistributorType),
     user_email: str,
@@ -31,6 +33,9 @@ def register_company(
         distributor_type=company_distributor_type,
         is_active=False,
     )
+
+    selected_language = translation.get_language_from_request(info.context.request)
+
     user = User(
         email=user_email.strip(),
         full_name=user_full_name.strip(),
@@ -38,6 +43,7 @@ def register_company(
         position=user_position.strip(),
         phone_or_mobile=user_phone_or_mobile.strip(),
         related_company=company,
+        language_preference=selected_language,
         is_active=False,
     )
     user.set_password(password)

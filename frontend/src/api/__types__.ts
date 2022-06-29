@@ -86,11 +86,16 @@ export type MaterialType = {
 
 export type Mutation = {
   __typename?: 'Mutation'
+  changeLanguage: Scalars['String']
   createCompanyProfile: Scalars['String']
   packagingReportFinalDataSubmit: Scalars['String']
   packagingReportForecastSubmit: Scalars['String']
   packagingReportForecastUpdate: Scalars['String']
   registerCompany: Scalars['String']
+}
+
+export type MutationChangeLanguageArgs = {
+  languageCode: Scalars['String']
 }
 
 export type MutationCreateCompanyProfileArgs = {

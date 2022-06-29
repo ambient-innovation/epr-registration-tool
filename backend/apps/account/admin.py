@@ -43,6 +43,7 @@ class CustomUserAdmin(UserAdmin):
                     'full_name',
                     'position',
                     'phone_or_mobile',
+                    'language_preference',
                 )
             },
         ),

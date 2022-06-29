@@ -52,7 +52,9 @@ def send_user_registration_complete_notification(company):
             'frontend_url': settings.FRONTEND_URL,
         }
 
-        subject, body_plain, body_html = render_translated_email('registration_complete', context)
+        subject, body_plain, body_html = render_translated_email(
+            'registration_complete', user.language_preference, context
+        )
         send_html_email(
             subject=subject,
             body_plain=body_plain,

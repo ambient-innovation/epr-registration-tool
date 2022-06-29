@@ -11,6 +11,7 @@ import { onError } from '@apollo/client/link/error'
 import cookie from 'cookie'
 import merge from 'deepmerge'
 import { isEqual } from 'lodash'
+import Router from 'next/router'
 import { useMemo } from 'react'
 
 import { handleError } from '@/utils/error.utils'
@@ -49,13 +50,15 @@ const getCsrfToken = async (): Promise<string> => {
   return csrfToken
 }
 
+// we get here our locale value from Router,
+// see this link: https://github.com/vercel/next.js/discussions/19261#discussioncomment-2345721
 const authLink = setContext(async (_, { headers }) => {
   return {
     credentials: 'include',
     headers: {
       ...headers,
       'X-CSRFToken': await getCsrfToken(),
-      'Accept-Language': localStorage.getItem('i18nextLng'),
+      'Accept-Language': Router.locale,
     },
   }
 })

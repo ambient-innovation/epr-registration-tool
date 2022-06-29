@@ -18,7 +18,7 @@ def send_user_activation_notification(user: UserModel):
         'url': get_activation_url(user),
         'frontend_url': settings.FRONTEND_URL,
     }
-    subject, body_plain, body_html = render_translated_email('user_activation', context)
+    subject, body_plain, body_html = render_translated_email('user_activation', user.language_preference, context)
     send_html_email(
         subject=subject,
         body_plain=body_plain,
@@ -37,7 +37,7 @@ def send_reset_password_mail(user, url):
         'frontend_url': settings.FRONTEND_URL,
     }
 
-    subject, body_plain, body_html = render_translated_email('reset_password', context)
+    subject, body_plain, body_html = render_translated_email('reset_password', user.language_preference, context)
 
     send_html_email(
         subject=subject,
