@@ -107,6 +107,14 @@ class PackagingReportUpdateTestCase(BaseApiTestCase):
         self.assertFalse(packaging_report.is_forecast_editable())
 
     @time_machine.travel(make_aware(datetime(year=2022, month=2, day=1)))
+    def test_update_packaging_report_without_records(self):
+        variables = {
+            "packagingReportId": self.packaging_report.id,
+            "packagingRecords": [],
+        }
+        self.query_and_assert_error(self.MUTATION, variables=variables, message="packagingRecordsEmpty")
+
+    @time_machine.travel(make_aware(datetime(year=2022, month=2, day=1)))
     def test_update_packaging_report(self):
         variables = {
             "packagingReportId": self.packaging_report.id,

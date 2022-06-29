@@ -128,6 +128,14 @@ class PackagingReportUpdateTestCase(BaseApiTestCase):
         self.query_and_assert_error(self.MUTATION, variables=variables, message="reportDoesNotExist")
 
     @time_machine.travel(make_aware(datetime(year=2022, month=5, day=1)))
+    def test_submit_packaging_report_final_data_without_records(self):
+        variables = {
+            "packagingReportId": self.packaging_report_1.id,
+            "packagingRecords": [],
+        }
+        self.query_and_assert_error(self.MUTATION, variables=variables, message="packagingRecordsEmpty")
+
+    @time_machine.travel(make_aware(datetime(year=2022, month=5, day=1)))
     def test_submit_packaging_report_final_data(self):
         variables = {
             "packagingReportId": self.packaging_report_1.id,

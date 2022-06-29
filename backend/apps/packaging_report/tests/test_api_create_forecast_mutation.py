@@ -103,6 +103,20 @@ class PackagingReportSubmissionTestCase(BaseApiTestCase):
             message='startDateIsInvalid',
         )
 
+    def test_submit_new_packaging_report_without_records(self):
+        variables = {
+            "year": 2023,
+            "startMonth": 9,
+            "tzInfo": 'Europe/Madrid',
+            "timeframe": "THREE_MONTHS",
+            "packagingRecords": [],
+        }
+        self.query_and_assert_error(
+            self.MUTATION,
+            variables=variables,
+            message='packagingRecordsEmpty',
+        )
+
     def test_submit_new_packaging_report_start_date_validation_month(self):
         variables = {
             "year": 2022,
