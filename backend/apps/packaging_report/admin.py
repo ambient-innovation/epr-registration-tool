@@ -2,6 +2,7 @@ from django import forms
 from django.conf.locale.es import formats as es_formats
 from django.contrib import admin
 from django.utils import timezone
+from django.utils.html import format_html
 
 import pytz
 from ai_django_core.admin.model_admins.mixins import CommonInfoAdminMixin
@@ -90,6 +91,7 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
         'timeframe',
         'year',
         'start_month',
+        'status',
     )
     fields = (
         'related_company',
@@ -105,6 +107,7 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
         'is_forecast_editable',
         'related_forecast',
         'related_final_submission',
+        'status',
     )
     add_fields = (
         'related_company',
@@ -128,6 +131,7 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
         'created_by',
         'created_at',
         'lastmodified_at',
+        'status',
     )
 
     def get_fields(self, request, obj=None):
@@ -138,7 +142,28 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
             return self.fields
 
     def get_queryset(self, request):
-        return super().get_queryset(request).select_related('related_forecast')
+        return super().get_queryset(request).select_related('related_forecast', 'related_final_submission')
 
     def has_change_permission(self, request, obj=None):
         return obj.is_forecast_editable() if obj else True
+
+    @admin.display(description='Status')
+    def status(self, obj: PackagingReport):
+        status = 'no data'
+        color = '#9a9e9f'
+        if obj:
+            if getattr(obj, 'related_forecast', None) and not getattr(obj, 'related_final_submission', None):
+                status = 'forecast'
+                color = '#0288d1'
+            elif getattr(obj, 'related_final_submission', None):
+                status = 'payment required'
+                color = '#ed6c02'
+        return format_html(
+            '<div style="max-width:150px;background-color:{color};'
+            'border-radius: 16px;text-align:center;'
+            'line-height:166%">'
+            '<span style="white-space: nowrap;color:#fff">{status}</span>'
+            '</div>',
+            status=status,
+            color=color,
+        )
