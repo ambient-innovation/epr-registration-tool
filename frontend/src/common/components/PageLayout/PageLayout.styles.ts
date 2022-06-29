@@ -10,3 +10,7 @@ export const wrapperSx: SxStyles = [
     justifyContent: 'space-between',
   },
 ]
+
+export const mainSx: SxStyles = {
+  paddingBottom: 12,
+}
