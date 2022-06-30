@@ -12,6 +12,7 @@ from ai_django_core.models import CommonInfo
 from dateutil.relativedelta import relativedelta
 
 from common.models import Month
+from common.storage_backend import private_file_storage
 from common.validators import validate_greater_than_zero
 from packaging_report.managers import PackagingReportQuerySet
 
@@ -36,13 +37,15 @@ class TimeframeType(models.IntegerChoices):
     TWELVE_MONTHS = 12, _("12 months")
 
 
+# todo improve performance
 class ReportSubmission(CommonInfo):
     class Meta:
         verbose_name = _("Report Submission")
         verbose_name_plural = _("Report Submissions")
         abstract = True
 
-    def calculate_fees(self, packaging_report, material_records):
+    @staticmethod
+    def calculate_fees(packaging_report, material_records):
         from packaging.price_utils import calculate_material_fees
 
         fees = 0
@@ -55,10 +58,14 @@ class ReportSubmission(CommonInfo):
             )
         return round(fees, 2)
 
-    @admin.display(description="Estimated Fees")
-    def estimated_fees_display(self) -> str:
+    def estimated_fees_str(self) -> str:
+        final_fees = getattr(self, 'fees', None)
         try:
-            fees = self.calculate_fees(self.related_report, self.material_records_queryset.all())
+            fees = (
+                final_fees
+                if final_fees
+                else self.calculate_fees(self.related_report, self.material_records_queryset.all())
+            )
         except ValidationError:
             # possible case: first material price not available at report year
             return _('n.a. (missing material price)')
@@ -87,6 +94,14 @@ class PackagingReport(CommonInfo):
     )
     timezone_info = models.CharField(
         verbose_name=_('Timezone info'), max_length=32, validators=[validate_report_timezone]
+    )
+    invoice_file = models.FileField(
+        _('Invoice File'),
+        upload_to='invoices',
+        storage=private_file_storage,
+        max_length=255,
+        null=True,
+        blank=True,
     )
 
     objects = PackagingReportQuerySet.as_manager()
@@ -127,6 +142,11 @@ class PackagingReport(CommonInfo):
         end_datetime = self.end_datetime
         return timezone.now() <= end_datetime if end_datetime else True
 
+    def generate_invoice_file(self, user_pk):
+        from packaging_report.invoice_file import InvoicePdf
+
+        return InvoicePdf(self.pk, user_pk).generate_pdf()
+
     def __str__(self):
         return f'Data Report No. {self.id}'
 
@@ -142,6 +162,10 @@ class ForecastSubmission(ReportSubmission):
         related_name='related_forecast',
         on_delete=models.CASCADE,
     )
+
+    @admin.display(description="Estimated Fees")
+    def estimated_fees_display(self):
+        return self.estimated_fees_str()
 
     def __str__(self):
         return f'Forecast Report No. {self.id}'
@@ -159,6 +183,10 @@ class FinalSubmission(ReportSubmission):
         on_delete=models.CASCADE,
     )
     fees = models.FloatField(verbose_name=_("Fees"), default=0.0, help_text=_("Report actual quantities fees"))
+
+    @admin.display(description="Final Fees")
+    def estimated_fees_display(self):
+        return self.estimated_fees_str()
 
     def __str__(self):
         return f'Final Report No. {self.id}'

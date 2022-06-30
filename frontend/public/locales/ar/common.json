@@ -12,6 +12,7 @@
   "loading": "يرجى الانتظار",
   "pleaseWait": "Please wait ...",
   "eprTool": "EPR Registration Tool",
+  "currency": "د.أ",
   "kg": "كلغ",
   "edit": "تعديل",
   "registrationForm": {
@@ -199,6 +200,7 @@
         "startsAt": "بداية التوقعات:",
         "timeframe": "الإطار الزمني للتنبؤات:",
         "estimatedF": "الرسوم المقدرة:",
+        "calculatedFees": "الرسوم:",
         "entries": "إدخالات التغليف:",
         "month": "شهر",
         "editableUntil": "يمكن التحرير حتى {{endDate}}",

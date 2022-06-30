@@ -54,3 +54,21 @@ class CompanyContactInfo(CommonInfo):
     street_number = models.CharField(verbose_name=_('Street number'), blank=True, max_length=15)
     phone_number = models.CharField(verbose_name=_('Phone number'), max_length=20)
     additional_address_info = models.TextField(verbose_name=_('Additional address info'), blank=True)
+
+    @property
+    def address_line(self):
+        return ", ".join(
+            list(
+                filter(
+                    None,
+                    [
+                        self.street,
+                        self.street_number,
+                        self.city,
+                        self.postal_code,
+                        self.country,
+                        self.additional_address_info,
+                    ],
+                )
+            )
+        )

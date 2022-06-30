@@ -29,6 +29,13 @@ enum DistributorType {
   LOCAL_PRODUCER
 }
 
+type DjangoFileType {
+  name: String!
+  path: String!
+  size: Int!
+  url: String!
+}
+
 type FinalSubmissionType {
   id: ID!
   fees: Float!
@@ -87,6 +94,7 @@ type PackagingReportType {
   fees: Decimal
   finalReport: FinalSubmissionType
   forecast: ForecastSubmissionType
+  invoiceFile: DjangoFileType
   isFinalReportSubmitted: Boolean!
   isForecastEditable: Boolean!
   packagingGroupsCount: Int!

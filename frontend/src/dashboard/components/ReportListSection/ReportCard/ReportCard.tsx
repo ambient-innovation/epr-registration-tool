@@ -1,8 +1,9 @@
 import { Card, Chip, Typography, Box, Stack, Button } from '@mui/material'
 import { useTranslation } from 'next-i18next'
 import NextLink from 'next/link'
+import { useRouter } from 'next/router'
 
-import { PackagingReportType } from '@/api/__types__'
+import { DjangoFileType, PackagingReportType } from '@/api/__types__'
 import { timeframeDisplayValue } from '@/common/contants'
 import { ROUTES } from '@/routes'
 
@@ -20,7 +21,7 @@ export type ReportCard = Pick<
   | 'isFinalReportSubmitted'
   | 'fees'
   | 'endDatetime'
->
+> & { invoiceFile?: Pick<DjangoFileType, 'url'> | null }
 
 export const ReportCard = ({
   id: reportId,
@@ -33,8 +34,11 @@ export const ReportCard = ({
   isFinalReportSubmitted,
   endDatetime,
   fees,
+  invoiceFile,
 }: ReportCard): React.ReactElement => {
   const { t } = useTranslation()
+  const { locale } = useRouter()
+
   const startDate = new Date(year, startMonth - 1, 1)
   const formattedStartDate = startDate.toLocaleDateString()
   const formattedSubmitDate = new Date(createdAt).toLocaleDateString()
@@ -68,11 +72,24 @@ export const ReportCard = ({
       </Button>
     </NextLink>
   ) : (
-    <NextLink href={ROUTES.dataReportView(reportId)} passHref>
-      <Button component={'a'} variant={'inverted'}>
-        {'view'}
-      </Button>
-    </NextLink>
+    <>
+      <NextLink href={ROUTES.dataReportView(reportId)} passHref>
+        <Button component={'a'} variant={'inverted'}>
+          {'view'}
+        </Button>
+      </NextLink>
+      {invoiceFile && (
+        <Button
+          component={'a'}
+          variant={'inverted'}
+          target={'_blank'}
+          href={invoiceFile.url}
+          sx={{ marginLeft: 6 }}
+        >
+          {'View Invoice'}
+        </Button>
+      )}
+    </>
   )
 
   const reportNumber = reportId
@@ -105,13 +122,13 @@ export const ReportCard = ({
         <Stack direction={{ xs: 'column', md: 'row' }} mt={8} spacing={4}>
           <Box sx={{ flex: 1 }}>
             <Typography variant={'body2'}>
-              {`${t('dashboard.reportListSection.reportCard.startsAt')} `}
+              {t('dashboard.reportListSection.reportCard.startsAt')}{' '}
               <Typography component={'span'} variant={'subtitle2'}>
                 {formattedStartDate}
               </Typography>
             </Typography>
             <Typography variant={'body2'}>
-              {`${t('dashboard.reportListSection.reportCard.timeframe')} `}
+              {t('dashboard.reportListSection.reportCard.timeframe')}{' '}
               <Typography component={'span'} variant={'subtitle2'}>
                 {timeframeDisplayValue(t)[timeframe]}
               </Typography>
@@ -125,11 +142,14 @@ export const ReportCard = ({
             </Typography>
             {fees && (
               <Typography variant={'body2'}>
-                {`${t(
-                  'dashboard.reportListSection.reportCard.calculatedFees'
-                )} `}
+                {t('dashboard.reportListSection.reportCard.calculatedFees')}{' '}
                 <Typography component={'span'} variant={'subtitle2'}>
-                  {`${fees} JOD`}
+                  {`${new Intl.NumberFormat(
+                    locale == 'ar' ? 'ar-JO' : 'en-GB',
+                    {
+                      minimumFractionDigits: 2,
+                    }
+                  ).format(fees)} ${t('currency')}`}
                 </Typography>
               </Typography>
             )}

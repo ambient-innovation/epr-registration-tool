@@ -28,6 +28,9 @@ django-modeltranslation = "==0.18.2"
 django-ai-kit-auth = "~=2.0.0"
 djangorestframework = "~=3.13.1"
 time-machine = "==2.7.0"
+weasyprint = "==55.0"
+django-storages = "==1.12.3"
+boto3 = "==1.24.17"
 
 [dev-packages]
 flake8 = "==4.0.1"
