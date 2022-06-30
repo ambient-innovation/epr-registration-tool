@@ -100,10 +100,7 @@ export const Step2 = (_: Step2) => {
   const { initialData, onSubmit, goToPrevStep, isReadonlyForm } =
     useForecastContext()
   const defaultValues = pick(initialData, ...FIELD_NAMES)
-  const { data, loading, error } = usePackagingBaseDataQuery({
-    // in case of changing the language , this should be triggerd
-    fetchPolicy: 'cache-and-network',
-  })
+  const { data, loading, error } = usePackagingBaseDataQuery()
 
   const packagingGroups = data?.packagingGroups || []
   const packagingMaterials = data?.packagingMaterials || []
