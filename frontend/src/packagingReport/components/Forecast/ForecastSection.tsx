@@ -15,7 +15,7 @@ export const ForecastSection = (_: ForecastSection): React.ReactElement => {
     <FormLayout>
       <Typography
         component={'h1'}
-        variant={'h4'}
+        variant={'h1'}
         mb={{ xs: 8, sm: 10, md: 11 }}
       >
         {t('reportForm.formLabel')}

@@ -10,14 +10,14 @@ export const ActivationComplete = (): React.ReactElement => {
   const { t } = useTranslation()
   return (
     <FormLayout>
-      <Typography component={'h1'} variant={'h4'} mb={H1_DEFAULT_SPACING}>
+      <Typography component={'h1'} variant={'h1'} mb={H1_DEFAULT_SPACING}>
         {t('activation.registrationComplete')}
       </Typography>
       <Alert severity={'success'}>
         {t('activation.accountHasBeenActivated')}
       </Alert>
       <Box mt={5} p={8} bgcolor={'background.light'} borderRadius={3}>
-        <Typography component={'h2'} variant={'h6'}>
+        <Typography component={'h2'} variant={'h3'}>
           {t('activation.accountIsReady')}
         </Typography>
         <Typography mt={3}>{t('activation.youCanLoginNow')}</Typography>

@@ -37,7 +37,7 @@ export const Homepage = (_: Homepage): React.ReactElement => {
             {loading ? 'loading...' : data?.helloWorld}
           </Typography>
           <Typography
-            variant={'h5'}
+            variant={'h2'}
             component={'h2'}
             gutterBottom
             sx={{ color: 'secondary.main' }}

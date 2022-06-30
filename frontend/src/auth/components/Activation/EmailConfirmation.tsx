@@ -51,7 +51,7 @@ const SuccessState = (): React.ReactElement => {
       </Box>
 
       <Box mt={5} p={8} bgcolor={'background.light'} borderRadius={3}>
-        <Typography component={'h2'} variant={'h6'}>
+        <Typography component={'h2'} variant={'h3'}>
           {t('activation.nextStepActivation.title')}
         </Typography>
         <Typography mt={6}>
@@ -118,7 +118,7 @@ export const EmailConfirmation = (): React.ReactElement => {
 
   return (
     <FormLayout>
-      <Typography component={'h1'} variant={'h4'} mb={{ xs: 5, md: 8, lg: 10 }}>
+      <Typography component={'h1'} variant={'h1'} mb={{ xs: 5, md: 8, lg: 10 }}>
         {t('activation.emailConfirmation')}
       </Typography>
       {isLoading ? (

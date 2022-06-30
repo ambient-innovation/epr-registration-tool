@@ -22,7 +22,7 @@ const RegistrationPage: NextPage = () => {
             {'Registration successful'}
           </Typography>
           <Box p={8} mt={11} bgcolor={'background.light'} borderRadius={3}>
-            <Typography component={'h2'} variant={'h5'}>
+            <Typography component={'h2'} variant={'h2'}>
               {'Thank you for registering'}
             </Typography>
             <Typography mt={8}>

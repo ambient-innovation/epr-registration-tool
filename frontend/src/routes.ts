@@ -1,13 +1,16 @@
 export const ROUTES = {
   home: '/',
-  login: '/login',
-  registration: '/registration',
-  registrationSuccess: '/registration/success',
-  dashboard: '/dashboard',
-  dashboardComplete: 'dashboard/complete',
-  accountActivation: '/auth/activation',
+  // --- auth ----
+  login: '/auth/login',
+  registration: '/auth/registration',
+  registrationSuccess: '/auth/registration/success',
   forgetPassword: '/auth/forget-password',
   resetPassword: '/auth/forget-password/reset',
+  accountActivation: '/auth/activation',
+  // --- dashboard ---
+  dashboard: '/dashboard',
+  dashboardComplete: 'dashboard/complete',
+  // --- report ---
   forecast: '/report/forecast/add',
   forecastSuccess: '/report/forecast/add/success',
   packagingReportChange: (id: string): string => `/report/${id}/change`,

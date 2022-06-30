@@ -33,7 +33,7 @@ export const ReportListSection = ({
       aria-describedby={descriptionId}
     >
       <Box sx={[backgroundSx, { gridColumn: '1 / -1' }]}>
-        <Typography component={'h2'} variant={'h5'} id={titleId}>
+        <Typography component={'h2'} variant={'h2'} id={titleId}>
           {t('dashboard.reportListSection.headline')}
         </Typography>
         <Typography sx={{ mt: 6 }} variant={'body1'} id={descriptionId}>

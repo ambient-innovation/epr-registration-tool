@@ -31,7 +31,7 @@ export const FormStepContainer = ({
   ...boxProps
 }: FormStepContainer) => (
   <Box component={'header'} sx={backgroundSx} {...boxProps}>
-    <Typography variant={'h6'}>{title}</Typography>
+    <Typography variant={'h3'}>{title}</Typography>
     {description && (
       <Typography variant={'body1'} mt={{ xs: 5, sm: 6 }}>
         {description}

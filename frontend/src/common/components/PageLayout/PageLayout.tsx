@@ -6,7 +6,7 @@ import { UserControls } from '@/common/components/UserControls'
 import { ROUTES } from '@/routes'
 import { pxToRemAsString } from '@/theme/utils'
 
-import { wrapperSx } from './PageLayout.styles'
+import { mainSx, wrapperSx } from './PageLayout.styles'
 
 export interface PageLayout {
   children: React.ReactNode
@@ -29,7 +29,7 @@ export const PageLayout = ({ children }: PageLayout): React.ReactElement => {
           <Link href={ROUTES.home} passHref>
             <Typography
               component={'a'}
-              variant={'h5'}
+              variant={'h2'}
               sx={{
                 color: 'background.paper',
                 textDecoration: 'none',
@@ -46,7 +46,9 @@ export const PageLayout = ({ children }: PageLayout): React.ReactElement => {
           </Box>
         </Box>
       </Box>
-      <main>{children}</main>
+      <Box component={'main'} sx={mainSx}>
+        {children}
+      </Box>
     </div>
   )
 }
