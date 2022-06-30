@@ -2,8 +2,7 @@ import datetime
 import warnings
 from decimal import Decimal
 
-from dateutil.relativedelta import relativedelta
-
+from packaging.models import MaterialPrice
 from packaging.price_utils import get_material_price_at
 from packaging_report.models import FinalSubmission
 
@@ -40,57 +39,79 @@ class InvoiceService:
                 'quantity': material_quantity,
                 'total': 0,
             }
-            material_total_fees = 0
-            monthly_material_prices = []
+
             frames = []
-            month = 1
-            for timeframe_month_index in range(self.timeframe):
-                month = self.start_month + timeframe_month_index
-                material_price = get_material_price_at(material_id, self.year, month)
-                if not monthly_material_prices or material_price.price_per_kg == monthly_material_prices[-1]:
-                    monthly_material_prices.append(material_price.price_per_kg)
-                else:  # price change at this month
-                    total_for_this_period = round(
-                        (Decimal(monthly_quantity) * len(monthly_material_prices))
-                        * Decimal(monthly_material_prices[0]),
-                        2,
-                    )
-                    material_total_fees = material_total_fees + total_for_this_period
-                    frames.append(
-                        {
-                            'from': (
-                                datetime.date(year=self.year, month=month, day=1)
-                                - relativedelta(months=len(monthly_material_prices))
-                            ).strftime("%d.%m.%Y"),
-                            'to': (last_day_of_month(datetime.date(year=self.year, month=month - 1, day=1))).strftime(
-                                "%d.%m.%Y"
-                            ),
-                            'quantity': round(Decimal(monthly_quantity) * len(monthly_material_prices), 2),
-                            'total': total_for_this_period,
-                            'fee_per_unit': monthly_material_prices[0],
-                        }
-                    )
-                    monthly_material_prices.clear()
-                    monthly_material_prices.append(material_price.price_per_kg)
-            if monthly_material_prices:
-                total_for_this_period = round(
-                    (Decimal(monthly_quantity) * len(monthly_material_prices)) * Decimal(monthly_material_prices[0]),
-                    2,
+            end_month = self.start_month + self.timeframe - 1
+            end_sort_key = MaterialPrice.get_sort_key(self.year, end_month)
+
+            def clean_frames(month, month_price):
+                sort_key = MaterialPrice.get_sort_key(self.year, month)
+                next_price_change = (
+                    MaterialPrice.objects.order_by('sort_key')
+                    .filter(sort_key__gt=sort_key, related_material_id=material_id)
+                    .first()
                 )
-                material_total_fees = material_total_fees + total_for_this_period
-                frames.append(
-                    {
-                        'from': (
-                            datetime.date(year=self.year, month=month, day=1)
-                            - relativedelta(months=len(monthly_material_prices) - 1)
-                        ).strftime("%d.%m.%Y"),
-                        'to': last_day_of_month(datetime.date(year=self.year, month=month, day=1)).strftime("%d.%m.%Y"),
-                        'quantity': round(Decimal(monthly_quantity) * len(monthly_material_prices), 2),
-                        'total': total_for_this_period,
-                        'fee_per_unit': monthly_material_prices[0],
+                next_sort_key = (
+                    MaterialPrice.get_sort_key(next_price_change.start_year, next_price_change.start_month)
+                    if next_price_change
+                    else None
+                )
+
+                if month == end_month:
+                    # end of report timeframe
+                    period = 1
+                    quantity = Decimal(monthly_quantity) * period
+                    total = Decimal(quantity) * Decimal(month_price.price_per_kg)
+                    frame = {
+                        'from': datetime.date(self.year, month, day=1).strftime("%d.%m.%Y"),
+                        # f'01.{month}.{self.year}',
+                        'to': last_day_of_month(datetime.date(year=self.year, month=month, day=1)).strftime(
+                            "%d.%m.%Y"
+                        ),  # f'31.{month}.{self.year}',
+                        'quantity': round(quantity, 2),
+                        'total': round(total, 2),
+                        'fee_per_unit': month_price.price_per_kg,
                     }
-                )
-            obj.update(total=round(material_total_fees, 2))
+                    frames.append(frame)
+                    return
+                elif not next_price_change or next_sort_key > end_sort_key:
+                    period = end_month - month + 1
+                    quantity = Decimal(monthly_quantity) * period
+                    total = Decimal(quantity) * Decimal(month_price.price_per_kg)
+                    frame = {
+                        'from': datetime.date(self.year, month, day=1).strftime("%d.%m.%Y"),
+                        # f'01.{month}.{self.year}',
+                        'to': last_day_of_month(datetime.date(year=self.year, month=end_month, day=1)).strftime(
+                            "%d.%m.%Y"
+                        ),  # f'31.{end_month}.{self.year}',
+                        'quantity': round(quantity, 2),
+                        'total': round(total, 2),
+                        'fee_per_unit': month_price.price_per_kg,
+                    }
+                    frames.append(frame)
+                    return
+                else:
+                    period = next_price_change.start_month - month
+                    quantity = Decimal(monthly_quantity) * period
+                    total = Decimal(quantity) * Decimal(month_price.price_per_kg)
+                    frame = {
+                        'from': datetime.date(self.year, month, day=1).strftime("%d.%m.%Y"),
+                        # f'01.{month}.{self.year}',
+                        'to': last_day_of_month(
+                            datetime.date(year=self.year, month=next_price_change.start_month - 1, day=1)
+                        ).strftime("%d.%m.%Y"),
+                        # f'31.{next_price_change.start_month - 1}.{next_price_change.start_year}',
+                        'quantity': round(quantity, 2),
+                        'total': round(total, 2),
+                        'fee_per_unit': month_price.price_per_kg,
+                    }
+                    frames.append(frame)
+                    return clean_frames(next_price_change.start_month, next_price_change)
+
+            start_month = self.start_month
+            start_month_price = get_material_price_at(material_id, self.year, start_month)
+            clean_frames(start_month, start_month_price)
+            obj.update(total=round(sum([f['total'] for f in frames]), 2))
             obj['frames'] = frames
             result.append(obj)
         return result

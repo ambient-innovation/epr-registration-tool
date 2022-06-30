@@ -1,9 +1,10 @@
 from datetime import datetime
 from decimal import Decimal
 
-import time_machine
 from django.db.models import Prefetch
 from django.utils.timezone import make_aware
+
+import time_machine
 from model_bakery import baker
 
 from common.tests.test_base import BaseTestCase
@@ -245,7 +246,7 @@ class MaterialGroupInvoiceServiceTestCase(BaseTestCase):
             )
             .first()
         )
-        with self.assertNumQueries(36):
+        with self.assertNumQueries(17):
             invoice_service = InvoiceService(
                 packaging_report.timeframe,
                 packaging_report.year,
