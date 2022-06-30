@@ -14,6 +14,9 @@ export const PACKAGING_REPORTS_QUERY = gql`
       isFinalReportSubmitted
       endDatetime
       fees
+      invoiceFile {
+        url
+      }
     }
   }
 `

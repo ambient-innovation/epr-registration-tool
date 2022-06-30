@@ -4,6 +4,7 @@ import typing
 
 import strawberry
 from strawberry.django import auto
+from strawberry_django import DjangoFileType
 
 from packaging.api.types import MaterialType, PackagingGroupType
 from packaging_report.models import FinalSubmission, ForecastSubmission, MaterialRecord, PackagingReport, TimeframeType
@@ -58,6 +59,12 @@ class PackagingReportType:
     @strawberry.django.field
     def end_datetime(self, root) -> datetime.datetime:
         return root.end_datetime
+
+    @strawberry.django.field
+    def invoice_file(self, root) -> typing.Optional[DjangoFileType]:
+        if root.invoice_file:
+            return root.invoice_file
+        return None
 
     @strawberry.django.field
     def packaging_groups_count(self, root: PackagingReport) -> int:

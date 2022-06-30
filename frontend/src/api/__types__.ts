@@ -52,6 +52,14 @@ export enum DistributorType {
   LOCAL_PRODUCER = 'LOCAL_PRODUCER',
 }
 
+export type DjangoFileType = {
+  __typename?: 'DjangoFileType'
+  name: Scalars['String']
+  path: Scalars['String']
+  size: Scalars['Int']
+  url: Scalars['String']
+}
+
 export type FinalSubmissionType = {
   __typename?: 'FinalSubmissionType'
   fees: Scalars['Float']
@@ -151,6 +159,7 @@ export type PackagingReportType = {
   finalReport?: Maybe<FinalSubmissionType>
   forecast?: Maybe<ForecastSubmissionType>
   id: Scalars['ID']
+  invoiceFile?: Maybe<DjangoFileType>
   isFinalReportSubmitted: Scalars['Boolean']
   isForecastEditable: Scalars['Boolean']
   packagingGroupsCount: Scalars['Int']
@@ -274,6 +283,7 @@ export type PackagingReportsQuery = {
     isFinalReportSubmitted: boolean
     endDatetime: any
     fees?: any | null
+    invoiceFile?: { __typename?: 'DjangoFileType'; url: string } | null
   }>
 }
 
@@ -579,6 +589,9 @@ export const PackagingReportsDocument = gql`
       isFinalReportSubmitted
       endDatetime
       fees
+      invoiceFile {
+        url
+      }
     }
   }
 `
