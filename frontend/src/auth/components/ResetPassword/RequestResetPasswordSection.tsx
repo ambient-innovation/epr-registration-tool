@@ -18,6 +18,8 @@ import { emailValidator } from '@/utils/form-validation.utils'
 
 import { ResetPasswordData } from './types'
 
+export const RESET_PW_COMPLETE_ALERT_KEY = 'resetPasswordRequest'
+
 type FormData = Pick<ResetPasswordData, 'email'>
 
 const schema: SchemaOf<Record<keyof FormData, unknown>> = yup.object().shape({
@@ -54,7 +56,7 @@ export const RequestResetPasswordSection = (): React.ReactElement => {
         router.push({
           pathname: ROUTES.login,
           query: {
-            alert: 'resetPasswordRequest',
+            alert: RESET_PW_COMPLETE_ALERT_KEY,
           },
         })
       })

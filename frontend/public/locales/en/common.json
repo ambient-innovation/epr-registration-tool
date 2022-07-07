@@ -98,7 +98,8 @@
     "notUniqueGroups": "this packaging group is duplicated",
     "notUniqueGroupsMaterials": "this material is duplicated in this packaging group",
     "noWhitespaceAllowed": "no whitespaces allowed",
-    "reportExceedsOneYear": "a report should not exceed a year"
+    "reportExceedsOneYear": "a report should not exceed a year",
+    "identicalPasswordNotAllowed": "The new password can not be identical with the old password"
   },
   "serverErrors": {
     "unknownError": "The server failed to handle your request. Please reload and try again.",
@@ -120,7 +121,8 @@
     "reportIsNotEditable": "Report is not editable",
     "profileAlreadyCompleted": "Company Profile already completed",
     "finalReportAlreadySubmitted": "Final Report already submitted",
-    "cannotSubmitFinalReportYet": "Final Report cannot be submitted yet"
+    "cannotSubmitFinalReportYet": "Final Report cannot be submitted yet",
+    "identicalPasswordNotAllowed": "The new password can not be identical with the old password."
   },
   "internalErrors": {
     "unknownError": "Something unexpected happened. Please reload and try again."
@@ -134,7 +136,21 @@
     "registerLink": "No Account Yet? Register Now.",
     "loginFailed": "Login failed",
     "resetPasswordRequest": "If this email address was used to create an account, instructions to reset your password will be sent to you. Please check your email.",
-    "resetPasswordComplete": "Password successfully updated."
+    "resetPasswordComplete": "Password successfully updated.",
+    "changePasswordComplete": "Password updated. Please sign in with your new password."
+  },
+  "accountSettings": {
+      "main": "Account & Settings",
+     "changePasswordForm": {
+       "title": "Password",
+       "description1": "Set a new password for your account. After choosing a new password enter your old password for confirmation.",
+       "description2": "To conform with our Strong Password policy, you are required to use a sufficiently strong password. Password must at least 8 characters long and contain upper and lower case letters, a number and a special character.",
+       "newPassword": "New password",
+       "oldPassword": "Old password",
+       "oldPasswordHelpText": "Please enter your old password for confirmation",
+       "submitChangePassword": "Change Password",
+       "passwordResetFailed": "Password Reset failed"
+     }
   },
   "activation": {
     "activation": "Activation",

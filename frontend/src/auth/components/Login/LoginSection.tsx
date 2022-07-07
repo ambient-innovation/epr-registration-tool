@@ -19,6 +19,8 @@ import { useForm } from 'react-hook-form'
 import { SchemaOf } from 'yup'
 import * as yup from 'yup'
 
+import { CHANGE_PW_COMPLETE_ALERT_KEY } from '@/accountSettings/components/AccountSettingsSection/ChangePasswordForm/ChangePasswordForm'
+import { RESET_PW_COMPLETE_ALERT_KEY } from '@/auth/components/ResetPassword/ResetPasswordSection'
 import { useUser } from '@/auth/hooks/useUser'
 import { getAxiosErrorMessage, handleAxiosError } from '@/auth/utils'
 import { ErrorAlert } from '@/common/components/ErrorAlert'
@@ -77,11 +79,11 @@ export const LoginSection = (): React.ReactElement => {
         setServerError(error)
       })
   }
-
   return (
     <FormLayout>
-      {(router.query.alert === 'resetPasswordRequest' ||
-        router.query.alert === 'resetPasswordComplete') && (
+      {(router.query.alert === RESET_PW_COMPLETE_ALERT_KEY ||
+        router.query.alert === RESET_PW_COMPLETE_ALERT_KEY ||
+        router.query.alert === CHANGE_PW_COMPLETE_ALERT_KEY) && (
         <Box mb={11}>
           <Alert
             sx={{ alignItems: 'center' }}

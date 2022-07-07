@@ -18,7 +18,9 @@ export const ProtectedPage = ({
   const { loading, user } = useUser()
 
   useEffect(() => {
-    !loading && !user && router.push(ROUTES.login)
+    !loading &&
+      !user &&
+      router.push({ pathname: ROUTES.login, query: router.query })
   }, [user, loading, router])
 
   return <>{children}</>

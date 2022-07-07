@@ -95,6 +95,7 @@ export type MaterialType = {
 export type Mutation = {
   __typename?: 'Mutation'
   changeLanguage: Scalars['String']
+  changePassword: Scalars['String']
   createCompanyProfile: Scalars['String']
   packagingReportFinalDataSubmit: Scalars['String']
   packagingReportForecastSubmit: Scalars['String']
@@ -104,6 +105,11 @@ export type Mutation = {
 
 export type MutationChangeLanguageArgs = {
   languageCode: Scalars['String']
+}
+
+export type MutationChangePasswordArgs = {
+  newPassword: Scalars['String']
+  oldPassword: Scalars['String']
 }
 
 export type MutationCreateCompanyProfileArgs = {
@@ -209,6 +215,16 @@ export type UserType = {
   fullName: Scalars['String']
   id: Scalars['ID']
   title: Scalars['String']
+}
+
+export type ChangePasswordMutationVariables = Exact<{
+  oldPassword: Scalars['String']
+  newPassword: Scalars['String']
+}>
+
+export type ChangePasswordMutation = {
+  __typename?: 'Mutation'
+  changePassword: string
 }
 
 export type RegisterCompanyMutationVariables = Exact<{
@@ -419,6 +435,36 @@ export type PackagingReportFinalDetailsQuery = {
   } | null
 }
 
+export const ChangePasswordDocument = gql`
+  mutation changePassword($oldPassword: String!, $newPassword: String!) {
+    changePassword(oldPassword: $oldPassword, newPassword: $newPassword)
+  }
+`
+export type ChangePasswordMutationFn = Apollo.MutationFunction<
+  ChangePasswordMutation,
+  ChangePasswordMutationVariables
+>
+export function useChangePasswordMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ChangePasswordMutation,
+    ChangePasswordMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    ChangePasswordMutation,
+    ChangePasswordMutationVariables
+  >(ChangePasswordDocument, options)
+}
+export type ChangePasswordMutationHookResult = ReturnType<
+  typeof useChangePasswordMutation
+>
+export type ChangePasswordMutationResult =
+  Apollo.MutationResult<ChangePasswordMutation>
+export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<
+  ChangePasswordMutation,
+  ChangePasswordMutationVariables
+>
 export const RegisterCompanyDocument = gql`
   mutation registerCompany(
     $companyName: String!

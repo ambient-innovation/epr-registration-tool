@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Box, TextField, Typography, Button } from '@mui/material'
+import { Box, TextField, Typography } from '@mui/material'
 import { AxiosError } from 'axios'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
@@ -13,10 +13,13 @@ import { getAxiosErrorMessage, handleAxiosError } from '@/auth/utils'
 import { ErrorAlert } from '@/common/components/ErrorAlert'
 import { FormLayout } from '@/common/components/FormLayout'
 import { backgroundSx } from '@/common/components/FormStep/FormStep.styles'
+import { FormSubmitFooter } from '@/common/components/FormSubmitFooter'
 import { ROUTES } from '@/routes'
 
 import { passwordValidator } from '../../../utils/form-validation.utils'
 import { ResetPasswordData } from './types'
+
+export const RESET_PW_COMPLETE_ALERT_KEY = 'resetPasswordComplete'
 
 export type ErrorData = { error?: string }
 export type ResetPasswordError = AxiosError<ErrorData>
@@ -56,7 +59,7 @@ export const ResetPasswordSection = (): React.ReactElement => {
         router.push({
           pathname: ROUTES.login,
           query: {
-            alert: 'resetPasswordComplete',
+            alert: RESET_PW_COMPLETE_ALERT_KEY,
           },
         })
       })
@@ -111,20 +114,10 @@ export const ResetPasswordSection = (): React.ReactElement => {
               </ErrorAlert>
             </Box>
           )}
-          <Box
-            component={'footer'}
-            sx={{ mt: 6, display: 'flex', justifyContent: 'flex-end' }}
-          >
-            <Button
-              variant={'contained'}
-              type={'submit'}
-              disabled={formState.isSubmitting}
-            >
-              {formState.isSubmitting
-                ? t('loading')
-                : t('resetPassword.saveNewPassword')}
-            </Button>
-          </Box>
+          <FormSubmitFooter
+            isSubmitting={formState.isSubmitting}
+            buttonLabelKey={'resetPassword.saveNewPassword'}
+          />
         </form>
       </section>
     </FormLayout>
