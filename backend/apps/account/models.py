@@ -14,6 +14,9 @@ class UserTitle(models.TextChoices):
     MRS = 'mrs', _('Mrs.')
 
 
+LanguageChoices = models.TextChoices('LanguageEnum', [key for key, val in settings.LANGUAGES])
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     """
     An abstract base class implementing a fully featured User model with
@@ -51,8 +54,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name=_('Language Preference'),
         max_length=2,
         blank=True,
-        default=settings.LANGUAGES[0][0],
-        choices=settings.LANGUAGES,
+        default=LanguageChoices.en.value,
+        choices=LanguageChoices.choices,
     )
     objects = UserManager.from_queryset(UserQuerySet)()
 

@@ -7,6 +7,7 @@ export const ME = gql`
       email
       title
       fullName
+      languagePreference
     }
   }
 `

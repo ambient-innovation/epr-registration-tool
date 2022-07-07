@@ -2,15 +2,15 @@ import { Box, Tab, Tabs, useMediaQuery } from '@mui/material'
 import { useTheme } from '@mui/system'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
-import { useId } from 'react'
 
 import { ROUTES } from '@/routes'
 
 import {
-  containerCssTest,
+  containerCss,
   formColumnSx,
   tabsColumnSx,
 } from './AccountSettingsSection.styles'
+import { ChangeLanguageForm } from './ChangeLanguageForm'
 import { ChangePasswordForm } from './ChangePasswordForm'
 
 interface AccountSettingsSectionProps {
@@ -22,18 +22,15 @@ interface LinkTabProps {
   href: string
 }
 
-enum TabOptions {
+export enum TabOptions {
   changePassword = 0,
+  changeLanguage = 1,
 }
 
 export const AccountSettingsSection = ({
   activeSection,
 }: AccountSettingsSectionProps): React.ReactElement => {
   const { t } = useTranslation()
-  const titleId = useId()
-  const firstDescriptionId = useId()
-  const secondDescriptionId = useId()
-  const descriptionId = firstDescriptionId.concat(' ', secondDescriptionId)
   const theme = useTheme()
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
 
@@ -46,12 +43,7 @@ export const AccountSettingsSection = ({
   }
 
   return (
-    <Box
-      component={'section'}
-      aria-labelledby={titleId}
-      aria-describedby={descriptionId}
-      sx={containerCssTest}
-    >
+    <Box sx={containerCss}>
       <Tabs
         sx={tabsColumnSx}
         orientation={isDesktop ? 'vertical' : 'horizontal'}
@@ -64,15 +56,17 @@ export const AccountSettingsSection = ({
           label={t('accountSettings.changePasswordForm.title')}
           href={ROUTES.accountSettingsChangePassword}
         />
+        <LinkTab
+          label={t('accountSettings.changeLanguageForm.tabTitle')}
+          href={ROUTES.accountSettingsChangeLanguage}
+        />
       </Tabs>
       <Box sx={formColumnSx}>
-        {activeSection === TabOptions.changePassword && (
-          <ChangePasswordForm
-            titleId={titleId}
-            firstDescriptionId={firstDescriptionId}
-            secondDescriptionId={secondDescriptionId}
-          />
-        )}
+        {activeSection === TabOptions.changePassword ? (
+          <ChangePasswordForm />
+        ) : activeSection === TabOptions.changeLanguage ? (
+          <ChangeLanguageForm />
+        ) : null}
       </Box>
     </Box>
   )

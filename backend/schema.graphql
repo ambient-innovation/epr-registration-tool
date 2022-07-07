@@ -47,6 +47,11 @@ type ForecastSubmissionType {
   materialRecords: [MaterialRecordType!]!
 }
 
+enum LanguageEnum {
+  en
+  ar
+}
+
 input MaterialInput {
   materialId: ID!
   quantity: Decimal!
@@ -65,7 +70,7 @@ type MaterialType {
 }
 
 type Mutation {
-  changeLanguage(languageCode: String!): String!
+  changeLanguage(languageCode: LanguageEnum!): String!
   changePassword(oldPassword: String!, newPassword: String!): String!
   registerCompany(companyName: String!, companyDistributorType: DistributorType!, userEmail: String!, userTitle: String!, userFullName: String!, userPosition: String!, userPhoneOrMobile: String!, password: String!): String!
   createCompanyProfile(profileData: CompanyProfileInputType!, identificationNumber: String!): String!
@@ -124,4 +129,5 @@ type UserType {
   email: String!
   title: String!
   fullName: String!
+  languagePreference: LanguageEnum!
 }

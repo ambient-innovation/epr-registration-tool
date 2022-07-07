@@ -39,3 +39,8 @@ export const forecastTimeframeOptions = (
     label: timeframeDisplayValue(t)[TimeframeType.TWELVE_MONTHS],
   },
 ]
+
+export const getLanguageOptions = () => [
+  { value: 'en', label: 'English' },
+  { value: 'ar', label: 'عربي' },
+]

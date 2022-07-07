@@ -1,21 +1,16 @@
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.db import transaction
-from django.utils.translation.trans_real import get_languages
 
 import strawberry
 from graphql import GraphQLError
 from strawberry.types import Info
 
+from account.models import LanguageChoices
 
-def change_user_language(info: Info, language_code: str) -> str:
+
+def change_user_language(info: Info, language_code: strawberry.enum(LanguageChoices)) -> str:
     user = info.context.request.user
-    language_code = language_code.lower()
-    supported_languages = get_languages()
-
-    if language_code not in supported_languages:
-        raise GraphQLError('languageCodeNotSupported')
-
     user.language_preference = language_code
 
     with transaction.atomic():

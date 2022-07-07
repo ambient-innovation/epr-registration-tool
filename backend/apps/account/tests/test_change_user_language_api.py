@@ -7,7 +7,7 @@ class AccountChangeLanguageMutationTestCase(BaseApiTestCase):
 
     MUTATION = """
         mutation changeLanguage(
-            $languageCode: String!
+            $languageCode: LanguageEnum!
         ) {
             changeLanguage(
                 languageCode: $languageCode
@@ -25,15 +25,8 @@ class AccountChangeLanguageMutationTestCase(BaseApiTestCase):
         self.assertEqual('ar', self.user.language_preference)
 
     def test_change_user_language_not_supported_language_code_fails(self):
-        self.query_and_assert_error(
+        resp = self.query(
             self.MUTATION,
-            message='languageCodeNotSupported',
             variables={'languageCode': 'fr'},
         )
-
-    def test_change_user_language_send_upper_case_language_code(self):
-        content = self.query_and_load_data(
-            self.MUTATION,
-            variables={'languageCode': 'EN'},
-        )
-        self.assertEqual('UPDATED', content['changeLanguage'])
+        self.assertResponseHasErrors(resp)

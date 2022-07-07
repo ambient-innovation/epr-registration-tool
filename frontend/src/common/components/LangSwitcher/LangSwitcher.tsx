@@ -13,6 +13,8 @@ import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { MouseEvent, useState } from 'react'
 
+import { getLanguageOptions } from '@/common/contants'
+
 const MENU_ID = 'language-menu'
 const BUTTON_ID = 'language-menu-button'
 
@@ -22,6 +24,11 @@ export const LangSwitcher = () => {
 
   const [anchorEl, setAnchorEl] = useState<(EventTarget & Element) | null>(null)
   const open = Boolean(anchorEl)
+
+  const languages = getLanguageOptions()
+  const enOption = languages[0]
+  const arOption = languages[1]
+
   const handleClick = (event: MouseEvent) => {
     event.preventDefault()
     setAnchorEl(event.currentTarget)
@@ -62,16 +69,16 @@ export const LangSwitcher = () => {
           },
         }}
       >
-        <MenuItem disabled={locale === 'en'}>
+        <MenuItem disabled={locale === enOption.value}>
           <ListItemIcon>{'🇬🇧'}</ListItemIcon>
-          <NextLink href={{ pathname, query }} locale={'en'} passHref>
-            <Link> {'English'}</Link>
+          <NextLink href={{ pathname, query }} locale={enOption.value} passHref>
+            <Link> {enOption.label}</Link>
           </NextLink>
         </MenuItem>
-        <MenuItem disabled={locale === 'ar'}>
+        <MenuItem disabled={locale === arOption.value}>
           <ListItemIcon>{'🇯🇴'}</ListItemIcon>
-          <NextLink href={{ pathname, query }} locale={'ar'} passHref>
-            <Link> {'عربي'}</Link>
+          <NextLink href={{ pathname, query }} locale={arOption.value} passHref>
+            <Link> {arOption.label}</Link>
           </NextLink>
         </MenuItem>
       </Menu>
