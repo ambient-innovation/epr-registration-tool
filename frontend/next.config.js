@@ -8,6 +8,9 @@ const nextConfig = {
     outputStandalone: true,
     emotion: true,
   },
+  images: {
+    domains: ['localhost', 'epr-tool.ambient.digital'],
+  },
   webpack: (config, options) => {
     // In `pages/_app.js`, Sentry is imported from @sentry/node. While
     // @sentry/react will run in a Node.js environment, @sentry/node will use

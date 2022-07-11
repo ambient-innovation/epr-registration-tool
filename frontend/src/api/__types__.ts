@@ -24,6 +24,7 @@ export type Scalars = {
   DateTime: any
   /** Decimal (fixed-point) */
   Decimal: any
+  Upload: any
 }
 
 export type CompanyProfileInputType = {
@@ -44,6 +45,7 @@ export type CompanyType = {
   identificationNumber: Scalars['String']
   isProfileCompleted: Scalars['Boolean']
   lastmodifiedAt: Scalars['DateTime']
+  logo?: Maybe<DjangoFileType>
   name: Scalars['String']
 }
 
@@ -99,6 +101,7 @@ export type MaterialType = {
 
 export type Mutation = {
   __typename?: 'Mutation'
+  changeCompanyLogo: Scalars['String']
   changeLanguage: Scalars['String']
   changePassword: Scalars['String']
   createCompanyProfile: Scalars['String']
@@ -106,6 +109,10 @@ export type Mutation = {
   packagingReportForecastSubmit: Scalars['String']
   packagingReportForecastUpdate: Scalars['String']
   registerCompany: Scalars['String']
+}
+
+export type MutationChangeCompanyLogoArgs = {
+  file?: InputMaybe<Scalars['Upload']>
 }
 
 export type MutationChangeLanguageArgs = {
@@ -282,6 +289,15 @@ export type CreateCompanyProfileMutation = {
   createCompanyProfile: string
 }
 
+export type ChangeCompanyLogoMutationVariables = Exact<{
+  file?: InputMaybe<Scalars['Upload']>
+}>
+
+export type ChangeCompanyLogoMutation = {
+  __typename?: 'Mutation'
+  changeCompanyLogo: string
+}
+
 export type CompanyDetailsQueryVariables = Exact<{ [key: string]: never }>
 
 export type CompanyDetailsQuery = {
@@ -295,6 +311,13 @@ export type CompanyDetailsQuery = {
     createdAt: any
     lastmodifiedAt: any
     isProfileCompleted: boolean
+    logo?: {
+      __typename?: 'DjangoFileType'
+      name: string
+      path: string
+      size: number
+      url: string
+    } | null
   } | null
 }
 
@@ -621,6 +644,36 @@ export type CreateCompanyProfileMutationOptions = Apollo.BaseMutationOptions<
   CreateCompanyProfileMutation,
   CreateCompanyProfileMutationVariables
 >
+export const ChangeCompanyLogoDocument = gql`
+  mutation changeCompanyLogo($file: Upload) {
+    changeCompanyLogo(file: $file)
+  }
+`
+export type ChangeCompanyLogoMutationFn = Apollo.MutationFunction<
+  ChangeCompanyLogoMutation,
+  ChangeCompanyLogoMutationVariables
+>
+export function useChangeCompanyLogoMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ChangeCompanyLogoMutation,
+    ChangeCompanyLogoMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    ChangeCompanyLogoMutation,
+    ChangeCompanyLogoMutationVariables
+  >(ChangeCompanyLogoDocument, options)
+}
+export type ChangeCompanyLogoMutationHookResult = ReturnType<
+  typeof useChangeCompanyLogoMutation
+>
+export type ChangeCompanyLogoMutationResult =
+  Apollo.MutationResult<ChangeCompanyLogoMutation>
+export type ChangeCompanyLogoMutationOptions = Apollo.BaseMutationOptions<
+  ChangeCompanyLogoMutation,
+  ChangeCompanyLogoMutationVariables
+>
 export const CompanyDetailsDocument = gql`
   query companyDetails {
     companyDetails {
@@ -631,6 +684,12 @@ export const CompanyDetailsDocument = gql`
       createdAt
       lastmodifiedAt
       isProfileCompleted
+      logo {
+        name
+        path
+        size
+        url
+      }
     }
   }
 `

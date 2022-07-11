@@ -126,10 +126,13 @@
     "profileAlreadyCompleted": "Company Profile already completed",
     "finalReportAlreadySubmitted": "Final Report already submitted",
     "cannotSubmitFinalReportYet": "Final Report cannot be submitted yet",
-    "identicalPasswordNotAllowed": "The new password can not be identical with the old password."
+    "identicalPasswordNotAllowed": "The new password can not be identical with the old password.",
+    "maximumFileSizeExceeded": "The maximum image size is 2MB. Please try a smaller image file.",
+    "invalidExtension": "Image format not allowed. Please upload another image (JPG or PNG)"
   },
   "internalErrors": {
-    "unknownError": "Something unexpected happened. Please reload and try again."
+    "unknownError": "Something unexpected happened. Please reload and try again.",
+    "imageUploadError": "Image upload failed. Please try with another image file."
   },
   "loginForm": {
     "title": "Login to the EPR Registration Tool",
@@ -144,26 +147,26 @@
     "changePasswordComplete": "Password updated. Please sign in with your new password."
   },
   "accountSettings": {
-      "main": "Account & Settings",
-     "changePasswordForm": {
-       "title": "Password",
-       "description1": "Set a new password for your account. After choosing a new password enter your old password for confirmation.",
-       "description2": "To conform with our Strong Password policy, you are required to use a sufficiently strong password. Password must at least 8 characters long and contain upper and lower case letters, a number and a special character.",
-       "newPassword": "New password",
-       "oldPassword": "Old password",
-       "oldPasswordHelpText": "Please enter your old password for confirmation",
-       "submitChangePassword": "Change Password",
-       "passwordResetFailed": "Password Reset failed"
-     },
+    "main": "Account & Settings",
+    "changePasswordForm": {
+      "title": "Password",
+      "description1": "Set a new password for your account. After choosing a new password enter your old password for confirmation.",
+      "description2": "To conform with our Strong Password policy, you are required to use a sufficiently strong password. Password must at least 8 characters long and contain upper and lower case letters, a number and a special character.",
+      "newPassword": "New password",
+      "oldPassword": "Old password",
+      "oldPasswordHelpText": "Please enter your old password for confirmation",
+      "submitChangePassword": "Change Password",
+      "passwordResetFailed": "Password Reset failed"
+    },
     "changeLanguageForm": {
-       "title": "Edit language of correspondance",
-        "tabTitle": "LANGUAGE",
-       "description": "Here you can set the language in which the email correspondence should take place.",
-       "label": "Edit language of correspondance",
-       "submitLanguagePassword": "Save changes",
-       "languageChangeFailed": "Language change failed",
+      "title": "Edit language of correspondance",
+      "tabTitle": "LANGUAGE",
+      "description": "Here you can set the language in which the email correspondence should take place.",
+      "label": "Edit language of correspondance",
+      "submitLanguagePassword": "Save changes",
+      "languageChangeFailed": "Language change failed",
       "notification": "Your language has been updated."
-     }
+    }
   },
   "activation": {
     "activation": "Activation",
@@ -240,6 +243,20 @@
         "editableUntil": "Can be edited until {{endDate}}",
         "forecast": "Forecast"
       }
+    },
+    "companyLogo": {
+      "addLogo": "Add logo",
+      "editLogo": "Edit logo",
+      "companyLogoAlt": "Current logo of your company"
+    },
+    "uploadCompanyLogoDialog": {
+      "title": "Company Logo",
+      "description": "Upload a logo for your company account (JPG or PNG). We recommend a resolution of at least 344 x 344 px.",
+      "deleteLogo": "Delete logo",
+      "uploadLogo": "Upload logo",
+      "cancel": "Cancel",
+      "save": "Save",
+      "companyLogoAlt": "Preview of your company logo that you would like to be displayed on your dashboard."
     }
   },
   "companyCompletionForm": {

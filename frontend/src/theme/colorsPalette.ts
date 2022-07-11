@@ -12,12 +12,14 @@ const primaryColors = {
   main: '#16284C',
   light: '#435078',
   dark: '#000024',
+  contrastText: '#fff',
 }
 
 const secondaryColors = {
   main: '#B6A268',
   light: '#D9CBA3',
   dark: '#85743C',
+  contrastText: '#fff',
 }
 
 export const palette = {

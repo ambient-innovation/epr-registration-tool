@@ -10,6 +10,12 @@ export const COMPANY_DETAILS = gql`
       createdAt
       lastmodifiedAt
       isProfileCompleted
+      logo {
+        name
+        path
+        size
+        url
+      }
     }
   }
 `
