@@ -67,6 +67,9 @@ env = environ.Env(
     DJANGO_EMAIL_PORT=(str, None),
     DJANGO_AWS_SES_ENABLED=(bool, False),
     DJANGO_DEFAULT_FROM_EMAIL=(str, 'noreply@ambient.digital'),
+    # Gitlab
+    DJANGO_REBUILD_FRONTEND_TRIGGER_REF=(str, ''),
+    DJANGO_REBUILD_FRONTEND_TRIGGER_TOKEN=(str, ''),
     # dev
     ENABLE_DEBUG_TOOLBAR=(bool, False),
 )
@@ -104,6 +107,24 @@ THIRD_PARTY_APPS = [
     'ai_kit_auth',
     'modeltranslation',
     'storages',
+    # --- wagtail ---
+    "wagtail_localize",
+    "wagtail_localize.locales",  # This replaces "wagtail.locales"
+    'wagtail.contrib.forms',
+    'wagtail.contrib.redirects',
+    'wagtail.embeds',
+    'wagtail.sites',
+    'wagtail.users',
+    'wagtail.snippets',
+    'wagtail.documents',
+    'wagtail.images',
+    'wagtail.search',
+    'wagtail.admin',
+    'wagtail',
+    'wagtail.api.v2',
+    'wagtail_headless_preview',
+    'modelcluster',
+    'taggit',
 ]
 
 LOCAL_APPS = [
@@ -113,6 +134,7 @@ LOCAL_APPS = [
     'packaging_report',
     'account',
     'company',
+    'cms',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -130,6 +152,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'wagtail.contrib.redirects.middleware.RedirectMiddleware',
     # AxesMiddleware should be the last middleware in the MIDDLEWARE list.
     # It only formats user lockout messages and renders Axes lockout responses
     # on failed user authentication attempts from login views.
@@ -374,6 +397,34 @@ else:
     EMAIL_BACKEND = env.str('DJANGO_EMAIL_BACKEND')
     EMAIL_HOST = env.str('DJANGO_EMAIL_HOST')
     EMAIL_PORT = env.str('DJANGO_EMAIL_PORT')
+
+
+# --- WAGTAIL --- #
+
+WAGTAILADMIN_BASE_URL = BASE_URL
+WAGTAIL_SITE_NAME = 'EPR Registration Tool'
+WAGTAILAPI_SEARCH_ENABLED = False
+
+WAGTAIL_I18N_ENABLED = True
+WAGTAIL_CONTENT_LANGUAGES = LANGUAGES
+WAGTAILSIMPLETRANSLATION_SYNC_PAGE_TREE = True
+
+WAGTAIL_HEADLESS_PREVIEW = {
+    "CLIENT_URLS": {
+        'default': FRONTEND_URL,
+    },
+    "LIVE_PREVIEW": False,  # requires web sockets
+    "SERVE_BASE_URL": None,  # can be used for HeadlessServeMixin
+    "REDIRECT_ON_PREVIEW": True,  # set to True to redirect to the preview instead of using the Wagtail default
+}
+
+# has to match next.js env variable `PREVIEW_SECRET`
+NEXTJS_PREVIEW_SECRET = 'pgHs98kziNyA6BXLE@ej'
+
+REBUILD_FRONTEND_TRIGGER_TOKEN = env.str('DJANGO_REBUILD_FRONTEND_TRIGGER_TOKEN')  # gitlab > settings > CI/CD > trigger
+REBUILD_FRONTEND_TRIGGER_REF = env.str('DJANGO_REBUILD_FRONTEND_TRIGGER_REF')  # branch or tag
+
+# --- LOGGING --- #
 
 LOGGING = {
     'version': 1,
