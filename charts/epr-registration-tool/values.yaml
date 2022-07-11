@@ -51,6 +51,9 @@ backend: # Do NOT run database migrations within your backend deployment. Use in
   sentry:
     dsn: ""
     environment: ""
+  rebuildFrontendTrigger:
+    ref: "" # pipeline or commit hash
+    token: "" # passed through in GitLab secrets
   resources: # Please note that, limits and requests should be properly set for your deployment. These values have to be changed accordingly. Comments regarding request and limits below are for a reference only, needs forecast according to different workloads, but if you have no idea at all, they can be good advice to start with.
     limits:
       cpu: 300m # When there are high number of request served, CPU usage goes much more above your baseline usage. In order to accomodate that, you can set 4 or 6 times of your baseline CPU usage, for example, if your request is 50m, make your limit 300m.  If your request is 200m, go for 800m.
