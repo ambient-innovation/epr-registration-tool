@@ -284,7 +284,7 @@ helm:render:
     - cd charts/epr-registration-tool
     - echo "The rendering is done so that if linting for your helm chart passes but you see YAML error in the Rancher, you can have a look to renderings to see if something looks wrong, which makes it easy for you to debug."
     - echo "Rendering test values."
-    - helm template --values values.test.yaml .
+    - helm template --debug --values values.test.yaml .
   only:
     - /^helm[-/\/].*$/
 
