@@ -48,7 +48,7 @@ def send_user_registration_complete_notification(company):
     for user in receiver_list:
         context = {
             'user': user,
-            'url': urljoin(settings.FRONTEND_URL, '/login'),
+            'url': urljoin(settings.FRONTEND_URL, '/auth/login'),
             'frontend_url': settings.FRONTEND_URL,
         }
 
