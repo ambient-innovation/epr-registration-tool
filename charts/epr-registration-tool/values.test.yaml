@@ -70,7 +70,7 @@ backend:
     successThreshold: 1
     timeoutSeconds: 15 # Number of seconds to wait for timeout on each request.
   readinessProbe: # Pay attention -> This setting is used to determine whether - for the initial boot of your application - your application is ready to start receiving traffic or not.
-    failureThreshold: 3
+    failureThreshold: 10 # initialDelaySeconds + failureThreshold * periodSeconds until deployment fails
     httpGet:
       httpHeaders:
         - name: Host
