@@ -46,6 +46,9 @@ backend:
   sentry:
     dsn: "https://7a1d06be73b4421ab9456c0854312e94@sentry.ambient-innovation.com/80"
     environment: "test"
+  rebuildFrontendTrigger:
+    ref: "develop"  # pipeline or commit hash
+    token: ""  # passed through in GitLab secrets
   resources:
     limits:
       cpu: 300m # When there are high number of request served, CPU usage goes much more above your baseline usage. In order to accomodate that, you can set 4 or 6 times of your baseline CPU usage, for example, if your request is 50m, make your limit 300m.  If your request is 200m, go for 800m.

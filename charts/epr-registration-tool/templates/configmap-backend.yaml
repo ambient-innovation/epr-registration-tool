@@ -34,3 +34,6 @@ data:
   DATABASE_USERNAME: {{.Values.backend.db.username | quote }}
   # email
   DJANGO_AWS_SES_ENABLED: {{ .Values.backend.aws.sesEnabled | quote }}
+  # gitlab trigger
+  DJANGO_REBUILD_FRONTEND_TRIGGER_REF: {{ .Values.backend.rebuildFrontendTrigger.ref | quote }}
+  # DJANGO_REBUILD_FRONTEND_TRIGGER_TOKEN:  <-- secret (passed in build job)

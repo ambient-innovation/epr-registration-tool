@@ -10,8 +10,11 @@ from django.views.generic import RedirectView
 
 from ai_kit_auth import views as ai_kit_views
 from strawberry.django.views import GraphQLView
+from wagtail.admin import urls as wagtailadmin_urls
+from wagtail.documents import urls as wagtaildocs_urls
 
 from account import views
+from cms.api.router import api_router
 
 from .schema import schema
 
@@ -26,6 +29,7 @@ auth_patterns = (
     'ai_kit_auth',
 )
 
+
 graphql_view = GraphQLView.as_view(schema=schema)
 
 urlpatterns = [
@@ -34,6 +38,12 @@ urlpatterns = [
     path('csrf/', views.fetch_csrf),
     path('graphql/', csrf_exempt(graphql_view) if settings.GRAPHQL_CSRF_EXEMPT else graphql_view),
     path('api/v1/auth/', include(auth_patterns)),
+    # --- wagtail ---
+    # override wagtail login --> use django admin login instead
+    path('cms/login/', RedirectView.as_view(url=reverse_lazy('admin:login'), query_string=True)),
+    path('cms/api/v2/', api_router.urls),
+    path('cms/', include(wagtailadmin_urls)),
+    path('documents/', include(wagtaildocs_urls)),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

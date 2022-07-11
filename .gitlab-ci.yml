@@ -9,7 +9,7 @@ stages:
 
 # When using dind, it's wise to use the overlays driver for improved performance.
 variables:
-  TEST_HELM_CHART_VERSION: "0.4.1"  # <-- helm chart version for test server
+  TEST_HELM_CHART_VERSION: "0.5.0"  # <-- helm chart version for test server
   DOCKER_DRIVER: overlay2
   IMAGE_TAG_BACKEND: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_REF_SLUG
   IMAGE_TAG_FRONTEND: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_REF_SLUG
@@ -39,6 +39,7 @@ backend:lint:
     - ./scripts/lint.sh
   except:
     - /^helm[-/\/].*$/
+    - triggers
 
 backend:security-check:
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.9-slim
@@ -51,6 +52,7 @@ backend:security-check:
   allow_failure: true
   except:
     - /^helm[-/\/].*$/
+    - triggers
 
 backend:build-and-push:
   stage: build
@@ -70,6 +72,7 @@ backend:build-and-push:
     - docker push $IMAGE_TAG_BACKEND_SHA
   except:
     - /^helm[-/\/].*$/
+    - triggers
 
 backend:post-build-checks:
   stage: post-build
@@ -88,6 +91,7 @@ backend:post-build-checks:
 
   except:
     - /^helm[-/\/].*$/
+    - triggers
 
 backend:test:
   stage: post-build
@@ -127,6 +131,7 @@ backend:test:
     - docker stop $POSTGRES_CONTAINER_NAME
   except:
     - /^helm[-/\/].*$/
+    - triggers
 
 .deploy_helm_chart: &deploy_helm_chart
   - rancher login $RANCHER2_SERVER_URL --token $RANCHER2_ACCESS_KEY:$RANCHER2_SECRET_KEY --context $RANCHER2_CLUSTER_ID:$RANCHER2_PROJECT_ID
@@ -136,6 +141,7 @@ backend:test:
     --set backend.aws.secretAccessKey=$AWS_SECRET_ACCESS_KEY
     --set backend.db.password=$DB_PASSWORD
     --set backend.django.secretKey=$DJANGO_SECRET
+    --set backend.rebuildFrontendTrigger.token=$DJANGO_REBUILD_FRONTEND_TRIGGER_TOKEN
     --set backend.image.tag=$CI_COMMIT_SHORT_SHA
     --set frontend.image.tag=$CI_COMMIT_SHORT_SHA
     --set forceRestartAt=${CI_JOB_ID} $RANCHER_APP_NAME $HELM_CHART_VERSION ||
@@ -146,6 +152,7 @@ backend:test:
     --set backend.aws.secretAccessKey=$AWS_SECRET_ACCESS_KEY
     --set backend.db.password=$DB_PASSWORD
     --set backend.django.secretKey=$DJANGO_SECRET
+    --set backend.rebuildFrontendTrigger.token=$DJANGO_REBUILD_FRONTEND_TRIGGER_TOKEN
     --set backend.image.tag=$CI_COMMIT_SHORT_SHA
     --set frontend.image.tag=$CI_COMMIT_SHORT_SHA
     --version $HELM_CHART_VERSION
@@ -195,6 +202,7 @@ frontend:lint:
     - yarn lint
   except:
     - /^helm[-/\/].*$/
+    - triggers
 
 
 frontend:test:
@@ -217,6 +225,7 @@ frontend:test:
     - yarn test:ci
   except:
     - /^helm[-/\/].*$/
+    - triggers
 
 frontend:security-check:
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:14-alpine
@@ -230,6 +239,7 @@ frontend:security-check:
   allow_failure: true
   except:
     - /^helm[-/\/].*$/
+    - triggers
 
 frontend:build-and-push:
   stage: build
@@ -390,3 +400,4 @@ e2e:test:
     - docker stop $FRONTEND_CONTAINER_NAME && docker rm $FRONTEND_CONTAINER_NAME || true
   except:
     - /^helm[-/\/].*$/
+    - triggers
