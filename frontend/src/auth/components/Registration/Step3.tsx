@@ -1,11 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { TextField } from '@mui/material'
 import { useTranslation } from 'next-i18next'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { SchemaOf } from 'yup'
 
 import { FormStep, FormStepContainer } from '@/common/components/FormStep'
+import { PasswordInput } from '@/common/components/PasswordInput'
 import { passwordValidator } from '@/utils/form-validation.utils'
 
 import { useRegistrationContext } from './RegistrationContext'
@@ -54,12 +54,10 @@ export const Step3 = (_: Step3) => {
         title={t('registrationForm.step3Title')}
         description={t('registrationForm.step3Description')}
       >
-        <TextField
+        <PasswordInput
           autoFocus
-          label={t('password')}
           error={!!errors?.password}
           helperText={errorMsg(errors?.password?.message)}
-          type={'password'}
           autoComplete={'new-password'} // let the browser give suggestions
           required
           fullWidth

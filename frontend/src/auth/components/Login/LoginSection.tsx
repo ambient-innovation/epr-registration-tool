@@ -27,6 +27,7 @@ import { ErrorAlert } from '@/common/components/ErrorAlert'
 import { FormLayout } from '@/common/components/FormLayout'
 import { backgroundSx } from '@/common/components/FormStep/FormStep.styles'
 import { DEFAULT_FORM_SPACING } from '@/common/components/FormStep/constants'
+import { PasswordInput } from '@/common/components/PasswordInput'
 import { ROUTES } from '@/routes'
 import {
   emailValidator,
@@ -79,6 +80,7 @@ export const LoginSection = (): React.ReactElement => {
         setServerError(error)
       })
   }
+
   return (
     <FormLayout>
       {(router.query.alert === RESET_PW_COMPLETE_ALERT_KEY ||
@@ -124,11 +126,9 @@ export const LoginSection = (): React.ReactElement => {
                   {...register('email')}
                   dir={'ltr'} // email always written from left
                 />
-                <TextField
-                  label={t('password')}
+                <PasswordInput
                   error={!!errors?.password}
                   helperText={errorMsg(errors?.password?.message)}
-                  type={'password'}
                   required
                   fullWidth
                   {...register('password')}
