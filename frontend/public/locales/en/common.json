@@ -30,6 +30,7 @@
       "importer": "Importer",
       "localProducer": "Local producer"
     },
+    "country": "Country",
     "contactPerson": "Contact person",
     "step2Title": "Provide a contact person",
     "step2Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",

@@ -30,11 +30,13 @@ def register_company(
     user_position: str,
     user_phone_or_mobile: str,
     password: str,
+    country_code: str,
 ) -> str:
     company = Company(
         name=company_name.strip(),
         distributor_type=company_distributor_type,
         is_active=False,
+        country_code=country_code.strip().lower(),
     )
 
     selected_language = translation.get_language_from_request(info.context.request)

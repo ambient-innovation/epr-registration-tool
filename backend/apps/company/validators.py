@@ -32,3 +32,12 @@ def validate_allowed_image_formats(image):
             params={'extension': file_extension, 'allowed_extensions': ", ".join(allowed_extensions)},
             code='invalidExtension',
         )
+
+
+def validate_is_lower_case(value: str):
+    if not value.islower():
+        raise ValidationError(
+            _('Value must be lower case'),
+            params={'value': value},
+            code='stringMustBeLowerCase',
+        )

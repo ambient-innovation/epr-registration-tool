@@ -6,6 +6,7 @@ import * as yup from 'yup'
 import { SchemaOf } from 'yup'
 
 import { getDistributorTypeOptions } from '@/auth/components/Registration/constants'
+import { COUNTRY_OPTIONS } from '@/auth/components/Registration/countries'
 import { FormStep, FormStepContainer } from '@/common/components/FormStep'
 import { DEFAULT_FORM_SPACING } from '@/common/components/FormStep/constants'
 import { requiredStringValidator } from '@/utils/form-validation.utils'
@@ -14,7 +15,11 @@ import { pick } from '@/utils/typescript.utils'
 import { useRegistrationContext } from './RegistrationContext'
 import { RegistrationData } from './types'
 
-const FIELD_NAMES = ['companyName', 'companyDistributorType'] as const
+const FIELD_NAMES = [
+  'companyName',
+  'companyDistributorType',
+  'countryCode',
+] as const
 
 type FieldName = typeof FIELD_NAMES[number]
 type FormData = Pick<RegistrationData, FieldName>
@@ -24,6 +29,7 @@ export type Step1 = Record<string, never>
 const schema: SchemaOf<Record<FieldName, unknown>> = yup.object().shape({
   companyName: requiredStringValidator(),
   companyDistributorType: requiredStringValidator().nullable(),
+  countryCode: requiredStringValidator(),
 })
 
 const resolver = yupResolver(schema)
@@ -42,7 +48,6 @@ export const Step1 = (_: Step1) => {
     translationKey && (t(translationKey) as string)
 
   const { errors } = formState
-
   return (
     <FormStep onSubmit={handleSubmit(onSubmit)}>
       <FormStepContainer
@@ -92,6 +97,33 @@ export const Step1 = (_: Step1) => {
                         helperText={errorMsg(
                           errors?.companyDistributorType?.message
                         )}
+                        fullWidth
+                        required
+                      />
+                    )
+                  }}
+                />
+              )
+            }}
+          />
+          <Controller
+            control={control}
+            name={'countryCode'}
+            render={({ field: { onChange, ref }, formState: { errors } }) => {
+              return (
+                <Autocomplete
+                  options={COUNTRY_OPTIONS}
+                  onChange={(_, value) => {
+                    onChange(value?.value)
+                  }}
+                  renderInput={(params) => {
+                    return (
+                      <TextField
+                        {...params}
+                        inputRef={ref}
+                        label={t('registrationForm.country')}
+                        error={!!errors?.countryCode}
+                        helperText={errorMsg(errors?.countryCode?.message)}
                         fullWidth
                         required
                       />

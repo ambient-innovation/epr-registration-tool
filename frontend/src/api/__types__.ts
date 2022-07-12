@@ -150,6 +150,7 @@ export type MutationPackagingReportForecastUpdateArgs = {
 export type MutationRegisterCompanyArgs = {
   companyDistributorType: DistributorType
   companyName: Scalars['String']
+  countryCode: Scalars['String']
   password: Scalars['String']
   userEmail: Scalars['String']
   userFullName: Scalars['String']
@@ -258,6 +259,7 @@ export type RegisterCompanyMutationVariables = Exact<{
   userPosition: Scalars['String']
   userPhoneOrMobile: Scalars['String']
   password: Scalars['String']
+  countryCode: Scalars['String']
 }>
 
 export type RegisterCompanyMutation = {
@@ -544,6 +546,7 @@ export const RegisterCompanyDocument = gql`
     $userPosition: String!
     $userPhoneOrMobile: String!
     $password: String!
+    $countryCode: String!
   ) {
     registerCompany(
       companyName: $companyName
@@ -554,6 +557,7 @@ export const RegisterCompanyDocument = gql`
       userPosition: $userPosition
       userPhoneOrMobile: $userPhoneOrMobile
       password: $password
+      countryCode: $countryCode
     )
   }
 `

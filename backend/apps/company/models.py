@@ -8,7 +8,8 @@ from ai_django_core.models import CommonInfo
 
 from common.storage_backend import private_file_storage
 from company.managers import CompanyQuerySet
-from company.validators import validate_allowed_image_formats, validate_max_image_size
+from company.validators import validate_allowed_image_formats, validate_is_lower_case, validate_max_image_size
+from config import settings
 
 
 class DistributorType(models.TextChoices):
@@ -37,6 +38,18 @@ class Company(CommonInfo):
     )
     identification_number = models.CharField(
         verbose_name=_('National identification number'), blank=True, max_length=255
+    )
+    country_code = models.CharField(
+        verbose_name=_('Country code'),
+        max_length=2,
+        validators=(validate_is_lower_case,),
+        default=settings.DEFAULT_LANGUAGE_CODE,
+        help_text=(
+            '<a target="_blank" href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">'
+            'ISO 3166-1-alpha-2'
+            '</a> '
+            '(lower cased)'
+        ),
     )
     logo = models.ImageField(
         _('Logo'),

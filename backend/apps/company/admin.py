@@ -67,7 +67,16 @@ class CompanyAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
         ),
         (
             _('General Information'),
-            {'fields': ('name', 'distributor_type', 'identification_number', 'logo', 'current_logo')},
+            {
+                'fields': (
+                    'name',
+                    'distributor_type',
+                    'identification_number',
+                    'country_code',
+                    'logo',
+                    'current_logo',
+                )
+            },
         ),
     )
 

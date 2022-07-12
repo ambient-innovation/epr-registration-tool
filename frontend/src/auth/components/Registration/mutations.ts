@@ -10,6 +10,7 @@ export const REGISTER_MUTATION = gql`
     $userPosition: String!
     $userPhoneOrMobile: String!
     $password: String!
+    $countryCode: String!
   ) {
     registerCompany(
       companyName: $companyName
@@ -20,6 +21,7 @@ export const REGISTER_MUTATION = gql`
       userPosition: $userPosition
       userPhoneOrMobile: $userPhoneOrMobile
       password: $password
+      countryCode: $countryCode
     )
   }
 `
