@@ -22,4 +22,8 @@ export const ROUTES = {
   // --- account & settings ---
   accountSettingsChangePassword: '/account-settings/change-password',
   accountSettingsChangeLanguage: '/account-settings/change-language',
+  // --- cms ----
+  cmsPage: (slug: string) => `/${slug}`,
+  previewApi: '/api/preview',
+  stopPreviewApi: '/api/stop-preview',
 }

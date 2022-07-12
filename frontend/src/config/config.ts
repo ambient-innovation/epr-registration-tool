@@ -6,6 +6,8 @@ const config = {
   SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
   SENTRY_ENVIRONMENT: process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT,
   SENTRY_RELEASE: process.env.NEXT_PUBLIC_SENTRY_RELEASE,
+
+  PREVIEW_SECRET: process.env.PREVIEW_SECRET,
 }
 
 export default config

@@ -13,6 +13,7 @@ import merge from 'deepmerge'
 import { isEqual } from 'lodash'
 import { useEffect, useMemo } from 'react'
 
+import { DEFAULT_LOCALE } from '@/config/i18n'
 import { handleError } from '@/utils/error.utils'
 import { joinUrl } from '@/utils/url.utils'
 
@@ -22,7 +23,6 @@ export const GRAPHQL_URI = joinUrl(config.API_URL, 'graphql/')
 export const AUTH_URI = joinUrl(config.API_URL, 'csrf/')
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_CACHE__'
 export const LOCAL_STORAGE_KEY_LOCALE = 'locale'
-export const DEFAULT_LOCALE = 'en'
 
 type ApolloClientType = ApolloClient<NormalizedCacheObject>
 

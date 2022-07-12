@@ -34,7 +34,7 @@ const ReportSuccessPage: NextPage = () => {
           <Grid container mt={8} justifyContent={'end'} alignItems={'center'}>
             <Grid>
               <NextLink href={ROUTES.forecast} passHref>
-                <Button variant={'inverted'} color={'primary'} component={'a'}>
+                <Button variant={'outlined'} color={'primary'} component={'a'}>
                   {t('reportForm.createAnotherReport')}
                 </Button>
               </NextLink>

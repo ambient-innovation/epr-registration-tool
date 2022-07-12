@@ -15,6 +15,10 @@
   "currency": "JOD",
   "kg": "kg",
   "edit": "Edit",
+  "previewAlert": {
+    "youAreInPreviewMode": "You are in preview mode",
+    "stopPreview": "Stop preview"
+  },
   "registrationForm": {
     "createNewAccount": "Create new account",
     "generalCompanyInformation": "General company information",

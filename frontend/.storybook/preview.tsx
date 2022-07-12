@@ -6,8 +6,11 @@ import { RouterContext } from 'next/dist/shared/lib/router-context'
 import { useEffect } from 'react'
 import { I18nextProvider, initReactI18next } from 'react-i18next'
 
+// @ts-ignore
 import commonAr from '../public/locales/ar/common.json'
+// @ts-ignore
 import commonEn from '../public/locales/en/common.json'
+import { DEFAULT_LOCALE, LOCALES } from '../src/config/i18n'
 import { theme } from '../src/theme'
 import './nextImage'
 import { customViewports } from './viewports'
@@ -70,6 +73,6 @@ export const parameters = {
     MockedProvider,
   },
   nextRouter: { Provider: RouterContext.Provider },
-  locales: ['en', 'ar'],
-  defaultLocale: 'en',
+  locales: LOCALES,
+  defaultLocale: DEFAULT_LOCALE,
 }

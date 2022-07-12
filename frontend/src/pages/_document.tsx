@@ -1,6 +1,7 @@
 import createEmotionServer from '@emotion/server/create-instance'
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
+import { DEFAULT_LOCALE } from '@/config/i18n'
 import { theme } from '@/theme'
 import { createEmotionCache } from '@/theme'
 
@@ -67,7 +68,7 @@ MyDocument.getInitialProps = async (ctx) => {
   // 4. page.render
 
   const originalRenderPage = ctx.renderPage
-  const locale = ctx?.locale || 'en'
+  const locale = ctx?.locale || DEFAULT_LOCALE
   const dir = locale === 'ar' ? 'rtl' : 'ltr'
   // You can consider sharing the same emotion cache between all the SSR requests to speed up performance.
   // However, be aware that it can have global side effects.

@@ -56,7 +56,7 @@ export const ReportListSection = ({
             <Link href={ROUTES.forecast} passHref>
               <Button
                 component={'a'}
-                variant={'inverted'}
+                variant={'outlined'}
                 color={'primary'}
                 disabled={!canAddReport}
               >
