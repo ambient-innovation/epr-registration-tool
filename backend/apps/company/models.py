@@ -1,4 +1,5 @@
 import os
+import uuid
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -56,6 +57,7 @@ class Company(CommonInfo):
     def update_logo(self, image):
         self.logo = image
         file_name, file_extension = os.path.splitext(image.name)
+        file_name = str(uuid.uuid4())
         self.logo.name = f'{file_name}{file_extension}'
 
 
