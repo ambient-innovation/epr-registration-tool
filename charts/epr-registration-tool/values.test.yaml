@@ -57,7 +57,7 @@ backend:
       cpu: 50m # Most workloads are idling most of the time, for that reason, you can request relatively low CPU as a baseline. Check out your workload metrics in Rancher to see what is approximately the baseline of CPU consumption.
       memory: 400Mi # For memory request, see your workload metrics in Rancher and set memory request slightly above baseline of your memory usage, for example, if your memory usage is around 360Mi, set your request 400Mi.
   livenessProbe: # Pay attention -> This setting let you configure a periodic check to make sure that your web app is still alive. If it is considered problematic, your web app automatically will be restarted.
-    failureThreshold: 3 # The application will be unhealthy after this number of failures.
+    failureThreshold: 10 # The application will be unhealthy after this number of failures.
     httpGet: # You need to adjust where to send http get request according to your own application.
       httpHeaders:
         - name: Host
@@ -65,12 +65,12 @@ backend:
       path: /admin/
       port: 8000
       scheme: HTTP
-    initialDelaySeconds: 15 # Wait number of seconds before performing first check.
+    initialDelaySeconds: 30 # Wait number of seconds before performing first check.
     periodSeconds: 15 # Wait number of seconds between each check.
     successThreshold: 1
     timeoutSeconds: 15 # Number of seconds to wait for timeout on each request.
   readinessProbe: # Pay attention -> This setting is used to determine whether - for the initial boot of your application - your application is ready to start receiving traffic or not.
-    failureThreshold: 10 # initialDelaySeconds + failureThreshold * periodSeconds until deployment fails
+    failureThreshold: 10 # The application will be unhealthy after this number of failures.
     httpGet:
       httpHeaders:
         - name: Host
@@ -78,7 +78,7 @@ backend:
       path: /admin/
       port: 8000
       scheme: HTTP
-    initialDelaySeconds: 15 # If your application needs a lot of initial delay (e.g. more than 10-15 seconds) check what is slowing the boot time and check if there is anything you can do to speed up the boot time. If you are not sure what to do, ask to Ops team for guidance.
+    initialDelaySeconds: 30 # If your application needs a lot of initial delay (e.g. more than 10-15 seconds) check what is slowing the boot time and check if there is anything you can do to speed up the boot time. If you are not sure what to do, ask to Ops team for guidance.
     periodSeconds: 15
     successThreshold: 1
     timeoutSeconds: 15
