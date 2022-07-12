@@ -1,16 +1,7 @@
 import { defaultGridSx, layout, maxWidthCss } from '@/theme/layout'
 import { SxStyleObject, SxStyles } from '@/theme/utils'
 
-export const fullHeightCss: SxStyleObject = {
-  // to be placed in another flex container
-  // --> take remaining space
-  flexGrow: 1,
-  // allow children to do the same
-  // --> define flex container
-  display: 'flex',
-}
-
-export const containerCssTest: SxStyles = [
+export const containerCss: SxStyles = [
   maxWidthCss,
   defaultGridSx,
   {

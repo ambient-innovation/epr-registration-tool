@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Box, Stack, TextField, Typography } from '@mui/material'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useId } from 'react'
 import { useForm } from 'react-hook-form'
 import { ref, SchemaOf } from 'yup'
 import * as yup from 'yup'
@@ -22,12 +22,6 @@ import { ChangePasswordData } from './types'
 
 export const CHANGE_PW_COMPLETE_ALERT_KEY = 'changePasswordComplete'
 
-type ChangePasswordFormType = {
-  titleId: string
-  firstDescriptionId: string
-  secondDescriptionId: string
-}
-
 const schema: SchemaOf<Record<keyof ChangePasswordData, unknown>> = yup
   .object()
   .shape({
@@ -40,11 +34,12 @@ const schema: SchemaOf<Record<keyof ChangePasswordData, unknown>> = yup
 
 const resolver = yupResolver(schema)
 
-export const ChangePasswordForm = ({
-  titleId,
-  firstDescriptionId,
-  secondDescriptionId,
-}: ChangePasswordFormType): React.ReactElement => {
+export const ChangePasswordForm = (): React.ReactElement => {
+  const titleId = useId()
+  const firstDescriptionId = useId()
+  const secondDescriptionId = useId()
+  const descriptionId = firstDescriptionId.concat(' ', secondDescriptionId)
+
   const { t } = useTranslation()
   const { setLoggedIn } = useUser()
   const router = useRouter()
@@ -88,69 +83,75 @@ export const ChangePasswordForm = ({
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate>
-      <Box sx={backgroundSx}>
-        <header>
-          <Typography id={titleId} component={'h2'} variant={'h3'}>
-            {t('accountSettings.changePasswordForm.title')}
-          </Typography>
-          <Typography
-            id={firstDescriptionId}
-            variant={'body1'}
-            mt={{ xs: 5, sm: 6 }}
-          >
-            {t('accountSettings.changePasswordForm.description1')}
-          </Typography>
-          <Typography
-            id={secondDescriptionId}
-            variant={'body1'}
-            mt={{ xs: 5, sm: 6 }}
-          >
-            {t('accountSettings.changePasswordForm.description2')}
-          </Typography>
-        </header>
-        <Box marginTop={{ xs: 9, md: 10 }}>
-          <Stack spacing={DEFAULT_FORM_SPACING}>
-            <TextField
-              label={t('accountSettings.changePasswordForm.oldPassword')}
-              error={!!errors?.oldPassword}
-              helperText={
-                errors?.oldPassword?.message
-                  ? errorMsg(errors?.oldPassword?.message)
-                  : t('accountSettings.changePasswordForm.oldPasswordHelpText')
-              }
-              type={'password'}
-              required
-              fullWidth
-              {...register('oldPassword')}
-            />
-            <TextField
-              label={t('accountSettings.changePasswordForm.newPassword')}
-              error={!!errors?.newPassword}
-              helperText={errorMsg(errors?.newPassword?.message)}
-              type={'password'}
-              required
-              fullWidth
-              {...register('newPassword')}
-            />
-          </Stack>
+    <section aria-labelledby={titleId} aria-describedby={descriptionId}>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <Box sx={backgroundSx}>
+          <header>
+            <Typography id={titleId} component={'h2'} variant={'h3'}>
+              {t('accountSettings.changePasswordForm.title')}
+            </Typography>
+            <Typography
+              id={firstDescriptionId}
+              variant={'body1'}
+              mt={{ xs: 5, sm: 6 }}
+            >
+              {t('accountSettings.changePasswordForm.description1')}
+            </Typography>
+            <Typography
+              id={secondDescriptionId}
+              variant={'body1'}
+              mt={{ xs: 5, sm: 6 }}
+            >
+              {t('accountSettings.changePasswordForm.description2')}
+            </Typography>
+          </header>
+          <Box marginTop={{ xs: 9, md: 10 }}>
+            <Stack spacing={DEFAULT_FORM_SPACING}>
+              <TextField
+                label={t('accountSettings.changePasswordForm.oldPassword')}
+                error={!!errors?.oldPassword}
+                helperText={
+                  errors?.oldPassword?.message
+                    ? errorMsg(errors?.oldPassword?.message)
+                    : t(
+                        'accountSettings.changePasswordForm.oldPasswordHelpText'
+                      )
+                }
+                type={'password'}
+                required
+                fullWidth
+                {...register('oldPassword')}
+              />
+              <TextField
+                label={t('accountSettings.changePasswordForm.newPassword')}
+                error={!!errors?.newPassword}
+                helperText={errorMsg(errors?.newPassword?.message)}
+                type={'password'}
+                required
+                fullWidth
+                {...register('newPassword')}
+              />
+            </Stack>
+          </Box>
         </Box>
-      </Box>
-      {error && (
-        <Box mt={5}>
-          <ApolloErrorAlert
-            title={t('accountSettings.changePasswordForm.passwordResetFailed')}
-            error={error}
-          />
-        </Box>
-      )}
-      <FormSubmitFooter
-        sx={footerSx}
-        isSubmitting={formState.isSubmitting}
-        buttonLabelKey={
-          'accountSettings.changePasswordForm.submitChangePassword'
-        }
-      />
-    </form>
+        {error && (
+          <Box mt={5}>
+            <ApolloErrorAlert
+              title={t(
+                'accountSettings.changePasswordForm.passwordResetFailed'
+              )}
+              error={error}
+            />
+          </Box>
+        )}
+        <FormSubmitFooter
+          sx={footerSx}
+          isSubmitting={formState.isSubmitting}
+          buttonLabelKey={
+            'accountSettings.changePasswordForm.submitChangePassword'
+          }
+        />
+      </form>
+    </section>
   )
 }

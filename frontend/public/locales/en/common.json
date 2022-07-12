@@ -150,6 +150,15 @@
        "oldPasswordHelpText": "Please enter your old password for confirmation",
        "submitChangePassword": "Change Password",
        "passwordResetFailed": "Password Reset failed"
+     },
+    "changeLanguageForm": {
+       "title": "Edit language of correspondance",
+        "tabTitle": "LANGUAGE",
+       "description": "Here you can set the language in which the email correspondence should take place.",
+       "label": "Edit language of correspondance",
+       "submitLanguagePassword": "Save changes",
+       "languageChangeFailed": "Language change failed",
+      "notification": "Your language has been updated."
      }
   },
   "activation": {

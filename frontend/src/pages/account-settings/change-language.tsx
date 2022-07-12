@@ -12,14 +12,14 @@ import { ROUTES } from '@/routes'
 import { maxWidthCss, paddedSectionCss } from '@/theme/layout'
 import { H1_DEFAULT_SPACING } from '@/theme/utils'
 
-const ChangePasswordPage: NextPage = () => {
+const ChangeLanguagePage: NextPage = () => {
   const { t } = useTranslation()
 
   return (
     <>
       <DefaultPageHead
-        subPageTitle={t('accountSettings.changePasswordForm.title')}
-        relativePath={ROUTES.accountSettingsChangePassword}
+        subPageTitle={t('accountSettings.changeLanguageForm.title')}
+        relativePath={ROUTES.accountSettingsChangeLanguage}
       />
       <PageLayout>
         <ProtectedPage>
@@ -29,7 +29,7 @@ const ChangePasswordPage: NextPage = () => {
             </Typography>
             <Divider />
           </Box>
-          <AccountSettingsSection activeSection={TabOptions.changePassword} />
+          <AccountSettingsSection activeSection={TabOptions.changeLanguage} />
         </ProtectedPage>
       </PageLayout>
     </>
@@ -44,4 +44,4 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   }
 }
 
-export default ChangePasswordPage
+export default ChangeLanguagePage

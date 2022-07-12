@@ -73,6 +73,11 @@ export type ForecastSubmissionType = {
   materialRecords: Array<MaterialRecordType>
 }
 
+export enum LanguageEnum {
+  ar = 'ar',
+  en = 'en',
+}
+
 export type MaterialInput = {
   materialId: Scalars['ID']
   quantity: Scalars['Decimal']
@@ -104,7 +109,7 @@ export type Mutation = {
 }
 
 export type MutationChangeLanguageArgs = {
-  languageCode: Scalars['String']
+  languageCode: LanguageEnum
 }
 
 export type MutationChangePasswordArgs = {
@@ -214,7 +219,17 @@ export type UserType = {
   email: Scalars['String']
   fullName: Scalars['String']
   id: Scalars['ID']
+  languagePreference: LanguageEnum
   title: Scalars['String']
+}
+
+export type ChangeLanguageMutationVariables = Exact<{
+  languageCode: LanguageEnum
+}>
+
+export type ChangeLanguageMutation = {
+  __typename?: 'Mutation'
+  changeLanguage: string
 }
 
 export type ChangePasswordMutationVariables = Exact<{
@@ -253,6 +268,7 @@ export type MeQuery = {
     email: string
     title: string
     fullName: string
+    languagePreference: LanguageEnum
   } | null
 }
 
@@ -435,6 +451,36 @@ export type PackagingReportFinalDetailsQuery = {
   } | null
 }
 
+export const ChangeLanguageDocument = gql`
+  mutation changeLanguage($languageCode: LanguageEnum!) {
+    changeLanguage(languageCode: $languageCode)
+  }
+`
+export type ChangeLanguageMutationFn = Apollo.MutationFunction<
+  ChangeLanguageMutation,
+  ChangeLanguageMutationVariables
+>
+export function useChangeLanguageMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ChangeLanguageMutation,
+    ChangeLanguageMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    ChangeLanguageMutation,
+    ChangeLanguageMutationVariables
+  >(ChangeLanguageDocument, options)
+}
+export type ChangeLanguageMutationHookResult = ReturnType<
+  typeof useChangeLanguageMutation
+>
+export type ChangeLanguageMutationResult =
+  Apollo.MutationResult<ChangeLanguageMutation>
+export type ChangeLanguageMutationOptions = Apollo.BaseMutationOptions<
+  ChangeLanguageMutation,
+  ChangeLanguageMutationVariables
+>
 export const ChangePasswordDocument = gql`
   mutation changePassword($oldPassword: String!, $newPassword: String!) {
     changePassword(oldPassword: $oldPassword, newPassword: $newPassword)
@@ -520,6 +566,7 @@ export const MeDocument = gql`
       email
       title
       fullName
+      languagePreference
     }
   }
 `
