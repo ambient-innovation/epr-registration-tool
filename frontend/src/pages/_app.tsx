@@ -8,6 +8,7 @@ import { useEffect } from 'react'
 
 import { UserProvider } from '@/auth/hooks/useUser'
 import { useApollo } from '@/config/apolloClient'
+import { DEFAULT_LOCALE } from '@/config/i18n'
 import { initSentry } from '@/config/sentry'
 import { theme, EmotionCacheProvider } from '@/theme'
 
@@ -16,7 +17,7 @@ initSentry()
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { locale } = useRouter()
-  const apolloClient = useApollo(pageProps, locale ? locale : 'en')
+  const apolloClient = useApollo(pageProps, locale || DEFAULT_LOCALE)
 
   useEffect(() => {
     const dir = locale === 'ar' ? 'rtl' : 'ltr'

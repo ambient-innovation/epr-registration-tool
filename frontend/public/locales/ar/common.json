@@ -15,6 +15,10 @@
   "currency": "د.أ",
   "kg": "كلغ",
   "edit": "تعديل",
+  "previewAlert": {
+    "youAreInPreviewMode": "You are in preview mode",
+    "stopPreview": "Stop preview"
+  },
   "registrationForm": {
     "createNewAccount": "انشاء حساب جديد",
     "generalCompanyInformation": "معلومات عامة عن الشركة",
