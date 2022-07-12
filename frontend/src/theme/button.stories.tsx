@@ -73,6 +73,7 @@ export const Button = (): React.ReactElement => {
         justifyContent={'start'}
         rowSpacing={2}
         mt={10}
+        sx={{ backgroundColor: 'primary.main', padding: 5 }}
       >
         {invertedColors.map((color, index) => (
           <Grid item xs={3} key={index}>

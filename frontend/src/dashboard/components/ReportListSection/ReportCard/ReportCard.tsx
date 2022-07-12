@@ -74,14 +74,14 @@ export const ReportCard = ({
   ) : (
     <>
       <NextLink href={ROUTES.dataReportView(reportId)} passHref>
-        <Button component={'a'} variant={'inverted'}>
+        <Button component={'a'} variant={'outlined'}>
           {'view'}
         </Button>
       </NextLink>
       {invoiceFile && (
         <Button
           component={'a'}
-          variant={'inverted'}
+          variant={'outlined'}
           target={'_blank'}
           href={invoiceFile.url}
           sx={{ marginLeft: 6 }}
