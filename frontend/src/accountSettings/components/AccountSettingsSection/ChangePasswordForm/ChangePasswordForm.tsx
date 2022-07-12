@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Box, Stack, TextField, Typography } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import React, { useId } from 'react'
@@ -12,6 +12,7 @@ import { useUser } from '@/auth/hooks/useUser'
 import { ApolloErrorAlert } from '@/common/components/ApolloErrorAlert'
 import { DEFAULT_FORM_SPACING } from '@/common/components/FormStep/constants'
 import { FormSubmitFooter } from '@/common/components/FormSubmitFooter'
+import { PasswordInput } from '@/common/components/PasswordInput'
 import {
   passwordValidator,
   requiredStringValidator,
@@ -107,7 +108,7 @@ export const ChangePasswordForm = (): React.ReactElement => {
           </header>
           <Box marginTop={{ xs: 9, md: 10 }}>
             <Stack spacing={DEFAULT_FORM_SPACING}>
-              <TextField
+              <PasswordInput
                 label={t('accountSettings.changePasswordForm.oldPassword')}
                 error={!!errors?.oldPassword}
                 helperText={
@@ -117,16 +118,14 @@ export const ChangePasswordForm = (): React.ReactElement => {
                         'accountSettings.changePasswordForm.oldPasswordHelpText'
                       )
                 }
-                type={'password'}
                 required
                 fullWidth
                 {...register('oldPassword')}
               />
-              <TextField
+              <PasswordInput
                 label={t('accountSettings.changePasswordForm.newPassword')}
                 error={!!errors?.newPassword}
                 helperText={errorMsg(errors?.newPassword?.message)}
-                type={'password'}
                 required
                 fullWidth
                 {...register('newPassword')}
