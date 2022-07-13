@@ -16,6 +16,7 @@ type CompanyType {
   createdAt: DateTime!
   identificationNumber: String!
   isProfileCompleted: Boolean!
+  logo: DjangoFileType
 }
 
 """Date with time (isoformat)"""
@@ -74,6 +75,7 @@ type Mutation {
   changePassword(oldPassword: String!, newPassword: String!): String!
   registerCompany(companyName: String!, companyDistributorType: DistributorType!, userEmail: String!, userTitle: String!, userFullName: String!, userPosition: String!, userPhoneOrMobile: String!, password: String!): String!
   createCompanyProfile(profileData: CompanyProfileInputType!, identificationNumber: String!): String!
+  changeCompanyLogo(file: Upload = null): String!
   packagingReportForecastSubmit(timeframe: TimeframeType!, year: Int!, startMonth: Int!, tzInfo: String!, packagingRecords: [PackagingGroupInput!]!): String!
   packagingReportFinalDataSubmit(packagingReportId: ID!, packagingRecords: [PackagingGroupInput!]!): String!
   packagingReportForecastUpdate(packagingReportId: ID!, packagingRecords: [PackagingGroupInput!]!): String!
@@ -123,6 +125,8 @@ enum TimeframeType {
   THREE_MONTHS
   TWELVE_MONTHS
 }
+
+scalar Upload
 
 type UserType {
   id: ID!

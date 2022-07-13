@@ -1,3 +1,5 @@
+from urllib.parse import urljoin
+
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 
@@ -13,10 +15,12 @@ class PrivateMediaStorage(S3Boto3Storage):
     custom_domain = False
 
 
+absolute_media_url = urljoin(settings.BASE_URL, settings.MEDIA_URL)
+
 if settings.AWS_PRIVATE_MEDIA_LOCATION:
     PRIVATE_FILE_STORAGE = PrivateMediaStorage()
 else:
-    file_system_storage = FileSystemStorage(location=settings.MEDIA_ROOT, base_url=settings.MEDIA_URL)
+    file_system_storage = FileSystemStorage(location=settings.MEDIA_ROOT, base_url=absolute_media_url)
     PRIVATE_FILE_STORAGE = file_system_storage
 
 

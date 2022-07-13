@@ -8,6 +8,7 @@ import {
 } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { onError } from '@apollo/client/link/error'
+import { createUploadLink } from 'apollo-upload-client'
 import cookie from 'cookie'
 import merge from 'deepmerge'
 import { isEqual } from 'lodash'
@@ -68,6 +69,11 @@ const httpLink = new HttpLink({
   uri: GRAPHQL_URI,
 })
 
+const httpUploadLink = createUploadLink({
+  // absolute server url
+  uri: GRAPHQL_URI,
+})
+
 /**
  * A "middleware" that handles graphql errors:
  * - graphQLErrors --> report to sentry
@@ -85,7 +91,11 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 function createApolloClient() {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
-    link: ApolloLink.from([authLink, errorLink, httpLink]),
+    // Typing of `concat` and `apollo-upload-client` are incompatible
+    // but it seems to work anyway.
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    link: ApolloLink.from([authLink, errorLink, httpUploadLink]),
     cache: new InMemoryCache(cacheOptions),
   })
 }

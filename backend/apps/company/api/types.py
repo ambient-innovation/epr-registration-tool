@@ -1,7 +1,9 @@
+import typing
 from typing import Optional
 
 import strawberry
 from strawberry.django import auto
+from strawberry_django import DjangoFileType
 
 from company.models import Company, CompanyContactInfo
 
@@ -19,6 +21,12 @@ class CompanyType:
     @strawberry.django.field
     def is_profile_completed(self, root: Company) -> bool:
         return getattr(root, 'is_profile_completed', False)
+
+    @strawberry.django.field
+    def logo(self, root) -> typing.Optional[DjangoFileType]:
+        if root.logo:
+            return root.logo
+        return None
 
 
 @strawberry.django.input(CompanyContactInfo)

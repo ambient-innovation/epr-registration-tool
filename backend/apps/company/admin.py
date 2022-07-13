@@ -1,5 +1,6 @@
 from django.contrib import admin, messages
 from django.db.models import OuterRef, Subquery
+from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
@@ -58,6 +59,7 @@ class CompanyAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
     )
     list_filter = ('is_active',)
     search_fields = ('name',)
+    readonly_fields = ('current_logo',)
     fieldsets = (
         (
             None,
@@ -65,13 +67,7 @@ class CompanyAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
         ),
         (
             _('General Information'),
-            {
-                'fields': (
-                    'name',
-                    'distributor_type',
-                    'identification_number',
-                )
-            },
+            {'fields': ('name', 'distributor_type', 'identification_number', 'logo', 'current_logo')},
         ),
     )
 
@@ -101,6 +97,10 @@ class CompanyAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
     @admin.display(description='Profile completed', boolean=True)
     def is_profile_completed(self, obj):
         return obj.is_profile_completed
+
+    @admin.display(description=_('Current logo'))
+    def current_logo(self, obj):
+        return format_html('<img src={logo_url} width="100" height="100" />', logo_url=obj.logo.url)
 
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)

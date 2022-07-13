@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.db import transaction
@@ -6,6 +8,7 @@ from django.utils import translation
 import strawberry
 from graphql import GraphQLError
 from sentry_sdk import capture_exception
+from strawberry.file_uploads import Upload
 from strawberry.types import Info
 from strawberry_django.mutations.fields import get_input_data
 
@@ -119,9 +122,37 @@ def create_company_profile(info: Info, profile_data: CompanyProfileInputType, id
     return 'CREATED'
 
 
+def change_company_logo(info: Info, file: Optional[Upload] = None) -> str:
+    user = info.context.request.user
+    company = user.related_company
+
+    try:
+        if not file:
+            company.logo.delete()
+        else:
+            company.update_logo(file)
+
+        company.full_clean()
+    except ValidationError as e:
+        if 'logo' in e.error_dict:
+            code = e.error_dict['logo'][0].code
+        else:
+            # other validation errors
+            code = 'validationError'
+        raise GraphQLError(code, original_error=e)
+
+    with transaction.atomic():
+        company.save()
+
+    return "UPDATED"
+
+
 @strawberry.type
 class RegisterCompanyMutation:
     register_company: str = strawberry.field(resolver=register_company)
     create_company_profile: str = strawberry.field(
         resolver=create_company_profile, permission_classes=[IsAuthenticated, IsActivated]
+    )
+    change_company_logo: str = strawberry.field(
+        resolver=change_company_logo, permission_classes=[IsAuthenticated, IsActivated]
     )

@@ -1,15 +1,27 @@
-import { Alert, Box, Grid, Skeleton, Typography } from '@mui/material'
+import {
+  Alert,
+  Box,
+  Grid,
+  Skeleton,
+  Typography,
+  Dialog,
+  useMediaQuery,
+} from '@mui/material'
+import { useTheme } from '@mui/system'
 import { useTranslation } from 'next-i18next'
 import { Fragment } from 'react'
+import React, { useState, useCallback } from 'react'
 
 import { CompanyType, useCompanyDetailsQuery } from '@/api/__types__'
 import { useUser } from '@/auth/hooks/useUser'
+import { CompanyLogo } from '@/common/components/CompanyLogo'
 import { CompletionAlert } from '@/dashboard/components/Dashboard/CompletionAltert'
 import { DashboardHeader } from '@/dashboard/components/Dashboard/DashboardHeader'
 import { ReportListSection } from '@/dashboard/components/ReportListSection'
-import { defaultContainerSx } from '@/theme/layout'
+import { defaultContainerSx, defaultGridSx } from '@/theme/layout'
 import { fontWeights } from '@/theme/typography'
 
+import { UploadLogoDialogContent } from '../UploadLogoDiaologContent'
 import { distributorTypes } from './constants'
 
 export type Dashboard = Record<string, never>
@@ -18,7 +30,11 @@ export interface BaseData {
 }
 
 const BaseData = ({ companyInformation }: BaseData): React.ReactElement => {
+  const [isUploadLogoDialogOpen, openUploadLogoDialog] =
+    useState<boolean>(false)
   const { t } = useTranslation()
+  const theme = useTheme()
+  const dialogFullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const { name, ...companyBaseData } = companyInformation
   const preparedData = {
     registrationNumber: companyBaseData.identificationNumber || 'Not set',
@@ -29,21 +45,46 @@ const BaseData = ({ companyInformation }: BaseData): React.ReactElement => {
     ).toLocaleDateString(),
   }
 
+  const closeDialog = useCallback(() => {
+    openUploadLogoDialog(false)
+  }, [])
+
   return (
     <>
-      <Typography variant={'h2'}>{name}</Typography>
-      <Grid container sx={{ mt: 6 }}>
-        {Object.entries(preparedData).map(([key, value]) => (
-          <Fragment key={key}>
-            <Grid item xs={6} md={3}>
-              <Typography>{`${t(`dashboard.${key}`)}:`}</Typography>
-            </Grid>
-            <Grid item xs={6} md={3}>
-              <Typography fontWeight={fontWeights.bold}>{value}</Typography>
-            </Grid>
-          </Fragment>
-        ))}
-      </Grid>
+      <Box sx={[defaultGridSx]}>
+        <Box sx={{ mb: { xs: 8, sm: 0 } }}>
+          <CompanyLogo
+            imageSrc={companyInformation.logo?.url}
+            onLogoClick={() => openUploadLogoDialog(true)}
+          />
+        </Box>
+        <Box sx={{ gridColumn: { xs: '1 / -1 ', sm: '2 / -1' } }}>
+          <Typography variant={'h2'}>{name}</Typography>
+          <Grid container sx={{ mt: 6 }}>
+            {Object.entries(preparedData).map(([key, value]) => (
+              <Fragment key={key}>
+                <Grid item xs={6} md={3}>
+                  <Typography variant={'body2'}>{`${t(
+                    `dashboard.${key}`
+                  )}:`}</Typography>
+                </Grid>
+                <Grid item xs={6} md={3}>
+                  <Typography variant={'body2'} fontWeight={fontWeights.bold}>
+                    {value}
+                  </Typography>
+                </Grid>
+              </Fragment>
+            ))}
+          </Grid>
+        </Box>
+      </Box>
+      <Dialog open={isUploadLogoDialogOpen} fullScreen={dialogFullScreen}>
+        <UploadLogoDialogContent
+          onCancel={closeDialog}
+          onSave={closeDialog}
+          currentLogoUrl={companyInformation.logo?.url}
+        />
+      </Dialog>
     </>
   )
 }

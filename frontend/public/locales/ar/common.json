@@ -121,10 +121,13 @@
     "reportDoesNotExist": "تقرير غير موجود",
     "reportIsNotEditable": "التقرير غير قابل للتحرير",
     "profileAlreadyCompleted": "ملف الشركة مكتمل بالفعل",
-    "identicalPasswordNotAllowed": "The new password can not be identical with the old password."
+    "identicalPasswordNotAllowed": "The new password can not be identical with the old password.",
+    "maximumFileSizeExceeded": "الحجم الأقصى للصورة هو 2 ميغا بايت. الرجاء محاولة ملف صورة أصغر.",
+    "invalidExtension": "تنسيق الصورة غير مسموح به. يرجى تحميل صورة أخرى (JPG أو PNG)"
   },
   "internalErrors": {
-    "unknownError": "Something unexpected happened. Please reload and try again."
+    "unknownError": "Something unexpected happened. Please reload and try again.",
+    "imageUploadError": "Image upload failed. Please try with another image file."
   },
   "loginForm": {
     "title": "تسجيل الدخول إلى أداة التسجيل EPR",
@@ -148,17 +151,17 @@
       "oldPasswordLabel": "Old password",
       "oldPasswordHelpText": "Please enter your old password for confirmation",
       "submitChangePassword": "Change Password",
-        "passwordResetFailed": "Password Reset failed"
+      "passwordResetFailed": "Password Reset failed"
     },
     "changeLanguageForm": {
-       "title": "Edit language of correspondance",
-        "tabTitle": "LANGUAGE",
-       "description": "Here you can set the language in which the email correspondence should take place.",
-       "label": "Edit language of correspondance",
-       "submitLanguagePassword": "Save changes",
-       "languageChangeFailed": "Language change failed",
-        "notification": "Your language has been updated."
-     }
+      "title": "Edit language of correspondance",
+      "tabTitle": "LANGUAGE",
+      "description": "Here you can set the language in which the email correspondence should take place.",
+      "label": "Edit language of correspondance",
+      "submitLanguagePassword": "Save changes",
+      "languageChangeFailed": "Language change failed",
+      "notification": "Your language has been updated."
+    }
   },
   "activation": {
     "activation": "Activation",
@@ -235,6 +238,20 @@
         "editableUntil": "يمكن التحرير حتى {{endDate}}",
         "forecast": "تنبؤ بالمناخ"
       }
+    },
+    "companyLogo": {
+      "addLogo": "أضف الشعار",
+      "editLogo": "تحرير الشعار",
+      "companyLogoAlt": "الشعار الحالي لشركتك"
+    },
+    "uploadCompanyLogoDialog": {
+      "title": "شعار الشركة",
+      "description": "قم بتحميل شعار لحساب شركتك (JPG أو PNG). نوصي بدرجة دقة لا تقل عن 344 × 344 بكسل.",
+      "deleteLogo": "حذف الشعار",
+      "uploadLogo": "تحميل الشعار",
+      "cancel": "يلغي",
+      "save": "يحفظ",
+      "companyLogoAlt": "معاينة شعار شركتك الذي ترغب في عرضه على لوحة المعلومات الخاصة بك."
     }
   },
   "companyCompletionForm": {

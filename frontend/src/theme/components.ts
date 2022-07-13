@@ -105,4 +105,11 @@ export const components: ThemeOptions['components'] = {
       },
     },
   },
+  MuiDialog: {
+    styleOverrides: {
+      paper: {
+        borderRadius: borderRadius[3],
+      },
+    },
+  },
 }
