@@ -12,7 +12,6 @@ def trigger_pipeline(ref: str, token):
     requests.post(url)
 
 
-@page_published.connect
 def trigger_frontend_rebuild(sender, **kwargs):
     """
     Trigger frontend rebuild on page publish
@@ -22,3 +21,6 @@ def trigger_frontend_rebuild(sender, **kwargs):
             ref=settings.REBUILD_FRONTEND_TRIGGER_REF,
             token=settings.REBUILD_FRONTEND_TRIGGER_TOKEN,
         )
+
+
+page_published.connect(trigger_frontend_rebuild)
