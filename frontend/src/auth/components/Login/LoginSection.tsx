@@ -20,6 +20,7 @@ import { SchemaOf } from 'yup'
 import * as yup from 'yup'
 
 import { CHANGE_PW_COMPLETE_ALERT_KEY } from '@/accountSettings/components/AccountSettingsSection/ChangePasswordForm/ChangePasswordForm'
+import { RESET_PW_REQUEST_ALERT_KEY } from '@/auth/components/ResetPassword/RequestResetPasswordSection'
 import { RESET_PW_COMPLETE_ALERT_KEY } from '@/auth/components/ResetPassword/ResetPasswordSection'
 import { useUser } from '@/auth/hooks/useUser'
 import { getAxiosErrorMessage, handleAxiosError } from '@/auth/utils'
@@ -80,11 +81,10 @@ export const LoginSection = (): React.ReactElement => {
         setServerError(error)
       })
   }
-
   return (
     <FormLayout>
       {(router.query.alert === RESET_PW_COMPLETE_ALERT_KEY ||
-        router.query.alert === RESET_PW_COMPLETE_ALERT_KEY ||
+        router.query.alert === RESET_PW_REQUEST_ALERT_KEY ||
         router.query.alert === CHANGE_PW_COMPLETE_ALERT_KEY) && (
         <Box mb={11}>
           <Alert

@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Box, TextField, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { AxiosError } from 'axios'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
@@ -14,6 +14,7 @@ import { ErrorAlert } from '@/common/components/ErrorAlert'
 import { FormLayout } from '@/common/components/FormLayout'
 import { backgroundSx } from '@/common/components/FormStep/FormStep.styles'
 import { FormSubmitFooter } from '@/common/components/FormSubmitFooter'
+import { PasswordInput } from '@/common/components/PasswordInput'
 import { ROUTES } from '@/routes'
 
 import { passwordValidator } from '../../../utils/form-validation.utils'
@@ -96,11 +97,9 @@ export const ResetPasswordSection = (): React.ReactElement => {
               </Typography>
             </header>
             <Box marginTop={{ xs: 9, md: 10 }}>
-              <TextField
-                label={t('password')}
+              <PasswordInput
                 error={!!errors?.password}
                 helperText={errorMsg(errors?.password?.message)}
-                type={'password'}
                 required
                 fullWidth
                 {...register('password')}
