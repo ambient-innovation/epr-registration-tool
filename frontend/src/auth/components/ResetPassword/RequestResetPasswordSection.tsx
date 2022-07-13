@@ -18,7 +18,7 @@ import { emailValidator } from '@/utils/form-validation.utils'
 
 import { ResetPasswordData } from './types'
 
-export const RESET_PW_COMPLETE_ALERT_KEY = 'resetPasswordRequest'
+export const RESET_PW_REQUEST_ALERT_KEY = 'resetPasswordRequest'
 
 type FormData = Pick<ResetPasswordData, 'email'>
 
@@ -56,7 +56,7 @@ export const RequestResetPasswordSection = (): React.ReactElement => {
         router.push({
           pathname: ROUTES.login,
           query: {
-            alert: RESET_PW_COMPLETE_ALERT_KEY,
+            alert: RESET_PW_REQUEST_ALERT_KEY,
           },
         })
       })
