@@ -25,9 +25,9 @@ backend:
     trustedCSRFOrigins: "https://api.epr-tool.ambient.digital,https://epr-tool.ambient.digital,http://0.0.0.0:8000,http://localhost:8000,http://localhost:3000,http://127.0.0.1:3000"
   aws:
     enabled: true
-    bucketName: ""
-    accessKeyId: ""
-    secretAccessKey: ""
+    bucketName: "epr-registration-tool-test"
+    accessKeyId: "" # set in git-lab secrets
+    secretAccessKey: "" # set in git-lab secrets
     sesEnabled: true
   axes:
     enabled: true

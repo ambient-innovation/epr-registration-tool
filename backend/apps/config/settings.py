@@ -382,7 +382,7 @@ if env('AWS_BUCKET_NAME'):
 
     AWS_LOCATION = 'media'
     MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
-    DEFAULT_FILE_STORAGE = 'aka.core.storage_backends.PublicMediaStorage'
+    DEFAULT_FILE_STORAGE = 'apps.common.storage_backend.PrivateMediaStorage'
 
     AWS_PUBLIC_MEDIA_LOCATION = 'media/public'
     AWS_PRIVATE_MEDIA_LOCATION = 'media/private'
