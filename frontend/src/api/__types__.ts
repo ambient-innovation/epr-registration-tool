@@ -27,7 +27,7 @@ export type Scalars = {
   Upload: any
 }
 
-export type CompanyProfileInputType = {
+export type CompanyContactInfoInput = {
   additionalAddressInfo?: InputMaybe<Scalars['String']>
   city: Scalars['String']
   country: Scalars['String']
@@ -37,10 +37,28 @@ export type CompanyProfileInputType = {
   streetNumber?: InputMaybe<Scalars['String']>
 }
 
+export type CompanyContactInfoType = {
+  __typename?: 'CompanyContactInfoType'
+  additionalAddressInfo?: Maybe<Scalars['String']>
+  city: Scalars['String']
+  country: Scalars['String']
+  phoneNumber: Scalars['String']
+  postalCode?: Maybe<Scalars['String']>
+  street: Scalars['String']
+  streetNumber?: Maybe<Scalars['String']>
+}
+
+export type CompanyInput = {
+  distributorType: DistributorType
+  identificationNumber?: InputMaybe<Scalars['String']>
+  name: Scalars['String']
+}
+
 export type CompanyType = {
   __typename?: 'CompanyType'
+  contactInfo?: Maybe<CompanyContactInfoType>
   createdAt: Scalars['DateTime']
-  distributorType: Scalars['String']
+  distributorType: DistributorType
   id: Scalars['ID']
   identificationNumber: Scalars['String']
   isProfileCompleted: Scalars['Boolean']
@@ -48,6 +66,10 @@ export type CompanyType = {
   logo?: Maybe<ImageType>
   name: Scalars['String']
   registrationNumber: Scalars['String']
+}
+
+export type CompanyTypeContactInfoArgs = {
+  pk?: InputMaybe<Scalars['ID']>
 }
 
 export enum DistributorType {
@@ -111,14 +133,19 @@ export type MaterialType = {
 
 export type Mutation = {
   __typename?: 'Mutation'
+  changeCompanyDetails: Scalars['String']
   changeCompanyLogo: Scalars['String']
   changeLanguage: Scalars['String']
   changePassword: Scalars['String']
-  createCompanyProfile: Scalars['String']
   packagingReportFinalDataSubmit: Scalars['String']
   packagingReportForecastSubmit: Scalars['String']
   packagingReportForecastUpdate: Scalars['String']
   registerCompany: Scalars['String']
+}
+
+export type MutationChangeCompanyDetailsArgs = {
+  companyInput: CompanyInput
+  contactInfoInput: CompanyContactInfoInput
 }
 
 export type MutationChangeCompanyLogoArgs = {
@@ -132,11 +159,6 @@ export type MutationChangeLanguageArgs = {
 export type MutationChangePasswordArgs = {
   newPassword: Scalars['String']
   oldPassword: Scalars['String']
-}
-
-export type MutationCreateCompanyProfileArgs = {
-  identificationNumber: Scalars['String']
-  profileData: CompanyProfileInputType
 }
 
 export type MutationPackagingReportFinalDataSubmitArgs = {
@@ -276,6 +298,41 @@ export type UserType = {
   title: Scalars['String']
 }
 
+export type CompanyDetailsWithContactInfoQueryVariables = Exact<{
+  [key: string]: never
+}>
+
+export type CompanyDetailsWithContactInfoQuery = {
+  __typename?: 'Query'
+  companyDetails?: {
+    __typename?: 'CompanyType'
+    id: string
+    name: string
+    distributorType: DistributorType
+    identificationNumber: string
+    contactInfo?: {
+      __typename?: 'CompanyContactInfoType'
+      postalCode?: string | null
+      streetNumber?: string | null
+      additionalAddressInfo?: string | null
+      city: string
+      phoneNumber: string
+      country: string
+      street: string
+    } | null
+  } | null
+}
+
+export type ChangeCompanyDetailsMutationVariables = Exact<{
+  companyInput: CompanyInput
+  contactInfoInput: CompanyContactInfoInput
+}>
+
+export type ChangeCompanyDetailsMutation = {
+  __typename?: 'Mutation'
+  changeCompanyDetails: string
+}
+
 export type ChangeLanguageMutationVariables = Exact<{
   languageCode: LanguageEnum
 }>
@@ -326,16 +383,6 @@ export type MeQuery = {
   } | null
 }
 
-export type CreateCompanyProfileMutationVariables = Exact<{
-  profileData: CompanyProfileInputType
-  identificationNumber: Scalars['String']
-}>
-
-export type CreateCompanyProfileMutation = {
-  __typename?: 'Mutation'
-  createCompanyProfile: string
-}
-
 export type ChangeCompanyLogoMutationVariables = Exact<{
   file?: InputMaybe<Scalars['Upload']>
 }>
@@ -354,12 +401,22 @@ export type CompanyDetailsQuery = {
     id: string
     name: string
     registrationNumber: string
-    distributorType: string
+    distributorType: DistributorType
     identificationNumber: string
     createdAt: any
     lastmodifiedAt: any
     isProfileCompleted: boolean
     logo?: { __typename?: 'ImageType'; url: string } | null
+    contactInfo?: {
+      __typename?: 'CompanyContactInfoType'
+      postalCode?: string | null
+      streetNumber?: string | null
+      additionalAddressInfo?: string | null
+      city: string
+      phoneNumber: string
+      country: string
+      street: string
+    } | null
   } | null
 }
 
@@ -531,6 +588,95 @@ export type PackagingReportFinalDetailsQuery = {
   } | null
 }
 
+export const CompanyDetailsWithContactInfoDocument = gql`
+  query companyDetailsWithContactInfo {
+    companyDetails {
+      id
+      name
+      distributorType
+      identificationNumber
+      contactInfo {
+        postalCode
+        streetNumber
+        additionalAddressInfo
+        city
+        phoneNumber
+        country
+        street
+      }
+    }
+  }
+`
+export function useCompanyDetailsWithContactInfoQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    CompanyDetailsWithContactInfoQuery,
+    CompanyDetailsWithContactInfoQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<
+    CompanyDetailsWithContactInfoQuery,
+    CompanyDetailsWithContactInfoQueryVariables
+  >(CompanyDetailsWithContactInfoDocument, options)
+}
+export function useCompanyDetailsWithContactInfoLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    CompanyDetailsWithContactInfoQuery,
+    CompanyDetailsWithContactInfoQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<
+    CompanyDetailsWithContactInfoQuery,
+    CompanyDetailsWithContactInfoQueryVariables
+  >(CompanyDetailsWithContactInfoDocument, options)
+}
+export type CompanyDetailsWithContactInfoQueryHookResult = ReturnType<
+  typeof useCompanyDetailsWithContactInfoQuery
+>
+export type CompanyDetailsWithContactInfoLazyQueryHookResult = ReturnType<
+  typeof useCompanyDetailsWithContactInfoLazyQuery
+>
+export type CompanyDetailsWithContactInfoQueryResult = Apollo.QueryResult<
+  CompanyDetailsWithContactInfoQuery,
+  CompanyDetailsWithContactInfoQueryVariables
+>
+export const ChangeCompanyDetailsDocument = gql`
+  mutation changeCompanyDetails(
+    $companyInput: CompanyInput!
+    $contactInfoInput: CompanyContactInfoInput!
+  ) {
+    changeCompanyDetails(
+      companyInput: $companyInput
+      contactInfoInput: $contactInfoInput
+    )
+  }
+`
+export type ChangeCompanyDetailsMutationFn = Apollo.MutationFunction<
+  ChangeCompanyDetailsMutation,
+  ChangeCompanyDetailsMutationVariables
+>
+export function useChangeCompanyDetailsMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ChangeCompanyDetailsMutation,
+    ChangeCompanyDetailsMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    ChangeCompanyDetailsMutation,
+    ChangeCompanyDetailsMutationVariables
+  >(ChangeCompanyDetailsDocument, options)
+}
+export type ChangeCompanyDetailsMutationHookResult = ReturnType<
+  typeof useChangeCompanyDetailsMutation
+>
+export type ChangeCompanyDetailsMutationResult =
+  Apollo.MutationResult<ChangeCompanyDetailsMutation>
+export type ChangeCompanyDetailsMutationOptions = Apollo.BaseMutationOptions<
+  ChangeCompanyDetailsMutation,
+  ChangeCompanyDetailsMutationVariables
+>
 export const ChangeLanguageDocument = gql`
   mutation changeLanguage($languageCode: LanguageEnum!) {
     changeLanguage(languageCode: $languageCode)
@@ -667,42 +813,6 @@ export function useMeLazyQuery(
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>
-export const CreateCompanyProfileDocument = gql`
-  mutation createCompanyProfile(
-    $profileData: CompanyProfileInputType!
-    $identificationNumber: String!
-  ) {
-    createCompanyProfile(
-      profileData: $profileData
-      identificationNumber: $identificationNumber
-    )
-  }
-`
-export type CreateCompanyProfileMutationFn = Apollo.MutationFunction<
-  CreateCompanyProfileMutation,
-  CreateCompanyProfileMutationVariables
->
-export function useCreateCompanyProfileMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreateCompanyProfileMutation,
-    CreateCompanyProfileMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useMutation<
-    CreateCompanyProfileMutation,
-    CreateCompanyProfileMutationVariables
-  >(CreateCompanyProfileDocument, options)
-}
-export type CreateCompanyProfileMutationHookResult = ReturnType<
-  typeof useCreateCompanyProfileMutation
->
-export type CreateCompanyProfileMutationResult =
-  Apollo.MutationResult<CreateCompanyProfileMutation>
-export type CreateCompanyProfileMutationOptions = Apollo.BaseMutationOptions<
-  CreateCompanyProfileMutation,
-  CreateCompanyProfileMutationVariables
->
 export const ChangeCompanyLogoDocument = gql`
   mutation changeCompanyLogo($file: Upload) {
     changeCompanyLogo(file: $file)
@@ -746,6 +856,15 @@ export const CompanyDetailsDocument = gql`
       isProfileCompleted
       logo {
         url
+      }
+      contactInfo {
+        postalCode
+        streetNumber
+        additionalAddressInfo
+        city
+        phoneNumber
+        country
+        street
       }
     }
   }

@@ -1,0 +1,21 @@
+{% extends "email/base/base_ar.html" %}
+
+{% block title %}
+  EPR Registration Tool | Your company data changed
+{% endblock %}
+
+{% block preheader %}
+  Your company's data has recently been changed.
+{% endblock %}
+
+{% block heading %}
+  (to be translated)<br><br>
+
+  The company data associated with your account was recently changed.
+  If you have requested these changes you can safely ignore this email.
+  If you find this behavior suspicious, please check your data and change your password.
+{% endblock %}
+
+{% block linktext %}
+  Log in now and check data
+{% endblock %}

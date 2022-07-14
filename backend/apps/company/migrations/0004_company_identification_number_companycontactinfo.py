@@ -5,6 +5,8 @@ import django.utils.timezone
 from django.conf import settings
 from django.db import migrations, models
 
+from company import validators
+
 
 class Migration(migrations.Migration):
 
@@ -17,7 +19,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='company',
             name='identification_number',
-            field=models.CharField(blank=True, max_length=255, verbose_name='National identification number'),
+            field=models.CharField(
+                blank=True,
+                max_length=255,
+                validators=[validators.validate_string_without_whitespaces],
+                verbose_name='National identification number',
+            ),
         ),
         migrations.CreateModel(
             name='CompanyContactInfo',

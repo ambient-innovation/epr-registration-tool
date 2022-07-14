@@ -33,3 +33,18 @@ export const tabsColumnSx: SxStyles = [
     gridColumn: { xs: '1 / -1', md: '1/-11' },
   },
 ]
+
+export const paddingSx: SxStyleObject = {
+  padding: {
+    xs: 6,
+    sm: 7,
+    md: 8,
+  },
+}
+
+export const formFooterSx: SxStyleObject = { mr: { xs: 6, sm: 7, md: 0 } }
+
+export const formBackgroundSx: SxStyles = [
+  paddingSx,
+  { backgroundColor: 'background.light', borderRadius: 3 },
+]

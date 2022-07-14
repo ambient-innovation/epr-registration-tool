@@ -1,4 +1,8 @@
-export interface CompanyProfileData {
+import { DistributorType } from '@/api/__types__'
+
+export interface CompanyData {
+  name: string
+  distributorType: DistributorType
   country: string
   postalCode?: string
   city: string
@@ -8,5 +12,3 @@ export interface CompanyProfileData {
   phoneNumber: string
   identificationNumber: string
 }
-
-export type CompanyProfileDataKey = keyof CompanyProfileData

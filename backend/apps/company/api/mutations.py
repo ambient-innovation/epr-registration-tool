@@ -8,6 +8,7 @@ from django.utils import translation
 import strawberry
 from graphql import GraphQLError
 from sentry_sdk import capture_exception
+from strawberry.django import auto
 from strawberry.file_uploads import Upload
 from strawberry.types import Info
 from strawberry_django.mutations.fields import get_input_data
@@ -15,10 +16,9 @@ from strawberry_django.mutations.fields import get_input_data
 from account.email import send_user_activation_notification
 from account.models import User
 from common.api.permissions import IsActivated, IsAuthenticated
-from company.api.types import CompanyProfileInputType
+from company.email import send_company_data_changed_notification
 from company.models import Company, CompanyContactInfo, DistributorType
 from company.utils import generate_unique_registration_number
-from company.validators import validate_string_without_whitespaces
 
 
 def register_company(
@@ -99,36 +99,65 @@ def register_company(
     return 'CREATED'
 
 
-def create_company_profile(info: Info, profile_data: CompanyProfileInputType, identification_number: str) -> str:
+@strawberry.django.input(Company)
+class CompanyInput:
+    name: auto
+    distributor_type: strawberry.enum(DistributorType)
+    identification_number: str
+
+
+@strawberry.django.input(CompanyContactInfo)
+class CompanyContactInfoInput:
+    country: auto
+    postal_code: auto
+    city: auto
+    street: auto
+    street_number: auto
+    additional_address_info: auto
+    phone_number: auto
+
+
+def change_company_details(
+    info: Info,
+    company_input: CompanyInput,
+    contact_info_input: CompanyContactInfoInput,
+) -> str:
     user = info.context.request.user
     company = user.related_company
 
-    profile_data_dict = {
-        key: value and value.strip() for key, value in get_input_data(CompanyProfileInputType, profile_data).items()
-    }
-
-    # for edit case this can be removed and this can be used as edit directly
-    if hasattr(company, 'related_contact_info'):
-        raise GraphQLError('profileAlreadyCompleted')
-
     try:
-        validate_string_without_whitespaces(identification_number)
-    except ValidationError as e:
-        raise GraphQLError(e.error_list[0].code, original_error=e)
+        contact_info = company.related_contact_info
+    except CompanyContactInfo.DoesNotExist:
+        contact_info = CompanyContactInfo(related_company=company)
 
-    company_contact_info = CompanyContactInfo(**profile_data_dict, related_company_id=company.id)
+    company_input_data = get_input_data(CompanyInput, company_input)
+    contact_info_input_data = get_input_data(CompanyContactInfoInput, contact_info_input)
+
+    for key, value in company_input_data.items():
+        assert hasattr(company, key), f'Company has no attribute {key}'
+        setattr(company, key, value.strip() if value else '')
+
+    for key, value in contact_info_input_data.items():
+        assert hasattr(contact_info, key), f'CompanyContactInfo has no attribute {key}'
+        setattr(contact_info, key, value.strip() if value else '')
 
     try:
         company.full_clean()
+        contact_info.full_clean()
     except ValidationError as e:
         raise GraphQLError('validationError', original_error=e)
 
     with transaction.atomic():
-        company_contact_info.save()
-        company.identification_number = identification_number
+        contact_info.save()
         company.save()
 
-    return 'CREATED'
+    try:
+        send_company_data_changed_notification(company)
+    except Exception as e:
+        # failing emails should not break the registration
+        capture_exception(e)
+
+    return 'UPDATED'
 
 
 def change_company_logo(info: Info, file: Optional[Upload] = None) -> str:
@@ -159,8 +188,8 @@ def change_company_logo(info: Info, file: Optional[Upload] = None) -> str:
 @strawberry.type
 class RegisterCompanyMutation:
     register_company: str = strawberry.field(resolver=register_company)
-    create_company_profile: str = strawberry.field(
-        resolver=create_company_profile, permission_classes=[IsAuthenticated, IsActivated]
+    change_company_details: str = strawberry.field(
+        resolver=change_company_details, permission_classes=[IsAuthenticated, IsActivated]
     )
     change_company_logo: str = strawberry.field(
         resolver=change_company_logo, permission_classes=[IsAuthenticated, IsActivated]

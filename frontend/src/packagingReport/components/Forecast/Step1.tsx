@@ -15,7 +15,7 @@ import { DEFAULT_FORM_SPACING } from '@/common/components/FormStep/constants'
 import {
   requiredDateValidator,
   requiredStringValidator,
-} from '@/utils/form-validation.utils'
+} from '@/utils/form/form-validation.utils'
 import { pick } from '@/utils/typescript.utils'
 import { startOfNextMonth } from '@/utils/utils.date'
 

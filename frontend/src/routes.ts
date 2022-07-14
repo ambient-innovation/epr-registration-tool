@@ -7,9 +7,9 @@ export const ROUTES = {
   forgetPassword: '/auth/forget-password',
   resetPassword: '/auth/forget-password/reset',
   accountActivation: '/auth/activation',
+  accountActivationComplete: '/auth/activation/complete',
   // --- dashboard ---
   dashboard: '/dashboard',
-  dashboardComplete: 'dashboard/complete',
   // --- report ---
   forecast: '/report/forecast/add',
   forecastSuccess: '/report/forecast/add/success',
@@ -22,6 +22,7 @@ export const ROUTES = {
   // --- account & settings ---
   accountSettingsChangePassword: '/account-settings/change-password',
   accountSettingsChangeLanguage: '/account-settings/change-language',
+  accountSettingsChangeCompanyData: '/account-settings/change-company-data',
   // --- cms ----
   cmsPage: (slug: string) => `/${slug}`,
   previewApi: '/api/preview',

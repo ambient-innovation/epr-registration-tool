@@ -33,7 +33,7 @@ import { ROUTES } from '@/routes'
 import {
   emailValidator,
   requiredStringValidator,
-} from '@/utils/form-validation.utils'
+} from '@/utils/form/form-validation.utils'
 
 import { footerSx, signInButton } from './LoginSection.styles'
 import { FormData } from './types'
@@ -98,11 +98,7 @@ export const LoginSection = (): React.ReactElement => {
           </Alert>
         </Box>
       )}
-      <Typography
-        component={'h1'}
-        variant={'h4'}
-        mb={{ xs: 8, sm: 10, md: 11 }}
-      >
+      <Typography variant={'h1'} mb={{ xs: 8, sm: 10, md: 11 }}>
         {t('login')}
       </Typography>
       <section>

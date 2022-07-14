@@ -1,1 +1,1 @@
-export { AccountSettingsSection } from './AccountSettingsSection'
+export { AccountSettingsSection, TabOptions } from './AccountSettingsSection'

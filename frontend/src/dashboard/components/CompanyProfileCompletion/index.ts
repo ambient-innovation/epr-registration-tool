@@ -1,1 +1,0 @@
-export { CompanyProfileSection } from './CompanyProfileSection'
