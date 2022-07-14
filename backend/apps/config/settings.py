@@ -324,13 +324,17 @@ if ENABLE_DEBUG_TOOLBAR:
     ip = socket.gethostbyname(socket.gethostname())
     INTERNAL_IPS += [ip[:-1] + '1']
 
-# django model translations settings
-MODELTRANSLATION_FALLBACK_LANGUAGES = ('en',)
 
 LANGUAGES = (
     ('en', 'English'),
     ('ar', 'Arabic'),
 )
+
+DEFAULT_LANGUAGE_CODE = LANGUAGES[0][0]
+
+# django model translations settings
+MODELTRANSLATION_FALLBACK_LANGUAGES = (DEFAULT_LANGUAGE_CODE,)
+
 
 # django-ai-auth-kit settings
 AI_KIT_AUTH = {

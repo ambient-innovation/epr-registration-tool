@@ -73,7 +73,7 @@ type MaterialType {
 type Mutation {
   changeLanguage(languageCode: LanguageEnum!): String!
   changePassword(oldPassword: String!, newPassword: String!): String!
-  registerCompany(companyName: String!, companyDistributorType: DistributorType!, userEmail: String!, userTitle: String!, userFullName: String!, userPosition: String!, userPhoneOrMobile: String!, password: String!): String!
+  registerCompany(companyName: String!, companyDistributorType: DistributorType!, userEmail: String!, userTitle: String!, userFullName: String!, userPosition: String!, userPhoneOrMobile: String!, password: String!, countryCode: String!): String!
   createCompanyProfile(profileData: CompanyProfileInputType!, identificationNumber: String!): String!
   changeCompanyLogo(file: Upload = null): String!
   packagingReportForecastSubmit(timeframe: TimeframeType!, year: Int!, startMonth: Int!, tzInfo: String!, packagingRecords: [PackagingGroupInput!]!): String!

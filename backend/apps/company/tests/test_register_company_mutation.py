@@ -18,6 +18,7 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
             $userPosition: String!,
             $userPhoneOrMobile: String!,
             $password: String!
+            $countryCode: String!
         ) {
             registerCompany(
                 companyName: $companyName,
@@ -28,6 +29,7 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
                 userPosition: $userPosition,
                 userPhoneOrMobile: $userPhoneOrMobile,
                 password: $password
+                countryCode: $countryCode
             )
         }
     """
@@ -44,6 +46,7 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
             "userPosition": "Da Bozz",
             "userPhoneOrMobile": "+49110",
             "password": "Pass123$",
+            "countryCode": "en",
         }
         cls.headers = {'HTTP_ACCEPT_LANGUAGE': 'en'}
 
@@ -55,6 +58,7 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
             email='helmut@local.invalid', is_active=False, related_company__id=company.id
         ).first()
         self.assertIsNotNone(company)
+        self.assertEqual('en', company.country_code)
         self.assertIsNotNone(user)
         self.assertEqual(user.id, company.created_by_id)
         # assert activation email to be sent
@@ -130,3 +134,17 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
     def test_register_a_company_not_sending_language_header_does_not_fail(self):
         response = self.query(self.MUTATION, variables=self.mutation_params)
         self.assertResponseNoErrors(response)
+
+    def test_register_a_company_with_invalid_country_code(self):
+        self.mutation_params['countryCode'] = 'abc'
+        self.query_and_assert_error(
+            self.MUTATION,
+            variables=self.mutation_params,
+            message='validationError',
+        )
+
+    def test_register_a_company_stores_country_code_in_lower_case(self):
+        self.mutation_params['countryCode'] = 'EN'
+        self.query(self.MUTATION, variables=self.mutation_params)
+        company = Company.objects.get(name="Farwell Co")
+        self.assertEqual('en', company.country_code)

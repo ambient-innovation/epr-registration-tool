@@ -35,6 +35,7 @@ RegistrationContext.displayName = 'RegsitrationContext'
 export const initialData: RegistrationData = {
   companyName: '',
   companyDistributorType: null,
+  countryCode: '',
   // user
   userEmail: '',
   userTitle: '',
@@ -68,6 +69,7 @@ export const RegistrationProvider: React.FC<{
               companyName: finalData.companyName,
               // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
               companyDistributorType: finalData.companyDistributorType!,
+              countryCode: finalData.countryCode,
               userEmail: finalData.userEmail,
               userTitle: finalData.userTitle,
               userFullName: finalData.userFullName,
