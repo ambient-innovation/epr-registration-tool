@@ -32,12 +32,12 @@ const useReportDetails = (
   })
 
   const packagingReport = data?.packagingReport || undefined
-  const report = packagingReport?.forecast || undefined
+  const submission = packagingReport?.forecast || undefined
 
   // group materials by packagingGroup
   const defaultFormData: ForecastData | undefined = useMemo(
-    () => generateDefaultReportFormData(packagingReport, report),
-    [packagingReport, report]
+    () => generateDefaultReportFormData(packagingReport, submission),
+    [packagingReport, submission]
   )
 
   return {
