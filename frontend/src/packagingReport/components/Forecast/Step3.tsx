@@ -4,10 +4,11 @@ import { useTranslation } from 'next-i18next'
 import { useForm } from 'react-hook-form'
 
 import { usePackagingReportFeesEstimationQuery } from '@/api/__types__'
+import { ApolloErrorAlert } from '@/common/components/ApolloErrorAlert'
 import { FormStep, FormStepContainer } from '@/common/components/FormStep'
+import { timeframeDisplayValue } from '@/common/contants'
 import { fontWeights } from '@/theme/typography'
 
-import { timeframeDisplayValue } from '../../../common/contants'
 import { useForecastContext } from './ForecastContext'
 
 export type Step3 = Record<string, never>
@@ -26,7 +27,11 @@ export const Step3 = (_: Step3) => {
   const year = startDate.getFullYear()
   const startMonth = startDate.getMonth() + 1
 
-  const { data: feesData, loading } = usePackagingReportFeesEstimationQuery({
+  const {
+    data: feesData,
+    loading,
+    error: feeError,
+  } = usePackagingReportFeesEstimationQuery({
     variables: {
       year,
       startMonth,
@@ -63,6 +68,8 @@ export const Step3 = (_: Step3) => {
                 {t('reportForm.calculating')}
               </Typography>
             </Grid>
+          ) : feeError ? (
+            <ApolloErrorAlert error={feeError} />
           ) : (
             <>
               <Grid item>
