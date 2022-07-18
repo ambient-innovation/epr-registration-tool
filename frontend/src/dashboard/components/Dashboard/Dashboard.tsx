@@ -106,7 +106,7 @@ export const Dashboard = (_: Dashboard): React.ReactElement => {
           {loading ? (
             <Skeleton
               variant={'rectangular'}
-              sx={{ height: { xs: 140, md: 95 } }}
+              sx={{ height: { xs: 300, sm: 172 } }}
             />
           ) : companyDetails ? (
             <BaseData companyInformation={companyDetails} />
