@@ -46,17 +46,16 @@ class ReportSubmission(CommonInfo):
 
     @staticmethod
     def calculate_fees(packaging_report, material_records):
-        from packaging.price_utils import calculate_material_fees
+        from packaging_report.utils import calculate_fees as _calculate_fees
 
-        fees = 0
-        timeframe = packaging_report.timeframe
-        start_month = packaging_report.start_month
-        year = packaging_report.year
-        for m in material_records:
-            fees = fees + calculate_material_fees(
-                timeframe, year, start_month, m.related_packaging_material_id, m.quantity
-            )
-        return round(fees, 2)
+        material_quantities = [(m.related_packaging_material_id, m.quantity) for m in material_records]
+
+        return _calculate_fees(
+            timeframe=packaging_report.timeframe,
+            start_month=packaging_report.start_month,
+            year=packaging_report.year,
+            material_quantities=material_quantities,
+        )
 
     def estimated_fees_str(self) -> str:
         final_fees = getattr(self, 'fees', None)

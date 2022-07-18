@@ -20,14 +20,16 @@ def get_packaging_report_fees_estimation(
     start_month: int,
     packaging_records: typing.List[PackagingGroupInput],
 ) -> decimal.Decimal:
-    if not packaging_records:
-        return 0.0
+    from packaging_report.utils import calculate_fees
 
-    fees = 0
-    for packaging in packaging_records:
-        for m in packaging.material_records:
-            fees = fees + calculate_material_fees(timeframe, year, start_month, m.material_id, m.quantity)
-    return round(fees, 2)
+    material_quantities = [(int(m.material_id), m.quantity) for p in packaging_records for m in p.material_records]
+
+    return calculate_fees(
+        timeframe=timeframe,
+        year=year,
+        start_month=start_month,
+        material_quantities=material_quantities,
+    )
 
 
 def packaging_reports(info: Info) -> typing.List[PackagingReportType]:

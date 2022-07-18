@@ -56,6 +56,49 @@ class PackagingReportQueriesTestCase(BaseApiTestCase):
             related_material=cls.material_2,
         )
 
+    def test_calculate_packaging_report_fees_empty(self):
+        variables = {
+            "year": 2022,
+            "startMonth": 7,
+            "timeframe": "THREE_MONTHS",
+            "packagingRecords": [],
+        }
+        data = self.query_and_load_data(self.QUERY, variables=variables)
+        self.assertEqual('0.00', data['packagingReportFeesEstimation'])
+
+    def test_calculate_packaging_report_fees_with_missing_price(self):
+        variables = {
+            "year": 195,  # <--- price does not yet exist
+            "startMonth": 7,
+            "timeframe": "THREE_MONTHS",
+            "packagingRecords": [
+                {
+                    "packagingGroupId": self.packaging_group.id,
+                    "materialRecords": [{"materialId": self.material.id, "quantity": 55}],
+                }
+            ],
+        }
+        self.query_and_assert_error(self.QUERY, variables=variables, message='materialDoesNotExist')
+
+    def test_calculate_packaging_report_fees_with_missing_material(self):
+        variables = {
+            "year": 2022,
+            "startMonth": 7,
+            "timeframe": "THREE_MONTHS",
+            "packagingRecords": [
+                {
+                    "packagingGroupId": self.packaging_group.id,
+                    "materialRecords": [
+                        {
+                            "materialId": 99999,  # <--- does not exist
+                            "quantity": 55,
+                        },
+                    ],
+                }
+            ],
+        }
+        self.query_and_assert_error(self.QUERY, variables=variables, message='materialDoesNotExist')
+
     @time_machine.travel(make_aware(datetime(year=2022, month=6, day=1)))
     def test_calculate_packaging_report_fees_starts_after_last_price_change(self):
         variables = {
