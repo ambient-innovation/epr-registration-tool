@@ -87,9 +87,12 @@ class PackagingReport(CommonInfo):
         verbose_name=_("Timeframe"),
         choices=TimeframeType.choices,
     )
-    year = models.PositiveIntegerField(verbose_name=_('Year'))
+    year = models.PositiveIntegerField(verbose_name=_('Year'), db_index=True)
     start_month = models.PositiveIntegerField(
-        verbose_name=_('Start Month'), validators=[validate_report_month], choices=Month.choices
+        verbose_name=_('Start Month'),
+        validators=[validate_report_month],
+        choices=Month.choices,
+        db_index=True,
     )
     timezone_info = models.CharField(
         verbose_name=_('Timezone info'), max_length=32, validators=[validate_report_timezone]

@@ -1,5 +1,5 @@
 import { defaultGridSx, layout, maxWidthCss } from '@/theme/layout'
-import { SxStyleObject, SxStyles } from '@/theme/utils'
+import { pxToRemAsString, SxStyleObject, SxStyles } from '@/theme/utils'
 
 export const containerSx: SxStyles = [
   maxWidthCss,
@@ -24,4 +24,14 @@ export const backgroundSx: SxStyleObject = {
     sm: 9,
     md: 8,
   },
+}
+
+export const filterFieldSx: SxStyleObject = {
+  width: { sm: pxToRemAsString(230) },
+}
+
+export const paginationContainerSx: SxStyleObject = {
+  display: 'flex',
+  justifyContent: 'center',
+  mt: { xs: 8, sm: 9, md: 10 },
 }

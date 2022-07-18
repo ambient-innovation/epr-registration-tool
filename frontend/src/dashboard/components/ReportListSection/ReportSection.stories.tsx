@@ -3,7 +3,11 @@ import { Story } from '@storybook/react'
 
 import { ReportListSection } from './ReportListSection'
 import { ReportListSkeleton } from './ReportListSkeleton'
-import { packagingReportsEmpyMock, packagingReportsMock } from './mockReports'
+import {
+  packagingReports2022Mock,
+  packagingReportsEmpyMock,
+  packagingReportsMock,
+} from './mockReports'
 
 export default {
   title: 'dashboard/ReportListSection',
@@ -19,7 +23,7 @@ WithReports.args = {
 }
 WithReports.parameters = {
   apolloClient: {
-    mocks: [packagingReportsMock],
+    mocks: [packagingReportsMock, packagingReports2022Mock],
   },
 }
 

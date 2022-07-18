@@ -131,7 +131,13 @@ def packaging_report_final_data_submit(
             final_submission.fees = final_submission.calculate_fees(report, material_records)
             final_submission.save()
     except (ValidationError, DatabaseError) as e:
-        raise GraphQLError('validationError', extensions={'message_dict': getattr(e, 'message_dict', {})})
+        extensions = {}
+        if hasattr(e, 'message_dict'):
+            extensions['message_dict'] = e.message_dict
+        raise GraphQLError(
+            'validationError',
+            extensions=extensions,
+        )
 
     def _generate_invoice_file(report_pk, user_pk):
         file = report.generate_invoice_file(user_pk)

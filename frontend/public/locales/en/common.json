@@ -243,6 +243,13 @@
         "month": "month",
         "editableUntil": "Can be edited until {{endDate}}",
         "forecast": "Forecast"
+      },
+      "filterByYear": "Filter by year",
+      "noResultsResetFilter": "Nothing to show. Reset filter to see all reports.",
+      "sorting": "Sorting",
+      "sortingOptions": {
+        "newestFirst": "Newest first",
+        "oldestFirst": "Oldest first"
       }
     },
     "companyLogo": {
@@ -281,5 +288,6 @@
       "description": "Please enter (without spaces) the correct VAT number / tax number of your company (may differ from the country where your company is located).",
       "fieldName": "VAT number / tax number"
     }
-  }
+  },
+  "reset": "Reset"
 }

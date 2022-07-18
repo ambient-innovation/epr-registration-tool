@@ -238,6 +238,13 @@
         "month": "شهر",
         "editableUntil": "يمكن التحرير حتى {{endDate}}",
         "forecast": "تنبؤ بالمناخ"
+      },
+      "filterByYear": "تصفية حسب السنة",
+      "noResultsResetFilter": "Nothing to show. Reset filter to see all reports.",
+      "sorting": "فرز",
+      "sortingOptions": {
+        "newestFirst": "الأحدث أولاً",
+        "oldestFirst": "الأقدم أولا"
       }
     },
     "companyLogo": {
@@ -276,5 +283,6 @@
       "description": "Please enter (without spaces) the correct VAT number / tax number of your company (may differ from the country where your company is located).",
       "fieldName": "VAT number / tax number"
     }
-  }
+  },
+  "reset": "إعادة ضبط"
 }

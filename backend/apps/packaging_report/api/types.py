@@ -1,6 +1,7 @@
 import datetime
 import decimal
 import typing
+from enum import Enum
 
 import strawberry
 from strawberry.django import auto
@@ -88,9 +89,20 @@ class PackagingReportType:
     @strawberry.django.field
     def is_final_report_submitted(self, root: PackagingReport) -> bool:
         # use annotated data
-        return bool(getattr(root, 'final_fees', None))
+        return bool(getattr(root, 'final_fees', False))
 
     @strawberry.django.field
     def fees(self, root: PackagingReport) -> typing.Optional[decimal.Decimal]:
         # use prefetched data
         return getattr(root, 'final_fees', None)
+
+
+@strawberry.input
+class PackagingReportsFilterInput:
+    year: typing.Optional[int]
+
+
+@strawberry.enum
+class PackagingReportsSortingOption(Enum):
+    NEWEST_FIRST = 'NEWEST_FIRST'
+    OLDEST_FIRST = 'OLDEST_FIRST'

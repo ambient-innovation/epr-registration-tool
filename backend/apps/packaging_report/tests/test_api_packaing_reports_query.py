@@ -6,21 +6,52 @@ import time_machine
 from model_bakery import baker
 
 from common.tests.test_base import BaseApiTestCase
+from packaging_report.api.types import PackagingReportsSortingOption
 from packaging_report.models import TimeframeType
 
 
+@time_machine.travel(make_aware(datetime(year=2022, month=6, day=23)))
 class PackagingReportQueriesTestCase(BaseApiTestCase):
     QUERY = """
-        {
+        query {
             packagingReports {
-                id
-                packagingGroupsCount
-                isForecastEditable
-                isFinalReportSubmitted
-                fees
+                items {
+                    id
+                    packagingGroupsCount
+                    isForecastEditable
+                    isFinalReportSubmitted
+                    fees
+                }
             }
         }
     """
+
+    QUERY_WITH_FILTER = """
+            query (
+                $pagination: PaginationInput,
+                $filter: PackagingReportsFilterInput,
+                $sorting: PackagingReportsSortingOption
+            ) {
+                packagingReports(
+                    pagination: $pagination,
+                    filter: $filter,
+                    sorting: $sorting
+                ) {
+                    items {
+                        id
+                        year
+                        startMonth
+                    }
+                    pageInfo {
+                        currentPage
+                        numPages
+                        hasNextPage
+                        totalCount
+                        perPage
+                    }
+                }
+            }
+        """
 
     @classmethod
     def setUpTestData(cls):
@@ -47,7 +78,7 @@ class PackagingReportQueriesTestCase(BaseApiTestCase):
             'packaging_report.tests.packaging_report',
             related_company=cls.company,
             timeframe=TimeframeType.THREE_MONTHS,
-            year=2022,
+            year=2021,
             start_month=2,
         )
         cls.forecast_submission = baker.make(
@@ -109,14 +140,13 @@ class PackagingReportQueriesTestCase(BaseApiTestCase):
         self.login(user)
         self.create_and_assign_company(user)
         data = self.query_and_load_data(self.QUERY)
-        packaging_reports = data['packagingReports']
+        packaging_reports = data['packagingReports']['items']
         self.assertEqual(0, len(packaging_reports))
 
-    @time_machine.travel(make_aware(datetime(year=2022, month=6, day=23)))
     def test_packaging_reports_query(self):
         self.login_normal_user()
         data = self.query_and_load_data(self.QUERY)
-        packaging_reports = data['packagingReports']
+        packaging_reports = data['packagingReports']['items']
         self.assertEqual(3, len(packaging_reports))
         for report in packaging_reports:
             if report['id'] == str(self.packaging_report_in_forecast.id):
@@ -134,3 +164,74 @@ class PackagingReportQueriesTestCase(BaseApiTestCase):
                 self.assertFalse(report['isForecastEditable'])
                 self.assertIsNone(report['fees'])
                 self.assertFalse(report['isFinalReportSubmitted'])
+
+    def test_packaging_reports_query_pagination_page_1(self):
+        self.login_normal_user()
+        data = self.query_and_load_data(
+            self.QUERY_WITH_FILTER,
+            variables={'pagination': {'page': 1, 'limit': 2}},
+        )
+        packaging_reports = data['packagingReports']['items']
+        page_info = data['packagingReports']['pageInfo']
+        self.assertEqual(2, len(packaging_reports))
+        self.assertEqual(1, page_info['currentPage'])
+        self.assertEqual(2, page_info['numPages'])
+        self.assertEqual(True, page_info['hasNextPage'])
+        self.assertEqual(3, page_info['totalCount'])
+        self.assertEqual(2, page_info['perPage'])
+
+    def test_packaging_reports_query_pagination_page_2(self):
+        self.login_normal_user()
+        data = self.query_and_load_data(
+            self.QUERY_WITH_FILTER,
+            variables={'pagination': {'page': 2, 'limit': 2}},
+        )
+        packaging_reports = data['packagingReports']['items']
+        page_info = data['packagingReports']['pageInfo']
+        self.assertEqual(1, len(packaging_reports))
+        self.assertEqual(2, page_info['currentPage'])
+        self.assertEqual(2, page_info['numPages'])
+        self.assertEqual(False, page_info['hasNextPage'])
+        self.assertEqual(3, page_info['totalCount'])
+        self.assertEqual(2, page_info['perPage'])
+
+    def test_packaging_reports_query_filter_by_year(self):
+        self.login_normal_user()
+        data = self.query_and_load_data(
+            self.QUERY_WITH_FILTER,
+            variables={'filter': {'year': 2022}},
+        )
+        packaging_reports = data['packagingReports']['items']
+        self.assertEqual(2, len(packaging_reports))
+        for packaging_report in packaging_reports:
+            self.assertEqual(2022, packaging_report['year'])
+
+    def test_packaging_reports_query_sort_by_newest(self):
+        self.login_normal_user()
+        data = self.query_and_load_data(
+            self.QUERY_WITH_FILTER,
+        )
+        packaging_reports = data['packagingReports']['items']
+        self.assertEqual(
+            [
+                (2022, 5),
+                (2022, 1),
+                (2021, 2),
+            ],
+            [(p['year'], p['startMonth']) for p in packaging_reports],
+        )
+
+    def test_packaging_reports_query_sort_by_oldest(self):
+        self.login_normal_user()
+        data = self.query_and_load_data(
+            self.QUERY_WITH_FILTER, variables={'sorting': PackagingReportsSortingOption.OLDEST_FIRST.value}
+        )
+        packaging_reports = data['packagingReports']['items']
+        self.assertEqual(
+            [
+                (2021, 2),
+                (2022, 1),
+                (2022, 5),
+            ],
+            [(p['year'], p['startMonth']) for p in packaging_reports],
+        )

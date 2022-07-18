@@ -188,6 +188,35 @@ export type PackagingReportType = {
   year: Scalars['Int']
 }
 
+export type PackagingReportTypePaginationResult = {
+  __typename?: 'PackagingReportTypePaginationResult'
+  items: Array<PackagingReportType>
+  pageInfo: PaginatorType
+}
+
+export type PackagingReportsFilterInput = {
+  year?: InputMaybe<Scalars['Int']>
+}
+
+export enum PackagingReportsSortingOption {
+  NEWEST_FIRST = 'NEWEST_FIRST',
+  OLDEST_FIRST = 'OLDEST_FIRST',
+}
+
+export type PaginationInput = {
+  limit: Scalars['Int']
+  page: Scalars['Int']
+}
+
+export type PaginatorType = {
+  __typename?: 'PaginatorType'
+  currentPage: Scalars['Int']
+  hasNextPage: Scalars['Boolean']
+  numPages: Scalars['Int']
+  perPage: Scalars['Int']
+  totalCount: Scalars['Int']
+}
+
 export type Query = {
   __typename?: 'Query'
   companyDetails?: Maybe<CompanyType>
@@ -198,7 +227,7 @@ export type Query = {
   packagingReportFeesEstimation: Scalars['Decimal']
   packagingReportFinalDetails?: Maybe<PackagingReportType>
   packagingReportForecastDetails?: Maybe<PackagingReportType>
-  packagingReports: Array<PackagingReportType>
+  packagingReports: PackagingReportTypePaginationResult
 }
 
 export type QueryPackagingReportFeesEstimationArgs = {
@@ -214,6 +243,12 @@ export type QueryPackagingReportFinalDetailsArgs = {
 
 export type QueryPackagingReportForecastDetailsArgs = {
   packagingReportId: Scalars['ID']
+}
+
+export type QueryPackagingReportsArgs = {
+  filter?: InputMaybe<PackagingReportsFilterInput>
+  pagination?: InputMaybe<PaginationInput>
+  sorting?: InputMaybe<PackagingReportsSortingOption>
 }
 
 export enum TimeframeType {
@@ -323,25 +358,40 @@ export type CompanyDetailsQuery = {
   } | null
 }
 
-export type PackagingReportsQueryVariables = Exact<{ [key: string]: never }>
+export type PackagingReportsQueryVariables = Exact<{
+  pagination: PaginationInput
+  filter: PackagingReportsFilterInput
+  sorting: PackagingReportsSortingOption
+}>
 
 export type PackagingReportsQuery = {
   __typename?: 'Query'
-  packagingReports: Array<{
-    __typename?: 'PackagingReportType'
-    id: string
-    createdAt: any
-    startMonth: number
-    year: number
-    timezoneInfo: string
-    timeframe: TimeframeType
-    packagingGroupsCount: number
-    isForecastEditable: boolean
-    isFinalReportSubmitted: boolean
-    endDatetime: any
-    fees?: any | null
-    invoiceFile?: { __typename?: 'DjangoFileType'; url: string } | null
-  }>
+  packagingReports: {
+    __typename?: 'PackagingReportTypePaginationResult'
+    items: Array<{
+      __typename?: 'PackagingReportType'
+      id: string
+      createdAt: any
+      startMonth: number
+      year: number
+      timezoneInfo: string
+      timeframe: TimeframeType
+      packagingGroupsCount: number
+      isForecastEditable: boolean
+      isFinalReportSubmitted: boolean
+      endDatetime: any
+      fees?: any | null
+      invoiceFile?: { __typename?: 'DjangoFileType'; url: string } | null
+    }>
+    pageInfo: {
+      __typename?: 'PaginatorType'
+      perPage: number
+      currentPage: number
+      numPages: number
+      totalCount: number
+      hasNextPage: boolean
+    }
+  }
 }
 
 export type ExampleQueryVariables = Exact<{ [key: string]: never }>
@@ -732,27 +782,44 @@ export type CompanyDetailsQueryResult = Apollo.QueryResult<
   CompanyDetailsQueryVariables
 >
 export const PackagingReportsDocument = gql`
-  query packagingReports {
-    packagingReports {
-      id
-      createdAt
-      startMonth
-      year
-      timezoneInfo
-      timeframe
-      packagingGroupsCount
-      isForecastEditable
-      isFinalReportSubmitted
-      endDatetime
-      fees
-      invoiceFile {
-        url
+  query packagingReports(
+    $pagination: PaginationInput!
+    $filter: PackagingReportsFilterInput!
+    $sorting: PackagingReportsSortingOption!
+  ) {
+    packagingReports(
+      pagination: $pagination
+      filter: $filter
+      sorting: $sorting
+    ) {
+      items {
+        id
+        createdAt
+        startMonth
+        year
+        timezoneInfo
+        timeframe
+        packagingGroupsCount
+        isForecastEditable
+        isFinalReportSubmitted
+        endDatetime
+        fees
+        invoiceFile {
+          url
+        }
+      }
+      pageInfo {
+        perPage
+        currentPage
+        numPages
+        totalCount
+        hasNextPage
       }
     }
   }
 `
 export function usePackagingReportsQuery(
-  baseOptions?: Apollo.QueryHookOptions<
+  baseOptions: Apollo.QueryHookOptions<
     PackagingReportsQuery,
     PackagingReportsQueryVariables
   >

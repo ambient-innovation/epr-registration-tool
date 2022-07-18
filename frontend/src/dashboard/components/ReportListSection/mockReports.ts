@@ -2,11 +2,12 @@ import {
   PackagingReportsDocument,
   PackagingReportsQuery,
   PackagingReportsQueryVariables,
+  PackagingReportsSortingOption,
   TimeframeType,
 } from '@/api/__types__'
 import { ApolloMock } from '@/utils/typescript.utils'
 
-export const mockReports: PackagingReportsQuery['packagingReports'] = [
+export const mockReports: PackagingReportsQuery['packagingReports']['items'] = [
   {
     createdAt: '2022-06-10T14:38:42.483799+00:00',
     id: '1',
@@ -48,17 +49,65 @@ export const mockReports: PackagingReportsQuery['packagingReports'] = [
   },
 ]
 
+const defaultVariables = {
+  pagination: {
+    page: 1,
+    limit: 12,
+  },
+  filter: {
+    year: null,
+  },
+  sorting: PackagingReportsSortingOption.NEWEST_FIRST,
+}
+
+const defaultPageInfo = {
+  perPage: defaultVariables.pagination.limit,
+  currentPage: 1,
+  numPages: 1,
+  totalCount: 0,
+  hasNextPage: false,
+}
+
 export const packagingReportsMock: ApolloMock<
   PackagingReportsQuery,
   PackagingReportsQueryVariables
 > = {
+  delay: 1000,
   request: {
     query: PackagingReportsDocument,
-    variables: {},
+    variables: defaultVariables,
   },
   result: {
     data: {
-      packagingReports: mockReports,
+      packagingReports: {
+        items: mockReports,
+        pageInfo: defaultPageInfo,
+      },
+    },
+  },
+}
+
+export const packagingReports2022Mock: ApolloMock<
+  PackagingReportsQuery,
+  PackagingReportsQueryVariables
+> = {
+  delay: 1000,
+  request: {
+    query: PackagingReportsDocument,
+    variables: {
+      ...defaultVariables,
+      filter: {
+        ...defaultVariables.filter,
+        year: 2022,
+      },
+    },
+  },
+  result: {
+    data: {
+      packagingReports: {
+        items: mockReports.filter((item) => item.year === 2022),
+        pageInfo: defaultPageInfo,
+      },
     },
   },
 }
@@ -69,11 +118,14 @@ export const packagingReportsEmpyMock: ApolloMock<
 > = {
   request: {
     query: PackagingReportsDocument,
-    variables: {},
+    variables: defaultVariables,
   },
   result: {
     data: {
-      packagingReports: [],
+      packagingReports: {
+        items: [],
+        pageInfo: defaultPageInfo,
+      },
     },
   },
 }
