@@ -108,13 +108,40 @@ type PackagingReportType {
   packagingGroupsCount: Int!
 }
 
+type PackagingReportTypePaginationResult {
+  items: [PackagingReportType!]!
+  pageInfo: PaginatorType!
+}
+
+input PackagingReportsFilterInput {
+  year: Int
+}
+
+enum PackagingReportsSortingOption {
+  NEWEST_FIRST
+  OLDEST_FIRST
+}
+
+input PaginationInput {
+  page: Int!
+  limit: Int!
+}
+
+type PaginatorType {
+  perPage: Int!
+  currentPage: Int!
+  numPages: Int!
+  totalCount: Int!
+  hasNextPage: Boolean!
+}
+
 type Query {
   me: UserType
   companyDetails: CompanyType
   packagingGroups: [PackagingGroupType!]!
   packagingMaterials: [MaterialType!]!
   packagingReportFeesEstimation(timeframe: TimeframeType!, year: Int!, startMonth: Int!, packagingRecords: [PackagingGroupInput!]!): Decimal!
-  packagingReports: [PackagingReportType!]!
+  packagingReports(pagination: PaginationInput = null, filter: PackagingReportsFilterInput = null, sorting: PackagingReportsSortingOption = NEWEST_FIRST): PackagingReportTypePaginationResult!
   packagingReportForecastDetails(packagingReportId: ID!): PackagingReportType
   packagingReportFinalDetails(packagingReportId: ID!): PackagingReportType
   helloWorld: String!

@@ -29,7 +29,7 @@ def calculate_material_fees(
     timeframe: TimeframeType,
     year: int,
     start_month: int,
-    material_id: str,
+    material_id: int,
     material_quantity: Decimal,
 ) -> Decimal:
     fees = 0

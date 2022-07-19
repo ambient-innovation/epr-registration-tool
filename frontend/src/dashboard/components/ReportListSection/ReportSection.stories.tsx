@@ -1,9 +1,16 @@
 import { Box } from '@mui/material'
 import { Story } from '@storybook/react'
 
+import { MockUserProvider } from '@/auth/hooks/useUser'
+import { mockUser } from '@/auth/mocks'
+
 import { ReportListSection } from './ReportListSection'
 import { ReportListSkeleton } from './ReportListSkeleton'
-import { packagingReportsEmpyMock, packagingReportsMock } from './mockReports'
+import {
+  packagingReports2022Mock,
+  packagingReportsEmpyMock,
+  packagingReportsMock,
+} from './mockReports'
 
 export default {
   title: 'dashboard/ReportListSection',
@@ -11,7 +18,11 @@ export default {
 }
 
 const Template: Story<ReportListSection> = (args) => {
-  return <ReportListSection {...args} />
+  return (
+    <MockUserProvider user={mockUser}>
+      <ReportListSection {...args} />
+    </MockUserProvider>
+  )
 }
 export const WithReports = Template.bind({})
 WithReports.args = {
@@ -19,7 +30,7 @@ WithReports.args = {
 }
 WithReports.parameters = {
   apolloClient: {
-    mocks: [packagingReportsMock],
+    mocks: [packagingReportsMock, packagingReports2022Mock],
   },
 }
 

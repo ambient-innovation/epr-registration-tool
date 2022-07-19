@@ -38,7 +38,7 @@ export const DashboardHeader = ({
               })}
             </Typography>
           ) : (
-            <Skeleton width={250} />
+            <Skeleton width={250} sx={{ mt: 3 }} />
           )}
         </Box>
         <Box sx={{ mt: { xs: 6, sm: 0 } }}>

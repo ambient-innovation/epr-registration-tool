@@ -82,8 +82,11 @@
     "estimatedFeesResult": "Price {{fees}} JOD",
     "reportSuccessful": "Report Successful",
     "reportUpdatedSuccessful": "Report Update Successful",
-    "finalReportCreateSuccessful": "Final Report Successful",
-    "calculating": "calculating, please wait ..."
+    "calculating": "calculating, please wait ...",
+    "updateReportNoX": "Update Data Report No. {{reportNo}}",
+    "submitActualQuantitiesForReportNoX": "Submit actual quantities for Data Report No. {{reportNo}}",
+    "reportNoX": "Data Report No. {{reportNo}}",
+    "reportNotFound": "No Report found!"
   },
   "validations": {
     "required": "This field is required",
@@ -242,7 +245,17 @@
         "entries": "Packaging Entries:",
         "month": "month",
         "editableUntil": "Can be edited until {{endDate}}",
-        "forecast": "Forecast"
+        "forecast": "Forecast",
+        "submitActualQuantities": "Submit Actual Quantities",
+        "view": "View",
+        "viewInvoice": "View invoice"
+      },
+      "filterByYear": "Filter by year",
+      "noResultsResetFilter": "Nothing to show. Reset filter to see all reports.",
+      "sorting": "Sorting",
+      "sortingOptions": {
+        "newestFirst": "Newest first",
+        "oldestFirst": "Oldest first"
       }
     },
     "companyLogo": {
@@ -281,5 +294,6 @@
       "description": "Please enter (without spaces) the correct VAT number / tax number of your company (may differ from the country where your company is located).",
       "fieldName": "VAT number / tax number"
     }
-  }
+  },
+  "reset": "Reset"
 }

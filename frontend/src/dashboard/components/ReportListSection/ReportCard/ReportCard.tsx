@@ -68,14 +68,14 @@ export const ReportCard = ({
   ) : !isFinalReportSubmitted ? (
     <NextLink href={ROUTES.packagingReportChange(reportId)} passHref>
       <Button component={'a'} variant={'contained'}>
-        {'Submit Actual Quantities'}
+        {t('dashboard.reportListSection.reportCard.submitActualQuantities')}
       </Button>
     </NextLink>
   ) : (
     <>
       <NextLink href={ROUTES.dataReportView(reportId)} passHref>
         <Button component={'a'} variant={'outlined'}>
-          {'view'}
+          {t('dashboard.reportListSection.reportCard.view')}
         </Button>
       </NextLink>
       {invoiceFile && (
@@ -84,9 +84,8 @@ export const ReportCard = ({
           variant={'outlined'}
           target={'_blank'}
           href={invoiceFile.url}
-          sx={{ marginLeft: 6 }}
         >
-          {'View Invoice'}
+          {t('dashboard.reportListSection.reportCard.viewInvoice')}
         </Button>
       )}
     </>
@@ -106,9 +105,13 @@ export const ReportCard = ({
             })}
           </Typography>
           <Box sx={{ display: { xs: 'none', md: 'block' } }}>{statusChip}</Box>
-          <Box sx={{ ml: 'auto', display: { xs: 'none', md: 'block' } }}>
+          <Stack
+            direction={'row'}
+            sx={{ ml: 'auto', display: { xs: 'none', md: 'block' } }}
+            spacing={6}
+          >
             {actionButton}
-          </Box>
+          </Stack>
         </Box>
         <Typography variant={'caption'}>
           {`${t(
@@ -170,7 +173,9 @@ export const ReportCard = ({
             )}
           </Box>
         </Stack>
-        <Stack sx={{ mt: 10, display: { md: 'none' } }}>{actionButton}</Stack>
+        <Stack sx={{ mt: 10, display: { md: 'none' } }} spacing={6}>
+          {actionButton}
+        </Stack>
       </Box>
     </Card>
   )

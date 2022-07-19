@@ -4,13 +4,14 @@ import typing
 from django.db.models import Case, Count, FloatField, Prefetch, When
 
 import strawberry
+from graphql import GraphQLError
 from strawberry import ID
 from strawberry.types import Info
 
+from common.api.pagination import CustomPaginator, PaginationInput, PaginationResult, PaginatorType
 from common.api.permissions import IsActivated, IsAuthenticated
 from packaging.api.types import PackagingGroupInput
-from packaging.price_utils import calculate_material_fees
-from packaging_report.api.types import PackagingReportType
+from packaging_report.api.types import PackagingReportsFilterInput, PackagingReportsSortingOption, PackagingReportType
 from packaging_report.models import PackagingReport, TimeframeType
 
 
@@ -20,48 +21,85 @@ def get_packaging_report_fees_estimation(
     start_month: int,
     packaging_records: typing.List[PackagingGroupInput],
 ) -> decimal.Decimal:
-    if not packaging_records:
-        return 0.0
+    from packaging_report.utils import calculate_fees
 
-    fees = 0
-    for packaging in packaging_records:
-        for m in packaging.material_records:
-            fees = fees + calculate_material_fees(timeframe, year, start_month, m.material_id, m.quantity)
-    return round(fees, 2)
+    material_quantities = [(int(m.material_id), m.quantity) for p in packaging_records for m in p.material_records]
+
+    return calculate_fees(
+        timeframe=timeframe,
+        year=year,
+        start_month=start_month,
+        material_quantities=material_quantities,
+    )
 
 
-def packaging_reports(info: Info) -> typing.List[PackagingReportType]:
-    import time
+DEFAULT_PACKAGING_REPORTS_LIMIT = 12
 
+
+def packaging_reports(
+    info: Info,
+    pagination: typing.Optional[PaginationInput] = None,
+    filter: typing.Optional[PackagingReportsFilterInput] = None,
+    sorting: typing.Optional[PackagingReportsSortingOption] = PackagingReportsSortingOption.NEWEST_FIRST,
+) -> PaginationResult[PackagingReportType]:
     current_user = info.context.request.user
 
     if not current_user.related_company_id:
-        return PackagingReport.objects.none()
-    start = time.perf_counter()
-    all_reports = (
-        PackagingReport.objects.visible_for(current_user)
-        .annotate(
-            final_fees=Case(
-                When(related_final_submission__isnull=False, then='related_final_submission__fees'),
-                default=None,
-                output_field=FloatField(),
-            ),
-            packaging_groups_count=Case(
-                # material_records count depends on report state
-                When(
-                    related_final_submission__isnull=True,
-                    then=Count('related_forecast__material_records_queryset__related_packaging_group', distinct=True),
-                ),
-                default=Count(
-                    'related_final_submission__material_records_queryset__related_packaging_group', distinct=True
-                ),
-            ),
-        )
-        .order_by('-id')
+        base_queryset = PackagingReport.objects.none()
+    else:
+        base_queryset = PackagingReport.objects.visible_for(current_user)
+
+    if filter and filter.year:
+        base_queryset = base_queryset.filter(year=filter.year)
+
+    order_by = (
+        ('year', 'start_month') if sorting == PackagingReportsSortingOption.OLDEST_FIRST else ('-year', '-start_month')
     )
-    end = time.perf_counter()
-    print(f"Finished in : {(end - start):.10f}s")
-    return all_reports
+
+    packaging_reports_queryset = base_queryset.annotate(
+        final_fees=Case(
+            When(related_final_submission__isnull=False, then='related_final_submission__fees'),
+            default=None,
+            output_field=FloatField(),
+        ),
+        packaging_groups_count=Case(
+            # material_records count depends on report state
+            When(
+                related_final_submission__isnull=True,
+                then=Count('related_forecast__material_records_queryset__related_packaging_group', distinct=True),
+            ),
+            default=Count(
+                'related_final_submission__material_records_queryset__related_packaging_group', distinct=True
+            ),
+        ),
+    ).order_by(*order_by)
+
+    if pagination:
+        if pagination.limit < 1 or pagination.limit > 100:
+            raise GraphQLError('invalidLimit')
+        else:
+            limit = pagination.limit
+        if pagination.page < 1:
+            raise GraphQLError('invalidPage')
+        else:
+            page_number = pagination.page
+    else:
+        limit = DEFAULT_PACKAGING_REPORTS_LIMIT
+        page_number = 1
+
+    paginator = CustomPaginator(packaging_reports_queryset, limit, count_queryset=base_queryset)
+    page = paginator.get_page(page_number)
+
+    return PaginationResult(
+        items=page,
+        page_info=PaginatorType(
+            current_page=page.number,
+            per_page=paginator.per_page,
+            num_pages=paginator.num_pages,
+            total_count=paginator.count,
+            has_next_page=page.has_next(),
+        ),
+    )
 
 
 def packaging_report_forecast_details(info: Info, packaging_report_id: ID) -> typing.Optional[PackagingReportType]:

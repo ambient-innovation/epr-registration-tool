@@ -11,9 +11,9 @@ export const generateDefaultReportFormData = (
   packagingReport?:
     | PackagingReportForecastDetailsQuery['packagingReport']
     | PackagingReportFinalDetailsQuery['packagingReport'],
-  report?: { id: Scalars['ID']; materialRecords: Array<MaterialRecordType> }
+  submission?: { id: Scalars['ID']; materialRecords: Array<MaterialRecordType> }
 ): ForecastData | undefined => {
-  if (!packagingReport || !report) {
+  if (!packagingReport || !submission) {
     return undefined
   }
   return {
@@ -23,9 +23,9 @@ export const generateDefaultReportFormData = (
       1
     ),
     timeframe: packagingReport.timeframe,
-    packagingRecords: !report.materialRecords.length
+    packagingRecords: !submission.materialRecords.length
       ? []
-      : report.materialRecords.reduce((acc, current) => {
+      : submission.materialRecords.reduce((acc, current) => {
           const {
             quantity,
             packagingGroup: { id: packagingGroupId },

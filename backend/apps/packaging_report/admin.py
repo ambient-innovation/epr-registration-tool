@@ -1,12 +1,15 @@
 from django import forms
 from django.conf.locale.es import formats as es_formats
 from django.contrib import admin
+from django.db.models import Case, CharField, F, Value, When
 from django.utils import timezone
 from django.utils.html import format_html
+from django.utils.translation import gettext_lazy as _
 
 import pytz
 from ai_django_core.admin.model_admins.mixins import CommonInfoAdminMixin
 
+from common.models import Month
 from packaging_report.models import FinalSubmission, ForecastSubmission, MaterialRecord, PackagingReport
 
 es_formats.DATETIME_FORMAT = "d M Y H:i:s"
@@ -82,15 +85,64 @@ class PackagingReportForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class MonthFilter(admin.SimpleListFilter):
+    title = _('Month')
+    parameter_name = 'month'
+
+    def lookups(self, request, model_admin):
+        return Month.choices
+
+    def queryset(self, request, queryset):
+        try:
+            value = self.value()
+            if value and int(value) in Month:
+                return queryset.annotate(end_month=F('start_month') + F('timeframe') - 1).filter(
+                    start_month__lte=value,
+                    end_month__gte=value,
+                )
+        except ValueError:
+            pass
+
+        return queryset
+
+
+class StatusFilter(admin.SimpleListFilter):
+    title = _('Status')
+    parameter_name = 'status'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('forecast', _('Forecast')),
+            ('payment-required', _('Payment required')),
+            ('no-submission', _('No data')),
+        )
+
+    def queryset(self, request, queryset):
+        value = self.value()
+        if value is not None:
+            if value == 'no-submission':
+                return queryset.filter(status__isnull=True)
+            else:
+                return queryset.filter(status=value)
+        return queryset
+
+
 @admin.register(PackagingReport)
 class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
     change_form_template = 'packaging_report/change_view.html'
     form = PackagingReportForm
     list_display = (
         '__str__',
-        'timeframe',
+        'company_name',
         'year',
         'start_month',
+        'timeframe',
+        'end_month',
+        'status',
+    )
+    search_fields = (
+        'company_name',
+        'year',
         'status',
     )
     fields = (
@@ -122,7 +174,12 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
         'lastmodified_at',
     )
     autocomplete_fields = ('related_company',)
-    list_filter = ('timeframe',)
+    list_filter = (
+        StatusFilter,
+        'year',
+        'timeframe',
+        MonthFilter,
+    )
     readonly_fields = (
         'related_forecast',
         'end_datetime_display',
@@ -135,6 +192,10 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
         'status',
     )
 
+    class Media:
+        js = ('packaging_report/admin.js',)
+        css = {'all': ('packaging_report/admin.css',)}
+
     def get_fields(self, request, obj=None):
         # in add form we don't need all fields
         if not obj:
@@ -143,28 +204,47 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
             return self.fields
 
     def get_queryset(self, request):
-        return super().get_queryset(request).select_related('related_forecast', 'related_final_submission')
+        return (
+            super()
+            .get_queryset(request)
+            .prefetch_related('related_forecast', 'related_final_submission')
+            .annotate(company_name=F('related_company__name'))
+            .annotate(
+                status=Case(
+                    When(related_final_submission__isnull=False, then=Value('payment-required')),
+                    When(related_forecast__isnull=False, then=Value('forecast')),
+                    output_field=CharField(),
+                    default=None,
+                ),
+            )
+        )
 
     def has_change_permission(self, request, obj=None):
         return obj.is_forecast_editable() if obj else True
 
-    @admin.display(description='Status')
+    @admin.display(description='End month')
+    def end_month(self, obj: PackagingReport):
+        end_month = obj.start_month + obj.timeframe - 1
+        try:
+            return Month.labels[end_month - 1]
+        except IndexError:
+            return 'n.a.'
+
+    @admin.display(description='Company')
+    def company_name(self, obj):
+        return obj.company_name
+
+    @admin.display(description='Status', ordering='status')
     def status(self, obj: PackagingReport):
-        status = 'no data'
-        color = '#9a9e9f'
-        if obj:
-            if getattr(obj, 'related_forecast', None) and not getattr(obj, 'related_final_submission', None):
-                status = 'forecast'
-                color = '#0288d1'
-            elif getattr(obj, 'related_final_submission', None):
-                status = 'payment required'
-                color = '#ed6c02'
+        status = getattr(obj, 'status')  # <-- annotated
+        if status == 'forecast':
+            label = _('Forecast')
+        elif status == 'payment-required':
+            label = _('Payment required')
+        else:
+            label = _('no data')
         return format_html(
-            '<div style="max-width:150px;background-color:{color};'
-            'border-radius: 16px;text-align:center;'
-            'line-height:166%">'
-            '<span style="white-space: nowrap;color:#fff">{status}</span>'
-            '</div>',
-            status=status,
-            color=color,
+            '<span class="status-badge {extra_class}"><span>{label}</span></div>',
+            label=label,
+            extra_class=f"status-badge--{status}" if status else '',
         )
