@@ -229,7 +229,7 @@
       "noReportPleaseComplete": "No Reports available. Complete your profile to submit a Report.",
       "reportCard": {
         "title": "رقم تقرير البيانات {{reportNumber}}",
-        "submittedOn": "تم إرساله {{submitDate}}",
+        "submittedOn": "تم إرساله",
         "startsAt": "بداية التوقعات:",
         "timeframe": "الإطار الزمني للتنبؤات:",
         "estimatedF": "الرسوم المقدرة:",
@@ -237,7 +237,10 @@
         "entries": "إدخالات التغليف:",
         "month": "شهر",
         "editableUntil": "يمكن التحرير حتى {{endDate}}",
-        "forecast": "تنبؤ بالمناخ"
+        "forecast": "تنبؤ بالمناخ",
+        "submitActualQuantities": "إرسال الكميات الفعلية",
+        "view": "رأي",
+        "viewInvoice": "عرض الفاتورة"
       },
       "filterByYear": "تصفية حسب السنة",
       "noResultsResetFilter": "Nothing to show. Reset filter to see all reports.",

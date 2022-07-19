@@ -242,7 +242,10 @@
         "entries": "Packaging Entries:",
         "month": "month",
         "editableUntil": "Can be edited until {{endDate}}",
-        "forecast": "Forecast"
+        "forecast": "Forecast",
+        "submitActualQuantities": "Submit Actual Quantities",
+        "view": "View",
+        "viewInvoice": "View invoice"
       },
       "filterByYear": "Filter by year",
       "noResultsResetFilter": "Nothing to show. Reset filter to see all reports.",
