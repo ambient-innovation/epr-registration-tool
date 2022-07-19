@@ -51,6 +51,8 @@
   },
   "reportForm": {
     "createSubPageTitle": "إنشاء تقرير جديد",
+    "updateSubPageTitle": "Update Report Forecast",
+    "submitFinalReportSubPageTitle": "Update Report Forecast",
     "successSubPageTitle": "تم الإبلاغ بنجاح",
     "formLabel": "إرسال تقرير التعبئة والتغليف",
     "timeframe": "الإطار الزمني",
@@ -80,7 +82,11 @@
     "estimatedFeesResult": "السعر {{fees}} د.أ",
     "reportSuccessful": "تم الإبلاغ بنجاح",
     "reportUpdatedSuccessful": "تم تعديل الإبلاغ عن بنجاح",
-    "calculating": "جاري الحساب ، من فضلك انتظر ..."
+    "calculating": "جاري الحساب ، من فضلك انتظر ...",
+    "updateReportNoX": "Update Data Report No. {{reportNo}}",
+    "submitActualQuantitiesForReportNoX": "Submit actual quantities for Data Report No. {{reportNo}}",
+    "reportNoX": "Data Report No. {{reportNo}}",
+    "reportNotFound": "No Report found!"
   },
   "validations": {
     "required": "هذه الخانة مطلوبه",
@@ -122,6 +128,8 @@
     "reportDoesNotExist": "تقرير غير موجود",
     "reportIsNotEditable": "التقرير غير قابل للتحرير",
     "profileAlreadyCompleted": "ملف الشركة مكتمل بالفعل",
+    "finalReportAlreadySubmitted": "Final Report already submitted",
+    "cannotSubmitFinalReportYet": "Final Report cannot be submitted yet",
     "identicalPasswordNotAllowed": "The new password can not be identical with the old password.",
     "maximumFileSizeExceeded": "الحجم الأقصى للصورة هو 2 ميغا بايت. الرجاء محاولة ملف صورة أصغر.",
     "invalidExtension": "تنسيق الصورة غير مسموح به. يرجى تحميل صورة أخرى (JPG أو PNG)"
@@ -146,10 +154,10 @@
     "main": "Account & Settings",
     "changePasswordForm": {
       "title": "Password",
-      "description1": "Lorem impsum dolor sit...",
-      "description2": "Lorem impsum dolor sit...",
-      "newPasswordLabel": "New password",
-      "oldPasswordLabel": "Old password",
+      "description1": "Set a new password for your account. After choosing a new password enter your old password for confirmation.",
+      "description2": "To conform with our Strong Password policy, you are required to use a sufficiently strong password. Password must at least 8 characters long and contain upper and lower case letters, a number and a special character.",
+      "newPassword": "New password",
+      "oldPassword": "Old password",
       "oldPasswordHelpText": "Please enter your old password for confirmation",
       "submitChangePassword": "Change Password",
       "passwordResetFailed": "Password Reset failed"

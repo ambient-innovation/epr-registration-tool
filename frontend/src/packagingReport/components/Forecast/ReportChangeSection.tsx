@@ -1,5 +1,6 @@
 import { ApolloError } from '@apollo/client'
 import { Typography } from '@mui/material'
+import { useTranslation } from 'next-i18next'
 import Error from 'next/error'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
@@ -53,7 +54,7 @@ export type ReportChangeSection = Record<string, never>
 export const ReportChangeSection = (
   _: ReportChangeSection
 ): React.ReactElement => {
-  // const { t } = useTranslation()
+  const { t } = useTranslation()
 
   const router = useRouter()
   const { id: packagingReportId } = router.query as { id: string }
@@ -72,7 +73,7 @@ export const ReportChangeSection = (
       ) : error ? (
         <ApolloErrorAlert error={error} />
       ) : !packagingReport || !defaultFormData ? (
-        <Error statusCode={404} title={'No Report found!'} />
+        <Error statusCode={404} title={t('reportForm.reportNotFound')} />
       ) : (
         <>
           <Typography
@@ -81,10 +82,16 @@ export const ReportChangeSection = (
             mb={{ xs: 8, sm: 10, md: 11 }}
           >
             {isForecast
-              ? `Update Data Report No. ${packagingReportId}`
+              ? t('reportForm.updateReportNoX', {
+                  reportNo: packagingReportId,
+                })
               : isFinalReportSubmit
-              ? `Submit actual quantities for Data Report No. ${packagingReportId}`
-              : `Data Report No. ${packagingReportId}`}
+              ? t('reportForm.submitActualQuantitiesForReportNoX', {
+                  reportNo: packagingReportId,
+                })
+              : t('reportForm.reportNoX', {
+                  reportNo: packagingReportId,
+                })}
           </Typography>
           <ForecastProvider
             defaultData={defaultFormData}

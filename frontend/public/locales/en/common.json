@@ -82,8 +82,11 @@
     "estimatedFeesResult": "Price {{fees}} JOD",
     "reportSuccessful": "Report Successful",
     "reportUpdatedSuccessful": "Report Update Successful",
-    "finalReportCreateSuccessful": "Final Report Successful",
-    "calculating": "calculating, please wait ..."
+    "calculating": "calculating, please wait ...",
+    "updateReportNoX": "Update Data Report No. {{reportNo}}",
+    "submitActualQuantitiesForReportNoX": "Submit actual quantities for Data Report No. {{reportNo}}",
+    "reportNoX": "Data Report No. {{reportNo}}",
+    "reportNotFound": "No Report found!"
   },
   "validations": {
     "required": "This field is required",
