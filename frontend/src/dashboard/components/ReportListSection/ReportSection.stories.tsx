@@ -1,6 +1,9 @@
 import { Box } from '@mui/material'
 import { Story } from '@storybook/react'
 
+import { MockUserProvider } from '@/auth/hooks/useUser'
+import { mockUser } from '@/auth/mocks'
+
 import { ReportListSection } from './ReportListSection'
 import { ReportListSkeleton } from './ReportListSkeleton'
 import {
@@ -15,7 +18,11 @@ export default {
 }
 
 const Template: Story<ReportListSection> = (args) => {
-  return <ReportListSection {...args} />
+  return (
+    <MockUserProvider user={mockUser}>
+      <ReportListSection {...args} />
+    </MockUserProvider>
+  )
 }
 export const WithReports = Template.bind({})
 WithReports.args = {

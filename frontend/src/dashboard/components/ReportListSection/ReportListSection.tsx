@@ -18,6 +18,7 @@ import {
   PackagingReportsSortingOption as SortingOption,
   usePackagingReportsQuery,
 } from '@/api/__types__'
+import { useUser } from '@/auth/hooks/useUser'
 import { ApolloErrorAlert } from '@/common/components/ApolloErrorAlert'
 import { DEFAULT_FORM_SPACING } from '@/common/components/FormStep/constants'
 import { SelectField } from '@/common/components/SelectField'
@@ -46,6 +47,7 @@ const MAX_YEAR = 2099
 export const ReportListSection = ({
   canAddReport,
 }: ReportListSection): React.ReactElement => {
+  const { user } = useUser()
   const { t } = useTranslation()
 
   const sortingOptions = getSortingOptions(t)
@@ -68,6 +70,7 @@ export const ReportListSection = ({
 
   const { data, loading, error } = usePackagingReportsQuery({
     fetchPolicy: 'cache-and-network',
+    skip: !user,
     variables: {
       pagination: {
         page: pageNumber,
@@ -79,6 +82,8 @@ export const ReportListSection = ({
       sorting: sorting,
     },
   })
+
+  const isLoading = !user || loading
 
   const titleId = useId()
   const descriptionId = useId()
@@ -153,7 +158,7 @@ export const ReportListSection = ({
         </Box>
 
         <Box>
-          {loading && !packagingReports?.length ? (
+          {isLoading && !packagingReports?.length ? (
             <ReportListSkeleton />
           ) : packagingReports?.length ? (
             <Stack spacing={LIST_SPACING} role={'list'}>

@@ -91,7 +91,7 @@ const BaseData = ({ companyInformation }: BaseData): React.ReactElement => {
 
 export const Dashboard = (_: Dashboard): React.ReactElement => {
   const { t } = useTranslation()
-  const { data, loading } = useCompanyDetailsQuery()
+  const { data, loading: loadingCompanyDetails } = useCompanyDetailsQuery()
   const companyDetails = data?.companyDetails
   const { user } = useUser()
 
@@ -100,10 +100,10 @@ export const Dashboard = (_: Dashboard): React.ReactElement => {
   return (
     <>
       <Box sx={defaultContainerSx}>
-        {!loading && !canAddReport && <CompletionAlert />}
+        {!loadingCompanyDetails && user && !canAddReport && <CompletionAlert />}
         <DashboardHeader user={user} canAddReport={canAddReport} />
         <Box sx={{ marginTop: 11 }}>
-          {loading ? (
+          {!user || loadingCompanyDetails ? (
             <Skeleton
               variant={'rectangular'}
               sx={{ height: { xs: 300, sm: 172 } }}
