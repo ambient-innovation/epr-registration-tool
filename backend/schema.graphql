@@ -16,7 +16,7 @@ type CompanyType {
   createdAt: DateTime!
   identificationNumber: String!
   isProfileCompleted: Boolean!
-  logo: DjangoFileType
+  logo: ImageType
 }
 
 """Date with time (isoformat)"""
@@ -46,6 +46,14 @@ type FinalSubmissionType {
 type ForecastSubmissionType {
   id: ID!
   materialRecords: [MaterialRecordType!]!
+}
+
+type ImageType {
+  name: String!
+  size: Int!
+  url: String!
+  width: Int!
+  height: Int!
 }
 
 enum LanguageEnum {

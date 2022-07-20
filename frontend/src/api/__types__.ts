@@ -45,7 +45,7 @@ export type CompanyType = {
   identificationNumber: Scalars['String']
   isProfileCompleted: Scalars['Boolean']
   lastmodifiedAt: Scalars['DateTime']
-  logo?: Maybe<DjangoFileType>
+  logo?: Maybe<ImageType>
   name: Scalars['String']
 }
 
@@ -73,6 +73,15 @@ export type ForecastSubmissionType = {
   __typename?: 'ForecastSubmissionType'
   id: Scalars['ID']
   materialRecords: Array<MaterialRecordType>
+}
+
+export type ImageType = {
+  __typename?: 'ImageType'
+  height: Scalars['Int']
+  name: Scalars['String']
+  size: Scalars['Int']
+  url: Scalars['String']
+  width: Scalars['Int']
 }
 
 export enum LanguageEnum {
@@ -348,13 +357,7 @@ export type CompanyDetailsQuery = {
     createdAt: any
     lastmodifiedAt: any
     isProfileCompleted: boolean
-    logo?: {
-      __typename?: 'DjangoFileType'
-      name: string
-      path: string
-      size: number
-      url: string
-    } | null
+    logo?: { __typename?: 'ImageType'; url: string } | null
   } | null
 }
 
@@ -739,9 +742,6 @@ export const CompanyDetailsDocument = gql`
       lastmodifiedAt
       isProfileCompleted
       logo {
-        name
-        path
-        size
         url
       }
     }

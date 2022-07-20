@@ -3,8 +3,8 @@ from typing import Optional
 
 import strawberry
 from strawberry.django import auto
-from strawberry_django import DjangoFileType
 
+from common.api.types import ImageType
 from company.models import Company, CompanyContactInfo
 
 
@@ -23,7 +23,7 @@ class CompanyType:
         return getattr(root, 'is_profile_completed', False)
 
     @strawberry.django.field
-    def logo(self, root) -> typing.Optional[DjangoFileType]:
+    def logo(self, root) -> typing.Optional[ImageType]:
         if root.logo:
             return root.logo
         return None
