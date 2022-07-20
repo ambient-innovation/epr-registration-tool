@@ -1,0 +1,11 @@
+Dear {{ user.display_name }}
+
+EPR Registration Tool | فاتورة تقرير البيانات
+
+فاتورة تقرير البيانات
+
+{{ packaging_report_id }} هذه فاتورة رقم تقرير البيانات
+
+{{ url }}
+
+هذه فاتورة رقم تقرير البيانات  {{ packaging_report_id }}.

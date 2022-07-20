@@ -1,0 +1,23 @@
+{% extends "email/base/base_en.html" %}
+
+{% block title %}
+  EPR Registration Tool | Data Report Invoice
+{% endblock %}
+
+{% block preheader %}
+  Data Report Invoice
+{% endblock %}
+
+{% block heading %}
+  Data Report No. {{ packaging_report_id }} Invoice.
+{% endblock %}
+
+{% block linktext %}
+  Invoice ⬇️
+{% endblock %}
+
+{% block info %}
+  <p>
+    Here is an invoice for Data Report No. {{ packaging_report_id }}.
+  </p>
+{% endblock %}

@@ -1,0 +1,11 @@
+Dear {{ user.display_name }}
+
+EPR Registration Tool | Packaging Report Invoice
+
+Packaging Report Invoice
+
+Packaging Report No. {{ packaging_report_id }} Invoice.
+
+{{ url }}
+
+Here is an invoice for packaging report no. {{ packaging_report_id }}.

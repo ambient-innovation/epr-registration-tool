@@ -1,0 +1,23 @@
+{% extends "email/base/base_en.html" %}
+
+{% block title %}
+  EPR Registration Tool | فاتورة تقرير البيانات
+{% endblock %}
+
+{% block preheader %}
+  فاتورة تقرير البيانات
+{% endblock %}
+
+{% block heading %}
+ {{ packaging_report_id }} هذه فاتورة رقم تقرير البيانات
+{% endblock %}
+
+{% block linktext %}
+  فاتورة ⬇️
+{% endblock %}
+
+{% block info %}
+  <p>
+   هذه فاتورة رقم تقرير البيانات  {{ packaging_report_id }}.
+  </p>
+{% endblock %}
