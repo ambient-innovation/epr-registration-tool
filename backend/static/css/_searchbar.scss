@@ -1,0 +1,22 @@
+// --- increase width of search bar ---
+
+#changelist-search {
+
+  div {
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    label {
+      margin-right: 5px;
+    }
+
+    #searchbar {
+      flex-grow: 1;
+    }
+
+    input[type=submit] {
+      margin-left: 10px;
+    }
+  }
+}

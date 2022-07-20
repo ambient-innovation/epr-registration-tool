@@ -130,6 +130,7 @@ class StatusFilter(admin.SimpleListFilter):
 @admin.register(PackagingReport)
 class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
     change_form_template = 'packaging_report/change_view.html'
+    change_list_template = 'packaging_report/change_list.html'
     form = PackagingReportForm
     list_display = (
         '__str__',
@@ -193,7 +194,6 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
     )
 
     class Media:
-        js = ('packaging_report/admin.js',)
         css = {'all': ('packaging_report/admin.css',)}
 
     def get_fields(self, request, obj=None):

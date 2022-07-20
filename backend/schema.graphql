@@ -11,6 +11,7 @@ input CompanyProfileInputType {
 type CompanyType {
   id: ID!
   name: String!
+  registrationNumber: String!
   distributorType: String!
   lastmodifiedAt: DateTime!
   createdAt: DateTime!

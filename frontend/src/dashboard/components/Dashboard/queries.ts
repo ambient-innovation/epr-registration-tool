@@ -5,6 +5,7 @@ export const COMPANY_DETAILS = gql`
     companyDetails {
       id
       name
+      registrationNumber
       distributorType
       identificationNumber
       createdAt

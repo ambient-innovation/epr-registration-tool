@@ -47,23 +47,38 @@ class CompanyContactInfoInline(admin.StackedInline):
 @admin.register(Company)
 class CompanyAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
     change_form_template = 'company/change_view.html'
+    change_list_template = 'company/change_list.html'
     inlines = (
         CompanyUserInline,
         CompanyContactInfoInline,
     )
     list_display = (
+        'registration_number',
         'name',
         'contact_person_email',
         'is_active',
         'is_profile_completed',
     )
     list_filter = ('is_active',)
-    search_fields = ('name',)
-    readonly_fields = ('current_logo',)
+    search_fields = (
+        'name',
+        'registration_number',
+        'identification_number',
+        'contact_person_email',
+    )
+    readonly_fields = (
+        'current_logo',
+        'registration_number',
+    )
     fieldsets = (
         (
             None,
-            {'fields': ('is_active',)},
+            {
+                'fields': (
+                    'registration_number',
+                    'is_active',
+                )
+            },
         ),
         (
             _('General Information'),
@@ -112,6 +127,11 @@ class CompanyAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
         return format_html('<img src={logo_url} width="100" height="100" />', logo_url=obj.logo.url)
 
     def save_model(self, request, obj, form, change):
+        from company.utils import generate_unique_registration_number
+
+        if not obj.registration_number:
+            obj.registration_number = generate_unique_registration_number(obj)
+
         super().save_model(request, obj, form, change)
 
         # notify user when is_active is changed from False -> True
