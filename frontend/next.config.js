@@ -9,7 +9,11 @@ const nextConfig = {
     emotion: true,
   },
   images: {
-    domains: ['localhost', 'epr-tool.ambient.digital'],
+    domains: [
+      'localhost',
+      'epr-tool.ambient.digital',
+      'epr-registration-tool-test.s3.amazonaws.com',
+    ],
   },
   webpack: (config, options) => {
     // In `pages/_app.js`, Sentry is imported from @sentry/node. While

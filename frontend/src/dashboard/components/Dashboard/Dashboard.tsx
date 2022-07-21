@@ -12,7 +12,7 @@ import { useTranslation } from 'next-i18next'
 import { Fragment } from 'react'
 import React, { useState, useCallback } from 'react'
 
-import { CompanyType, useCompanyDetailsQuery } from '@/api/__types__'
+import { CompanyType, ImageType, useCompanyDetailsQuery } from '@/api/__types__'
 import { useUser } from '@/auth/hooks/useUser'
 import { CompanyLogo } from '@/common/components/CompanyLogo'
 import { CompletionAlert } from '@/dashboard/components/Dashboard/CompletionAltert'
@@ -26,7 +26,9 @@ import { distributorTypes } from './constants'
 
 export type Dashboard = Record<string, never>
 export interface BaseData {
-  companyInformation: CompanyType
+  companyInformation: Omit<CompanyType, 'logo'> & {
+    logo?: Pick<ImageType, 'url'> | null
+  }
 }
 
 const CompanyBaseData = ({
