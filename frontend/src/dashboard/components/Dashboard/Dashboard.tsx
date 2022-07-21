@@ -29,7 +29,9 @@ export interface BaseData {
   companyInformation: CompanyType
 }
 
-const BaseData = ({ companyInformation }: BaseData): React.ReactElement => {
+const CompanyBaseData = ({
+  companyInformation,
+}: BaseData): React.ReactElement => {
   const [isUploadLogoDialogOpen, openUploadLogoDialog] =
     useState<boolean>(false)
   const { t } = useTranslation()
@@ -37,7 +39,7 @@ const BaseData = ({ companyInformation }: BaseData): React.ReactElement => {
   const dialogFullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const { name, ...companyBaseData } = companyInformation
   const preparedData = {
-    registrationNumber: companyBaseData.identificationNumber || 'Not set',
+    registrationNumber: companyBaseData.registrationNumber,
     distributorType: distributorTypes(t)[companyBaseData.distributorType],
     createdAt: new Date(companyBaseData.createdAt).toLocaleDateString(),
     lastmodifiedAt: new Date(
@@ -109,7 +111,7 @@ export const Dashboard = (_: Dashboard): React.ReactElement => {
               sx={{ height: { xs: 300, sm: 172 } }}
             />
           ) : companyDetails ? (
-            <BaseData companyInformation={companyDetails} />
+            <CompanyBaseData companyInformation={companyDetails} />
           ) : (
             <Alert severity={'warning'}>
               {t('dashboard.noCompanyAssigned')}

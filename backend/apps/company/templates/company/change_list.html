@@ -1,0 +1,7 @@
+{% extends "admin/change_list.html" %}
+
+{% block content %}
+  {{ block.super }}
+
+  {% include 'common/set_searchbar_placeholder_script.html' with placeholder="Search by name, registration ID, tax number or contact email" %}
+{% endblock %}

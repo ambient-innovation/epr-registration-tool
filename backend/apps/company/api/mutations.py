@@ -17,6 +17,7 @@ from account.models import User
 from common.api.permissions import IsActivated, IsAuthenticated
 from company.api.types import CompanyProfileInputType
 from company.models import Company, CompanyContactInfo, DistributorType
+from company.utils import generate_unique_registration_number
 from company.validators import validate_string_without_whitespaces
 
 
@@ -37,6 +38,9 @@ def register_company(
         distributor_type=company_distributor_type,
         is_active=False,
         country_code=country_code.strip().lower(),
+        # add dummy registration number to satisfy validation
+        # --> generate actual registration number, once the company is validated
+        registration_number='XY0123456789',
     )
 
     selected_language = translation.get_language_from_request(info.context.request)
@@ -76,6 +80,9 @@ def register_company(
         validate_password(password)
     except ValidationError as e:
         raise GraphQLError(e.error_list[0].code, original_error=e)
+
+    # generate registration_number AFTER validation of company
+    company.registration_number = generate_unique_registration_number(company)
 
     with transaction.atomic():
         company.save()

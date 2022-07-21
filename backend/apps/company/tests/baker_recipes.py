@@ -1,4 +1,7 @@
+from model_bakery import seq
 from model_bakery.recipe import Recipe
+
+from company.utils import REGISTRATION_NUMBER_MIN
 
 company_contact_info = Recipe(
     'company.CompanyContactInfo',
@@ -17,4 +20,5 @@ company = Recipe(
     distributor_type='IMPORTER',
     is_active=True,
     identification_number="DE1235458",
+    registration_number=seq('DE', start=REGISTRATION_NUMBER_MIN),
 )

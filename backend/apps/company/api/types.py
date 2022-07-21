@@ -12,6 +12,7 @@ from company.models import Company, CompanyContactInfo
 class CompanyType:
     id: auto
     name: auto
+    registration_number: auto
     distributor_type: auto
     lastmodified_at: auto
     created_at: auto

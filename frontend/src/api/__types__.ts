@@ -47,6 +47,7 @@ export type CompanyType = {
   lastmodifiedAt: Scalars['DateTime']
   logo?: Maybe<DjangoFileType>
   name: Scalars['String']
+  registrationNumber: Scalars['String']
 }
 
 export enum DistributorType {
@@ -343,6 +344,7 @@ export type CompanyDetailsQuery = {
     __typename?: 'CompanyType'
     id: string
     name: string
+    registrationNumber: string
     distributorType: string
     identificationNumber: string
     createdAt: any
@@ -733,6 +735,7 @@ export const CompanyDetailsDocument = gql`
     companyDetails {
       id
       name
+      registrationNumber
       distributorType
       identificationNumber
       createdAt
