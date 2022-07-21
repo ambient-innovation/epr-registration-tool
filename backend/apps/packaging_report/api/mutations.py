@@ -6,6 +6,7 @@ from django.utils import timezone
 
 import strawberry
 from graphql import GraphQLError
+from sentry_sdk import capture_exception
 from strawberry import ID
 from strawberry.types import Info
 
@@ -13,6 +14,7 @@ from account.models import User
 from common.api.permissions import IsActivated, IsAuthenticated
 from packaging.api.types import PackagingGroupInput
 from packaging.models import MaterialPrice
+from packaging_report.email import send_packaging_report_invoice
 from packaging_report.models import FinalSubmission, ForecastSubmission, MaterialRecord, PackagingReport, TimeframeType
 
 
@@ -139,12 +141,18 @@ def packaging_report_final_data_submit(
             extensions=extensions,
         )
 
-    def _generate_invoice_file(report_pk, user_pk):
+    def _generate_invoice_file(user_pk):
         file = report.generate_invoice_file(user_pk)
         report.invoice_file = file
         report.save()
 
-    _generate_invoice_file(report.pk, current_user.pk)
+    _generate_invoice_file(current_user.pk)
+    try:
+        send_packaging_report_invoice(current_user, report)
+    except Exception as e:
+        # failing emails should not break anything else
+        capture_exception(e)
+
     return 'CREATED'
 
 

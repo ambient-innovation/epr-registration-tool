@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.core import mail
 from django.utils.timezone import make_aware
 
 import time_machine
@@ -179,3 +180,7 @@ class PackagingReportUpdateTestCase(BaseApiTestCase):
         )
         self.assertEqual(self.material.id, material_record.related_packaging_material.id)
         self.assertEqual(20, material_record.quantity)
+        self.assertIsNotNone(report.invoice_file)
+        self.assertEqual(1, len(mail.outbox))
+        self.assertEqual([self.user.email], mail.outbox[0].to)
+        self.assertEqual('noreply@ambient.digital', mail.outbox[0].from_email)
