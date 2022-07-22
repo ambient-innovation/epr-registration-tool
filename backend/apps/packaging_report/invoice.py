@@ -27,6 +27,10 @@ class InvoiceService:
     def get_total_fees(self):
         return self.final_submission.fees
 
+    @staticmethod
+    def invoice_id(unique_id):
+        return f'{datetime.datetime.now().year}-{unique_id}'
+
     def clean_material_records(self):
         result = []
         for material_record in self.material_records:

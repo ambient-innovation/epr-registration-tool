@@ -39,14 +39,14 @@ class InvoicePdf(PDFService):
         )
         context.update(
             company=self.company,
-            invoice_no=self.packaging_report.id,
+            invoice_no=invoice_service.invoice_id(self.packaging_report.id),
             company_address=self.company.related_contact_info.address_line,
             contact_person=self.user,
             invoice_date=self.packaging_report.final_submission.created_at,
             invoice_due_date=self.packaging_report.final_submission.created_at + relativedelta(days=30),
             material_records_frames=invoice_service.clean_material_records(),
             total_fees=invoice_service.get_total_fees(),
-            tax='19%',
+            tax='19%',  # placeholder
             currancy='JOD',
         )
         return context
