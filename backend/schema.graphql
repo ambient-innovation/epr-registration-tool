@@ -1,4 +1,14 @@
-input CompanyProfileInputType {
+input CompanyContactInfoInput {
+  country: String!
+  postalCode: String
+  city: String!
+  street: String!
+  streetNumber: String
+  additionalAddressInfo: String
+  phoneNumber: String!
+}
+
+type CompanyContactInfoType {
   country: String!
   postalCode: String
   city: String!
@@ -8,15 +18,22 @@ input CompanyProfileInputType {
   additionalAddressInfo: String
 }
 
+input CompanyInput {
+  name: String!
+  distributorType: DistributorType!
+  identificationNumber: String
+}
+
 type CompanyType {
   id: ID!
   name: String!
   registrationNumber: String!
-  distributorType: String!
+  distributorType: DistributorType!
   lastmodifiedAt: DateTime!
   createdAt: DateTime!
   identificationNumber: String!
   isProfileCompleted: Boolean!
+  contactInfo(pk: ID): CompanyContactInfoType
   logo: ImageType
 }
 
@@ -83,7 +100,7 @@ type Mutation {
   changeLanguage(languageCode: LanguageEnum!): String!
   changePassword(oldPassword: String!, newPassword: String!): String!
   registerCompany(companyName: String!, companyDistributorType: DistributorType!, userEmail: String!, userTitle: String!, userFullName: String!, userPosition: String!, userPhoneOrMobile: String!, password: String!, countryCode: String!): String!
-  createCompanyProfile(profileData: CompanyProfileInputType!, identificationNumber: String!): String!
+  changeCompanyDetails(companyInput: CompanyInput!, contactInfoInput: CompanyContactInfoInput!): String!
   changeCompanyLogo(file: Upload = null): String!
   packagingReportForecastSubmit(timeframe: TimeframeType!, year: Int!, startMonth: Int!, tzInfo: String!, packagingRecords: [PackagingGroupInput!]!): String!
   packagingReportFinalDataSubmit(packagingReportId: ID!, packagingRecords: [PackagingGroupInput!]!): String!

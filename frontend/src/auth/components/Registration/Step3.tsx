@@ -6,7 +6,7 @@ import { SchemaOf } from 'yup'
 
 import { FormStep, FormStepContainer } from '@/common/components/FormStep'
 import { PasswordInput } from '@/common/components/PasswordInput'
-import { passwordValidator } from '@/utils/form-validation.utils'
+import { passwordValidator } from '@/utils/form/form-validation.utils'
 
 import { useRegistrationContext } from './RegistrationContext'
 import { RegistrationData } from './types'

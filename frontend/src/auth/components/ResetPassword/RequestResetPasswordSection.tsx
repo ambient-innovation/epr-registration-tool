@@ -14,7 +14,7 @@ import { ErrorAlert } from '@/common/components/ErrorAlert'
 import { FormLayout } from '@/common/components/FormLayout'
 import { backgroundSx } from '@/common/components/FormStep/FormStep.styles'
 import { ROUTES } from '@/routes'
-import { emailValidator } from '@/utils/form-validation.utils'
+import { emailValidator } from '@/utils/form/form-validation.utils'
 
 import { ResetPasswordData } from './types'
 
@@ -70,11 +70,7 @@ export const RequestResetPasswordSection = (): React.ReactElement => {
 
   return (
     <FormLayout>
-      <Typography
-        component={'h1'}
-        variant={'h4'}
-        mb={{ xs: 8, sm: 10, md: 11 }}
-      >
+      <Typography variant={'h1'} mb={{ xs: 8, sm: 10, md: 11 }}>
         {t('resetPassword.title')}
       </Typography>
       <section>

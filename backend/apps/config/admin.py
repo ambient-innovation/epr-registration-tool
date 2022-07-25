@@ -13,7 +13,7 @@ ADMIN_ORDERING = OrderedDict(
     (
         ('account', ()),
         ('company', ()),
-        ('packaging_report', ()),
+        ('packaging_report', ('PackagingReport',)),
         ('packaging', ()),
         ('axes', ()),
     )

@@ -6,10 +6,10 @@ import * as yup from 'yup'
 import { SchemaOf } from 'yup'
 
 import { getDistributorTypeOptions } from '@/auth/components/Registration/constants'
-import { COUNTRY_OPTIONS } from '@/auth/components/Registration/countries'
 import { FormStep, FormStepContainer } from '@/common/components/FormStep'
 import { DEFAULT_FORM_SPACING } from '@/common/components/FormStep/constants'
-import { requiredStringValidator } from '@/utils/form-validation.utils'
+import { COUNTRY_OPTIONS } from '@/utils/form/countries'
+import { requiredStringValidator } from '@/utils/form/form-validation.utils'
 import { pick } from '@/utils/typescript.utils'
 
 import { useRegistrationContext } from './RegistrationContext'

@@ -15,7 +15,10 @@ import { LoadingState } from '@/common/components/LoadingState'
 import { SelectField } from '@/common/components/SelectField'
 import { getLanguageOptions } from '@/common/contants'
 
-import { backgroundSx, footerSx } from './ChangeLanguageForm.styles'
+import {
+  formBackgroundSx,
+  formFooterSx,
+} from '../AccountSettingsSection.styles'
 import { ChangeLanguageData } from './types'
 
 const schema: SchemaOf<Record<keyof ChangeLanguageData, unknown>> = yup
@@ -81,7 +84,7 @@ export const ChangeLanguageForm = (): React.ReactElement => {
       )}
       <section aria-labelledby={titleId} aria-describedby={descriptionId}>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <Box sx={backgroundSx}>
+          <Box sx={formBackgroundSx}>
             <header>
               <Typography id={titleId} component={'h2'} variant={'h3'}>
                 {t('accountSettings.changeLanguageForm.title')}
@@ -118,7 +121,7 @@ export const ChangeLanguageForm = (): React.ReactElement => {
             </Box>
           )}
           <FormSubmitFooter
-            sx={footerSx}
+            sx={formFooterSx}
             isSubmitting={formState.isSubmitting}
             buttonLabelKey={
               'accountSettings.changeLanguageForm.submitLanguagePassword'

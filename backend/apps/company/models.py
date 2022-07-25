@@ -9,7 +9,12 @@ from ai_django_core.models import CommonInfo
 
 from common.storage_backend import private_file_storage
 from company.managers import CompanyQuerySet
-from company.validators import validate_allowed_image_formats, validate_is_lower_case, validate_max_image_size
+from company.validators import (
+    validate_allowed_image_formats,
+    validate_is_lower_case,
+    validate_max_image_size,
+    validate_string_without_whitespaces,
+)
 from config import settings
 
 
@@ -50,7 +55,10 @@ class Company(CommonInfo):
         help_text=_('No user of the company will be able to log in as long the company is inactive.'),
     )
     identification_number = models.CharField(
-        verbose_name=_('National identification number'), blank=True, max_length=255
+        verbose_name=_('National identification number'),
+        blank=True,
+        max_length=255,
+        validators=(validate_string_without_whitespaces,),
     )
     country_code = models.CharField(
         verbose_name=_('Country code'),
@@ -78,7 +86,7 @@ class Company(CommonInfo):
     )
 
     def __str__(self):
-        return self.name
+        return f'{self.name} ({self.registration_number})'
 
     def update_logo(self, image):
         self.logo = image

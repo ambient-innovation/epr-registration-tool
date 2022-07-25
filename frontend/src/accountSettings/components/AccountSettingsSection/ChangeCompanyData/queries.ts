@@ -1,19 +1,12 @@
 import { gql } from '@apollo/client'
 
-export const COMPANY_DETAILS = gql`
-  query companyDetails {
+export const COMPANY_DETAILS_WITH_CONTACT_INFO = gql`
+  query companyDetailsWithContactInfo {
     companyDetails {
       id
       name
-      registrationNumber
       distributorType
       identificationNumber
-      createdAt
-      lastmodifiedAt
-      isProfileCompleted
-      logo {
-        url
-      }
       contactInfo {
         postalCode
         streetNumber

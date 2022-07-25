@@ -1,0 +1,7 @@
+Dear {{ user.display_name }}
+
+The company data associated with your account was recently changed.
+If you have requested these changes you can safely ignore this email.
+If you find this behavior suspicious, please check your data and change your password.
+
+Log in now and check data: {{ url }}

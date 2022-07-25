@@ -13,7 +13,7 @@ import { pxToRemAsString } from '@/theme/utils'
 import {
   emailValidator,
   requiredStringValidator,
-} from '@/utils/form-validation.utils'
+} from '@/utils/form/form-validation.utils'
 import { pick } from '@/utils/typescript.utils'
 
 import { useRegistrationContext } from './RegistrationContext'

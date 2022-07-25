@@ -14,7 +14,7 @@ const ActivationCompletePage: NextPage = () => {
     <>
       <DefaultPageHead
         subPageTitle={t('activation.registrationComplete')}
-        relativePath={ROUTES.dashboardComplete}
+        relativePath={ROUTES.accountActivationComplete}
       />
       <PageLayout>
         <ActivationComplete />

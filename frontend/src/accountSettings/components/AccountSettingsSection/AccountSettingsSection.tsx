@@ -10,10 +10,11 @@ import {
   formColumnSx,
   tabsColumnSx,
 } from './AccountSettingsSection.styles'
+import { ChangeCompanyDetails } from './ChangeCompanyData'
 import { ChangeLanguageForm } from './ChangeLanguageForm'
 import { ChangePasswordForm } from './ChangePasswordForm'
 
-interface AccountSettingsSectionProps {
+export interface AccountSettingsSection {
   activeSection: TabOptions
 }
 
@@ -24,12 +25,13 @@ interface LinkTabProps {
 
 export enum TabOptions {
   changePassword = 0,
-  changeLanguage = 1,
+  changeCompanyData = 1,
+  changeLanguage = 2,
 }
 
 export const AccountSettingsSection = ({
   activeSection,
-}: AccountSettingsSectionProps): React.ReactElement => {
+}: AccountSettingsSection): React.ReactElement => {
   const { t } = useTranslation()
   const theme = useTheme()
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
@@ -40,6 +42,18 @@ export const AccountSettingsSection = ({
         <Tab component={'a'} {...props} />
       </Link>
     )
+  }
+  let selectedTabContent = null
+  switch (activeSection) {
+    case TabOptions.changePassword:
+      selectedTabContent = <ChangePasswordForm />
+      break
+    case TabOptions.changeLanguage:
+      selectedTabContent = <ChangeLanguageForm />
+      break
+    case TabOptions.changeCompanyData:
+      selectedTabContent = <ChangeCompanyDetails />
+      break
   }
 
   return (
@@ -57,17 +71,15 @@ export const AccountSettingsSection = ({
           href={ROUTES.accountSettingsChangePassword}
         />
         <LinkTab
+          label={t('accountSettings.changeCompanyDataForm.tabTitle')}
+          href={ROUTES.accountSettingsChangeCompanyData}
+        />
+        <LinkTab
           label={t('accountSettings.changeLanguageForm.tabTitle')}
           href={ROUTES.accountSettingsChangeLanguage}
         />
       </Tabs>
-      <Box sx={formColumnSx}>
-        {activeSection === TabOptions.changePassword ? (
-          <ChangePasswordForm />
-        ) : activeSection === TabOptions.changeLanguage ? (
-          <ChangeLanguageForm />
-        ) : null}
-      </Box>
+      <Box sx={formColumnSx}>{selectedTabContent}</Box>
     </Box>
   )
 }

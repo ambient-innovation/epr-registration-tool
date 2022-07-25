@@ -63,3 +63,27 @@ def send_user_registration_complete_notification(company):
         )
     else:
         capture_message(f'No receivers for registration complete notification (company ID={company.id})')
+
+
+def send_company_data_changed_notification(company):
+    assert company is not None
+    receiver_list = company.users_queryset.active()
+
+    for user in receiver_list:
+        context = {
+            'user': user,
+            'url': urljoin(settings.FRONTEND_URL, '/account-settings/change-company-data'),
+            'frontend_url': settings.FRONTEND_URL,
+        }
+
+        subject, body_plain, body_html = render_translated_email(
+            'company_data_changed', user.language_preference, context
+        )
+        send_html_email(
+            subject=subject,
+            body_plain=body_plain,
+            body_html=body_html,
+            to=[user.email],
+        )
+    else:
+        capture_message(f'No receivers for company data changed notification (company ID={company.id})')

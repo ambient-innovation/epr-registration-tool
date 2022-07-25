@@ -1,0 +1,7 @@
+Dear {{ user.display_name }}
+
+Your company's data has recently been changed.
+
+View changed data: {{ url }}
+
+Please get in touch with us if you have not initiated these changes.

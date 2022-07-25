@@ -14,7 +14,7 @@ export const CompletionAlert = (_: CompletionAlert): React.ReactElement => {
       sx={{ marginTop: 8 }}
       severity={'error'}
       action={
-        <NextLink href={ROUTES.dashboardComplete} passHref>
+        <NextLink href={ROUTES.accountSettingsChangeCompanyData} passHref>
           <Button
             component={'a'}
             color={'inherit'}

@@ -16,9 +16,12 @@ import { PasswordInput } from '@/common/components/PasswordInput'
 import {
   passwordValidator,
   requiredStringValidator,
-} from '@/utils/form-validation.utils'
+} from '@/utils/form/form-validation.utils'
 
-import { backgroundSx, footerSx } from './ChangePasswordForm.styles'
+import {
+  formBackgroundSx,
+  formFooterSx,
+} from '../AccountSettingsSection.styles'
 import { ChangePasswordData } from './types'
 
 export const CHANGE_PW_COMPLETE_ALERT_KEY = 'changePasswordComplete'
@@ -52,7 +55,7 @@ export const ChangePasswordForm = (): React.ReactElement => {
       oldPassword: '',
     },
   })
-  const [ChangePasswordMutation, { error }] = useChangePasswordMutation()
+  const [changePasswordMutation, { error }] = useChangePasswordMutation()
 
   const { errors } = formState
 
@@ -61,7 +64,7 @@ export const ChangePasswordForm = (): React.ReactElement => {
 
   const onSubmit = ({ newPassword, oldPassword }: ChangePasswordData) => {
     return (
-      ChangePasswordMutation({
+      changePasswordMutation({
         variables: {
           oldPassword,
           newPassword,
@@ -86,7 +89,7 @@ export const ChangePasswordForm = (): React.ReactElement => {
   return (
     <section aria-labelledby={titleId} aria-describedby={descriptionId}>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <Box sx={backgroundSx}>
+        <Box sx={formBackgroundSx}>
           <header>
             <Typography id={titleId} component={'h2'} variant={'h3'}>
               {t('accountSettings.changePasswordForm.title')}
@@ -144,7 +147,7 @@ export const ChangePasswordForm = (): React.ReactElement => {
           </Box>
         )}
         <FormSubmitFooter
-          sx={footerSx}
+          sx={formFooterSx}
           isSubmitting={formState.isSubmitting}
           buttonLabelKey={
             'accountSettings.changePasswordForm.submitChangePassword'

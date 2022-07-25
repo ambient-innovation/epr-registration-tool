@@ -17,7 +17,7 @@ import { FormSubmitFooter } from '@/common/components/FormSubmitFooter'
 import { PasswordInput } from '@/common/components/PasswordInput'
 import { ROUTES } from '@/routes'
 
-import { passwordValidator } from '../../../utils/form-validation.utils'
+import { passwordValidator } from '../../../utils/form/form-validation.utils'
 import { ResetPasswordData } from './types'
 
 export const RESET_PW_COMPLETE_ALERT_KEY = 'resetPasswordComplete'

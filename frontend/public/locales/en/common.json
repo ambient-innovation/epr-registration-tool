@@ -170,6 +170,34 @@
       "submitLanguagePassword": "Save changes",
       "languageChangeFailed": "Language change failed",
       "notification": "Your language has been updated."
+    },
+    "changeCompanyDataForm": {
+      "title": "Company data",
+      "tabTitle": "Company data",
+      "description": "Here you can edit and save the data you have entered for your company. Please note that the data provided must be truthful and up to date.",
+      "companyName": "Name of company",
+      "companyDistributorType": {
+        "label": "Type of distributor",
+        "importer": "Importer",
+        "localProducer": "Local producer"
+      },
+      "companyCountry": "Country",
+      "companyPostalCode": "Postal Code (optional)",
+      "companyCity": "City",
+      "companyStreet": "Street",
+      "companyStreetNumber": "Street number (optional)",
+      "companyAdditionalAddressInfo": "Additional address info (optional)",
+      "companyPhoneNumber": {
+        "label": "Phone number",
+        "hint": "Please enter the phone number with country code prefix (e.g. +44 18081570192 or 44 18081570192)"
+      },
+      "companyIdentificationNumber": {
+        "title": "National identification number",
+        "description": "Please enter (without spaces) the correct VAT number / tax number of your company (may differ from the country where your company is located).",
+        "number": "VAT number / tax number"
+      },
+      "submitChanges": "Save changes",
+      "updateSuccessMessage": "Your company data has been updated."
     }
   },
   "activation": {
