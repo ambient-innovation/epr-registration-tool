@@ -86,7 +86,7 @@ class Company(CommonInfo):
     )
 
     def __str__(self):
-        return self.name
+        return f'{self.name} ({self.registration_number})'
 
     def update_logo(self, image):
         self.logo = image
