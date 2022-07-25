@@ -18,7 +18,7 @@ const EditCompanyData: NextPage = () => {
   return (
     <>
       <DefaultPageHead
-        subPageTitle={t('accountSettings.changePasswordForm.title')}
+        subPageTitle={t('accountSettings.changeCompanyDataForm.title')}
         relativePath={ROUTES.accountSettingsChangePassword}
       />
       <PageLayout>
