@@ -35,7 +35,7 @@
 
 {% block content %}
 
-  {% if not original.is_active %}
+  {% if original and not original.is_active %}
     <div class='alert alert--info'>
       <span class='alert__icon'></span>
       This company is not activated yet.
