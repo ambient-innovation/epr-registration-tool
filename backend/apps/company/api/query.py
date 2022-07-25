@@ -5,14 +5,20 @@ from strawberry.types import Info
 
 from common.api.permissions import IsAuthenticated
 from company.api.types import CompanyType
-from company.models import Company, CompanyContactInfo
+from company.models import Company
 
 
 def get_company_details(info: Info) -> typing.Optional[CompanyType]:
     user = info.context.request.user
-    company = Company.objects.filter(users_queryset__id=user.id).annotate_is_profile_completed().first()
-    company.contact_info = CompanyContactInfo.objects.filter(related_company_id=company.id).first() or None
-    return company if company else None
+    company = (
+        Company.objects.filter(users_queryset__id=user.id)
+        .select_related('related_contact_info')
+        .annotate_is_profile_completed()
+        .first()
+    )
+    if company:
+        company.contact_info = getattr(company, 'related_contact_info', None)
+    return company
 
 
 @strawberry.type

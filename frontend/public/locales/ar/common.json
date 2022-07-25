@@ -198,7 +198,8 @@
         "number": "VAT number / tax number"
       },
       "submitChanges": "Save changes",
-      "updateSuccessMessage": "تم تحديث بيانات شركتك."
+      "updateSuccessMessage": "تم تحديث بيانات شركتك.",
+      "noCompanyAssigned": "حسابك غير مرتبط بشركة"
     },
     "editAccountForm": {
       "title": "Account",

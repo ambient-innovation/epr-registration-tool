@@ -12,6 +12,9 @@ class CreateCompanyProfileMutationTestCase(BaseApiTestCase):
             companyDetails {
                 id
                 isProfileCompleted
+                contactInfo {
+                    country
+                }
             }
         }
     """
@@ -32,6 +35,7 @@ class CreateCompanyProfileMutationTestCase(BaseApiTestCase):
     def test_company_details_incomplete(self):
         data = self.query_and_load_data(self.QUERY)
         self.assertEqual(False, data['companyDetails']['isProfileCompleted'])
+        self.assertIsNone(data['companyDetails']['contactInfo'])
 
     def test_company_details_completed(self):
         self.company.identification_number = '123456789'
@@ -39,3 +43,10 @@ class CreateCompanyProfileMutationTestCase(BaseApiTestCase):
         baker.make('company.CompanyContactInfo', related_company=self.company)
         data = self.query_and_load_data(self.QUERY)
         self.assertEqual(True, data['companyDetails']['isProfileCompleted'])
+        self.assertIsNotNone(data['companyDetails']['contactInfo'])
+
+    def test_company_details_without_company(self):
+        user_without_company = baker.make_recipe('account.tests.user')
+        self.login(user_without_company)
+        data = self.query_and_load_data(self.QUERY)
+        self.assertIsNone(data['companyDetails'])
