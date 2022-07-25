@@ -129,7 +129,7 @@ const ChangeCompanyDetailsForm = ({
     // reset form when data is re-fetched
     // (check for formState to prevent reset on initial render)
     if (formState.isSubmitSuccessful) {
-      reset(defaultValues, { keepIsSubmitted: true })
+      reset(defaultValues)
     }
     // explicitly exclude `formState` from dependencies
     // --> only reset form when defaultValues change
