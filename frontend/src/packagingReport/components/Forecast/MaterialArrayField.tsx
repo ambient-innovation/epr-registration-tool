@@ -34,7 +34,7 @@ export const MaterialArrayField = ({
 }: MaterialArrayField) => {
   const { t } = useTranslation()
 
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control,
     name: `packagingRecords.${nestIndex}.materialRecords`,
   })
@@ -118,6 +118,17 @@ export const MaterialArrayField = ({
               />
             )}
           />
+          {index !== 0 && (
+            <Button
+              variant={'text'}
+              color={'error'}
+              onClick={() => remove(index)}
+              disabled={readOnly}
+              sx={{ alignSelf: 'end' }}
+            >
+              {t('reportForm.deleteMaterial')}
+            </Button>
+          )}
           <Divider />
         </Stack>
       ))}

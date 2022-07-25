@@ -73,6 +73,7 @@
     "netPricePlusVat": "Net price plus statutory VAT",
     "material": "Material",
     "addMaterial": "Add another material",
+    "deleteMaterial": "Delete Material",
     "createReportSuccessTitle": "Thank you for reporting",
     "createReportSuccessDescription": "A Forecast Report is created successfully and you can find it in your dashboard.",
     "updateReportSuccessDescription": "Data Report is updated successfully.",

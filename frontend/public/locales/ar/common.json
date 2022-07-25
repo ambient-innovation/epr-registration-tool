@@ -73,6 +73,7 @@
     "netPricePlusVat": "السعر الصافي بالإضافة إلى ضريبة القيمة المضافة القانونية",
     "material": "مواد",
     "addMaterial": "أضف مادة أخرى",
+    "deleteMaterial": "حذف المادة",
     "createReportSuccessTitle": "شكرا لك على  التقرير",
     "createReportSuccessDescription": "تم إنشاء تقرير التنبؤ بنجاح ويمكنك العثور عليه في لوحة المعلومات.",
     "updateReportSuccessDescription": "تم تحديث تقرير التنبؤ بنجاح.",

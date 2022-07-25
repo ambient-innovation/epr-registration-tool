@@ -53,6 +53,7 @@ export const PackagingArrayField = ({
                   color={'error'}
                   onClick={() => remove(index)}
                   disabled={readOnly}
+                  sx={{ alignSelf: 'end' }}
                 >
                   {t('reportForm.deleteEntry')}
                 </Button>
