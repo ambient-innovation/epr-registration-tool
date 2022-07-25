@@ -198,7 +198,8 @@
         "number": "VAT number / tax number"
       },
       "submitChanges": "Save changes",
-      "updateSuccessMessage": "Your company data has been updated."
+      "updateSuccessMessage": "Your company data has been updated.",
+      "noCompanyAssigned": "Your account is not associated with a company"
     },
     "editAccountForm": {
       "title": "Account",

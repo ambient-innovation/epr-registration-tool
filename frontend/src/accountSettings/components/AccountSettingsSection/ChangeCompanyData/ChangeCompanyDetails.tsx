@@ -401,12 +401,16 @@ const LoadingState = (): React.ReactElement => {
 }
 
 export const ChangeCompanyDetails = (): React.ReactElement => {
-  const { data } = useCompanyDetailsWithContactInfoQuery()
-
+  const { loading, data } = useCompanyDetailsWithContactInfoQuery()
+  const { t } = useTranslation()
   return (
     <section>
-      {!data?.companyDetails ? (
+      {loading ? (
         <LoadingState />
+      ) : !data?.companyDetails ? (
+        <Alert severity={'warning'}>
+          {t('common:accountSettings.changeCompanyDataForm.noCompanyAssigned')}
+        </Alert>
       ) : (
         <ChangeCompanyDetailsForm companyDetails={data.companyDetails} />
       )}
