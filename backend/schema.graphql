@@ -55,6 +55,12 @@ type DjangoFileType {
   url: String!
 }
 
+type EmailChangeRequestType {
+  email: String!
+  createdAt: DateTime!
+  isValid: Boolean!
+}
+
 type FinalSubmissionType {
   id: ID!
   fees: Float!
@@ -99,6 +105,7 @@ type MaterialType {
 type Mutation {
   changeLanguage(languageCode: LanguageEnum!): String!
   changePassword(oldPassword: String!, newPassword: String!): String!
+  changeAccount(accountData: UserChangeInputType!): String!
   registerCompany(companyName: String!, companyDistributorType: DistributorType!, userEmail: String!, userTitle: String!, userFullName: String!, userPosition: String!, userPhoneOrMobile: String!, password: String!, countryCode: String!): String!
   changeCompanyDetails(companyInput: CompanyInput!, contactInfoInput: CompanyContactInfoInput!): String!
   changeCompanyLogo(file: Upload = null): String!
@@ -181,10 +188,21 @@ enum TimeframeType {
 
 scalar Upload
 
+input UserChangeInputType {
+  email: String!
+  title: String
+  fullName: String!
+  position: String
+  phoneOrMobile: String
+}
+
 type UserType {
   id: ID!
   email: String!
   title: String!
   fullName: String!
+  phoneOrMobile: String!
+  position: String!
   languagePreference: LanguageEnum!
+  emailChangeRequest: EmailChangeRequestType
 }

@@ -14,6 +14,7 @@ from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
 from account import views
+from account.views import ConfirmUserEmailChangeView
 from cms.api.router import api_router
 
 from .schema import schema
@@ -25,10 +26,10 @@ auth_patterns = (
         path('activate_email/', views.ActivateUser.as_view(), name='activate'),
         path('reset_password/', ai_kit_views.ResetPassword.as_view(), name='reset_password'),
         path('send_pw_reset_email/', ai_kit_views.InitiatePasswordResetView.as_view(), name='reset_password'),
+        path('users/<str:user_ident>/change_email_confirm/', ConfirmUserEmailChangeView.as_view(), name='change_email'),
     ],
-    'ai_kit_auth',
+    'auth_api',
 )
-
 
 graphql_view = GraphQLView.as_view(schema=schema)
 

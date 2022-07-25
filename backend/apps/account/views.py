@@ -1,7 +1,12 @@
+from urllib.parse import urljoin
+
 from django.conf import settings
-from django.contrib.auth import get_user_model, tokens
+from django.contrib.auth import get_user_model, logout, tokens
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.db import IntegrityError
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
+from django.views.generic import RedirectView
 
 from ai_kit_auth import services
 from ai_kit_auth.views import ActivateUser as OldActivateUser
@@ -10,6 +15,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from sentry_sdk import capture_exception
 
+from common.utils import base64_decode, parse_url_with_params
+
+from .models import EmailChangeRequest, User
 from .serializers import LoginSerializer
 
 UserModel = get_user_model()
@@ -89,3 +97,65 @@ class ActivateUser(OldActivateUser):
                     capture_exception(e)
 
         return Response(status=status.HTTP_200_OK)
+
+
+class ConfirmUserEmailChangeView(RedirectView):
+    """
+    Proceed user email change request:
+    - if the request is not older than 24 hours
+    - if the token in the url is correct
+    - if there is request any way
+    """
+
+    base_url = urljoin(settings.FRONTEND_URL, '/account-settings/change-email-confirm')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.success = False
+        self.error_code = 'error'
+
+    def get_redirect_url(self, *args, **kwargs):
+        params = {'state': 'success' if self.success else self.error_code}
+        return parse_url_with_params(self.base_url, params)
+
+    def get(self, request, *args, **kwargs):
+        try:
+            user_token = request.GET.get('_t', None)
+            base64_user_email = kwargs.get('user_ident', None)
+
+            try:
+                user_email = base64_decode(base64_user_email)
+            except Exception as e:
+                raise ValidationError(message=e.message, code='incorrectEmailEncode')
+
+            user = User.objects.get(email=user_email)
+
+            email_change_request: EmailChangeRequest = user.email_change_request
+            change_email_token = email_change_request.get_change_email_token()
+
+            new_email = email_change_request.email
+            if not email_change_request.is_valid:
+                raise ValidationError(message='email change request is not valid any more', code='requestOutdated')
+            elif user_token != change_email_token:
+                raise ValidationError(message=f'token ({change_email_token}) is not valid', code='invalidToken')
+
+            if user_token == change_email_token and new_email and email_change_request.is_valid:
+                user.email = new_email
+                user.save()
+                self.success = True
+                email_change_request.delete()
+                logout(request)
+        except User.DoesNotExist:
+            self.error_code = 'userDoesNotExists'
+        except ObjectDoesNotExist:
+            self.error_code = 'requestDoesNotExists'
+        except ValidationError as e:
+            self.error_code = e.code
+            capture_exception(e)
+        except IntegrityError as e:
+            self.error_code = 'emailExists'
+            capture_exception(e)
+        except Exception as e:
+            # in case of unexpected error, we need to log it.
+            capture_exception(e)
+        return super().get(request, *args, **kwargs)

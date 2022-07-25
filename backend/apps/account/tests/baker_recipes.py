@@ -19,3 +19,8 @@ user = Recipe(
     password=make_password(SOME_USER_PASSWORD),
     is_active=True,
 )
+
+email_change_request = Recipe(
+    'account.EmailChangeRequest',
+    email=seq('changedEmailUser', suffix='@local.local'),
+)

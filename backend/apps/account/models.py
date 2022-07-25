@@ -1,3 +1,6 @@
+import hashlib
+from urllib.parse import urljoin
+
 from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
@@ -6,7 +9,11 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from ai_django_core.models import CommonInfo
+from rest_framework.reverse import reverse
+
 from account.managers import UserManager, UserQuerySet
+from common.utils import base64_encode
 
 
 class UserTitle(models.TextChoices):
@@ -114,3 +121,43 @@ class NotificationSettings(models.Model):
 
     def __str__(self):
         return f'Notification settings for user ID={self.related_user_id}'
+
+
+class EmailChangeRequest(CommonInfo):
+    class Meta:
+        verbose_name = _('Email Change Request')
+        verbose_name_plural = _('Email Change Requests')
+
+    # in case a user hits a wrong email and this email is a valid another user email
+    email = models.EmailField(verbose_name=_('Email address'), unique=False, validators=[validate_email])
+    related_user = models.OneToOneField(
+        'account.User',
+        verbose_name=_("User"),
+        primary_key=True,
+        on_delete=models.CASCADE,
+        related_name='email_change_request',
+    )
+
+    def get_change_email_token(self):
+        # include the new email
+        new_email = self.email.encode('utf-8')
+        username = self.related_user.USERNAME_FIELD.encode('utf-8')
+        secret = settings.SECRET_KEY.encode('utf-8')
+        context = 'change_email'.encode()
+        return hashlib.md5(context + username + new_email + secret).hexdigest()
+
+    @property
+    def is_valid(self):
+        now = timezone.now()
+        email_change_request_datetime = self.created_at
+        delta = now - email_change_request_datetime
+        # the change request is valid only within 24 hours
+        return (delta.total_seconds() / (60 * 60)) <= 24
+
+    def get_change_email_link(self):
+        user = self.related_user
+        user_email_encoded = base64_encode(user.email)
+        path = "{url}?_t={token}".format(
+            url=reverse('auth_api:change_email', args=[user_email_encoded]), token=self.get_change_email_token()
+        )
+        return urljoin(settings.BASE_URL, path)

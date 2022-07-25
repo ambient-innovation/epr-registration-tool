@@ -1,0 +1,13 @@
+Dear {{ user.display_name }}
+
+Please confirm your new email address
+
+The recently changed the email address associated with your account.
+please confirm {{ new_email }} as your new email address
+
+{{ url }}
+
+Your email will not be changed until you confirm. Once you do,
+all future email from the EPR Toll (such as notifications of activity) will be sent to this address.
+
+If you have not tried to change your email address recently, you can safely ignore this email.

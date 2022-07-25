@@ -13,6 +13,7 @@ import {
 import { ChangeCompanyDetails } from './ChangeCompanyData'
 import { ChangeLanguageForm } from './ChangeLanguageForm'
 import { ChangePasswordForm } from './ChangePasswordForm'
+import { EditAccount } from './EditAccountForm'
 
 export interface AccountSettingsSection {
   activeSection: TabOptions
@@ -27,6 +28,7 @@ export enum TabOptions {
   changePassword = 0,
   changeCompanyData = 1,
   changeLanguage = 2,
+  editAccount = 3,
 }
 
 export const AccountSettingsSection = ({
@@ -54,6 +56,9 @@ export const AccountSettingsSection = ({
     case TabOptions.changeCompanyData:
       selectedTabContent = <ChangeCompanyDetails />
       break
+    case TabOptions.editAccount:
+      selectedTabContent = <EditAccount />
+      break
   }
 
   return (
@@ -77,6 +82,10 @@ export const AccountSettingsSection = ({
         <LinkTab
           label={t('accountSettings.changeLanguageForm.tabTitle')}
           href={ROUTES.accountSettingsChangeLanguage}
+        />
+        <LinkTab
+          label={t('accountSettings.editAccountForm.title')}
+          href={ROUTES.accountSettingsEditAccount}
         />
       </Tabs>
       <Box sx={formColumnSx}>{selectedTabContent}</Box>
