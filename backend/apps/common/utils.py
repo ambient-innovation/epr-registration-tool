@@ -1,6 +1,9 @@
 import datetime
 import functools
 import time
+import urllib.parse as urlparse
+from base64 import b64decode, b64encode
+from typing import Dict
 
 from django.db import connection, reset_queries
 
@@ -70,3 +73,24 @@ def make_local_datetime_at(year, month, timezone_info, day=1, hour=0, minute=0):
     naive_datetime = datetime.datetime.combine(date, naive_time)
     tz = pytz.timezone(timezone_info)
     return tz.localize(naive_datetime)
+
+
+def base64_encode(s: str):
+    return b64encode(s.encode('utf-8')).decode('utf-8')
+
+
+def base64_decode(s: str):
+    return b64decode(s).decode('utf-8')
+
+
+def parse_url_with_params(url, params: Dict):
+    """
+    return url with passed params as query string parameter
+    """
+    url_parse = urlparse.urlparse(url)
+    query = url_parse.query
+    url_dict = dict(urlparse.parse_qsl(query))
+    url_dict.update(params)
+    url_new_query = urlparse.urlencode(url_dict)
+    url_parse = url_parse._replace(query=url_new_query)
+    return urlparse.urlunparse(url_parse)

@@ -4,8 +4,13 @@ import { UserType } from '@/api/__types__'
 
 import { ErrorPromise } from './utils'
 
+export type UserMeType = Pick<
+  UserType,
+  'id' | 'email' | 'title' | 'fullName' | 'languagePreference'
+>
+
 export interface UserContextValue {
-  user: UserType | null
+  user: UserMeType | null
 }
 
 export interface AuthContextValue {

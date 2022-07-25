@@ -11,3 +11,21 @@ export const ME = gql`
     }
   }
 `
+
+export const USER_ACCOUNT_DATA = gql`
+  query userAccountData {
+    me {
+      id
+      email
+      title
+      fullName
+      phoneOrMobile
+      position
+      emailChangeRequest {
+        createdAt
+        email
+        isValid
+      }
+    }
+  }
+`

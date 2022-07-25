@@ -1,6 +1,8 @@
-import { LanguageEnum, UserType } from '@/api/__types__'
+import { LanguageEnum } from '@/api/__types__'
 
-export const mockUser: UserType = {
+import { UserMeType } from './hooks/useUser/UserContext'
+
+export const mockUser: UserMeType = {
   id: '1',
   fullName: 'Chuck Norris',
   email: 'chuck.norris@example.com',

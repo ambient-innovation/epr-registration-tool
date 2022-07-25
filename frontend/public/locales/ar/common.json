@@ -198,6 +198,18 @@
       },
       "submitChanges": "Save changes",
       "updateSuccessMessage": "تم تحديث بيانات شركتك."
+    },
+    "editAccountForm": {
+      "title": "Account",
+      "description": "Lorem ipsum...",
+      "email": "E-mail",
+      "emailHelpText": "Attention: This is the E-Mail your company will use to log in to the EPR Registration Tool.",
+      "emailConfirmNeededHelpText": "⚠️ confirm please your new email address or will be ignored.",
+      "titleLabel": "Title",
+      "fullName": "Full name",
+      "position": "Position",
+      "phoneNumber": "Phone / mobile number",
+      "notification": "Your account has been updated."
     }
   },
   "activation": {
@@ -323,5 +335,18 @@
       "fieldName": "VAT number / tax number"
     }
   },
-  "reset": "إعادة ضبط"
+  "reset": "إعادة ضبط",
+  "changeEmailConfirm": {
+    "changeEmail": "Change Email",
+    "changeEmailFailed": {
+      "incorrectEmailEncode": "Incorrect url encode. please connect support for help",
+      "requestOutdated": "Change request cannot be proceed after 24 hours",
+      "userDoesNotExists": "Your account does not exists.",
+      "requestDoesNotExists": "No request to change your email exists.",
+      "emailExists": "Another user has the same email you are trying to change to. please connect support for help",
+      "invalidToken": "Invalid token. please connect support for help",
+      "unknownError": "Request failed. Unknown Error occurs, please try again later."
+    },
+    "changeEmailSuccess": "Your email has been changed successfully. You have been logged out from all your devices and you can login now again with your new email."
+  }
 }

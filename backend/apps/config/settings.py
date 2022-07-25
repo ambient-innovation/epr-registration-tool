@@ -324,7 +324,6 @@ if ENABLE_DEBUG_TOOLBAR:
     ip = socket.gethostbyname(socket.gethostname())
     INTERNAL_IPS += [ip[:-1] + '1']
 
-
 LANGUAGES = (
     ('en', 'English'),
     ('ar', 'Arabic'),
@@ -334,7 +333,6 @@ DEFAULT_LANGUAGE_CODE = LANGUAGES[0][0]
 
 # django model translations settings
 MODELTRANSLATION_FALLBACK_LANGUAGES = (DEFAULT_LANGUAGE_CODE,)
-
 
 # django-ai-auth-kit settings
 AI_KIT_AUTH = {
@@ -401,7 +399,6 @@ else:
     EMAIL_BACKEND = env.str('DJANGO_EMAIL_BACKEND')
     EMAIL_HOST = env.str('DJANGO_EMAIL_HOST')
     EMAIL_PORT = env.str('DJANGO_EMAIL_PORT')
-
 
 # --- WAGTAIL --- #
 

@@ -1,0 +1,28 @@
+{% extends "email/base/base_en.html" %}
+
+{% block title %}
+  EPR Registration Tool | Please confirm your new email address
+{% endblock %}
+
+{% block preheader %}
+  Please confirm your new email address
+{% endblock %}
+
+{% block heading %}
+  The recently changed the email address associated with your account.
+    please confirm {{ new_email }} as your new email address
+{% endblock %}
+
+{% block linktext %}
+  confirm my e-mail-address
+{% endblock %}
+
+{% block info %}
+  <p>
+    Your email will not be changed until you confirm. Once you do,
+      all future email from the EPR Toll (such as notifications of activity) will be sent to this address.
+  </p>
+    <p>
+    If you have not tried to change your email address recently, you can safely ignore this email.
+    </p>
+{% endblock %}

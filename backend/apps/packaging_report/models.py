@@ -37,7 +37,6 @@ class TimeframeType(models.IntegerChoices):
     TWELVE_MONTHS = 12, _("12 months")
 
 
-# todo improve performance
 class ReportSubmission(CommonInfo):
     class Meta:
         verbose_name = _("Report Submission")

@@ -1,0 +1,7 @@
+Dear {{ user.display_name }}
+
+تم تغيير بيانات حسابك مؤخرًا.
+If you have requested these changes you can safely ignore this email.
+If you find this behavior suspicious, please check your data and change your password.
+
+Log in now and check data: {{ url }}

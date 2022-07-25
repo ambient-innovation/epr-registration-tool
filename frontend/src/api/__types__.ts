@@ -85,6 +85,13 @@ export type DjangoFileType = {
   url: Scalars['String']
 }
 
+export type EmailChangeRequestType = {
+  __typename?: 'EmailChangeRequestType'
+  createdAt: Scalars['DateTime']
+  email: Scalars['String']
+  isValid: Scalars['Boolean']
+}
+
 export type FinalSubmissionType = {
   __typename?: 'FinalSubmissionType'
   fees: Scalars['Float']
@@ -133,6 +140,7 @@ export type MaterialType = {
 
 export type Mutation = {
   __typename?: 'Mutation'
+  changeAccount: Scalars['String']
   changeCompanyDetails: Scalars['String']
   changeCompanyLogo: Scalars['String']
   changeLanguage: Scalars['String']
@@ -141,6 +149,10 @@ export type Mutation = {
   packagingReportForecastSubmit: Scalars['String']
   packagingReportForecastUpdate: Scalars['String']
   registerCompany: Scalars['String']
+}
+
+export type MutationChangeAccountArgs = {
+  accountData: UserChangeInputType
 }
 
 export type MutationChangeCompanyDetailsArgs = {
@@ -289,12 +301,23 @@ export enum TimeframeType {
   TWELVE_MONTHS = 'TWELVE_MONTHS',
 }
 
+export type UserChangeInputType = {
+  email: Scalars['String']
+  fullName: Scalars['String']
+  phoneOrMobile?: InputMaybe<Scalars['String']>
+  position?: InputMaybe<Scalars['String']>
+  title?: InputMaybe<Scalars['String']>
+}
+
 export type UserType = {
   __typename?: 'UserType'
   email: Scalars['String']
+  emailChangeRequest?: Maybe<EmailChangeRequestType>
   fullName: Scalars['String']
   id: Scalars['ID']
   languagePreference: LanguageEnum
+  phoneOrMobile: Scalars['String']
+  position: Scalars['String']
   title: Scalars['String']
 }
 
@@ -321,6 +344,15 @@ export type CompanyDetailsWithContactInfoQuery = {
       street: string
     } | null
   } | null
+}
+
+export type ChangeAccountMutationVariables = Exact<{
+  accountData: UserChangeInputType
+}>
+
+export type ChangeAccountMutation = {
+  __typename?: 'Mutation'
+  changeAccount: string
 }
 
 export type ChangeCompanyDetailsMutationVariables = Exact<{
@@ -380,6 +412,27 @@ export type MeQuery = {
     title: string
     fullName: string
     languagePreference: LanguageEnum
+  } | null
+}
+
+export type UserAccountDataQueryVariables = Exact<{ [key: string]: never }>
+
+export type UserAccountDataQuery = {
+  __typename?: 'Query'
+  me?: {
+    __typename?: 'UserType'
+    id: string
+    email: string
+    title: string
+    fullName: string
+    phoneOrMobile: string
+    position: string
+    emailChangeRequest?: {
+      __typename?: 'EmailChangeRequestType'
+      createdAt: any
+      email: string
+      isValid: boolean
+    } | null
   } | null
 }
 
@@ -641,6 +694,36 @@ export type CompanyDetailsWithContactInfoQueryResult = Apollo.QueryResult<
   CompanyDetailsWithContactInfoQuery,
   CompanyDetailsWithContactInfoQueryVariables
 >
+export const ChangeAccountDocument = gql`
+  mutation changeAccount($accountData: UserChangeInputType!) {
+    changeAccount(accountData: $accountData)
+  }
+`
+export type ChangeAccountMutationFn = Apollo.MutationFunction<
+  ChangeAccountMutation,
+  ChangeAccountMutationVariables
+>
+export function useChangeAccountMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ChangeAccountMutation,
+    ChangeAccountMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    ChangeAccountMutation,
+    ChangeAccountMutationVariables
+  >(ChangeAccountDocument, options)
+}
+export type ChangeAccountMutationHookResult = ReturnType<
+  typeof useChangeAccountMutation
+>
+export type ChangeAccountMutationResult =
+  Apollo.MutationResult<ChangeAccountMutation>
+export type ChangeAccountMutationOptions = Apollo.BaseMutationOptions<
+  ChangeAccountMutation,
+  ChangeAccountMutationVariables
+>
 export const ChangeCompanyDetailsDocument = gql`
   mutation changeCompanyDetails(
     $companyInput: CompanyInput!
@@ -813,6 +896,57 @@ export function useMeLazyQuery(
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>
+export const UserAccountDataDocument = gql`
+  query userAccountData {
+    me {
+      id
+      email
+      title
+      fullName
+      phoneOrMobile
+      position
+      emailChangeRequest {
+        createdAt
+        email
+        isValid
+      }
+    }
+  }
+`
+export function useUserAccountDataQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    UserAccountDataQuery,
+    UserAccountDataQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<UserAccountDataQuery, UserAccountDataQueryVariables>(
+    UserAccountDataDocument,
+    options
+  )
+}
+export function useUserAccountDataLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    UserAccountDataQuery,
+    UserAccountDataQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<
+    UserAccountDataQuery,
+    UserAccountDataQueryVariables
+  >(UserAccountDataDocument, options)
+}
+export type UserAccountDataQueryHookResult = ReturnType<
+  typeof useUserAccountDataQuery
+>
+export type UserAccountDataLazyQueryHookResult = ReturnType<
+  typeof useUserAccountDataLazyQuery
+>
+export type UserAccountDataQueryResult = Apollo.QueryResult<
+  UserAccountDataQuery,
+  UserAccountDataQueryVariables
+>
 export const ChangeCompanyLogoDocument = gql`
   mutation changeCompanyLogo($file: Upload) {
     changeCompanyLogo(file: $file)
