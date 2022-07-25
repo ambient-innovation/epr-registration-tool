@@ -202,7 +202,7 @@
     },
     "editAccountForm": {
       "title": "Account",
-      "description": "Lorem ipsum...",
+      "description": "Here you can edit and save the data you have entered for your account. Please note that the data provided must be truthful and up to date.",
       "email": "E-mail",
       "emailHelpText": "Attention: This is the E-Mail your company will use to log in to the EPR Registration Tool.",
       "emailConfirmNeededHelpText": "⚠️ confirm please your new email address or will be ignored.",
@@ -340,12 +340,12 @@
   "changeEmailConfirm": {
     "changeEmail": "Change Email",
     "changeEmailFailed": {
-      "incorrectEmailEncode": "Incorrect url encode. please connect support for help",
-      "requestOutdated": "Change request cannot be proceed after 24 hours",
+      "incorrectEmailEncode": "Incorrect url encode. Please connect support for help.",
+      "requestOutdated": "Change request cannot be proceed after 24 hours.",
       "userDoesNotExists": "Your account does not exists.",
       "requestDoesNotExists": "No request to change your email exists.",
-      "emailExists": "Another user has the same email you are trying to change to. please connect support for help",
-      "invalidToken": "Invalid token. please connect support for help",
+      "emailExists": "Another user has the same email you are trying to change to. Please connect support for help.",
+      "invalidToken": "Invalid token. Please connect support for help.",
       "unknownError": "Request failed. Unknown Error occurs, please try again later."
     },
     "changeEmailSuccess": "Your email has been changed successfully. You have been logged out from all your devices and you can login now again with your new email."

@@ -25,10 +25,10 @@ interface LinkTabProps {
 }
 
 export enum TabOptions {
-  changePassword = 0,
-  changeCompanyData = 1,
-  changeLanguage = 2,
-  editAccount = 3,
+  editAccount = 0,
+  changePassword = 1,
+  changeCompanyData = 2,
+  changeLanguage = 3,
 }
 
 export const AccountSettingsSection = ({
@@ -72,6 +72,10 @@ export const AccountSettingsSection = ({
         centered={!isDesktop}
       >
         <LinkTab
+          label={t('accountSettings.editAccountForm.title')}
+          href={ROUTES.accountSettingsEditAccount}
+        />
+        <LinkTab
           label={t('accountSettings.changePasswordForm.title')}
           href={ROUTES.accountSettingsChangePassword}
         />
@@ -82,10 +86,6 @@ export const AccountSettingsSection = ({
         <LinkTab
           label={t('accountSettings.changeLanguageForm.tabTitle')}
           href={ROUTES.accountSettingsChangeLanguage}
-        />
-        <LinkTab
-          label={t('accountSettings.editAccountForm.title')}
-          href={ROUTES.accountSettingsEditAccount}
         />
       </Tabs>
       <Box sx={formColumnSx}>{selectedTabContent}</Box>

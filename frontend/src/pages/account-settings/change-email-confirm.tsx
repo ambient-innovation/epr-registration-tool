@@ -28,8 +28,9 @@ const ChangeEmailConfirmPage: NextPage = () => {
           mt={TOP_GAP_DEFAULT}
           mb={H1_DEFAULT_SPACING}
         >
-          {!state && <LoadingState />}
-          {state === 'success' ? (
+          {!state ? (
+            <LoadingState />
+          ) : state === 'success' ? (
             <Alert
               sx={{ alignItems: 'center' }}
               variant={'filled'}
