@@ -15,6 +15,7 @@ export interface WagtailApiQueryParams {
   type?: WagtailPageType
   locale?: string
   translation_of?: number
+  show_in_menus?: boolean
 }
 
 const fetchTranslatedPageId = async (
@@ -135,4 +136,8 @@ export const fetchPagesList = async (
 
 export const fetchAvailablePages = (): Promise<WagtailBasePage[]> => {
   return fetchPagesList({ locale: DEFAULT_LOCALE })
+}
+
+export const fetchMenuPages = (): Promise<WagtailBasePage[]> => {
+  return fetchPagesList({ locale: DEFAULT_LOCALE, show_in_menus: true })
 }

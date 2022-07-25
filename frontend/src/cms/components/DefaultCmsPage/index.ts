@@ -1,0 +1,1 @@
+export { DefaultCmsPage } from './DefaultCmsPage'

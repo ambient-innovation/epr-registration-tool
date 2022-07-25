@@ -1,4 +1,3 @@
-import { Box, Typography } from '@mui/material'
 import type { GetStaticPaths, GetStaticProps } from 'next'
 import { NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -8,20 +7,15 @@ import {
   fetchStandardPage,
   fetchAvailablePages,
   fetchPagePreview,
+  fetchMenuPages,
 } from '@/cms/api'
-import { PreviewAlert } from '@/cms/components/PreviewAlert'
-import { StreamFieldSection } from '@/cms/components/StreamFieldSection'
+import { DefaultCmsPage } from '@/cms/components/DefaultCmsPage'
 import {
   CmsPageBaseProps,
   CmsPreviewData,
   WagtailStandardPage,
 } from '@/cms/types'
 import { getPageType } from '@/cms/utils'
-import { DefaultPageHead } from '@/common/components/DefaultPageHead'
-import { LoadingState } from '@/common/components/LoadingState'
-import { PageLayout } from '@/common/components/PageLayout'
-import { defaultContainerSx } from '@/theme/layout'
-import { H1_DEFAULT_SPACING, TOP_GAP_DEFAULT } from '@/theme/utils'
 
 export interface CmsStandardPageStaticPropsParams extends ParsedUrlQuery {
   slug: string
@@ -31,43 +25,8 @@ interface NextCmsStandardPageProps extends CmsPageBaseProps {
   page: null | WagtailStandardPage
 }
 
-const CmsStandardPage: NextPage<NextCmsStandardPageProps> = ({
-  page,
-  previewMode,
-}) => {
-  if (!page) {
-    return (
-      <>
-        <PageLayout>
-          <LoadingState />
-        </PageLayout>
-      </>
-    )
-  }
-
-  return (
-    <>
-      <DefaultPageHead
-        subPageTitle={page.title}
-        description={page.meta.search_description}
-        relativePath={`/${page.meta.slug}`}
-      />
-      <PageLayout>
-        {previewMode && <PreviewAlert />}
-        <Box
-          sx={defaultContainerSx}
-          mt={TOP_GAP_DEFAULT}
-          mb={H1_DEFAULT_SPACING}
-        >
-          <Typography component={'h1'} variant={'h1'}>
-            {page?.title}
-          </Typography>
-        </Box>
-
-        <StreamFieldSection blocks={page.body} />
-      </PageLayout>
-    </>
-  )
+const CmsStandardPage: NextPage<NextCmsStandardPageProps> = (props) => {
+  return <DefaultCmsPage {...props} />
 }
 
 export const getStaticProps: GetStaticProps<
@@ -106,6 +65,7 @@ export const getStaticProps: GetStaticProps<
     props: {
       page: page,
       previewMode: !!preview,
+      menuPages: await fetchMenuPages(),
       ...(await serverSideTranslations(locale as string, ['common'])),
     },
     notFound: !page,

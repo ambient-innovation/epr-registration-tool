@@ -8,9 +8,17 @@ import { theme } from '@/theme'
 
 import { UserMenu } from './UserMenu'
 
-export const UserControls = () => {
+export interface UserControls {
+  showRegistrationButton?: boolean
+  showUserMenu?: boolean
+}
+
+export const UserControls = ({
+  showRegistrationButton = true,
+  showUserMenu = true,
+}: UserControls) => {
   const { t } = useTranslation()
-  const { loggedIn, loading } = useUser()
+  const { loggedIn, loading, logout } = useUser()
 
   if (loading) {
     return null
@@ -21,26 +29,33 @@ export const UserControls = () => {
       <NextLink href={ROUTES.login} passHref>
         <Button
           component={'a'}
+          variant={'outlined'}
           sx={{
             color: theme.palette.common.white,
             backgroundColor: theme.palette.primary.main,
-            border: `2px solid ${theme.palette.common.white}`,
+            border: `1px solid ${theme.palette.common.white}`,
             '&:hover': {
               backgroundColor: theme.palette.primary.dark,
-              border: `2px solid ${theme.palette.common.white}`,
+              border: `1px solid ${theme.palette.common.white}`,
             },
           }}
         >
           {t('login')}
         </Button>
       </NextLink>
-      <NextLink href={ROUTES.registration} passHref>
-        <Button component={'a'} variant={'inverted'}>
-          {t('register')}
-        </Button>
-      </NextLink>
+      {showRegistrationButton && (
+        <NextLink href={ROUTES.registration} passHref>
+          <Button component={'a'} variant={'inverted'}>
+            {t('register')}
+          </Button>
+        </NextLink>
+      )}
     </>
-  ) : (
+  ) : showUserMenu ? (
     <UserMenu />
+  ) : (
+    <Button onClick={() => logout()} variant={'inverted'}>
+      {t('logout')}
+    </Button>
   )
 }
