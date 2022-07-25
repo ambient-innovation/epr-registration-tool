@@ -23,7 +23,6 @@ import {
 import { ApolloErrorAlert } from '@/common/components/ApolloErrorAlert'
 import { DEFAULT_FORM_SPACING } from '@/common/components/FormStep/constants'
 import { FormSubmitFooter } from '@/common/components/FormSubmitFooter'
-import { COUNTRY_OPTIONS } from '@/utils/form/countries'
 import {
   requiredStringValidator,
   requiredStringWithoutWhitespace,
@@ -254,49 +253,17 @@ const ChangeCompanyDetailsForm = ({
                 )
               }}
             />
-            <Controller
-              control={control}
-              name={'country'}
-              render={({
-                field: { onChange, ref, value },
-                formState: { errors },
-              }) => {
-                return (
-                  <Autocomplete
-                    options={COUNTRY_OPTIONS}
-                    isOptionEqualToValue={(option, value) =>
-                      option.label === value.label
-                    }
-                    onChange={(_, value) => {
-                      onChange(value?.label)
-                    }}
-                    value={
-                      COUNTRY_OPTIONS.find(
-                        (option) => option.label === value
-                      ) || null
-                    }
-                    renderInput={(params) => {
-                      return (
-                        <TextField
-                          {...params}
-                          inputRef={ref}
-                          label={t(
-                            'accountSettings.changeCompanyDataForm.companyCountry'
-                          )}
-                          InputLabelProps={{
-                            // avoid moving label for required fields
-                            shrink: !!defaultValues.country || undefined,
-                          }}
-                          error={!!errors?.country}
-                          helperText={errorMsg(errors?.country?.message)}
-                          fullWidth
-                          required
-                        />
-                      )
-                    }}
-                  />
-                )
+            <TextField
+              label={t('accountSettings.changeCompanyDataForm.companyCountry')}
+              InputLabelProps={{
+                // avoid moving label for required fields
+                shrink: !!defaultValues.country || undefined,
               }}
+              error={!!errors?.country}
+              helperText={errorMsg(errors?.country?.message)}
+              fullWidth
+              required
+              {...register('country')}
             />
 
             <TextField
