@@ -195,6 +195,7 @@ export const EditAccountForm = ({
           <FormSubmitFooter
             sx={formFooterSx}
             isSubmitting={formState.isSubmitting}
+            buttonLabelKey={'accountSettings.submitChanges'}
           />
         </form>
       </section>

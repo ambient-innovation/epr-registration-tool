@@ -93,7 +93,7 @@ export const UserMenu = () => {
             </Typography>
           </MenuItem>
         </NextLink>
-        <NextLink href={ROUTES.accountSettingsChangePassword}>
+        <NextLink href={ROUTES.accountSettingsEditAccount}>
           <MenuItem>
             <ListItemAvatar>
               <Avatar sx={{ bgcolor: 'primary.main' }}>
