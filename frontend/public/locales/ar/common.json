@@ -261,10 +261,6 @@
       "greeting": "{{userName}}, مرحبًا بك في لوحة تحكم EPR",
       "submitNewReport": "إرسال تقرير جديد"
     },
-    "registrationNumber": "رقم التسجيل",
-    "distributorType": "نوع موزع الشركة",
-    "createdAt": "تاريخ التسجيل",
-    "lastmodifiedAt": "آخر تحديث لبيانات القاعدة",
     "noCompanyAssigned": "لم يتم تعيينك لأية شركة",
     "pleaseLogin": "الرجاء تسجيل الدخول",
     "completionAlert": {
@@ -313,6 +309,13 @@
       "cancel": "يلغي",
       "save": "يحفظ",
       "companyLogoAlt": "معاينة شعار شركتك الذي ترغب في عرضه على لوحة المعلومات الخاصة بك."
+    },
+    "companyBaseData": {
+      "distributorType": "نوع موزع الشركة",
+      "createdAt": "تاريخ التسجيل",
+      "lastmodifiedAt": "آخر تحديث لبيانات القاعدة",
+      "registrationNumber": "رقم التسجيل",
+      "identificationNumber": "رقم الهوية"
     }
   },
   "companyCompletionForm": {

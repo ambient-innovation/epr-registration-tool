@@ -26,7 +26,7 @@ export const CompanyBaseData = ({
   const dialogFullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const { name, ...companyBaseData } = companyInformation
   const preparedData = {
-    registrationNumber: companyBaseData.registrationNumber,
+    identificationNumber: companyBaseData.identificationNumber,
     distributorType: distributorTypes(t)[companyBaseData.distributorType],
     createdAt: new Date(companyBaseData.createdAt).toLocaleDateString(),
     lastmodifiedAt: new Date(
@@ -54,7 +54,7 @@ export const CompanyBaseData = ({
               <Fragment key={key}>
                 <Grid item xs={6} md={3}>
                   <Typography variant={'body2'}>{`${t(
-                    `dashboard.${key}`
+                    `dashboard.companyBaseData.${key}`
                   )}:`}</Typography>
                 </Grid>
                 <Grid item xs={6} md={3}>

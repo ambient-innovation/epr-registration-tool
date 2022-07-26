@@ -261,10 +261,6 @@
       "greeting": "{{userName}}, welcome to your EPR dashboard",
       "submitNewReport": "Submit new report"
     },
-    "registrationNumber": "Registration number",
-    "distributorType": "Company distributor type",
-    "createdAt": "Date of registration",
-    "lastmodifiedAt": "Last base data update",
     "noCompanyAssigned": "You have not been assigned to any company",
     "pleaseLogin": "Please Log In",
     "completionAlert": {
@@ -313,6 +309,13 @@
       "cancel": "Cancel",
       "save": "Save",
       "companyLogoAlt": "Preview of your company logo that you would like to be displayed on your dashboard."
+    },
+    "companyBaseData": {
+      "distributorType": "Company distributor type",
+      "createdAt": "Date of registration",
+      "lastmodifiedAt": "Last base data update",
+      "registrationNumber": "Registration number",
+      "identificationNumber": "Identification number"
     }
   },
   "companyCompletionForm": {
