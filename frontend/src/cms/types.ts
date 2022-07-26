@@ -28,14 +28,30 @@ export interface ParagraphStreamBlock {
   id: string
 }
 
-export interface VideoStreamBlock {
-  type: 'image'
+export interface ImageBlockValue {
+  url: string
+  width: number
+  height: number
   alt_text: string
-  image: { url: string; width: number; height: number }
+}
+export interface FullWidthImageStreamBlock {
+  type: 'fullWidthImage'
+  id: string
+  value: {
+    image: ImageBlockValue
+    header: string
+  }
+}
+export interface ImageStreamBlock {
+  type: 'image'
+  image: ImageBlockValue
   id: string
 }
 
-export type StreamBlock = ParagraphStreamBlock | VideoStreamBlock
+export type StreamBlock =
+  | ParagraphStreamBlock
+  | ImageStreamBlock
+  | FullWidthImageStreamBlock
 
 export interface WagtailStandardPage
   extends WagtailBasePage<'cms.StandardPage'> {

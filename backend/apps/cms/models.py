@@ -15,12 +15,19 @@ class ImageBlock(blocks.StructBlock):
     def get_api_representation(self, value, context=None):
         return {
             'alt_text': value['alt_text'],
-            'image': {
-                'url': value['image'].file.url,
-                'width': value['image'].file.width,
-                'height': value['image'].file.height,
-            },
+            'url': value['image'].file.url,
+            'width': value['image'].file.width,
+            'height': value['image'].file.height,
         }
+
+
+class FullWithImageBlock(blocks.StructBlock):
+    image = ImageBlock()
+    header = blocks.CharBlock()
+
+    class Meta:
+        label = 'Full width image'
+        icon = 'image'
 
 
 class AbstractStandardPage(CustomHeadlessMixin, Page):
@@ -30,6 +37,7 @@ class AbstractStandardPage(CustomHeadlessMixin, Page):
     body = StreamField(
         [
             ('paragraph', blocks.RichTextBlock(features=['h2', 'h3', 'bold', 'italic', 'ul', 'ol'])),
+            ('fullWidthImage', FullWithImageBlock()),
         ],
         use_json_field=True,
     )

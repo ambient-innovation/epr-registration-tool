@@ -380,12 +380,13 @@ if env('AWS_BUCKET_NAME'):
 
     AWS_LOCATION = 'media'
     MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
-    DEFAULT_FILE_STORAGE = 'apps.common.storage_backend.PrivateMediaStorage'
+    DEFAULT_FILE_STORAGE = 'apps.common.storage_backend.PublicS3Storage'
 
     AWS_PUBLIC_MEDIA_LOCATION = 'media/public'
     AWS_PRIVATE_MEDIA_LOCATION = 'media/private'
 else:
     MEDIA_URL = '/media/'
+    DEFAULT_FILE_STORAGE = 'apps.common.storage_backend.LocalFileStorage'
 
 # --- EMAIL settings --- #
 

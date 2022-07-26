@@ -17,10 +17,13 @@ export const typography: TypographyOptions = {
   fontWeightMedium: 500,
   fontWeightBold: 600,
   h1: {
-    fontSize: pxToRemAsString(30),
+    fontSize: pxToRemAsString(14),
     fontWeight: fontWeights.medium,
     lineHeight: '123%',
     letterSpacing: 0.25,
+    [breakpoints.up('sm')]: {
+      fontSize: pxToRemAsString(24),
+    },
     [breakpoints.up('lg')]: {
       fontSize: pxToRemAsString(34),
     },

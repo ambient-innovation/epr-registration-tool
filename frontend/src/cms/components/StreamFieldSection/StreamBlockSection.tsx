@@ -1,5 +1,6 @@
 import { Box } from '@mui/material'
 
+import { FullWidthImageBlock } from '@/cms/components/blocks/FullWidthImage/FullWidthImageBlock'
 import { StreamBlock } from '@/cms/types'
 import { RichText } from '@/common/components/RichText'
 import { defaultContainerSx } from '@/theme/layout'
@@ -17,6 +18,12 @@ export const StreamBlockSection = ({
       return (
         <Box sx={defaultContainerSx}>
           <RichText html={block.value} />
+        </Box>
+      )
+    case 'fullWidthImage':
+      return (
+        <Box sx={defaultContainerSx}>
+          <FullWidthImageBlock {...block.value} />
         </Box>
       )
     case 'image':
