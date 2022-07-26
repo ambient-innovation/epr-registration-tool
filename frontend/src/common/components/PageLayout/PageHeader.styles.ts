@@ -1,4 +1,6 @@
+import { maxWidthCss, paddedSectionCss } from '@/theme/layout'
 import { pxToRemAsString } from '@/theme/utils'
+import { SxStyles } from '@/theme/utils'
 
 import { SxStyleObject } from '../../../theme/utils'
 
@@ -10,6 +12,16 @@ export const headerSx: SxStyleObject = {
   zIndex: 'appBar',
   alignItems: 'center',
 }
+
+export const headerContainerSx: SxStyles = [
+  maxWidthCss,
+  paddedSectionCss,
+  {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+]
 
 export const listItemButtonSx: SxStyleObject = {
   '&.Mui-selected, &:hover': {
