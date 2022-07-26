@@ -7,8 +7,7 @@ import parse, {
 import DOMPurify from 'isomorphic-dompurify'
 import NextLink from 'next/link'
 import React, { useMemo } from 'react'
-
-import { richTextCss } from './RichText.styles'
+import { richTextCss } from 'src/cms/components/RichText/RichText.styles'
 
 export interface RichText extends Omit<BoxProps, 'children'> {
   html: string

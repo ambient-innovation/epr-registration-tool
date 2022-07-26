@@ -1,6 +1,6 @@
-import { render } from '@/utils/test.utils'
+import { RichText } from 'src/cms/components/RichText/RichText'
 
-import { RichText } from './RichText'
+import { render } from '@/utils/test.utils'
 
 describe('<RichText>', () => {
   it('renders an internal link as a MUI component', async () => {

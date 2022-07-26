@@ -1,4 +1,4 @@
-import { RichText } from './RichText'
+import { RichText } from 'src/cms/components/RichText/RichText'
 
 export default {
   title: 'Common/RichText',
