@@ -66,6 +66,7 @@ export const parameters = {
     },
     hideNoControlsWarning: true,
   },
+  layout: 'fullscreen',
   viewport: {
     viewports: customViewports,
   },

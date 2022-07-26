@@ -57,6 +57,7 @@ export interface PagesApiResult {
 
 export interface CmsPageBaseProps {
   previewMode: boolean
+  menuPages: WagtailBasePage[]
 }
 
 export interface CmsPreviewData {

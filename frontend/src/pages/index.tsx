@@ -1,48 +1,18 @@
-import { Box, Typography } from '@mui/material'
 import type { GetStaticProps, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Head from 'next/head'
 import { ParsedUrlQuery } from 'querystring'
 
-import { fetchPagePreview, fetchHomePage } from '@/cms/api'
-import { PreviewAlert } from '@/cms/components/PreviewAlert'
-import { StreamFieldSection } from '@/cms/components/StreamFieldSection'
+import { fetchPagePreview, fetchHomePage, fetchMenuPages } from '@/cms/api'
+import { DefaultCmsPage } from '@/cms/components/DefaultCmsPage'
 import { CmsPageBaseProps, CmsPreviewData, WagtailHomePage } from '@/cms/types'
 import { getPageType } from '@/cms/utils'
-import { PageLayout } from '@/common/components/PageLayout'
-import { defaultContainerSx } from '@/theme/layout'
-import { H1_DEFAULT_SPACING, TOP_GAP_DEFAULT } from '@/theme/utils'
 
 export interface HomePageProps extends CmsPageBaseProps {
-  page?: WagtailHomePage
+  page: null | WagtailHomePage
 }
 
-const Home: NextPage<HomePageProps> = ({ page, previewMode }) => {
-  return (
-    <>
-      <Head>
-        <title>{'EPR Registration Tool Home page'}</title>
-        <meta
-          name={'description'}
-          content={'EPR Registration Tool Home page'}
-        />
-        <link rel={'canonical'} href={'/'} />
-      </Head>
-      <PageLayout>
-        {previewMode && <PreviewAlert sx={{ mb: 5 }} />}
-        <Box
-          sx={defaultContainerSx}
-          mt={TOP_GAP_DEFAULT}
-          mb={H1_DEFAULT_SPACING}
-        >
-          <Typography component={'h1'} variant={'h1'}>
-            {page?.title}
-          </Typography>
-        </Box>
-        {page && <StreamFieldSection blocks={page.body} />}
-      </PageLayout>
-    </>
-  )
+const Home: NextPage<HomePageProps> = (props) => {
+  return <DefaultCmsPage {...props} />
 }
 
 export const getStaticProps: GetStaticProps<
@@ -79,11 +49,13 @@ export const getStaticProps: GetStaticProps<
 
   return {
     props: {
-      page: page || undefined,
+      page: page,
       previewMode: !!preview,
+      menuPages: await fetchMenuPages(),
       ...(await serverSideTranslations(locale as string, ['common'])),
     },
-    notFound: !page,
+    // home page should never be not found
+    notFound: false,
   }
 }
 

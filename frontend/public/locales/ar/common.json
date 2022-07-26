@@ -239,7 +239,8 @@
   "logout": "Logout",
   "pageHeader": {
     "languageSwitch": "محوّل اللغة",
-    "userMenu": "قائمة المستخدم"
+    "userMenu": "قائمة المستخدم",
+    "close": "أغلق"
   },
   "resetPassword": {
     "title": "إعادة تعيين كلمة المرور",

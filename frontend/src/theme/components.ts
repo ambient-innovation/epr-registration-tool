@@ -112,4 +112,11 @@ export const components: ThemeOptions['components'] = {
       },
     },
   },
+  MuiDrawer: {
+    styleOverrides: {
+      paper: {
+        backgroundColor: palette.primary.main,
+      },
+    },
+  },
 }

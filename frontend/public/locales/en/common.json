@@ -239,7 +239,8 @@
   "logout": "Logout",
   "pageHeader": {
     "languageSwitch": "Language switcher",
-    "userMenu": "User menu"
+    "userMenu": "User menu",
+    "close": "close"
   },
   "resetPassword": {
     "title": "Reset password",

@@ -7,7 +7,9 @@ import {
   IconButton,
   Tooltip,
   MenuItem,
+  Stack,
 } from '@mui/material'
+import Typography from '@mui/material/Typography'
 import { useTranslation } from 'next-i18next'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
@@ -18,7 +20,11 @@ import { getLanguageOptions } from '@/common/contants'
 const MENU_ID = 'language-menu'
 const BUTTON_ID = 'language-menu-button'
 
-export const LangSwitcher = () => {
+export type LangSwitcher = {
+  showLabel?: boolean
+}
+
+export const LangSwitcher = ({ showLabel }: LangSwitcher) => {
   const { locale, pathname, query } = useRouter()
   const { t } = useTranslation()
 
@@ -36,7 +42,6 @@ export const LangSwitcher = () => {
   const handleClose = () => {
     setAnchorEl(null)
   }
-
   return (
     <>
       <Tooltip title={t('pageHeader.languageSwitch')}>
@@ -44,13 +49,25 @@ export const LangSwitcher = () => {
           id={BUTTON_ID}
           onClick={handleClick}
           size={'small'}
-          sx={{ ml: 2 }}
+          sx={{ color: 'common.white' }}
           aria-controls={open ? MENU_ID : undefined}
           aria-haspopup={'true'}
           aria-expanded={open ? 'true' : undefined}
         >
-          <Language sx={{ color: 'common.white', width: 33, height: 33 }} />
-          <KeyboardArrowDownIcon sx={{ color: 'common.white' }} />
+          <Stack
+            component={'span'}
+            spacing={3}
+            direction={'row'}
+            alignItems={'center'}
+          >
+            <Language sx={{ color: 'common.white', width: 33, height: 33 }} />
+            {showLabel && (
+              <Typography component={'span'}>
+                {languages.find((language) => language.value === locale)?.label}
+              </Typography>
+            )}
+            <KeyboardArrowDownIcon sx={{ color: 'common.white' }} />
+          </Stack>
         </IconButton>
       </Tooltip>
       <Menu
