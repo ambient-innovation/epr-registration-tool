@@ -51,7 +51,7 @@ export const getStaticProps: GetStaticProps<
     props: {
       page: page,
       previewMode: !!preview,
-      menuPages: await fetchMenuPages(),
+      menuPages: await fetchMenuPages(locale),
       ...(await serverSideTranslations(locale as string, ['common'])),
     },
     // home page should never be not found
