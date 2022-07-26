@@ -36,7 +36,9 @@ export const AccountSettingsSection = ({
 }: AccountSettingsSection): React.ReactElement => {
   const { t } = useTranslation()
   const theme = useTheme()
+  const isTablet = useMediaQuery(theme.breakpoints.up('sm'))
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
+  const isMobile = !isTablet && !isDesktop
 
   const LinkTab = (props: LinkTabProps) => {
     return (
@@ -63,32 +65,33 @@ export const AccountSettingsSection = ({
 
   return (
     <Box sx={containerCss}>
-      <Tabs
-        sx={tabsColumnSx}
-        orientation={isDesktop ? 'vertical' : 'horizontal'}
-        value={activeSection}
-        allowScrollButtonsMobile={!isDesktop}
-        scrollButtons={!isDesktop}
-        centered={!isDesktop}
-        variant={'scrollable'}
-      >
-        <LinkTab
-          label={t('accountSettings.editAccountForm.title')}
-          href={ROUTES.accountSettingsEditAccount}
-        />
-        <LinkTab
-          label={t('accountSettings.changePasswordForm.title')}
-          href={ROUTES.accountSettingsChangePassword}
-        />
-        <LinkTab
-          label={t('accountSettings.changeCompanyDataForm.tabTitle')}
-          href={ROUTES.accountSettingsChangeCompanyData}
-        />
-        <LinkTab
-          label={t('accountSettings.changeLanguageForm.tabTitle')}
-          href={ROUTES.accountSettingsChangeLanguage}
-        />
-      </Tabs>
+      <Box sx={tabsColumnSx}>
+        <Tabs
+          orientation={isDesktop ? 'vertical' : 'horizontal'}
+          value={activeSection}
+          allowScrollButtonsMobile={isMobile}
+          scrollButtons={isMobile}
+          centered={isTablet && !isDesktop}
+          variant={isMobile ? 'scrollable' : 'standard'}
+        >
+          <LinkTab
+            label={t('accountSettings.editAccountForm.title')}
+            href={ROUTES.accountSettingsEditAccount}
+          />
+          <LinkTab
+            label={t('accountSettings.changePasswordForm.title')}
+            href={ROUTES.accountSettingsChangePassword}
+          />
+          <LinkTab
+            label={t('accountSettings.changeCompanyDataForm.tabTitle')}
+            href={ROUTES.accountSettingsChangeCompanyData}
+          />
+          <LinkTab
+            label={t('accountSettings.changeLanguageForm.tabTitle')}
+            href={ROUTES.accountSettingsChangeLanguage}
+          />
+        </Tabs>
+      </Box>
       <Box sx={formColumnSx}>{selectedTabContent}</Box>
     </Box>
   )
