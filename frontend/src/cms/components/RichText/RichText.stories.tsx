@@ -24,7 +24,7 @@ verschwinden wollte!
 <h3>Dies ist noch eine H3</h3>
 <p>Hatte einer seiner zahllosen Kollegen dieselbe Idee gehabt, ihn beobachtet 
 und abgewartet, um ihn nun um die Früchte seiner Arbeit zu erleichtern? 
-<a href="/about">Das ist ein interner Link, denn er hat eine relative URL</a>
+<a data-slug="about" data-pagetype="cms.StandardPage">Das ist ein interner Link, denn er hat eine relative URL</a>
 Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter 
 dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich 
 zuschnappen? Er konnte die Aufforderung stehen zu bleiben schon hören.

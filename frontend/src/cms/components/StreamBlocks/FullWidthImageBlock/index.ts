@@ -1,0 +1,1 @@
+export { FullWidthImageBlock } from './FullWidthImageBlock'
