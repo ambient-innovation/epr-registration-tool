@@ -70,6 +70,7 @@ export const AccountSettingsSection = ({
         allowScrollButtonsMobile={!isDesktop}
         scrollButtons={!isDesktop}
         centered={!isDesktop}
+        variant={'scrollable'}
       >
         <LinkTab
           label={t('accountSettings.editAccountForm.title')}
