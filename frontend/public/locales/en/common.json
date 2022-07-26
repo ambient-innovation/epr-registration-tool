@@ -153,6 +153,7 @@
   },
   "accountSettings": {
     "main": "Account & Settings",
+    "submitChanges": "Save changes",
     "changePasswordForm": {
       "title": "Password",
       "description1": "Set a new password for your account. After choosing a new password enter your old password for confirmation.",
@@ -168,7 +169,6 @@
       "tabTitle": "LANGUAGE",
       "description": "Here you can set the language in which the email correspondence should take place.",
       "label": "Edit language of correspondance",
-      "submitLanguagePassword": "Save changes",
       "languageChangeFailed": "Language change failed",
       "notification": "Your language has been updated."
     },
@@ -197,7 +197,6 @@
         "description": "Please enter (without spaces) the correct VAT number / tax number of your company (may differ from the country where your company is located).",
         "number": "VAT number / tax number"
       },
-      "submitChanges": "Save changes",
       "updateSuccessMessage": "Your company data has been updated.",
       "noCompanyAssigned": "Your account is not associated with a company"
     },

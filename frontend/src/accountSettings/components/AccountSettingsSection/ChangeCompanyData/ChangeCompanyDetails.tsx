@@ -381,7 +381,7 @@ const ChangeCompanyDetailsForm = ({
       <FormSubmitFooter
         sx={formFooterSx}
         isSubmitting={formState.isSubmitting}
-        buttonLabelKey={'accountSettings.changeCompanyDataForm.submitChanges'}
+        buttonLabelKey={'accountSettings.submitChanges'}
       />
     </form>
   )

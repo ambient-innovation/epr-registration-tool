@@ -123,9 +123,7 @@ export const ChangeLanguageForm = (): React.ReactElement => {
           <FormSubmitFooter
             sx={formFooterSx}
             isSubmitting={formState.isSubmitting}
-            buttonLabelKey={
-              'accountSettings.changeLanguageForm.submitLanguagePassword'
-            }
+            buttonLabelKey={'accountSettings.submitChanges'}
           />
         </form>
       </section>
