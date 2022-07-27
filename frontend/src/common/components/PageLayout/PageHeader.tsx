@@ -22,8 +22,8 @@ import { wrapperSx } from '@/common/components/PageLayout/PageLayout.styles'
 import { MenuPage } from '@/common/components/PageLayout/types'
 import { UserControls } from '@/common/components/UserControls'
 import { ROUTES } from '@/routes'
+import { pxToRemAsString } from '@/theme/utils'
 
-import { pxToRemAsString } from '../../../theme/utils'
 import { headerSx, listItemButtonSx } from './PageHeader.styles'
 
 const MOBILE_MENU_ID = 'mobile-nav-menu'
@@ -32,8 +32,9 @@ export interface PageHeader {
 }
 
 const Logo = (): React.ReactElement => {
+  const { locale } = useRouter()
   return (
-    <NextLink href={ROUTES.home} passHref>
+    <NextLink href={ROUTES.home} locale={locale} passHref>
       <Typography
         component={'a'}
         variant={'h2'}
@@ -104,7 +105,7 @@ export const PageHeader = ({ pages }: PageHeader) => {
             <List>
               {pages?.map((page) => (
                 <ListItem key={page.title} disablePadding sx={{ my: 6 }}>
-                  <NextLink href={page.href} passHref>
+                  <NextLink href={page.href} locale={router.locale} passHref>
                     <ListItemButton
                       component={'a'}
                       sx={listItemButtonSx}
@@ -124,7 +125,11 @@ export const PageHeader = ({ pages }: PageHeader) => {
           </Box>
           {!loggedIn && (
             <Box>
-              <NextLink href={ROUTES.registration} passHref>
+              <NextLink
+                href={ROUTES.registration}
+                locale={router.locale}
+                passHref
+              >
                 <Button
                   component={'a'}
                   variant={'inverted'}

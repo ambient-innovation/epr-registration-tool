@@ -509,10 +509,6 @@ export type PackagingReportsQuery = {
   }
 }
 
-export type ExampleQueryVariables = Exact<{ [key: string]: never }>
-
-export type ExampleQuery = { __typename?: 'Query'; helloWorld: string }
-
 export type PackagingReportForecastSubmitMutationVariables = Exact<{
   year: Scalars['Int']
   startMonth: Scalars['Int']
@@ -1107,35 +1103,6 @@ export type PackagingReportsLazyQueryHookResult = ReturnType<
 export type PackagingReportsQueryResult = Apollo.QueryResult<
   PackagingReportsQuery,
   PackagingReportsQueryVariables
->
-export const ExampleDocument = gql`
-  query example {
-    helloWorld
-  }
-`
-export function useExampleQuery(
-  baseOptions?: Apollo.QueryHookOptions<ExampleQuery, ExampleQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useQuery<ExampleQuery, ExampleQueryVariables>(
-    ExampleDocument,
-    options
-  )
-}
-export function useExampleLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<ExampleQuery, ExampleQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useLazyQuery<ExampleQuery, ExampleQueryVariables>(
-    ExampleDocument,
-    options
-  )
-}
-export type ExampleQueryHookResult = ReturnType<typeof useExampleQuery>
-export type ExampleLazyQueryHookResult = ReturnType<typeof useExampleLazyQuery>
-export type ExampleQueryResult = Apollo.QueryResult<
-  ExampleQuery,
-  ExampleQueryVariables
 >
 export const PackagingReportForecastSubmitDocument = gql`
   mutation packagingReportForecastSubmit(

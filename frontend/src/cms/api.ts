@@ -138,6 +138,6 @@ export const fetchAvailablePages = (): Promise<WagtailBasePage[]> => {
   return fetchPagesList({ locale: DEFAULT_LOCALE })
 }
 
-export const fetchMenuPages = (): Promise<WagtailBasePage[]> => {
-  return fetchPagesList({ locale: DEFAULT_LOCALE, show_in_menus: true })
+export const fetchMenuPages = (locale: string): Promise<WagtailBasePage[]> => {
+  return fetchPagesList({ locale: locale, show_in_menus: true })
 }

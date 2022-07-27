@@ -1,0 +1,1 @@
+export { FullWidthImage } from './FullWidthImage'

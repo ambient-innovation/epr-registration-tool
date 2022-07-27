@@ -3,6 +3,7 @@ import {
   Alert,
   Autocomplete,
   Box,
+  Divider,
   Skeleton,
   Stack,
   TextField,
@@ -253,6 +254,7 @@ const ChangeCompanyDetailsForm = ({
                 )
               }}
             />
+            <Divider />
             <TextField
               label={t('accountSettings.changeCompanyDataForm.companyCountry')}
               InputLabelProps={{

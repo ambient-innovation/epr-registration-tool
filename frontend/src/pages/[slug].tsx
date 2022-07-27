@@ -65,7 +65,7 @@ export const getStaticProps: GetStaticProps<
     props: {
       page: page,
       previewMode: !!preview,
-      menuPages: await fetchMenuPages(),
+      menuPages: await fetchMenuPages(locale),
       ...(await serverSideTranslations(locale as string, ['common'])),
     },
     notFound: !page,

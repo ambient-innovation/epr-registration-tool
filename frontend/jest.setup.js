@@ -13,3 +13,22 @@ import { TextDecoder, TextEncoder } from 'util'
 
 global.TextEncoder = TextEncoder
 global.TextDecoder = TextDecoder
+
+// mock useRouter
+jest.mock('next/dist/client/router', () => ({
+  __esModule: true,
+  useRouter: () => ({
+    query: {},
+    pathname: '/',
+    asPath: '/',
+    locale: 'en',
+    events: {
+      emit: jest.fn(),
+      on: jest.fn(),
+      off: jest.fn(),
+    },
+    push: jest.fn(() => Promise.resolve(true)),
+    prefetch: jest.fn(() => Promise.resolve(true)),
+    replace: jest.fn(() => Promise.resolve(true)),
+  }),
+}))

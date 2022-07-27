@@ -22,28 +22,75 @@ export interface WagtailBasePage<T extends WagtailPageType = WagtailPageType> {
   title: string
 }
 
-export interface ParagraphStreamBlock {
-  type: 'paragraph'
-  value: string
-  id: string
+export interface CtaValue {
+  label: null | string
+  internal_page: null | {
+    slug: string
+    type: WagtailPageType
+  }
+  external_link: null | string
 }
 
-export interface VideoStreamBlock {
-  type: 'image'
+export type BackgroundOption = 'default' | 'shaded'
+
+export interface BaseTextBlockValue {
+  heading: string
+  body: string
+  cta: null | CtaValue
+  orientation: 'left' | 'center'
+}
+
+export interface TextBlockValue extends BaseTextBlockValue {
+  background: BackgroundOption
+}
+
+export interface TextBlockData {
+  type: 'text'
+  id: string
+  value: TextBlockValue
+}
+
+export interface CmsImageValue {
+  url: string
+  width: number
+  height: number
   alt_text: string
-  image: { url: string; width: number; height: number }
-  id: string
+  caption: null | string
 }
 
-export type StreamBlock = ParagraphStreamBlock | VideoStreamBlock
+export interface FullWidthImageBlockData {
+  type: 'fullWidthImage'
+  id: string
+  value: {
+    image: CmsImageValue
+    heading: string
+    background: BackgroundOption
+  }
+}
+
+export interface ImageWithTextBlockData {
+  type: 'imageWithText'
+  id: string
+  value: {
+    image: CmsImageValue
+    text: Omit<BaseTextBlockValue, 'orientation'>
+    background: BackgroundOption
+    orientation: 'textFirst' | 'imageFirst' | 'fullWidthImage'
+  }
+}
+
+export type StreamBlockData =
+  | TextBlockData
+  | FullWidthImageBlockData
+  | ImageWithTextBlockData
 
 export interface WagtailStandardPage
   extends WagtailBasePage<'cms.StandardPage'> {
-  body: StreamBlock[]
+  body: StreamBlockData[]
 }
 
 export interface WagtailHomePage extends WagtailBasePage<'cms.HomePage'> {
-  body: StreamBlock[]
+  body: StreamBlockData[]
 }
 
 export type WagtailPage = WagtailHomePage | WagtailStandardPage

@@ -34,6 +34,7 @@ boto3 = "==1.24.17"                                                     # AWS S3
 wagtail = "~=3.0.1"
 wagtail-localize = "~=1.2.1"                                            # Multi lang support for Wagtail
 wagtail-headless-preview = "~=0.3.0"                                    # Enable wagtail preview via REST
+beautifulsoup4 = "*"
 
 [dev-packages]
 flake8 = "==4.0.1"

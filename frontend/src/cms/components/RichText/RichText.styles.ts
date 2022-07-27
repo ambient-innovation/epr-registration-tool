@@ -22,6 +22,10 @@ export const richTextCss: SxStyleObject = {
     display: 'list-item',
   },
 
+  a: {
+    fontWeight: 'bold',
+  },
+
   'p + p': {
     marginTop: 5,
   },
@@ -41,5 +45,14 @@ export const richTextCss: SxStyleObject = {
     h4: {
       marginTop: { xs: 6, md: 7 },
     },
+  },
+}
+
+export const centeredSx: SxStyleObject = {
+  textAlign: 'center',
+  'ol, ul': {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
 }
