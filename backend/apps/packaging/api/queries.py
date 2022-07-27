@@ -1,11 +1,21 @@
 import typing
 
 import strawberry
+from strawberry.types import Info
 
 from packaging.api.types import MaterialType, PackagingGroupType
 
 
 @strawberry.type
 class PackagingQuery:
-    packaging_groups: typing.List[PackagingGroupType] = strawberry.django.field()
-    packaging_materials: typing.List[MaterialType] = strawberry.django.field()
+    @strawberry.field()
+    def packaging_groups(self, info: Info) -> typing.List[PackagingGroupType]:
+        from packaging.models import PackagingGroup
+
+        return PackagingGroup.objects.all()
+
+    @strawberry.field()
+    def packaging_materials(self, info: Info) -> typing.List[MaterialType]:
+        from packaging.models import Material
+
+        return Material.objects.all()
