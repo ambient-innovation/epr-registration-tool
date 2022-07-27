@@ -8,7 +8,6 @@ import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
 import { useTheme } from '@mui/system'
 import { visuallyHidden } from '@mui/utils'
 import { useTranslation } from 'next-i18next'
@@ -18,35 +17,21 @@ import React, { useEffect } from 'react'
 
 import { useUser } from '@/auth/hooks/useUser'
 import { LangSwitcher } from '@/common/components/LangSwitcher'
-import { wrapperSx } from '@/common/components/PageLayout/PageLayout.styles'
 import { MenuPage } from '@/common/components/PageLayout/types'
 import { UserControls } from '@/common/components/UserControls'
 import { ROUTES } from '@/routes'
 import { pxToRemAsString } from '@/theme/utils'
 
-import { headerSx, listItemButtonSx } from './PageHeader.styles'
+import { Logo } from './Logo'
+import {
+  headerSx,
+  listItemButtonSx,
+  headerContainerSx,
+} from './PageHeader.styles'
 
 const MOBILE_MENU_ID = 'mobile-nav-menu'
 export interface PageHeader {
   pages?: MenuPage[]
-}
-
-const Logo = (): React.ReactElement => {
-  const { locale } = useRouter()
-  return (
-    <NextLink href={ROUTES.home} locale={locale} passHref>
-      <Typography
-        component={'a'}
-        variant={'h2'}
-        sx={{
-          color: 'background.paper',
-          textDecoration: 'none',
-        }}
-      >
-        {'Logo'}
-      </Typography>
-    </NextLink>
-  )
 }
 
 export const PageHeader = ({ pages }: PageHeader) => {
@@ -87,7 +72,7 @@ export const PageHeader = ({ pages }: PageHeader) => {
         },
       }}
     >
-      <Box component={'nav'} sx={wrapperSx}>
+      <Box component={'nav'} sx={headerContainerSx}>
         <Button
           variant={'inverted'}
           sx={{
@@ -146,7 +131,7 @@ export const PageHeader = ({ pages }: PageHeader) => {
   )
   return (
     <Box component={'header'} sx={headerSx}>
-      <Box sx={wrapperSx}>
+      <Box sx={headerContainerSx}>
         <AppBar
           position={'relative'}
           component={'div'} // default is <header> (avoid duplicate)

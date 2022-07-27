@@ -18,16 +18,16 @@ export const FullWidthImage = ({ heading, image }: FullWidthImage) => {
         <Box sx={wrapperSx}>
           {!!heading && (
             <Box sx={headingWrapperSx}>
-              <Typography sx={headingSx} variant={'h1'} component={'h2'}>
+              <Box sx={headingSx} component={'h2'}>
                 {heading}
-              </Typography>
+              </Box>
             </Box>
           )}
           <Image
             src={image.url}
             alt={image.alt_text}
             width={1024}
-            height={410} // 40% of height
+            height={512}
             objectFit={'cover'}
             objectPosition={'center center'}
           />

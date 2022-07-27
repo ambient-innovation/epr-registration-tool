@@ -4,8 +4,11 @@ import { useRouter } from 'next/router'
 
 import { CtaValue } from '@/cms/types'
 import { getInternalOrExternalUrl } from '@/cms/utils'
+import { SxStyleObject } from '@/theme/utils'
 
 export type CtaLink = CtaValue
+
+const buttonSx: SxStyleObject = { width: { xs: '100%', sm: 'auto' } }
 
 export const CtaLink = ({
   label,
@@ -30,12 +33,13 @@ export const CtaLink = ({
       href={href}
       target={'_blank'}
       rel={'noopener noreferrer nofollow'}
+      sx={buttonSx}
     >
       {label}
     </Button>
   ) : (
     <Link href={href} locale={locale} passHref>
-      <Button variant={'contained'} component={'a'} href={href}>
+      <Button variant={'contained'} component={'a'} href={href} sx={buttonSx}>
         {label}
       </Button>
     </Link>

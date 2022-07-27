@@ -2,8 +2,9 @@ import { Box } from '@mui/material'
 
 import { MenuPage } from '@/common/components/PageLayout/types'
 
+import { PageFooter } from './PageFooter'
 import { PageHeader } from './PageHeader'
-import { mainSx } from './PageLayout.styles'
+import { mainSx, pageLayoutSx } from './PageLayout.styles'
 
 export interface PageLayout {
   children: React.ReactNode
@@ -15,11 +16,12 @@ export const PageLayout = ({
   menuPages,
 }: PageLayout): React.ReactElement => {
   return (
-    <div>
+    <Box sx={pageLayoutSx}>
       <PageHeader pages={menuPages} />
       <Box component={'main'} sx={mainSx}>
         {children}
       </Box>
-    </div>
+      <PageFooter />
+    </Box>
   )
 }
