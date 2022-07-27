@@ -27,7 +27,7 @@ export const FullWidthImage = ({ heading, image }: FullWidthImage) => {
             src={image.url}
             alt={image.alt_text}
             width={1024}
-            height={410} // 40% of height
+            height={512}
             objectFit={'cover'}
             objectPosition={'center center'}
           />
