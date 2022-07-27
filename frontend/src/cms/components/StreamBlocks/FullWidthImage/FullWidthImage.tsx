@@ -18,9 +18,9 @@ export const FullWidthImage = ({ heading, image }: FullWidthImage) => {
         <Box sx={wrapperSx}>
           {!!heading && (
             <Box sx={headingWrapperSx}>
-              <Typography sx={headingSx} variant={'h1'} component={'h2'}>
+              <Box sx={headingSx} component={'h2'}>
                 {heading}
-              </Typography>
+              </Box>
             </Box>
           )}
           <Image

@@ -1,4 +1,5 @@
-import { SxStyleObject } from '@/theme/utils'
+import { fontWeights } from '@/theme/typography'
+import { pxToRemAsString, SxStyleObject } from '@/theme/utils'
 
 export const wrapperSx: SxStyleObject = {
   position: 'relative',
@@ -20,4 +21,12 @@ export const headingSx: SxStyleObject = {
   backgroundColor: '#ffffffe6',
   padding: 6,
   maxWidth: '80%',
+  fontSize: {
+    xs: pxToRemAsString(14),
+    sm: pxToRemAsString(24),
+    lg: pxToRemAsString(34),
+  },
+  fontWeight: fontWeights.regular,
+  lineHeight: '123%',
+  letterSpacing: 0.25,
 }
