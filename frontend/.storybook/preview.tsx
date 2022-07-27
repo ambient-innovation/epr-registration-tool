@@ -2,7 +2,6 @@ import { MockedProvider } from '@apollo/client/testing'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 import { addDecorator } from '@storybook/react'
 import i18n from 'i18next'
-import { RouterContext } from 'next/dist/shared/lib/router-context'
 import { useEffect } from 'react'
 import { I18nextProvider, initReactI18next } from 'react-i18next'
 
@@ -12,7 +11,6 @@ import commonAr from '../public/locales/ar/common.json'
 import commonEn from '../public/locales/en/common.json'
 import { DEFAULT_LOCALE, LOCALES } from '../src/config/i18n'
 import { theme } from '../src/theme'
-import './nextImage'
 import { customViewports } from './viewports'
 
 /**
@@ -73,7 +71,6 @@ export const parameters = {
   apolloClient: {
     MockedProvider,
   },
-  nextRouter: { Provider: RouterContext.Provider },
   locales: LOCALES,
   defaultLocale: DEFAULT_LOCALE,
 }

@@ -13,7 +13,12 @@ module.exports = {
     },
     '@storybook/addon-a11y',
     'storybook-addon-apollo-client',
-    'storybook-addon-next-router',
+    {
+      name: 'storybook-addon-next',
+      options: {
+        nextConfigPath: path.resolve(__dirname, '../next.config.js'),
+      },
+    },
   ],
   staticDirs: ['../public'],
   features: {
@@ -21,6 +26,9 @@ module.exports = {
     emotionAlias: false,
   },
   framework: '@storybook/react',
+  core: {
+    builder: 'webpack5',
+  },
   webpackFinal: async (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
