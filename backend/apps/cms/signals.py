@@ -1,6 +1,9 @@
+from urllib.parse import urljoin
+
 from django.conf import settings
 
 import requests
+from sentry_sdk import capture_exception
 from wagtail.signals import page_published
 
 GITLAB_URL = "https://gitlab.ambient-innovation.com"
@@ -14,13 +17,20 @@ def trigger_pipeline(ref: str, token):
 
 def trigger_frontend_rebuild(sender, **kwargs):
     """
-    Trigger frontend rebuild on page publish
+    Trigger frontend revalidating api on page publish
     """
-    if settings.REBUILD_FRONTEND_TRIGGER_TOKEN and settings.REBUILD_FRONTEND_TRIGGER_REF:
-        trigger_pipeline(
-            ref=settings.REBUILD_FRONTEND_TRIGGER_REF,
-            token=settings.REBUILD_FRONTEND_TRIGGER_TOKEN,
-        )
+    try:
+        api = urljoin(settings.FRONTEND_URL, "/api/webhook")
+        slug = kwargs["instance"].slug
+        requests.post(api, data={"secret": settings.NEXTJS_PUBLISH_SECRET, "slug": slug}, verify=False)
+    except Exception as e:
+        capture_exception(e)
+        # Or Trigger frontend rebuild using gitlab pipeline on page publish if the revalidating post failed
+        if settings.REBUILD_FRONTEND_TRIGGER_TOKEN and settings.REBUILD_FRONTEND_TRIGGER_REF:
+            trigger_pipeline(
+                ref=settings.REBUILD_FRONTEND_TRIGGER_REF,
+                token=settings.REBUILD_FRONTEND_TRIGGER_TOKEN,
+            )
 
 
 page_published.connect(trigger_frontend_rebuild)
