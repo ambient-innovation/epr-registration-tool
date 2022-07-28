@@ -48,6 +48,7 @@ class CompanyContactInfoInline(admin.StackedInline):
 class CompanyAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
     change_form_template = 'company/change_view.html'
     change_list_template = 'company/change_list.html'
+
     inlines = (
         CompanyUserInline,
         CompanyContactInfoInline,
@@ -125,6 +126,12 @@ class CompanyAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
     @admin.display(description=_('Current logo'))
     def current_logo(self, obj):
         return format_html('<img src={logo_url} width="100" height="100" />', logo_url=obj.logo.url)
+
+    def get_actions(self, request):
+        # we remove here the delete action as the user should not delete multiple companies at once for safety
+        actions = super().get_actions(request)
+        actions.pop('delete_selected')
+        return actions
 
     def save_model(self, request, obj, form, change):
         from company.utils import generate_unique_registration_number
