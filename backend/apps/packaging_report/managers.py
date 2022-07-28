@@ -1,4 +1,4 @@
-from django.db.models import QuerySet
+from django.db.models import F, QuerySet
 
 from account.models import User
 
@@ -9,3 +9,6 @@ class PackagingReportQuerySet(QuerySet):
             return self.none()
 
         return self.filter(related_company_id=user.related_company_id)
+
+    def annotate_end_month(self):
+        return self.annotate(end_month=F('start_month') + F('timeframe') - 1)

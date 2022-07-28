@@ -15,3 +15,8 @@ class Month(models.IntegerChoices):
     OCTOBER = 10, _("October")
     NOVEMBER = 11, _("November")
     DECEMBER = 12, _("December")
+
+    @staticmethod
+    def get_label_by_value(value):
+        choices = [c[1] for c in Month.choices if c[0] == value]
+        return choices[0] if len(choices) else None

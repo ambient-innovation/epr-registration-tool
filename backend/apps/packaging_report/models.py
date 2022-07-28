@@ -70,6 +70,16 @@ class ReportSubmission(CommonInfo):
         return f'{fees} JOD/ {self.related_report.timeframe} month(s)'
 
 
+class ReportTypes(models.IntegerChoices):
+    FORCAST = 1, _("Forcast")
+    FINAL = 2, _("Actual Quantities")
+
+    @staticmethod
+    def get_label_by_value(value):
+        choices = [c[1] for c in ReportTypes.choices if c[0] == value]
+        return choices[0] if len(choices) else None
+
+
 class PackagingReport(CommonInfo):
     class Meta:
         verbose_name = _("Packaging Report")
@@ -153,7 +163,7 @@ class PackagingReport(CommonInfo):
         super().delete()
 
     def __str__(self):
-        return f'Data Report No. {self.id}'
+        return f'Data Report No. {self.id} {self.start_month} {self.timeframe}'
 
 
 class ForecastSubmission(ReportSubmission):
