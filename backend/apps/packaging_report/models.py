@@ -79,7 +79,7 @@ class PackagingReport(CommonInfo):
         'company.Company',
         verbose_name=_('Company'),
         related_name="packaging_report_queryset",
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
     )
 
     timeframe = models.PositiveIntegerField(
@@ -147,6 +147,10 @@ class PackagingReport(CommonInfo):
         from packaging_report.invoice_file import InvoicePdf
 
         return InvoicePdf(self.pk, user_pk).generate_pdf()
+
+    def delete(self, using=None, keep_parents=False):
+        self.invoice_file.delete(save=False)
+        super().delete()
 
     def __str__(self):
         return f'Data Report No. {self.id}'
