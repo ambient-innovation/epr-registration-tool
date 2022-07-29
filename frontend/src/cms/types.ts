@@ -79,10 +79,26 @@ export interface ImageWithTextBlockData {
   }
 }
 
+export interface FileValue {
+  title: string
+  url: string
+  fileSize: number
+}
+
+export interface PdfDownloadBlockData {
+  type: 'pdfDownload'
+  id: string
+  value: {
+    text: Omit<BaseTextBlockValue, 'orientation'>
+    files: Array<FileValue>
+  }
+}
+
 export type StreamBlockData =
   | TextBlockData
   | FullWidthImageBlockData
   | ImageWithTextBlockData
+  | PdfDownloadBlockData
 
 export interface WagtailStandardPage
   extends WagtailBasePage<'cms.StandardPage'> {
