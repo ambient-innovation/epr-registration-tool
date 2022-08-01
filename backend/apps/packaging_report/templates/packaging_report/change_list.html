@@ -1,4 +1,12 @@
 {% extends "admin/change_list.html" %}
+{% load i18n %}
+
+{% block object-tools-items %}
+    <li>
+        <a href="{% url 'admin:export_reports_data' %}" class="btn btn-high btn-success">{% trans 'Export to CSV File' %}</a>
+    </li>
+    {{ block.super }}
+{% endblock %}
 
 {% block content %}
   {{ block.super }}

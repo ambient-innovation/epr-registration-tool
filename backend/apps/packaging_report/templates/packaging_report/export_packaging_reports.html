@@ -1,0 +1,51 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_list %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}">
+{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    {{ media.js }}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a> ›
+        <a href="{% url 'admin:app_list' 'packaging_report' %}">{% trans 'Packaging Reports' %}</a> ›
+        <a href="{% url 'admin:packaging_report_packagingreport_changelist' %}">{% trans 'Packaging Reports' %}</a> ›
+        {% trans 'Export Data to CSV' %} {{ original|truncatewords:"18" }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div style="display: flex; margin-bottom: 1rem; justify-content: start; align-items: center">
+        <a href="{% url 'admin:packaging_report_packagingreport_changelist' %}" class="back-button">
+            ⬅ Return to list
+        </a>
+    </div>
+    <h1>Export Reports data to CSV file</h1>
+    <div id="content-main">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="module aligned ">
+                {% for field in form.visible_fields %}
+                    <div class="form-row">
+                        <div>
+                            {{ field.errors }}
+                            {{ field.label_tag }} {{ field }}
+                            <div class="help">
+                                {{ field.help_text }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </fieldset>
+            <div class="submit-row">
+                <input type="submit" value="Export to CSV ⬇️" name="_export">
+            </div>
+        </form>
+    </div>
+{% endblock %}

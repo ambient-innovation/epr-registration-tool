@@ -2,6 +2,7 @@ from django import forms
 from django.conf.locale.es import formats as es_formats
 from django.contrib import admin
 from django.db.models import Case, CharField, F, Value, When
+from django.urls import path
 from django.utils import timezone
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
@@ -11,6 +12,7 @@ from ai_django_core.admin.model_admins.mixins import CommonInfoAdminMixin
 
 from common.models import Month
 from packaging_report.models import FinalSubmission, ForecastSubmission, MaterialRecord, PackagingReport
+from packaging_report.views import CSVExportDataView
 
 es_formats.DATETIME_FORMAT = "d M Y H:i:s"
 
@@ -248,3 +250,14 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
             label=label,
             extra_class=f"status-badge--{status}" if status else '',
         )
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path(
+                'export/',
+                self.admin_site.admin_view(CSVExportDataView.as_view()),
+                name='export_reports_data',
+            )
+        ]
+        return custom_urls + urls
