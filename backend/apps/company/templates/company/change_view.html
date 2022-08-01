@@ -2,35 +2,6 @@
 
 {% load i18n %}
 
-{% block extrahead %}
-  {{ block.super }}
-  <style>
-      .alert {
-          padding: 20px;
-          background: #F3F4F6;
-          max-width: 500px;
-          border-radius: 5px;
-
-          display: flex;
-      }
-
-      .alert .alert__icon {
-          font-size: 1.5em;
-          margin-right: 20px;
-      }
-
-      .alert--info {
-          background: #0288D1;
-          color: #F3F4F6;
-      }
-
-      .alert--info .alert__icon:before {
-          content: '🔔';
-      }
-
-  </style>
-{% endblock %}
-
 {% block object-tools %}{% endblock %}
 
 {% block content %}

@@ -121,7 +121,6 @@
     "inactiveCompany": "You company account has not been activated yet. You will be notified via email once this is done.",
     "missingCompanyRelation": "You cannot login because your account is not associated with a company.",
     "alreadyAuthenticated": "You are signed in with another account. Please log out and try again.",
-    "inactiveUser": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link.",
     "packagingGroupDoesNotExist": "إحدى مجموعات الحزم المحددة غير موجودة",
     "materialDoesNotExist": "إحدى المواد المختارة غير موجودة",
     "noCompanyAssignedORInactiveCompany": "لم يتم تعيينك لأي شركة أو لم يتم تنشيط حساب شركتك بعد.",
@@ -133,7 +132,9 @@
     "cannotSubmitFinalReportYet": "Final Report cannot be submitted yet",
     "identicalPasswordNotAllowed": "The new password can not be identical with the old password.",
     "maximumFileSizeExceeded": "الحجم الأقصى للصورة هو 2 ميغا بايت. الرجاء محاولة ملف صورة أصغر.",
-    "invalidExtension": "تنسيق الصورة غير مسموح به. يرجى تحميل صورة أخرى (JPG أو PNG)"
+    "invalidExtension": "تنسيق الصورة غير مسموح به. يرجى تحميل صورة أخرى (JPG أو PNG)",
+    "emailNotConfirmed": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link.",
+    "inactiveUser": "تم حظر حسابك."
   },
   "internalErrors": {
     "unknownError": "Something unexpected happened. Please reload and try again.",

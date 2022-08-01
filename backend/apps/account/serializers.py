@@ -36,6 +36,9 @@ class LoginSerializer(OldLoginSerializer):
         if not user or not user.check_password(password):
             raise_validation("invalidCredentials")
 
+        if not user.has_email_confirmed:
+            raise_validation("emailNotConfirmed")
+
         if not user.is_active:
             raise_validation("inactiveUser")
 

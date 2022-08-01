@@ -6,10 +6,10 @@
 
 {% block content %}
 
-  {% if original.pk and not original.is_forecast_editable %}
-    <div class='alert alert--info'>
+  {% if original.pk and not original.is_active %}
+    <div class='alert alert--warn'>
       <span class='alert__icon'></span>
-        Deadline is reached.
+      This user is deactivated
     </div>
 
   {% endif %}

@@ -10,11 +10,11 @@ from common.email import send_translated_email
 UserModel = get_user_model()
 
 
-def send_user_activation_notification(user: UserModel):
+def send_user_confirm_email_notification(user: UserModel):
     """
     Sends the initial mail for a nonactive user.
     """
-    send_translated_email('user_activation', user, url=get_activation_url(user))
+    send_translated_email('confirm_email', user, url=get_activation_url(user))
 
 
 def send_reset_password_mail(user, url):
@@ -47,10 +47,13 @@ def send_account_data_changed_mail(user):
         url=urljoin(settings.FRONTEND_URL, '/account-settings/edit-account'),
     )
 
-    subject, body_plain, body_html = render_translated_email('account_data_update', user.language_preference, context)
-    send_html_email(
-        subject=subject,
-        body_plain=body_plain,
-        body_html=body_html,
-        to=[user.email],
+
+def send_account_deactivated_mail(user):
+    """
+    Send notification to user that his account has been deactivated
+    """
+    send_translated_email(
+        'account_deactivated',
+        user,
+        url=settings.FRONTEND_URL,
     )

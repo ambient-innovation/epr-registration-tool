@@ -50,20 +50,33 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=True,
         blank=True,
     )
-
-    is_active = models.BooleanField(
-        verbose_name=_('Email confirmed'),
-        default=True,
-        help_text=_('Designates whether a user has confirmed his email address'),
-    )
-    date_joined = models.DateTimeField(verbose_name=_('date joined'), default=timezone.now)
     language_preference = models.CharField(
         verbose_name=_('Language Preference'),
         max_length=2,
         blank=True,
         default=LanguageChoices.en.value,
         choices=LanguageChoices.choices,
+        help_text=_('Preferred language for email correspondence.'),
     )
+
+    date_joined = models.DateTimeField(verbose_name=_('date joined'), default=timezone.now)
+    has_email_confirmed = models.BooleanField(
+        verbose_name=_('Email confirmed'),
+        default=True,
+        help_text=_('Designates whether a user has confirmed his email address'),
+    )
+    is_active = models.BooleanField(
+        verbose_name=_('Active'),
+        default=True,
+        help_text=_(
+            'Designates whether a user account is active or not.<br> Use this flag to deactivate/block a user account'
+        ),
+    )
+
+    @property
+    def can_authenticate(self):
+        return self.is_active and self.has_email_confirmed
+
     objects = UserManager.from_queryset(UserQuerySet)()
 
     EMAIL_FIELD = 'email'

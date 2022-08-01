@@ -7,7 +7,7 @@ class UserQuerySet(QuerySet):
         return self.filter(is_superuser=True)
 
     def active(self):
-        return self.filter(is_active=True)
+        return self.filter(is_active=True).filter(has_email_confirmed=True)
 
 
 class UserManager(BaseUserManager):
@@ -33,6 +33,5 @@ class UserManager(BaseUserManager):
             password=password,
         )
         user.is_superuser = True
-        user.is_active = True
         user.save(using=self._db)
         return user

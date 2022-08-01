@@ -1,0 +1,6 @@
+Dear {{ user.display_name }}
+
+Your EPR Registration Tool account has been deactivated.
+Please contact our support if you receive this email unexpectedly.
+
+Go to homepage {{ url }}
