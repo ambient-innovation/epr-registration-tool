@@ -50,6 +50,8 @@ env = environ.Env(
     AXES_ONLY_ADMIN_SITE=(bool, True),
     # Graphql
     DJANGO_GRAPHQL_CSRF_EXEMPT=(bool, False),
+    SLOW_QUERY_THRESHOLD_MS=(int, 50),
+    SLOW_MUTATION_THRESHOLD_MS=(int, 100),
     # Security
     DJANGO_COOKIE_DOMAIN=(str, 'localhost'),
     DJANGO_CORS_ORIGIN_WHITELIST=(list, []),
@@ -297,10 +299,14 @@ if env.bool('AXES_ENABLED'):
 else:
     AXES_ENABLED = False
 
+SLOW_QUERY_THRESHOLD_MS = env.int('SLOW_QUERY_THRESHOLD_MS')  # ms
+SLOW_MUTATION_THRESHOLD_MS = env.int('SLOW_QUERY_THRESHOLD_MS')  # ms
+
 # --- SENTRY --- #
 
 # Scrubbing Sensitive Data
-if env('DJANGO_SENTRY_DSN'):
+SENTRY_ENABLED = bool(env.str('DJANGO_SENTRY_DSN'))
+if SENTRY_ENABLED:
     import sentry_sdk
     from sentry_sdk.integrations.django import DjangoIntegration
 
