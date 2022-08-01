@@ -262,7 +262,7 @@ AUTHENTICATION_BACKENDS = [
     # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
     'axes.backends.AxesBackend',
     # Django ModelBackend is the default authentication backend.
-    'django.contrib.auth.backends.ModelBackend',
+    "account.auth_backend.CustomModelBackend",
 ]
 
 ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')

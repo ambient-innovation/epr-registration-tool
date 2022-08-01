@@ -11,6 +11,7 @@ super_user = Recipe(
     password=make_password(SUPER_USER_PASSWORD),
     is_superuser=True,
     is_active=True,
+    has_email_confirmed=True,
 )
 
 user = Recipe(
@@ -18,6 +19,7 @@ user = Recipe(
     email=seq('user', suffix='@local.local'),
     password=make_password(SOME_USER_PASSWORD),
     is_active=True,
+    has_email_confirmed=True,
 )
 
 email_change_request = Recipe(

@@ -19,6 +19,7 @@ class Migration(migrations.Migration):
                 default='en',
                 max_length=2,
                 verbose_name='Language Preference',
+                help_text='Preferred language for email correspondence.',
             ),
         ),
     ]

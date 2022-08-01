@@ -6,6 +6,7 @@
     is_superuser: false
     full_name: Regular User
     email: regular@epr.local
+    has_email_confirmed: true
     is_active: true
     date_joined: 2022-05-09T09:33:31.483Z
     groups: []

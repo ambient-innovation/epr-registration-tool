@@ -30,3 +30,19 @@ def send_html_email(subject, body_plain, body_html, to: [str], **kwargs):
     )
     msg.attach_alternative(body_html, "text/html")
     msg.send()
+
+
+def send_translated_email(email_name, user, **extra_context):
+    assert user is not None
+    context = {
+        'user': user,
+        'frontend_url': settings.FRONTEND_URL,
+        **extra_context,
+    }
+    subject, body_plain, body_html = render_translated_email(email_name, user.language_preference, context)
+    send_html_email(
+        subject=subject,
+        body_plain=body_plain,
+        body_html=body_html,
+        to=[user.email],
+    )

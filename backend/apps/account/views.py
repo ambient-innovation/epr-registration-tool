@@ -58,7 +58,8 @@ class RememberMeLoginView(OldLoginView):
 class ActivateUser(OldActivateUser):
     """
     Slightly adjusted version of ai_kit_auth.views.ActivateUser
-    - only save user when user is not yet active
+    - only save user when user has not confirmed his email
+    - use `has_email_confirmed` instead of `is_active´
     - notify admins to confirm user
     """
 
@@ -81,8 +82,8 @@ class ActivateUser(OldActivateUser):
                 {"error": "activationLinkInvalid"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        if not user.is_active:
-            user.is_active = True
+        if not user.has_email_confirmed:
+            user.has_email_confirmed = True
             user.save()
 
             # notify admins about newly registered company

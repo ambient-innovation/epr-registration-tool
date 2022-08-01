@@ -121,7 +121,6 @@
     "inactiveCompany": "You company account has not been activated yet. You will be notified via email once this is done.",
     "missingCompanyRelation": "You cannot login because your account is not associated with a company.",
     "alreadyAuthenticated": "You are signed in with another account. Please log out and try again.",
-    "inactiveUser": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link.",
     "packagingGroupDoesNotExist": "One of the selected Packaging group does not exist",
     "materialDoesNotExist": "One of the selected Material does not exist",
     "noCompanyAssignedORInactiveCompany": "You have not been assigned to any company or your company account has not been activated yet.",
@@ -133,7 +132,9 @@
     "cannotSubmitFinalReportYet": "Final Report cannot be submitted yet",
     "identicalPasswordNotAllowed": "The new password can not be identical with the old password.",
     "maximumFileSizeExceeded": "The maximum image size is 2MB. Please try a smaller image file.",
-    "invalidExtension": "Image format not allowed. Please upload another image (JPG or PNG)"
+    "invalidExtension": "Image format not allowed. Please upload another image (JPG or PNG)",
+    "emailNotConfirmed": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link.",
+    "inactiveUser": "Your account has been blocked."
   },
   "internalErrors": {
     "unknownError": "Something unexpected happened. Please reload and try again.",

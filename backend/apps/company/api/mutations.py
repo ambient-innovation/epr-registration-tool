@@ -13,7 +13,7 @@ from strawberry.file_uploads import Upload
 from strawberry.types import Info
 from strawberry_django.mutations.fields import get_input_data
 
-from account.email import send_user_activation_notification
+from account.email import send_user_confirm_email_notification
 from account.models import User
 from common.api.permissions import IsActivated, IsAuthenticated
 from company.email import send_company_data_changed_notification
@@ -91,7 +91,7 @@ def register_company(
         company.save()
 
     try:
-        send_user_activation_notification(user)
+        send_user_confirm_email_notification(user)
     except Exception as e:
         # failing emails should not break the registration
         capture_exception(e)
