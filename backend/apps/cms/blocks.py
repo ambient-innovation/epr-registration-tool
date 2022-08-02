@@ -2,9 +2,11 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from wagtail import blocks
+from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 
 from cms.utils import get_page_for_id, get_page_type, parse_internal_link
+from cms.validators import validate_is_pdf
 
 DEFAULT_RICH_TEXT_FEATURES = ['h3', 'bold', 'italic', 'ul', 'ol', 'link']
 
@@ -113,8 +115,28 @@ class ImageWithTextBlock(blocks.StructBlock):
     background = blocks.ChoiceBlock(choices=BackgroundChoices.choices, default=BackgroundChoices.DEFAULT)
 
 
+class PdfDocumentBlock(DocumentChooserBlock):
+    def get_api_representation(self, value, context=None):
+        return {
+            'title': value.title,
+            'url': value.file.url if value.file else '',
+            'fileSize': value.file_size,
+        }
+
+
+class PdfDownloadBlock(blocks.StructBlock):
+    text = BaseTextBlock()
+    files = blocks.ListBlock(
+        child_block=PdfDocumentBlock(validators=(validate_is_pdf,), help_text=_('Please select a PDF file'))
+    )
+
+    class Meta:
+        label = _('PDF file links with text')
+
+
 DEFAULT_BLOCKS = [
     ('text', TextBlock()),
     ('fullWidthImage', FullWidthImageBlock()),
     ('imageWithText', ImageWithTextBlock()),
+    ('pdfDownload', PdfDownloadBlock()),
 ]

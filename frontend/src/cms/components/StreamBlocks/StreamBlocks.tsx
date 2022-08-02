@@ -1,3 +1,4 @@
+import { PdfDownloadBlock } from '@/cms/components/StreamBlocks/PdfDownloadBlock'
 import { StreamBlockData } from '@/cms/types'
 
 import { FullWidthImageBlock } from './FullWidthImageBlock'
@@ -19,6 +20,8 @@ export const StreamBlockSection = ({
       return <FullWidthImageBlock {...block.value} />
     case 'imageWithText':
       return <ImageWithTextBlock {...block.value} />
+    case 'pdfDownload':
+      return <PdfDownloadBlock {...block.value} />
   }
   return <span>{`Unknown block type "${blockType}"`}</span>
 }
