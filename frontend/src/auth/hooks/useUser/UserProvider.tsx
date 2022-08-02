@@ -47,19 +47,17 @@ export const UserProvider = ({
     })
   }
 
-  const logout = (alertKey?: string) => {
+  const logout = () => {
     setLoggedIn(false)
-    return logoutAPI()
-      .then(() =>
-        router.push({
-          pathname: ROUTES.login,
-          query: { alert: alertKey },
+    return (
+      logoutAPI()
+        // bring user to home page instead of login page, as ProtectedPage does
+        .then(() => router.push(ROUTES.home))
+        .catch((error) => handleError(error))
+        .finally(() => {
+          return client.resetStore()
         })
-      )
-      .catch((error) => handleError(error))
-      .finally(() => {
-        return client.resetStore()
-      })
+    )
   }
 
   return (

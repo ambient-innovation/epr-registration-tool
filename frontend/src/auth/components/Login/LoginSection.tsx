@@ -74,12 +74,14 @@ export const LoginSection = (): React.ReactElement => {
     translationKey && (t(translationKey) as string)
 
   const onSubmit = ({ email, password, rememberMe }: FormData) => {
-    return login(email, password, rememberMe)
-      .then(() => router.push(ROUTES.dashboard))
-      .catch((error: LoginError) => {
-        handleAxiosError(error)
-        setServerError(error)
-      })
+    return (
+      login(email, password, rememberMe)
+        // User will automatically be redirected by ProtectedPage
+        .catch((error: LoginError) => {
+          handleAxiosError(error)
+          setServerError(error)
+        })
+    )
   }
 
   const isLoading =
@@ -121,7 +123,6 @@ export const LoginSection = (): React.ReactElement => {
             <Box marginTop={{ xs: 9, md: 10 }}>
               <Stack spacing={DEFAULT_FORM_SPACING}>
                 <TextField
-                  autoFocus // autofocus first field
                   label={t('email')}
                   error={!!errors?.email}
                   helperText={errorMsg(errors?.email?.message)}
