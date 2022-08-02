@@ -54,6 +54,7 @@ const fullWithImageBlockProps: StreamBlockData = {
       caption:
         'Auch gibt es niemanden, der den Schmerz an sich liebt, sucht oder wünscht, nur, weil er Schmerz ist, ' +
         'es sei denn, es kommt zu zufälligen Umständen, in denen Mühen und Schmerz ihm große',
+      placeholder: null,
     },
     heading: 'This is header with some text',
     background: 'shaded',
@@ -72,6 +73,7 @@ const imageWithTextBlockProps: StreamBlockData = {
       caption:
         'Auch gibt es niemanden, der den Schmerz an sich liebt, sucht oder wünscht, nur, weil er Schmerz ist, ' +
         'es sei denn, es kommt zu zufälligen Umständen, in denen Mühen und Schmerz ihm große',
+      placeholder: null,
     },
     text: {
       heading: 'This is a nice header',

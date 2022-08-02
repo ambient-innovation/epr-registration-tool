@@ -30,6 +30,8 @@ export const FullWidthImage = ({ heading, image }: FullWidthImage) => {
             height={512}
             objectFit={'cover'}
             objectPosition={'center center'}
+            placeholder={image.placeholder ? 'blur' : undefined}
+            blurDataURL={image.placeholder || undefined}
           />
         </Box>
       </Box>

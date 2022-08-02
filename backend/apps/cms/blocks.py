@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
 
+from cms.image_utils import get_image_placeholder
 from cms.utils import get_page_for_id, get_page_type, parse_internal_link
 
 DEFAULT_RICH_TEXT_FEATURES = ['h3', 'bold', 'italic', 'ul', 'ol', 'link']
@@ -26,12 +27,15 @@ class ImageBlock(blocks.StructBlock):
     caption = blocks.CharBlock(required=False)
 
     def get_api_representation(self, value, context=None):
+        image = value['image']
+
         return {
             'alt_text': value['alt_text'],
-            'url': value['image'].file.url,
-            'width': value['image'].file.width,
-            'height': value['image'].file.height,
+            'url': image.file.url,
+            'width': image.file.width,
+            'height': image.file.height,
             'caption': value['caption'],
+            'placeholder': get_image_placeholder(image),
         }
 
 

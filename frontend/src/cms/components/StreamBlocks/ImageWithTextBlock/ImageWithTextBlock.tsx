@@ -36,6 +36,8 @@ const ImageWithCaption = (
         height={Math.min((image.height / image.width) * 388, 500)}
         objectFit={'cover'}
         objectPosition={'center center'}
+        placeholder={image.placeholder ? 'blur' : undefined}
+        blurDataURL={image.placeholder || undefined}
       />
       <Typography variant={'caption'} mt={4}>
         {image.caption}
