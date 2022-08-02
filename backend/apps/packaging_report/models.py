@@ -163,7 +163,7 @@ class PackagingReport(CommonInfo):
         super().delete()
 
     def __str__(self):
-        return f'Data Report No. {self.id} {self.start_month} {self.timeframe}'
+        return f'Data Report No. {self.id}'
 
 
 class ForecastSubmission(ReportSubmission):

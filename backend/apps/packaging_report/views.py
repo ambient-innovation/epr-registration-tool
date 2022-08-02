@@ -21,6 +21,7 @@ class CSVExportDataView(AdminViewMixin, generic.FormView):
             PackagingReport.objects.annotate_end_month()
             .filter(year=year)
             .filter(start_month__lte=to_month, end_month__gte=from_month)
+            .order_by('related_company_id', 'start_month')
         )
 
         return (

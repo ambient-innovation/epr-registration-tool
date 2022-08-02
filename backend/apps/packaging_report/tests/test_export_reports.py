@@ -85,6 +85,8 @@ class ExportReportDataTestCase(BaseTestCase):
         # report_3: 06.2021 -> 08.2021, has forecast.
         # report_4: 09.2021 -> 11.2021, has forecast.
         cls.company = cls.create_and_assign_company(cls.user)
+        cls.company_2 = baker.make_recipe('company.tests.company', users_queryset=[cls.super_user], name='Abc')
+        baker.make_recipe('company.tests.company_contact_info', related_company=cls.company_2)
         cls.create_packaging_base_data()
         cls.report_1 = baker.make_recipe(
             'packaging_report.tests.packaging_report',
@@ -97,7 +99,7 @@ class ExportReportDataTestCase(BaseTestCase):
         cls.create_final_submission(cls.report_1)
         cls.report_2 = baker.make_recipe(
             'packaging_report.tests.packaging_report',
-            related_company=cls.company,
+            related_company=cls.company_2,
             timeframe=TimeframeType.THREE_MONTHS,
             start_month=4,
             year=2022,
@@ -115,7 +117,7 @@ class ExportReportDataTestCase(BaseTestCase):
 
         cls.report_4 = baker.make_recipe(
             'packaging_report.tests.packaging_report',
-            related_company=cls.company,
+            related_company=cls.company_2,
             timeframe=TimeframeType.THREE_MONTHS,
             start_month=9,
             year=2022,
@@ -139,6 +141,16 @@ class ExportReportDataTestCase(BaseTestCase):
             year=2022, from_month=11, to_month=11, report_type=ReportTypes.FORCAST
         )
         self.assertEqual(2, len(reports))
+
+    def test_order(self):
+        reports = CSVExportDataView.get_reports_in_timeframe(
+            year=2022, from_month=1, to_month=12, report_type=ReportTypes.FORCAST
+        )
+        self.assertEqual(4, len(reports))
+        self.assertEqual(self.report_1.pk, reports[0].id)
+        self.assertEqual(self.report_3.pk, reports[1].id)
+        self.assertEqual(self.report_2.pk, reports[2].id)
+        self.assertEqual(self.report_4.pk, reports[3].id)
 
     def test_get_final_reports_in_timeframe(self):
         reports = CSVExportDataView.get_reports_in_timeframe(
