@@ -72,7 +72,7 @@ class CSVExportDataForm(forms.Form):
         return rows
 
     def export_to_csv(self, year, from_month, to_month, report_type, reports: typing.List[PackagingReport]):
-
+        # see https://docs.djangoproject.com/en/4.0/howto/outputting-csv/#streaming-large-csv-files
         pseudo_buffer = Echo()
         writer = csv.writer(pseudo_buffer)
         header_row = [
