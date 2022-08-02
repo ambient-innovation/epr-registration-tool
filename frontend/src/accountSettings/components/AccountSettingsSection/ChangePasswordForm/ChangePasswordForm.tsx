@@ -63,32 +63,31 @@ export const ChangePasswordForm = (): React.ReactElement => {
     translationKey && (t(translationKey) as string)
 
   const onSubmit = ({ newPassword, oldPassword }: ChangePasswordData) => {
-    return (
-      changePasswordMutation({
-        variables: {
-          oldPassword,
-          newPassword,
-        },
-      })
-        .then(() => {
-          // no need to call the logout mutation as the session is already invalidated by django in case of PW change.
-          // ProtectedRoute redirects automatically to the login page. We add the query parameters here and they will
-          // be preserved during the redirect.
-          router
-            .replace({
-              pathname: router.pathname,
-              query: { alert: CHANGE_PW_COMPLETE_ALERT_KEY },
-            })
-            .then(() => setLoggedIn(false))
+    return changePasswordMutation({
+      variables: {
+        oldPassword,
+        newPassword,
+      },
+    }).then(() => {
+      // no need to call the logout mutation as the session is already invalidated by django in case of PW change.
+      // ProtectedRoute redirects automatically to the login page. We add the query parameters here and they will
+      // be preserved during the redirect.
+      router
+        .replace({
+          pathname: router.pathname,
+          query: { alert: CHANGE_PW_COMPLETE_ALERT_KEY },
         })
-        // handle error via error object returned by useMutation
-        .catch(() => null)
-    )
+        .then(() => setLoggedIn(false))
+    })
   }
 
   return (
     <section aria-labelledby={titleId} aria-describedby={descriptionId}>
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <form
+        // handle error via error object returned by useMutation
+        onSubmit={(e) => handleSubmit(onSubmit)(e).catch(() => null)}
+        noValidate
+      >
         <Box sx={formBackgroundSx}>
           <header>
             <Typography id={titleId} component={'h2'} variant={'h3'}>
@@ -149,6 +148,7 @@ export const ChangePasswordForm = (): React.ReactElement => {
         <FormSubmitFooter
           sx={formFooterSx}
           isSubmitting={formState.isSubmitting}
+          forceLoading={formState.isSubmitSuccessful}
           buttonLabelKey={
             'accountSettings.changePasswordForm.submitChangePassword'
           }

@@ -81,6 +81,14 @@ export const LoginSection = (): React.ReactElement => {
         setServerError(error)
       })
   }
+
+  const isLoading =
+    formState.isSubmitting ||
+    // keep loading state after valid submission until page is refreshed
+    (formState.isSubmitSuccessful && !serverError)
+
+  const currentEmail = !errors.email && getValues('email')
+
   return (
     <FormLayout>
       {(router.query.alert === RESET_PW_COMPLETE_ALERT_KEY ||
@@ -176,10 +184,10 @@ export const LoginSection = (): React.ReactElement => {
             <Button
               variant={'contained'}
               type={'submit'}
-              disabled={formState.isSubmitting}
+              disabled={isLoading}
               sx={signInButton}
             >
-              {formState.isSubmitting ? t('loading') : t('loginForm.signIn')}
+              {isLoading ? t('loading') : t('loginForm.signIn')}
             </Button>
           </Box>
         </form>
