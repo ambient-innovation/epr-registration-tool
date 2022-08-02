@@ -58,7 +58,7 @@ export const LoginSection = (): React.ReactElement => {
   const { login } = useUser()
   const [serverError, setServerError] = useState<null | LoginError>(null)
 
-  const { register, handleSubmit, formState } = useForm<FormData>({
+  const { register, handleSubmit, formState, getValues } = useForm<FormData>({
     mode: 'onTouched',
     resolver,
     defaultValues: {
@@ -139,7 +139,17 @@ export const LoginSection = (): React.ReactElement => {
                     label={t('loginForm.rememberMe')}
                     {...register('rememberMe')}
                   />
-                  <NextLink href={ROUTES.forgetPassword} passHref>
+                  <NextLink
+                    href={{
+                      pathname: ROUTES.forgetPassword,
+                      query: currentEmail
+                        ? {
+                            email: currentEmail,
+                          }
+                        : undefined,
+                    }}
+                    passHref
+                  >
                     <Link>{t('loginForm.resetPassword')}</Link>
                   </NextLink>
                 </Stack>
