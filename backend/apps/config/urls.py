@@ -4,7 +4,7 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path, reverse_lazy
+from django.urls import include, path, re_path, reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView
 
@@ -12,10 +12,13 @@ from ai_kit_auth import views as ai_kit_views
 from strawberry.django.views import GraphQLView
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.documents import urls as wagtaildocs_urls
+from wagtail.urls import serve_pattern
+from wagtail.views import serve
 
 from account import views
 from account.views import ConfirmUserEmailChangeView
 from cms.api.router import api_router
+from cms.headless_mixin import CustomHeadlessMixin
 
 from .schema import schema
 
@@ -40,6 +43,9 @@ urlpatterns = [
     path('graphql/', csrf_exempt(graphql_view) if settings.GRAPHQL_CSRF_EXEMPT else graphql_view),
     path('api/v1/auth/', include(auth_patterns)),
     # --- wagtail ---
+    # custom serve URL, that does not start at root level
+    # Otherwise the root page would lead to our backend root URL (which is a redirect to django admin)
+    re_path(rf'^{CustomHeadlessMixin.SERVE_PATH}/{serve_pattern[1:]}', serve, name="wagtail_serve"),
     # override wagtail login --> use django admin login instead
     path('cms/login/', RedirectView.as_view(url=reverse_lazy('admin:login'), query_string=True)),
     path('cms/api/v2/', api_router.urls),
