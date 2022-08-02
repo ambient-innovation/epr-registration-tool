@@ -56,7 +56,7 @@ backend:security-check:
 
 backend:build-and-push:
   stage: build
-  needs: []
+  needs: [ ]
   tags:
     - normal-load
   script:
@@ -76,7 +76,7 @@ backend:build-and-push:
 
 backend:post-build-checks:
   stage: post-build
-  needs: ["backend:build-and-push"]
+  needs: [ "backend:build-and-push" ]
   tags:
     - normal-load
   variables:
@@ -95,11 +95,19 @@ backend:post-build-checks:
 
 backend:test:
   stage: post-build
-  needs: ["backend:build-and-push"]
+  needs: [ "backend:build-and-push" ]
   tags:
     - normal-load
   variables:
     GIT_STRATEGY: none
+  artifacts:
+    when: always
+    reports:
+      junit: [ 'test-reports/TEST-*.xml' ]
+      coverage_report:
+        coverage_format: cobertura
+        path: 'coverage/report.xml'
+  coverage: '/TOTAL.*\s+(\d+.?\d*%)$/'
   before_script:
     # login to registry
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
@@ -114,8 +122,15 @@ backend:test:
   script:
     # wait for db
     - sleep 5
+    - mkdir -p ${PWD}/coverage || true
+    - mkdir -p ${PWD}/test-reports || true
+    # we make it public, so the docker user can use it and write report.xml in it
+    - chmod -R 777 ${PWD}/coverage
+    - chmod -R 777 ${PWD}/test-reports
     - docker run
       --rm
+      -v ${PWD}/coverage:/app/coverage
+      -v ${PWD}/test-reports:/app/test-reports
       --entrypoint=/bin/sh
       -e DATABASE_NAME=ptp
       -e DATABASE_USERNAME=$TEST_POSTGRES_USERNAME
@@ -126,9 +141,10 @@ backend:test:
       --link $TEST_POSTGRES_CONTAINER_NAME
       $IMAGE_TAG_BACKEND
       ./scripts/test.sh
+    - sed -i 's:<source>/app/apps</source>:<source>'`pwd`'/backend/apps</source>:' ${PWD}/coverage/report.xml
   after_script:
     # Stop DB container
-    - docker stop $POSTGRES_CONTAINER_NAME
+    - docker stop $POSTGRES_CONTAINER_NAME && docker rm $POSTGRES_CONTAINER_NAME || true
   except:
     - /^helm[-/\/].*$/
     - triggers
@@ -243,7 +259,7 @@ frontend:security-check:
 
 frontend:build-and-push:
   stage: build
-  needs: []
+  needs: [ ]
   tags:
     - high-load
   before_script:
@@ -349,7 +365,7 @@ check:deploy:test:
 
 e2e:test:
   stage: post-build
-  needs: ['frontend:build-and-push', 'backend:build-and-push']
+  needs: [ 'frontend:build-and-push', 'backend:build-and-push' ]
   tags:
     - high-load
   variables:

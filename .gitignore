@@ -3,3 +3,4 @@
 ./backend/media/*
 ./backend/staticfiles/*
 node_modules
+./backend/test-reports

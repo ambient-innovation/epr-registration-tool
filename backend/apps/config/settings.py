@@ -76,6 +76,10 @@ env = environ.Env(
     ENABLE_DEBUG_TOOLBAR=(bool, False),
 )
 
+# needed to creat junit test reports which used by gitlab runners
+TEST_RUNNER = 'xmlrunner.extra.djangotestrunner.XMLTestRunner'
+TEST_OUTPUT_DIR = 'test-reports'
+
 # read default env variables
 environ.Env.read_env()
 
