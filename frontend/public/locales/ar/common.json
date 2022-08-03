@@ -15,6 +15,7 @@
   "currency": "د.أ",
   "kg": "كلغ",
   "edit": "تعديل",
+  "backToDashboard": "back to dashboard",
   "previewAlert": {
     "youAreInPreviewMode": "You are in preview mode",
     "stopPreview": "Stop preview"

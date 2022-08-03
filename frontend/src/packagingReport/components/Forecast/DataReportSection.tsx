@@ -1,5 +1,6 @@
 import { ApolloError } from '@apollo/client'
 import { Typography } from '@mui/material'
+import { useTranslation } from 'next-i18next'
 import Error from 'next/error'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
@@ -12,6 +13,8 @@ import {
 import { ApolloErrorAlert } from '@/common/components/ApolloErrorAlert'
 import { FormLayout } from '@/common/components/FormLayout'
 import { LoadingState } from '@/common/components/LoadingState'
+import { BackButton } from '@/common/components/backButton'
+import { ROUTES } from '@/routes'
 
 import { ForecastProvider } from './ForecastContext'
 import { ForecastStepper } from './FormStepper'
@@ -54,7 +57,7 @@ const useReportFinalDetails = (
 export type DataReportSection = Record<string, never>
 
 export const DataReportSection = (_: DataReportSection): React.ReactElement => {
-  // const { t } = useTranslation()
+  const { t } = useTranslation()
 
   const router = useRouter()
   const { id: packagingReportId } = router.query as { id: string }
@@ -68,6 +71,15 @@ export const DataReportSection = (_: DataReportSection): React.ReactElement => {
 
   return (
     <FormLayout>
+      <div>
+        <BackButton
+          url={ROUTES.dashboard}
+          label={t('backToDashboard')}
+          style={{
+            marginBottom: { xs: 8, lg: 11 },
+          }}
+        />
+      </div>
       {loading ? (
         <LoadingState />
       ) : error ? (
