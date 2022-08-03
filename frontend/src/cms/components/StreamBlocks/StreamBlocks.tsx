@@ -1,4 +1,6 @@
+import { FullWidthVideoBlock } from '@/cms/components/StreamBlocks/FullWidthVideoBlock'
 import { PdfDownloadBlock } from '@/cms/components/StreamBlocks/PdfDownloadBlock'
+import { VideoWithTextBlock } from '@/cms/components/StreamBlocks/VideoWithTextBlock'
 import { StreamBlockData } from '@/cms/types'
 
 import { FullWidthImageBlock } from './FullWidthImageBlock'
@@ -22,6 +24,10 @@ export const StreamBlockSection = ({
       return <ImageWithTextBlock {...block.value} />
     case 'pdfDownload':
       return <PdfDownloadBlock {...block.value} />
+    case 'fullWidthVideo':
+      return <FullWidthVideoBlock {...block.value} />
+    case 'videoWithText':
+      return <VideoWithTextBlock {...block.value} />
   }
   return <span>{`Unknown block type "${blockType}"`}</span>
 }

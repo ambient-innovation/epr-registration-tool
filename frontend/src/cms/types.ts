@@ -96,11 +96,34 @@ export interface PdfDownloadBlockData {
   }
 }
 
+export interface FullWidthVideoBlockData {
+  type: 'fullWidthVideo'
+  id: string
+  value: {
+    video_url: string
+    heading: string
+    background: BackgroundOption
+  }
+}
+
+export interface VideoWithTextBlockData {
+  type: 'videoWithText'
+  id: string
+  value: {
+    video_url: string
+    text: Omit<BaseTextBlockValue, 'orientation'>
+    background: BackgroundOption
+    orientation: 'textFirst' | 'videoFirst'
+  }
+}
+
 export type StreamBlockData =
   | TextBlockData
   | FullWidthImageBlockData
   | ImageWithTextBlockData
   | PdfDownloadBlockData
+  | FullWidthVideoBlockData
+  | VideoWithTextBlockData
 
 export interface WagtailStandardPage
   extends WagtailBasePage<'cms.StandardPage'> {
