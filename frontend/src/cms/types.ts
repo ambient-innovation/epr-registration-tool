@@ -92,6 +92,7 @@ export interface PdfDownloadBlockData {
   value: {
     text: Omit<BaseTextBlockValue, 'orientation'>
     files: Array<FileValue>
+    background: BackgroundOption
   }
 }
 

@@ -60,9 +60,10 @@ const FileList = (files: PdfDownloadBlock['files']): React.ReactElement => {
 export const PdfDownloadBlock = ({
   text,
   files,
+  background,
 }: PdfDownloadBlock): React.ReactElement => {
   return (
-    <BaseBlock>
+    <BaseBlock background={background}>
       <Box sx={defaultContainerSx}>
         <Box>
           <HeadingWithTextAndCta orientation={'left'} {...text} />

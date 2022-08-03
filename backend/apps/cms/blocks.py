@@ -133,6 +133,7 @@ class PdfDownloadBlock(blocks.StructBlock):
     files = blocks.ListBlock(
         child_block=PdfDocumentBlock(validators=(validate_is_pdf,), help_text=_('Please select a PDF file'))
     )
+    background = blocks.ChoiceBlock(choices=BackgroundChoices.choices, default=BackgroundChoices.DEFAULT)
 
     class Meta:
         label = _('PDF file links with text')
