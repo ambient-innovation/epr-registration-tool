@@ -3,7 +3,7 @@ import { pxToRemAsString, SxStyleObject } from '@/theme/utils'
 
 export const wrapperSx: SxStyleObject = {
   position: 'relative',
-  display: 'flex',
+  display: 'block',
 }
 
 export const headingWrapperSx: SxStyleObject = {

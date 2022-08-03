@@ -26,8 +26,10 @@ export const FullWidthImage = ({ heading, image }: FullWidthImage) => {
           <Image
             src={image.url}
             alt={image.alt_text}
+            layout={'responsive'}
             width={1024}
             height={512}
+            sizes={'(min-width: 1024px) 1024px, 100vw'}
             objectFit={'cover'}
             objectPosition={'center center'}
             placeholder={image.placeholder ? 'blur' : undefined}

@@ -17,29 +17,22 @@ const ImageWithCaption = (
   image: ImageWithTextBlock['image']
 ): React.ReactElement => {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        '& span': {
-          display: 'block',
-        },
-      }}
-    >
+    <Box>
       <Image
         src={image.url}
         alt={image.alt_text}
-        // set width to 388 + scale height proportionally
-        // max height is 500
-        width={388}
-        height={Math.min((image.height / image.width) * 388, 500)}
+        layout={'responsive'}
+        // with layout="responsive"
+        // width and height only define the aspect ratio
+        width={image.width}
+        height={image.height}
+        sizes={'(min-width: 1024px) 313px, 100vw'}
         objectFit={'cover'}
         objectPosition={'center center'}
         placeholder={image.placeholder ? 'blur' : undefined}
         blurDataURL={image.placeholder || undefined}
       />
-      <Typography variant={'caption'} mt={4}>
+      <Typography variant={'caption'} mt={4} textAlign={'center'}>
         {image.caption}
       </Typography>
     </Box>
