@@ -35,6 +35,8 @@ wagtail = "~=3.0.1"
 wagtail-localize = "~=1.2.1"                                            # Multi lang support for Wagtail
 wagtail-headless-preview = "~=0.3.0"                                    # Enable wagtail preview via REST
 beautifulsoup4 = "*"
+coverage = "==6.4.2"                                                    # to create coverage report
+unittest-xml-reporting = "==3.0.2"                                      # Tool for analyzing code coverage in CI pipeline
 
 [dev-packages]
 flake8 = "==4.0.1"
