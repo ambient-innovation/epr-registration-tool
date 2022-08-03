@@ -1,6 +1,8 @@
 # EPR Registration Tool | Frontend
 
-## Local development
+## Run project
+
+**Non Docker setup**
 
 We recommend not to use Docker for local development
 
@@ -9,11 +11,20 @@ We recommend not to use Docker for local development
     
 Open: [localhost:3000]()
 
+----
+
+**Docker setup**
+
+Run in root directory
+
+      docker compose up frontend
+
+
 ## Storybook
 
 We use storybook to develop components in isolation. 
 
-    yarn start:storybook
+    yarn storybook
     
 Open: [localhost:9009]()
 
@@ -60,3 +71,9 @@ You execute run step 1. and 3. by running (in root dir):
     update_schema_and_types.sh
 
 You will find the generated types and hooks in: `src/api/__types__.ts`
+
+## Next.js images
+
+Please make sure that all `next/image`s use the `layout="repsonsive"` or `"fill"` with
+appropriate `sizes="..."` attribute to make sure, that images are provided in the correct 
+size for different screen sizes. 
