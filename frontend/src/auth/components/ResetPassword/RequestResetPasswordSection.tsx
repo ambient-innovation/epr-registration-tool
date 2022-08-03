@@ -3,7 +3,7 @@ import { Box, TextField, Typography, Button } from '@mui/material'
 import { AxiosError } from 'axios'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { SchemaOf } from 'yup'
 import * as yup from 'yup'
@@ -36,13 +36,26 @@ export const RequestResetPasswordSection = (): React.ReactElement => {
   const { requestPasswordReset } = useUser()
   const [serverErrorMessage, setServerErrorMessage] = useState<string>('')
 
-  const { register, handleSubmit, formState } = useForm<FormData>({
+  const { register, handleSubmit, formState, setValue } = useForm<FormData>({
     mode: 'onTouched',
     resolver,
     defaultValues: {
       email: '',
     },
   })
+
+  const email = router.query.email
+
+  useEffect(() => {
+    if (email && typeof email === 'string') {
+      emailValidator()
+        .validate(email)
+        .then((validatedEmail) => {
+          setValue('email', validatedEmail)
+        })
+        .catch(() => null)
+    }
+  }, [setValue, email])
 
   const { errors } = formState
 

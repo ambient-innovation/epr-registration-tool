@@ -15,13 +15,18 @@ export const ProtectedPage = ({
   children,
 }: ProtectedPage): React.ReactElement => {
   const router = useRouter()
-  const { loading, user } = useUser()
+  const { loading, loggedIn } = useUser()
+
+  const userStateIsLoadedAndNotLoggedIn = !loading && !loggedIn
 
   useEffect(() => {
-    !loading &&
-      !user &&
-      router.push({ pathname: ROUTES.login, query: router.query })
-  }, [user, loading, router])
+    if (userStateIsLoadedAndNotLoggedIn) {
+      router.push({
+        pathname: ROUTES.login,
+        query: { ...router.query, next: router.pathname },
+      })
+    }
+  }, [userStateIsLoadedAndNotLoggedIn, router])
 
   return <>{children}</>
 }

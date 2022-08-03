@@ -22,7 +22,7 @@ export interface AuthContextValue {
   ) => Promise<unknown>
   loggedIn: boolean
   setLoggedIn: (loggedIn: boolean) => Promise<unknown>
-  logout: (alertKey?: string) => Promise<unknown>
+  logout: () => Promise<unknown>
   activate: (ident: string, token: string) => Promise<unknown>
   requestPasswordReset: (email: string) => Promise<unknown>
   resetPassword: (

@@ -58,7 +58,7 @@ export const LoginSection = (): React.ReactElement => {
   const { login } = useUser()
   const [serverError, setServerError] = useState<null | LoginError>(null)
 
-  const { register, handleSubmit, formState } = useForm<FormData>({
+  const { register, handleSubmit, formState, getValues } = useForm<FormData>({
     mode: 'onTouched',
     resolver,
     defaultValues: {
@@ -74,13 +74,23 @@ export const LoginSection = (): React.ReactElement => {
     translationKey && (t(translationKey) as string)
 
   const onSubmit = ({ email, password, rememberMe }: FormData) => {
-    return login(email, password, rememberMe)
-      .then(() => router.push(ROUTES.dashboard))
-      .catch((error: LoginError) => {
-        handleAxiosError(error)
-        setServerError(error)
-      })
+    return (
+      login(email, password, rememberMe)
+        // User will automatically be redirected by ProtectedPage
+        .catch((error: LoginError) => {
+          handleAxiosError(error)
+          setServerError(error)
+        })
+    )
   }
+
+  const isLoading =
+    formState.isSubmitting ||
+    // keep loading state after valid submission until page is refreshed
+    (formState.isSubmitSuccessful && !serverError)
+
+  const currentEmail = !errors.email && getValues('email')
+
   return (
     <FormLayout>
       {(router.query.alert === RESET_PW_COMPLETE_ALERT_KEY ||
@@ -113,7 +123,6 @@ export const LoginSection = (): React.ReactElement => {
             <Box marginTop={{ xs: 9, md: 10 }}>
               <Stack spacing={DEFAULT_FORM_SPACING}>
                 <TextField
-                  autoFocus // autofocus first field
                   label={t('email')}
                   error={!!errors?.email}
                   helperText={errorMsg(errors?.email?.message)}
@@ -139,7 +148,17 @@ export const LoginSection = (): React.ReactElement => {
                     label={t('loginForm.rememberMe')}
                     {...register('rememberMe')}
                   />
-                  <NextLink href={ROUTES.forgetPassword} passHref>
+                  <NextLink
+                    href={{
+                      pathname: ROUTES.forgetPassword,
+                      query: currentEmail
+                        ? {
+                            email: currentEmail,
+                          }
+                        : undefined,
+                    }}
+                    passHref
+                  >
                     <Link>{t('loginForm.resetPassword')}</Link>
                   </NextLink>
                 </Stack>
@@ -166,10 +185,10 @@ export const LoginSection = (): React.ReactElement => {
             <Button
               variant={'contained'}
               type={'submit'}
-              disabled={formState.isSubmitting}
+              disabled={isLoading}
               sx={signInButton}
             >
-              {formState.isSubmitting ? t('loading') : t('loginForm.signIn')}
+              {isLoading ? t('loading') : t('loginForm.signIn')}
             </Button>
           </Box>
         </form>

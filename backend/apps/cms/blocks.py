@@ -5,6 +5,7 @@ from wagtail import blocks
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 
+from cms.image_utils import get_image_placeholder
 from cms.utils import get_page_for_id, get_page_type, parse_internal_link
 from cms.validators import validate_is_pdf
 
@@ -28,12 +29,15 @@ class ImageBlock(blocks.StructBlock):
     caption = blocks.CharBlock(required=False)
 
     def get_api_representation(self, value, context=None):
+        image = value['image']
+
         return {
             'alt_text': value['alt_text'],
-            'url': value['image'].file.url,
-            'width': value['image'].file.width,
-            'height': value['image'].file.height,
+            'url': image.file.url,
+            'width': image.file.width,
+            'height': image.file.height,
             'caption': value['caption'],
+            'placeholder': get_image_placeholder(image),
         }
 
 

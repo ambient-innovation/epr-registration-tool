@@ -56,6 +56,7 @@ export interface CmsImageValue {
   height: number
   alt_text: string
   caption: null | string
+  placeholder: null | string
 }
 
 export interface FullWidthImageBlockData {

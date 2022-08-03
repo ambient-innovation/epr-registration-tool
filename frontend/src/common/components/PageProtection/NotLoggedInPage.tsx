@@ -15,11 +15,32 @@ export const NotLoggedInPage = ({
   children,
 }: NotLoggedInPage): React.ReactElement => {
   const router = useRouter()
-  const { loading, user } = useUser()
+  const { loading, loggedIn } = useUser()
+
+  const userStateIsLoadedAndLoggedIn = !loading && loggedIn
 
   useEffect(() => {
-    !loading && user && router.push(ROUTES.home)
-  }, [user, router, loading])
+    if (userStateIsLoadedAndLoggedIn) {
+      const {
+        // take "next" query parameter to redirect user to the requested
+        // resource after requiring a login
+        next,
+        // alert is only need on logout
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        alert: _,
+        // keep all other query parameters
+        ...query
+      } = router.query
+
+      const pathname =
+        typeof next === 'string' && next.startsWith('/')
+          ? next
+          : // default redirect after login
+            ROUTES.dashboard
+
+      router.push({ pathname, query })
+    }
+  }, [userStateIsLoadedAndLoggedIn, router])
 
   return <>{children}</>
 }
