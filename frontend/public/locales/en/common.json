@@ -200,7 +200,9 @@
         "number": "VAT number / tax number"
       },
       "updateSuccessMessage": "Your company data has been updated.",
-      "noCompanyAssigned": "Your account is not associated with a company"
+      "noCompanyAssigned": "Your account is not associated with a company",
+      "additionalInvoiceRecipient": "Additional invoice recipient",
+      "additionalInvoiceRecipientDesc": " If the invoice should not be sent to you but to the billing department or other recipients of your company, please enter the contact data here."
     },
     "editAccountForm": {
       "title": "Account",

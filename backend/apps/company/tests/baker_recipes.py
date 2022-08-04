@@ -14,6 +14,14 @@ company_contact_info = Recipe(
     phone_number='+9 123654',
 )
 
+additional_invoice_recipient = Recipe(
+    'company.AdditionalInvoiceRecipient',
+    email=seq('invoice_recipient', suffix='@local.local'),
+    phone_or_mobile='+9 123654',
+    full_name='Bean',
+    title='mr',
+)
+
 company = Recipe(
     'company.Company',
     name='Farwell Co',

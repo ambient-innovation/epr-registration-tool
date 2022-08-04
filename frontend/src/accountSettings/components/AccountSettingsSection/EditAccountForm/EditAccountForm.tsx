@@ -147,7 +147,7 @@ export const EditAccountForm = ({
                     sx={{
                       width: { sm: pxToRemAsString(140) },
                     }}
-                    label={t('accountSettings.editAccountForm.title')}
+                    label={t('accountSettings.editAccountForm.titleLabel')}
                     error={!!errors?.title}
                     helperText={errorMsg(errors?.title?.message)}
                     defaultValue={defaultValues?.title || ''}

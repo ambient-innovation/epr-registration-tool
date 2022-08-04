@@ -12,6 +12,7 @@ from strawberry.types import Info
 
 from account.models import User
 from common.api.permissions import IsActivated, IsAuthenticated
+from company.models import Company
 from packaging.api.types import PackagingGroupInput
 from packaging.models import MaterialPrice
 from packaging_report.email import send_packaging_report_invoice
@@ -103,6 +104,7 @@ def packaging_report_final_data_submit(
     packaging_records: typing.List[PackagingGroupInput],
 ) -> str:
     current_user: User = info.context.request.user
+    company: Company = current_user.related_company
 
     report: PackagingReport = PackagingReport.objects.visible_for(current_user).filter(pk=packaging_report_id).first()
     if not report:
@@ -148,7 +150,9 @@ def packaging_report_final_data_submit(
 
     _generate_invoice_file(current_user.pk)
     try:
-        send_packaging_report_invoice(current_user, report)
+        send_packaging_report_invoice(
+            current_user, report, getattr(company, 'related_additional_invoice_recipient', None)
+        )
     except Exception as e:
         # failing emails should not break anything else
         capture_exception(e)

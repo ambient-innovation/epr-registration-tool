@@ -16,6 +16,12 @@ export const COMPANY_DETAILS_WITH_CONTACT_INFO = gql`
         country
         street
       }
+      additionalInvoiceRecipient {
+        title
+        fullName
+        email
+        phoneOrMobile
+      }
     }
   }
 `

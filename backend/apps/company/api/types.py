@@ -5,7 +5,7 @@ import strawberry
 from strawberry.django import auto
 
 from common.api.types import ImageType
-from company.models import Company, CompanyContactInfo, DistributorType
+from company.models import AdditionalInvoiceRecipient, Company, CompanyContactInfo, DistributorType
 
 
 @strawberry.django.type(CompanyContactInfo)
@@ -19,6 +19,14 @@ class CompanyContactInfoType:
     additional_address_info: Optional[str]
 
 
+@strawberry.django.type(AdditionalInvoiceRecipient)
+class AdditionalInvoiceRecipientType:
+    title: auto
+    full_name: auto
+    email: auto
+    phone_or_mobile: auto
+
+
 @strawberry.django.type(Company)
 class CompanyType:
     id: auto
@@ -30,6 +38,7 @@ class CompanyType:
     identification_number: auto
     is_profile_completed: bool
     contact_info: Optional[CompanyContactInfoType]
+    additional_invoice_recipient: Optional[AdditionalInvoiceRecipientType]
 
     @strawberry.django.field
     def is_profile_completed(self, root: Company) -> bool:
