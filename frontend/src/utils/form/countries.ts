@@ -6,19 +6,19 @@
 export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   {
     value: 'AF',
-    label: 'افغانستان',
+    label: 'Afghanistan',
   },
   {
     value: 'AX',
-    label: 'Åland',
+    label: 'Åland Islands',
   },
   {
     value: 'AL',
-    label: 'Shqipëria',
+    label: 'Albania',
   },
   {
     value: 'DZ',
-    label: 'الجزائر',
+    label: 'Algeria',
   },
   {
     value: 'AS',
@@ -50,7 +50,7 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'AM',
-    label: 'Հայաստան',
+    label: 'Armenia',
   },
   {
     value: 'AW',
@@ -62,11 +62,11 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'AT',
-    label: 'Österreich',
+    label: 'Austria',
   },
   {
     value: 'AZ',
-    label: 'Azərbaycan',
+    label: 'Azerbaijan',
   },
   {
     value: 'BS',
@@ -74,7 +74,7 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'BH',
-    label: '‏البحرين',
+    label: 'Bahrain',
   },
   {
     value: 'BD',
@@ -86,11 +86,11 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'BY',
-    label: 'Белару́сь',
+    label: 'Belarus',
   },
   {
     value: 'BE',
-    label: 'België',
+    label: 'Belgium',
   },
   {
     value: 'BZ',
@@ -98,7 +98,7 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'BJ',
-    label: 'Bénin',
+    label: 'Benin',
   },
   {
     value: 'BM',
@@ -106,19 +106,19 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'BT',
-    label: 'ʼbrug-yul',
+    label: 'Bhutan',
   },
   {
     value: 'BO',
-    label: 'Bolivia',
+    label: 'Bolivia, Plurinational State of',
   },
   {
     value: 'BQ',
-    label: 'Bonaire',
+    label: 'Bonaire, Sint Eustatius and Saba',
   },
   {
     value: 'BA',
-    label: 'Bosna i Hercegovina',
+    label: 'Bosnia and Herzegovina',
   },
   {
     value: 'BW',
@@ -126,11 +126,11 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'BV',
-    label: 'Bouvetøya',
+    label: 'Bouvet Island',
   },
   {
     value: 'BR',
-    label: 'Brasil',
+    label: 'Brazil',
   },
   {
     value: 'IO',
@@ -138,11 +138,11 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'BN',
-    label: 'Negara Brunei Darussalam',
+    label: 'Brunei Darussalam',
   },
   {
     value: 'BG',
-    label: 'България',
+    label: 'Bulgaria',
   },
   {
     value: 'BF',
@@ -153,8 +153,12 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
     label: 'Burundi',
   },
   {
+    value: 'CV',
+    label: 'Cabo Verde',
+  },
+  {
     value: 'KH',
-    label: 'Kâmpŭchéa',
+    label: 'Cambodia',
   },
   {
     value: 'CM',
@@ -165,20 +169,16 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
     label: 'Canada',
   },
   {
-    value: 'CV',
-    label: 'Cabo Verde',
-  },
-  {
     value: 'KY',
     label: 'Cayman Islands',
   },
   {
     value: 'CF',
-    label: 'Ködörösêse tî Bêafrîka',
+    label: 'Central African Republic',
   },
   {
     value: 'TD',
-    label: 'Tchad',
+    label: 'Chad',
   },
   {
     value: 'CL',
@@ -186,7 +186,7 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'CN',
-    label: '中国',
+    label: 'China',
   },
   {
     value: 'CX',
@@ -202,15 +202,15 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'KM',
-    label: 'Komori',
+    label: 'Comoros',
   },
   {
     value: 'CG',
-    label: 'République du Congo',
+    label: 'Congo',
   },
   {
     value: 'CD',
-    label: 'République démocratique du Congo',
+    label: 'Congo, Democratic Republic of the',
   },
   {
     value: 'CK',
@@ -221,12 +221,8 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
     label: 'Costa Rica',
   },
   {
-    value: 'CI',
-    label: "Côte d'Ivoire",
-  },
-  {
     value: 'HR',
-    label: 'Hrvatska',
+    label: 'Croatia',
   },
   {
     value: 'CU',
@@ -238,15 +234,19 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'CY',
-    label: 'Κύπρος',
+    label: 'Cyprus',
   },
   {
     value: 'CZ',
-    label: 'Česká republika',
+    label: 'Czechia',
+  },
+  {
+    value: 'CI',
+    label: "Côte d'Ivoire",
   },
   {
     value: 'DK',
-    label: 'Danmark',
+    label: 'Denmark',
   },
   {
     value: 'DJ',
@@ -258,7 +258,7 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'DO',
-    label: 'República Dominicana',
+    label: 'Dominican Republic',
   },
   {
     value: 'EC',
@@ -266,7 +266,7 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'EG',
-    label: 'مصر‎',
+    label: 'Egypt',
   },
   {
     value: 'SV',
@@ -274,27 +274,31 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'GQ',
-    label: 'Guinea Ecuatorial',
+    label: 'Equatorial Guinea',
   },
   {
     value: 'ER',
-    label: 'ኤርትራ',
+    label: 'Eritrea',
   },
   {
     value: 'EE',
-    label: 'Eesti',
+    label: 'Estonia',
+  },
+  {
+    value: 'SZ',
+    label: 'Eswatini',
   },
   {
     value: 'ET',
-    label: 'ኢትዮጵያ',
+    label: 'Ethiopia',
   },
   {
     value: 'FK',
-    label: 'Falkland Islands',
+    label: 'Falkland Islands (Malvinas)',
   },
   {
     value: 'FO',
-    label: 'Føroyar',
+    label: 'Faroe Islands',
   },
   {
     value: 'FJ',
@@ -302,7 +306,7 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'FI',
-    label: 'Suomi',
+    label: 'Finland',
   },
   {
     value: 'FR',
@@ -310,15 +314,15 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'GF',
-    label: 'Guyane française',
+    label: 'French Guiana',
   },
   {
     value: 'PF',
-    label: 'Polynésie française',
+    label: 'French Polynesia',
   },
   {
     value: 'TF',
-    label: 'Territoire des Terres australes et antarctiques fr',
+    label: 'French Southern Territories',
   },
   {
     value: 'GA',
@@ -330,11 +334,11 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'GE',
-    label: 'საქართველო',
+    label: 'Georgia',
   },
   {
     value: 'DE',
-    label: 'Deutschland',
+    label: 'Germany',
   },
   {
     value: 'GH',
@@ -346,11 +350,11 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'GR',
-    label: 'Ελλάδα',
+    label: 'Greece',
   },
   {
     value: 'GL',
-    label: 'Kalaallit Nunaat',
+    label: 'Greenland',
   },
   {
     value: 'GD',
@@ -374,11 +378,11 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'GN',
-    label: 'Guinée',
+    label: 'Guinea',
   },
   {
     value: 'GW',
-    label: 'Guiné-Bissau',
+    label: 'Guinea-Bissau',
   },
   {
     value: 'GY',
@@ -386,7 +390,7 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'HT',
-    label: 'Haïti',
+    label: 'Haiti',
   },
   {
     value: 'HM',
@@ -394,7 +398,7 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'VA',
-    label: 'Vaticano',
+    label: 'Holy See',
   },
   {
     value: 'HN',
@@ -402,19 +406,19 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'HK',
-    label: '香港',
+    label: 'Hong Kong',
   },
   {
     value: 'HU',
-    label: 'Magyarország',
+    label: 'Hungary',
   },
   {
     value: 'IS',
-    label: 'Ísland',
+    label: 'Iceland',
   },
   {
     value: 'IN',
-    label: 'भारत',
+    label: 'India',
   },
   {
     value: 'ID',
@@ -422,15 +426,15 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'IR',
-    label: 'ایران',
+    label: 'Iran, Islamic Republic of',
   },
   {
     value: 'IQ',
-    label: 'العراق',
+    label: 'Iraq',
   },
   {
     value: 'IE',
-    label: 'Éire',
+    label: 'Ireland',
   },
   {
     value: 'IM',
@@ -438,11 +442,11 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'IL',
-    label: 'יִשְׂרָאֵל',
+    label: 'Israel',
   },
   {
     value: 'IT',
-    label: 'Italia',
+    label: 'Italy',
   },
   {
     value: 'JM',
@@ -450,7 +454,7 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'JP',
-    label: '日本',
+    label: 'Japan',
   },
   {
     value: 'JE',
@@ -458,11 +462,11 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'JO',
-    label: 'الأردن',
+    label: 'Jordan',
   },
   {
     value: 'KZ',
-    label: 'Қазақстан',
+    label: 'Kazakhstan',
   },
   {
     value: 'KE',
@@ -474,31 +478,31 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'KP',
-    label: '북한',
+    label: "Korea, Democratic People's Republic of",
   },
   {
     value: 'KR',
-    label: '대한민국',
+    label: 'Korea, Republic of',
   },
   {
     value: 'KW',
-    label: 'الكويت',
+    label: 'Kuwait',
   },
   {
     value: 'KG',
-    label: 'Кыргызстан',
+    label: 'Kyrgyzstan',
   },
   {
     value: 'LA',
-    label: 'ສປປລາວ',
+    label: "Lao People's Democratic Republic",
   },
   {
     value: 'LV',
-    label: 'Latvija',
+    label: 'Latvia',
   },
   {
     value: 'LB',
-    label: 'لبنان',
+    label: 'Lebanon',
   },
   {
     value: 'LS',
@@ -510,7 +514,7 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'LY',
-    label: '‏ليبيا',
+    label: 'Libya',
   },
   {
     value: 'LI',
@@ -518,7 +522,7 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'LT',
-    label: 'Lietuva',
+    label: 'Lithuania',
   },
   {
     value: 'LU',
@@ -526,15 +530,11 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'MO',
-    label: '澳門',
-  },
-  {
-    value: 'MK',
-    label: 'Северна Македонија',
+    label: 'Macao',
   },
   {
     value: 'MG',
-    label: 'Madagasikara',
+    label: 'Madagascar',
   },
   {
     value: 'MW',
@@ -558,7 +558,7 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'MH',
-    label: 'M̧ajeļ',
+    label: 'Marshall Islands',
   },
   {
     value: 'MQ',
@@ -566,11 +566,11 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'MR',
-    label: 'موريتانيا',
+    label: 'Mauritania',
   },
   {
     value: 'MU',
-    label: 'Maurice',
+    label: 'Mauritius',
   },
   {
     value: 'YT',
@@ -578,15 +578,15 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'MX',
-    label: 'México',
+    label: 'Mexico',
   },
   {
     value: 'FM',
-    label: 'Micronesia',
+    label: 'Micronesia, Federated States of',
   },
   {
     value: 'MD',
-    label: 'Moldova',
+    label: 'Moldova, Republic of',
   },
   {
     value: 'MC',
@@ -594,11 +594,11 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'MN',
-    label: 'Монгол улс',
+    label: 'Mongolia',
   },
   {
     value: 'ME',
-    label: 'Црна Гора',
+    label: 'Montenegro',
   },
   {
     value: 'MS',
@@ -606,15 +606,15 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'MA',
-    label: 'المغرب',
+    label: 'Morocco',
   },
   {
     value: 'MZ',
-    label: 'Moçambique',
+    label: 'Mozambique',
   },
   {
     value: 'MM',
-    label: 'မြန်မာ',
+    label: 'Myanmar',
   },
   {
     value: 'NA',
@@ -626,15 +626,15 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'NP',
-    label: 'नपल',
+    label: 'Nepal',
   },
   {
     value: 'NL',
-    label: 'Nederland',
+    label: 'Netherlands',
   },
   {
     value: 'NC',
-    label: 'Nouvelle-Calédonie',
+    label: 'New Caledonia',
   },
   {
     value: 'NZ',
@@ -654,11 +654,15 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'NU',
-    label: 'Niuē',
+    label: 'Niue',
   },
   {
     value: 'NF',
     label: 'Norfolk Island',
+  },
+  {
+    value: 'MK',
+    label: 'North Macedonia',
   },
   {
     value: 'MP',
@@ -666,11 +670,11 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'NO',
-    label: 'Norge',
+    label: 'Norway',
   },
   {
     value: 'OM',
-    label: 'عمان',
+    label: 'Oman',
   },
   {
     value: 'PK',
@@ -682,15 +686,15 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'PS',
-    label: 'فلسطين',
+    label: 'Palestine, State of',
   },
   {
     value: 'PA',
-    label: 'Panamá',
+    label: 'Panama',
   },
   {
     value: 'PG',
-    label: 'Papua Niugini',
+    label: 'Papua New Guinea',
   },
   {
     value: 'PY',
@@ -698,19 +702,19 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'PE',
-    label: 'Perú',
+    label: 'Peru',
   },
   {
     value: 'PH',
-    label: 'Pilipinas',
+    label: 'Philippines',
   },
   {
     value: 'PN',
-    label: 'Pitcairn Islands',
+    label: 'Pitcairn',
   },
   {
     value: 'PL',
-    label: 'Polska',
+    label: 'Poland',
   },
   {
     value: 'PT',
@@ -722,31 +726,31 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'QA',
-    label: 'قطر',
-  },
-  {
-    value: 'RE',
-    label: 'La Réunion',
+    label: 'Qatar',
   },
   {
     value: 'RO',
-    label: 'România',
+    label: 'Romania',
   },
   {
     value: 'RU',
-    label: 'Россия',
+    label: 'Russian Federation',
   },
   {
     value: 'RW',
     label: 'Rwanda',
   },
   {
+    value: 'RE',
+    label: 'Réunion',
+  },
+  {
     value: 'BL',
-    label: 'Saint-Barthélemy',
+    label: 'Saint Barthélemy',
   },
   {
     value: 'SH',
-    label: 'Saint Helena',
+    label: 'Saint Helena, Ascension and Tristan da Cunha',
   },
   {
     value: 'KN',
@@ -758,11 +762,11 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'MF',
-    label: 'Saint-Martin',
+    label: 'Saint Martin (French part)',
   },
   {
     value: 'PM',
-    label: 'Saint-Pierre-et-Miquelon',
+    label: 'Saint Pierre and Miquelon',
   },
   {
     value: 'VC',
@@ -778,19 +782,19 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'ST',
-    label: 'São Tomé e Príncipe',
+    label: 'Sao Tome and Principe',
   },
   {
     value: 'SA',
-    label: 'العربية السعودية',
+    label: 'Saudi Arabia',
   },
   {
     value: 'SN',
-    label: 'Sénégal',
+    label: 'Senegal',
   },
   {
     value: 'RS',
-    label: 'Србија',
+    label: 'Serbia',
   },
   {
     value: 'SC',
@@ -806,15 +810,15 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'SX',
-    label: 'Sint Maarten',
+    label: 'Sint Maarten (Dutch part)',
   },
   {
     value: 'SK',
-    label: 'Slovensko',
+    label: 'Slovakia',
   },
   {
     value: 'SI',
-    label: 'Slovenija',
+    label: 'Slovenia',
   },
   {
     value: 'SB',
@@ -822,7 +826,7 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'SO',
-    label: 'Soomaaliya',
+    label: 'Somalia',
   },
   {
     value: 'ZA',
@@ -830,7 +834,7 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'GS',
-    label: 'South Georgia',
+    label: 'South Georgia and the South Sandwich Islands',
   },
   {
     value: 'SS',
@@ -838,15 +842,15 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'ES',
-    label: 'España',
+    label: 'Spain',
   },
   {
     value: 'LK',
-    label: 'śrī laṃkāva',
+    label: 'Sri Lanka',
   },
   {
     value: 'SD',
-    label: 'السودان',
+    label: 'Sudan',
   },
   {
     value: 'SR',
@@ -854,39 +858,35 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'SJ',
-    label: 'Svalbard og Jan Mayen',
-  },
-  {
-    value: 'SZ',
-    label: 'Swaziland',
+    label: 'Svalbard and Jan Mayen',
   },
   {
     value: 'SE',
-    label: 'Sverige',
+    label: 'Sweden',
   },
   {
     value: 'CH',
-    label: 'Schweiz',
+    label: 'Switzerland',
   },
   {
     value: 'SY',
-    label: 'سوريا',
+    label: 'Syrian Arab Republic',
   },
   {
     value: 'TW',
-    label: '臺灣',
+    label: 'Taiwan, Province of China',
   },
   {
     value: 'TJ',
-    label: 'Тоҷикистон',
+    label: 'Tajikistan',
   },
   {
     value: 'TZ',
-    label: 'Tanzania',
+    label: 'Tanzania, United Republic of',
   },
   {
     value: 'TH',
-    label: 'ประเทศไทย',
+    label: 'Thailand',
   },
   {
     value: 'TL',
@@ -910,15 +910,15 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'TN',
-    label: 'تونس',
+    label: 'Tunisia',
   },
   {
     value: 'TR',
-    label: 'Türkiye',
+    label: 'Turkey',
   },
   {
     value: 'TM',
-    label: 'Türkmenistan',
+    label: 'Turkmenistan',
   },
   {
     value: 'TC',
@@ -934,23 +934,23 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'UA',
-    label: 'Україна',
+    label: 'Ukraine',
   },
   {
     value: 'AE',
-    label: 'دولة الإمارات العربية المتحدة',
+    label: 'United Arab Emirates',
   },
   {
     value: 'GB',
     label: 'United Kingdom',
   },
   {
-    value: 'US',
-    label: 'United States',
-  },
-  {
     value: 'UM',
     label: 'United States Minor Outlying Islands',
+  },
+  {
+    value: 'US',
+    label: 'United States',
   },
   {
     value: 'UY',
@@ -958,7 +958,7 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'UZ',
-    label: 'O‘zbekiston',
+    label: 'Uzbekistan',
   },
   {
     value: 'VU',
@@ -966,31 +966,31 @@ export const COUNTRY_OPTIONS: { value: string; label: string }[] = [
   },
   {
     value: 'VE',
-    label: 'Venezuela',
+    label: 'Venezuela, Bolivarian Republic of',
   },
   {
     value: 'VN',
-    label: 'Việt Nam',
+    label: 'Viet Nam',
   },
   {
     value: 'VG',
-    label: 'British Virgin Islands',
+    label: 'Virgin Islands, British',
   },
   {
     value: 'VI',
-    label: 'United States Virgin Islands',
+    label: 'Virgin Islands, U.S.',
   },
   {
     value: 'WF',
-    label: 'Wallis et Futuna',
+    label: 'Wallis and Futuna',
   },
   {
     value: 'EH',
-    label: 'الصحراء الغربية',
+    label: 'Western Sahara',
   },
   {
     value: 'YE',
-    label: 'اليَمَن',
+    label: 'Yemen',
   },
   {
     value: 'ZM',

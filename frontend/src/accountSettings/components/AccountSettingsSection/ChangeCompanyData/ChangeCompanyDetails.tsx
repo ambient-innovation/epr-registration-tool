@@ -17,8 +17,8 @@ import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { SchemaOf } from 'yup'
 
+import { COMPANY_DETAILS_WITH_CONTACT_INFO } from '@/accountSettings/components/AccountSettingsSection/ChangeCompanyData/queries'
 import {
-  CompanyDetailsWithContactInfoDocument,
   CompanyDetailsWithContactInfoQuery,
   useChangeCompanyDetailsMutation,
   useCompanyDetailsWithContactInfoQuery,
@@ -29,6 +29,7 @@ import { DEFAULT_FORM_SPACING } from '@/common/components/FormStep/constants'
 import { FormSubmitFooter } from '@/common/components/FormSubmitFooter'
 import { SelectField } from '@/common/components/SelectField'
 import { pxToRemAsString } from '@/theme/utils'
+import { COUNTRY_OPTIONS } from '@/utils/form/countries'
 import {
   emailValidator,
   requiredStringValidator,
@@ -137,7 +138,7 @@ const ChangeCompanyDetailsForm = ({
   const { t } = useTranslation()
 
   const [changeCompanyDetails, { error }] = useChangeCompanyDetailsMutation({
-    refetchQueries: [{ query: CompanyDetailsWithContactInfoDocument }],
+    refetchQueries: [COMPANY_DETAILS_WITH_CONTACT_INFO],
   })
 
   const isSubmittedSuccessfulRef = useRef(false)
@@ -317,17 +318,46 @@ const ChangeCompanyDetailsForm = ({
               }}
             />
             <Divider />
-            <TextField
-              label={t('accountSettings.changeCompanyDataForm.companyCountry')}
-              InputLabelProps={{
-                // avoid moving label for required fields
-                shrink: !!defaultValues.country || undefined,
+            <Controller
+              control={control}
+              name={'country'}
+              render={({
+                field: { onChange, ref, value },
+                formState: { errors },
+              }) => {
+                return (
+                  <Autocomplete
+                    options={COUNTRY_OPTIONS}
+                    onChange={(_, value) => {
+                      onChange(value?.label)
+                    }}
+                    value={
+                      COUNTRY_OPTIONS.find(
+                        (option) => option.label === value
+                      ) || null
+                    }
+                    renderInput={(params) => {
+                      return (
+                        <TextField
+                          {...params}
+                          inputRef={ref}
+                          label={t(
+                            'accountSettings.changeCompanyDataForm.companyCountry'
+                          )}
+                          InputLabelProps={{
+                            // avoid moving label for required fields
+                            shrink: !!defaultValues.country || undefined,
+                          }}
+                          error={!!errors?.country}
+                          helperText={errorMsg(errors?.country?.message)}
+                          fullWidth
+                          required
+                        />
+                      )
+                    }}
+                  />
+                )
               }}
-              error={!!errors?.country}
-              helperText={errorMsg(errors?.country?.message)}
-              fullWidth
-              required
-              {...register('country')}
             />
 
             <TextField
