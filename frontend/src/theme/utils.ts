@@ -25,4 +25,4 @@ export const defaultFocusSx: SxStyleObject = {
 
 export const TOP_GAP_DEFAULT = { xs: 5, md: 6, lg: 7 }
 
-export const H1_DEFAULT_SPACING = { xs: 5, md: 8, lg: 10 }
+export const H1_DEFAULT_SPACING = { xs: 3, md: 6, lg: 8 }

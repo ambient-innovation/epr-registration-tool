@@ -12,6 +12,8 @@ import {
 import { ApolloErrorAlert } from '@/common/components/ApolloErrorAlert'
 import { FormLayout } from '@/common/components/FormLayout'
 import { LoadingState } from '@/common/components/LoadingState'
+import { BackButton } from '@/common/components/backButton'
+import { ROUTES } from '@/routes'
 
 import { ForecastProvider } from './ForecastContext'
 import { ForecastStepper } from './FormStepper'
@@ -68,6 +70,15 @@ export const ReportChangeSection = (
 
   return (
     <FormLayout>
+      <div>
+        <BackButton
+          url={ROUTES.dashboard}
+          label={t('backToDashboard')}
+          style={{
+            marginBottom: { xs: 8, lg: 11 },
+          }}
+        />
+      </div>
       {loading ? (
         <LoadingState />
       ) : error ? (

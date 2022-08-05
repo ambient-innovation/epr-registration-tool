@@ -8,6 +8,7 @@ import { TabOptions } from '@/accountSettings/components/AccountSettingsSection/
 import { DefaultPageHead } from '@/common/components/DefaultPageHead'
 import { PageLayout } from '@/common/components/PageLayout'
 import { ProtectedPage } from '@/common/components/PageProtection'
+import { BackButton } from '@/common/components/backButton'
 import { ROUTES } from '@/routes'
 import { maxWidthCss, paddedSectionCss } from '@/theme/layout'
 import { H1_DEFAULT_SPACING } from '@/theme/utils'
@@ -24,6 +25,13 @@ const ChangePasswordPage: NextPage = () => {
       <PageLayout>
         <ProtectedPage>
           <Box sx={[maxWidthCss, paddedSectionCss, { marginTop: 11 }]}>
+            <BackButton
+              url={ROUTES.dashboard}
+              label={t('backToDashboard')}
+              style={{
+                marginBottom: { xs: 8, lg: 11 },
+              }}
+            />
             <Typography component={'h1'} variant={'h1'} mb={H1_DEFAULT_SPACING}>
               {t('accountSettings.main')}
             </Typography>
