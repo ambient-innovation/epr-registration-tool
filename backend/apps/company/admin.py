@@ -9,7 +9,7 @@ from sentry_sdk import capture_exception
 
 from account.models import User
 from company.email import send_user_registration_complete_notification
-from company.models import Company, CompanyContactInfo
+from company.models import AdditionalInvoiceRecipient, Company, CompanyContactInfo
 
 
 class CompanyUserInline(admin.StackedInline):
@@ -27,6 +27,24 @@ class CompanyUserInline(admin.StackedInline):
     readonly_fields = (
         'email',
         'is_active',
+    )
+
+
+class CompanyAdditionalInvoiceRecipientInline(admin.StackedInline):
+    model = AdditionalInvoiceRecipient
+    extra = 0
+    max_num = 0
+    fields = (
+        'title',
+        'full_name',
+        'email',
+        'phone_or_mobile',
+    )
+    readonly_fields = (
+        'title',
+        'full_name',
+        'email',
+        'phone_or_mobile',
     )
 
 
@@ -51,6 +69,7 @@ class CompanyAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
 
     inlines = (
         CompanyUserInline,
+        CompanyAdditionalInvoiceRecipientInline,
         CompanyContactInfoInline,
     )
     list_display = (

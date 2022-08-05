@@ -12,10 +12,12 @@ class ChangeCompanyDetailsTestCase(BaseApiTestCase):
         mutation changeCompanyDetails(
             $companyInput: CompanyInput!
             $contactInfoInput: CompanyContactInfoInput!
+            $additionalInvoiceRecipientInput: AdditionalInvoiceRecipientInput
         ) {
             changeCompanyDetails(
                 companyInput: $companyInput
                 contactInfoInput: $contactInfoInput
+                additionalInvoiceRecipientInput: $additionalInvoiceRecipientInput
             )
         }
     """
@@ -33,6 +35,12 @@ class ChangeCompanyDetailsTestCase(BaseApiTestCase):
         'streetNumber': '10 (updated)',
         'additionalAddressInfo': "Second floor (updated)",
         'phoneNumber': '+9 123654 (updated)',
+    }
+    DEFAULT_ADDITIONAL_INVOICE_RECIPIENT_INPUT = {
+        'email': 'bean@local.local',
+        'title': 'mr',
+        'fullName': 'Bean',
+        'phoneOrMobile': '+912545778',
     }
 
     @classmethod
@@ -61,6 +69,7 @@ class ChangeCompanyDetailsTestCase(BaseApiTestCase):
             variables={
                 'companyInput': self.DEFAULT_COMPANY_INPUT,
                 'contactInfoInput': self.DEFAULT_CONTACT_INFO_INPUT,
+                'additionalInvoiceRecipientInput': None,
             },
             message='not_authenticated',
         )
@@ -84,6 +93,7 @@ class ChangeCompanyDetailsTestCase(BaseApiTestCase):
             variables={
                 'companyInput': self.DEFAULT_COMPANY_INPUT,
                 'contactInfoInput': self.DEFAULT_CONTACT_INFO_INPUT,
+                'additionalInvoiceRecipientInput': None,
             },
         )
         self.assertEqual('UPDATED', content['changeCompanyDetails'])
@@ -102,6 +112,7 @@ class ChangeCompanyDetailsTestCase(BaseApiTestCase):
             variables={
                 'companyInput': self.DEFAULT_COMPANY_INPUT,
                 'contactInfoInput': self.DEFAULT_CONTACT_INFO_INPUT,
+                'additionalInvoiceRecipientInput': None,
             },
         )
         self.assertEqual('UPDATED', content['changeCompanyDetails'])
@@ -120,6 +131,7 @@ class ChangeCompanyDetailsTestCase(BaseApiTestCase):
                     'name': '',
                 },
                 'contactInfoInput': self.DEFAULT_CONTACT_INFO_INPUT,
+                'additionalInvoiceRecipientInput': None,
             },
             message='validationError',
         )
@@ -133,6 +145,7 @@ class ChangeCompanyDetailsTestCase(BaseApiTestCase):
                     'identificationNumber': '1232 4343',
                 },
                 'contactInfoInput': self.DEFAULT_CONTACT_INFO_INPUT,
+                'additionalInvoiceRecipientInput': None,
             },
             message='validationError',
         )
@@ -148,6 +161,7 @@ class ChangeCompanyDetailsTestCase(BaseApiTestCase):
                     'streetNumber': None,
                     'additionalAddressInfo': None,
                 },
+                'additionalInvoiceRecipientInput': None,
             },
         )
         self.assertEqual('UPDATED', content['changeCompanyDetails'])
@@ -166,9 +180,86 @@ class ChangeCompanyDetailsTestCase(BaseApiTestCase):
                     for key, value in self.DEFAULT_COMPANY_INPUT.items()
                 },
                 'contactInfoInput': {key: f'  {value}  ' for key, value in self.DEFAULT_CONTACT_INFO_INPUT.items()},
+                'additionalInvoiceRecipientInput': None,
             },
         )
         self.assertEqual('UPDATED', content['changeCompanyDetails'])
         company = Company.objects.get(pk=self.company.id)
         contact_info = company.related_contact_info
         self.assert_default_values(company, contact_info)
+
+    def test_insert_new_additional_invoice_recipient(self):
+        content = self.query_and_load_data(
+            self.MUTATION,
+            variables={
+                'companyInput': {
+                    key: (f'  {value}  ' if key != 'distributorType' else value)
+                    for key, value in self.DEFAULT_COMPANY_INPUT.items()
+                },
+                'contactInfoInput': {key: f'  {value}  ' for key, value in self.DEFAULT_CONTACT_INFO_INPUT.items()},
+                'additionalInvoiceRecipientInput': {
+                    key: f'  {value}  ' for key, value in self.DEFAULT_ADDITIONAL_INVOICE_RECIPIENT_INPUT.items()
+                },
+            },
+        )
+        self.assertEqual('UPDATED', content['changeCompanyDetails'])
+        self.assertEqual(
+            self.DEFAULT_ADDITIONAL_INVOICE_RECIPIENT_INPUT['email'],
+            self.company.related_additional_invoice_recipient.email,
+        )
+
+    def test_delete_additional_invoice_recipient(self):
+        baker.make_recipe('company.tests.additional_invoice_recipient', related_company=self.company)
+        self.assertIsNotNone(self.company.related_additional_invoice_recipient)
+
+        content = self.query_and_load_data(
+            self.MUTATION,
+            variables={
+                'companyInput': {
+                    key: (f'  {value}  ' if key != 'distributorType' else value)
+                    for key, value in self.DEFAULT_COMPANY_INPUT.items()
+                },
+                'contactInfoInput': {key: f'  {value}  ' for key, value in self.DEFAULT_CONTACT_INFO_INPUT.items()},
+                'additionalInvoiceRecipientInput': None,
+            },
+        )
+        self.assertEqual('UPDATED', content['changeCompanyDetails'])
+        self.company.refresh_from_db()
+        self.assertIsNone(getattr(self.company, 'related_additional_invoice_recipient', None))
+
+    def test_update_additional_invoice_recipient(self):
+        baker.make_recipe(
+            'company.tests.additional_invoice_recipient', related_company=self.company, email='test@test.test'
+        )
+        content = self.query_and_load_data(
+            self.MUTATION,
+            variables={
+                'companyInput': {
+                    key: (f'  {value}  ' if key != 'distributorType' else value)
+                    for key, value in self.DEFAULT_COMPANY_INPUT.items()
+                },
+                'contactInfoInput': {key: f'  {value}  ' for key, value in self.DEFAULT_CONTACT_INFO_INPUT.items()},
+                'additionalInvoiceRecipientInput': {
+                    key: f'  {value}  ' for key, value in self.DEFAULT_ADDITIONAL_INVOICE_RECIPIENT_INPUT.items()
+                },
+            },
+        )
+        self.assertEqual('UPDATED', content['changeCompanyDetails'])
+        self.company.refresh_from_db()
+        self.assertEqual('bean@local.local', self.company.related_additional_invoice_recipient.email)
+
+    def test_delete_not_exists_additional_invoice_recipient(self):
+        self.assertIsNone(getattr(self.company, 'related_additional_invoice_recipient', None))
+        content = self.query_and_load_data(
+            self.MUTATION,
+            variables={
+                'companyInput': {
+                    key: (f'  {value}  ' if key != 'distributorType' else value)
+                    for key, value in self.DEFAULT_COMPANY_INPUT.items()
+                },
+                'contactInfoInput': {key: f'  {value}  ' for key, value in self.DEFAULT_CONTACT_INFO_INPUT.items()},
+                'additionalInvoiceRecipientInput': None,
+            },
+        )
+        self.assertEqual('UPDATED', content['changeCompanyDetails'])
+        self.assertIsNone(getattr(self.company, 'related_additional_invoice_recipient', None))

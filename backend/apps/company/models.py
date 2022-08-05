@@ -1,12 +1,13 @@
 import os
 import uuid
 
-from django.core.validators import MinLengthValidator
+from django.core.validators import MinLengthValidator, validate_email
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from ai_django_core.models import CommonInfo
 
+from account.models import UserTitle
 from common.storage_backend import private_file_storage
 from company.managers import CompanyQuerySet
 from company.validators import (
@@ -93,6 +94,23 @@ class Company(CommonInfo):
         file_name, file_extension = os.path.splitext(image.name)
         file_name = str(uuid.uuid4())
         self.logo.name = f'{file_name}{file_extension}'
+
+
+class AdditionalInvoiceRecipient(CommonInfo):
+    class Meta:
+        verbose_name = _('Additional invoice recipient')
+        verbose_name_plural = _('Additional invoice recipients')
+
+    related_company = models.OneToOneField(
+        Company, related_name='related_additional_invoice_recipient', on_delete=models.CASCADE, primary_key=True
+    )
+    title = models.CharField(verbose_name=_('Title'), max_length=20, blank=True, choices=UserTitle.choices)
+    full_name = models.CharField(verbose_name=_('Full name'), max_length=150)
+    email = models.EmailField(verbose_name=_('Email address'), unique=True, validators=[validate_email])
+    phone_or_mobile = models.CharField(verbose_name=_('Phone/Mobile number'), max_length=16, blank=True)
+
+    def __str__(self):
+        return f'{self.title} {self.full_name}' if self.title else self.full_name
 
 
 class CompanyContactInfo(CommonInfo):

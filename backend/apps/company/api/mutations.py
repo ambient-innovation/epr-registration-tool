@@ -1,3 +1,4 @@
+import typing
 from typing import Optional
 
 from django.contrib.auth.password_validation import validate_password
@@ -8,7 +9,6 @@ from django.utils import translation
 import strawberry
 from graphql import GraphQLError
 from sentry_sdk import capture_exception
-from strawberry.django import auto
 from strawberry.file_uploads import Upload
 from strawberry.types import Info
 from strawberry_django.mutations.fields import get_input_data
@@ -16,8 +16,9 @@ from strawberry_django.mutations.fields import get_input_data
 from account.email import send_user_confirm_email_notification
 from account.models import User
 from common.api.permissions import IsActivated, IsAuthenticated
+from company.api.inputs import AdditionalInvoiceRecipientInput, CompanyContactInfoInput, CompanyInput
 from company.email import send_company_data_changed_notification
-from company.models import Company, CompanyContactInfo, DistributorType
+from company.models import AdditionalInvoiceRecipient, Company, CompanyContactInfo, DistributorType
 from company.utils import generate_unique_registration_number
 
 
@@ -99,28 +100,11 @@ def register_company(
     return 'CREATED'
 
 
-@strawberry.django.input(Company)
-class CompanyInput:
-    name: auto
-    distributor_type: strawberry.enum(DistributorType)
-    identification_number: str
-
-
-@strawberry.django.input(CompanyContactInfo)
-class CompanyContactInfoInput:
-    country: auto
-    postal_code: auto
-    city: auto
-    street: auto
-    street_number: auto
-    additional_address_info: auto
-    phone_number: auto
-
-
 def change_company_details(
     info: Info,
     company_input: CompanyInput,
     contact_info_input: CompanyContactInfoInput,
+    additional_invoice_recipient_input: typing.Optional[AdditionalInvoiceRecipientInput],
 ) -> str:
     user = info.context.request.user
     company = user.related_company
@@ -132,6 +116,23 @@ def change_company_details(
 
     company_input_data = get_input_data(CompanyInput, company_input)
     contact_info_input_data = get_input_data(CompanyContactInfoInput, contact_info_input)
+    additional_invoice_recipient_data = (
+        get_input_data(AdditionalInvoiceRecipientInput, additional_invoice_recipient_input)
+        if additional_invoice_recipient_input
+        else {}
+    )
+
+    additional_invoice_recipient_delete = not bool(additional_invoice_recipient_data)
+    additional_invoice_recipient = None
+    try:
+        additional_invoice_recipient = company.related_additional_invoice_recipient
+    except AdditionalInvoiceRecipient.DoesNotExist:
+        if bool(additional_invoice_recipient_data):
+            additional_invoice_recipient = AdditionalInvoiceRecipient(related_company=company)
+
+    for key, value in additional_invoice_recipient_data.items():
+        assert hasattr(additional_invoice_recipient, key), f'AdditionalInvoiceRecipient has no attribute {key}'
+        setattr(additional_invoice_recipient, key, value.strip() if value else '')
 
     for key, value in company_input_data.items():
         assert hasattr(company, key), f'Company has no attribute {key}'
@@ -144,10 +145,14 @@ def change_company_details(
     try:
         company.full_clean()
         contact_info.full_clean()
+        if additional_invoice_recipient and not additional_invoice_recipient_delete:
+            additional_invoice_recipient.full_clean()
     except ValidationError as e:
         raise GraphQLError('validationError', original_error=e)
 
     with transaction.atomic():
+        additional_invoice_recipient and not additional_invoice_recipient_delete and additional_invoice_recipient.save()
+        additional_invoice_recipient and additional_invoice_recipient_delete and additional_invoice_recipient.delete()
         contact_info.save()
         company.save()
 

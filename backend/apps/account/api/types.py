@@ -30,12 +30,3 @@ class UserType:
     @strawberry.django.field
     def email_change_request(self, root: User) -> typing.Optional[EmailChangeRequestType]:
         return getattr(root, 'email_change_request', None)
-
-
-@strawberry.django.input(User)
-class UserChangeInputType:
-    email: auto
-    title: auto
-    full_name: auto
-    position: auto
-    phone_or_mobile: auto

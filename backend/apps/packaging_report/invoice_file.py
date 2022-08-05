@@ -37,11 +37,19 @@ class InvoicePdf(PDFService):
             self.packaging_report.start_month,
             self.final_submission,
         )
+        additional_invoice_recipient = getattr(self.company, 'related_additional_invoice_recipient', None)
+        invoice_recipient_email = (
+            additional_invoice_recipient.email if additional_invoice_recipient else self.user.email
+        )
+        invoice_recipient_phone_or_mobile = (
+            additional_invoice_recipient.phone_or_mobile if additional_invoice_recipient else self.user.phone_or_mobile
+        )
         context.update(
             company=self.company,
             invoice_no=invoice_service.invoice_id(self.packaging_report.id),
             company_address=self.company.related_contact_info.address_line,
-            contact_person=self.user,
+            invoice_recipient_email=invoice_recipient_email,
+            invoice_recipient_phone_or_mobile=invoice_recipient_phone_or_mobile,
             invoice_date=self.packaging_report.final_submission.created_at,
             invoice_due_date=self.packaging_report.final_submission.created_at + relativedelta(days=30),
             material_records_frames=invoice_service.clean_material_records(),

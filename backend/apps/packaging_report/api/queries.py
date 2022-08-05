@@ -10,8 +10,9 @@ from strawberry.types import Info
 
 from common.api.pagination import CustomPaginator, PaginationInput, PaginationResult, PaginatorType
 from common.api.permissions import IsActivated, IsAuthenticated
-from packaging.api.types import PackagingGroupInput
-from packaging_report.api.types import PackagingReportsFilterInput, PackagingReportsSortingOption, PackagingReportType
+from packaging.api.inputs import PackagingGroupInput
+from packaging_report.api.inputs import PackagingReportsFilterInput
+from packaging_report.api.types import PackagingReportsSortingOption, PackagingReportType
 from packaging_report.models import PackagingReport, TimeframeType
 
 

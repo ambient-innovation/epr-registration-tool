@@ -27,6 +27,21 @@ export type Scalars = {
   Upload: any
 }
 
+export type AdditionalInvoiceRecipientInput = {
+  email: Scalars['String']
+  fullName: Scalars['String']
+  phoneOrMobile?: InputMaybe<Scalars['String']>
+  title?: InputMaybe<Scalars['String']>
+}
+
+export type AdditionalInvoiceRecipientType = {
+  __typename?: 'AdditionalInvoiceRecipientType'
+  email: Scalars['String']
+  fullName: Scalars['String']
+  phoneOrMobile: Scalars['String']
+  title: Scalars['String']
+}
+
 export type CompanyContactInfoInput = {
   additionalAddressInfo?: InputMaybe<Scalars['String']>
   city: Scalars['String']
@@ -56,6 +71,7 @@ export type CompanyInput = {
 
 export type CompanyType = {
   __typename?: 'CompanyType'
+  additionalInvoiceRecipient?: Maybe<AdditionalInvoiceRecipientType>
   contactInfo?: Maybe<CompanyContactInfoType>
   createdAt: Scalars['DateTime']
   distributorType: DistributorType
@@ -66,6 +82,10 @@ export type CompanyType = {
   logo?: Maybe<ImageType>
   name: Scalars['String']
   registrationNumber: Scalars['String']
+}
+
+export type CompanyTypeAdditionalInvoiceRecipientArgs = {
+  pk?: InputMaybe<Scalars['ID']>
 }
 
 export type CompanyTypeContactInfoArgs = {
@@ -156,6 +176,7 @@ export type MutationChangeAccountArgs = {
 }
 
 export type MutationChangeCompanyDetailsArgs = {
+  additionalInvoiceRecipientInput?: InputMaybe<AdditionalInvoiceRecipientInput>
   companyInput: CompanyInput
   contactInfoInput: CompanyContactInfoInput
 }
@@ -343,6 +364,13 @@ export type CompanyDetailsWithContactInfoQuery = {
       country: string
       street: string
     } | null
+    additionalInvoiceRecipient?: {
+      __typename?: 'AdditionalInvoiceRecipientType'
+      title: string
+      fullName: string
+      email: string
+      phoneOrMobile: string
+    } | null
   } | null
 }
 
@@ -358,6 +386,7 @@ export type ChangeAccountMutation = {
 export type ChangeCompanyDetailsMutationVariables = Exact<{
   companyInput: CompanyInput
   contactInfoInput: CompanyContactInfoInput
+  additionalInvoiceRecipientInput?: InputMaybe<AdditionalInvoiceRecipientInput>
 }>
 
 export type ChangeCompanyDetailsMutation = {
@@ -653,6 +682,12 @@ export const CompanyDetailsWithContactInfoDocument = gql`
         country
         street
       }
+      additionalInvoiceRecipient {
+        title
+        fullName
+        email
+        phoneOrMobile
+      }
     }
   }
 `
@@ -724,10 +759,12 @@ export const ChangeCompanyDetailsDocument = gql`
   mutation changeCompanyDetails(
     $companyInput: CompanyInput!
     $contactInfoInput: CompanyContactInfoInput!
+    $additionalInvoiceRecipientInput: AdditionalInvoiceRecipientInput
   ) {
     changeCompanyDetails(
       companyInput: $companyInput
       contactInfoInput: $contactInfoInput
+      additionalInvoiceRecipientInput: $additionalInvoiceRecipientInput
     )
   }
 `

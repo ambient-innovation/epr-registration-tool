@@ -1,3 +1,17 @@
+input AdditionalInvoiceRecipientInput {
+  email: String!
+  title: String
+  fullName: String!
+  phoneOrMobile: String
+}
+
+type AdditionalInvoiceRecipientType {
+  title: String!
+  fullName: String!
+  email: String!
+  phoneOrMobile: String!
+}
+
 input CompanyContactInfoInput {
   country: String!
   postalCode: String
@@ -34,6 +48,7 @@ type CompanyType {
   identificationNumber: String!
   isProfileCompleted: Boolean!
   contactInfo(pk: ID): CompanyContactInfoType
+  additionalInvoiceRecipient(pk: ID): AdditionalInvoiceRecipientType
   logo: ImageType
 }
 
@@ -107,7 +122,7 @@ type Mutation {
   changePassword(oldPassword: String!, newPassword: String!): String!
   changeAccount(accountData: UserChangeInputType!): String!
   registerCompany(companyName: String!, companyDistributorType: DistributorType!, userEmail: String!, userTitle: String!, userFullName: String!, userPosition: String!, userPhoneOrMobile: String!, password: String!, countryCode: String!): String!
-  changeCompanyDetails(companyInput: CompanyInput!, contactInfoInput: CompanyContactInfoInput!): String!
+  changeCompanyDetails(companyInput: CompanyInput!, contactInfoInput: CompanyContactInfoInput!, additionalInvoiceRecipientInput: AdditionalInvoiceRecipientInput): String!
   changeCompanyLogo(file: Upload = null): String!
   packagingReportForecastSubmit(timeframe: TimeframeType!, year: Int!, startMonth: Int!, tzInfo: String!, packagingRecords: [PackagingGroupInput!]!): String!
   packagingReportFinalDataSubmit(packagingReportId: ID!, packagingRecords: [PackagingGroupInput!]!): String!

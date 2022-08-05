@@ -18,6 +18,7 @@ def get_company_details(info: Info) -> typing.Optional[CompanyType]:
     )
     if company:
         company.contact_info = getattr(company, 'related_contact_info', None)
+        company.additional_invoice_recipient = getattr(company, 'related_additional_invoice_recipient', None)
     return company
 
 

@@ -137,6 +137,27 @@ class PackagingReportUpdateTestCase(BaseApiTestCase):
         self.query_and_assert_error(self.MUTATION, variables=variables, message="packagingRecordsEmpty")
 
     @time_machine.travel(make_aware(datetime(year=2022, month=5, day=1)))
+    def test_email_sent_to_additional_recipient(self):
+        additional_invoice_recipient = baker.make_recipe(
+            'company.tests.additional_invoice_recipient', related_company=self.company
+        )
+        variables = {
+            "packagingReportId": self.packaging_report_1.id,
+            "packagingRecords": [
+                {
+                    "packagingGroupId": self.packaging_group.id,
+                    "materialRecords": {"materialId": self.material.id, "quantity": 20},
+                }
+            ],
+        }
+        content = self.query_and_load_data(self.MUTATION, variables=variables)
+        self.assertEqual(content['packagingReportFinalDataSubmit'], 'CREATED')
+        self.assertEqual(1, len(mail.outbox))
+        self.assertEqual('noreply@ambient.digital', mail.outbox[0].from_email)
+        self.assertEqual([additional_invoice_recipient.email], mail.outbox[0].to)
+        self.assertEqual([self.user.email], mail.outbox[0].cc)
+
+    @time_machine.travel(make_aware(datetime(year=2022, month=5, day=1)))
     def test_submit_packaging_report_final_data(self):
         variables = {
             "packagingReportId": self.packaging_report_1.id,

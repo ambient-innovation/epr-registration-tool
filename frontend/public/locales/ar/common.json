@@ -200,7 +200,9 @@
         "number": "VAT number / tax number"
       },
       "updateSuccessMessage": "تم تحديث بيانات شركتك.",
-      "noCompanyAssigned": "حسابك غير مرتبط بشركة"
+      "noCompanyAssigned": "حسابك غير مرتبط بشركة",
+      "additionalInvoiceRecipient": "Additional invoice recipient",
+      "additionalInvoiceRecipientDesc": " If the invoice should not be sent to you but to the billing department or other recipients of your company, please enter the contact data here."
     },
     "editAccountForm": {
       "title": "Account",

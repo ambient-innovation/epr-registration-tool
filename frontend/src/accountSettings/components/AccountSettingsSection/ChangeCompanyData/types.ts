@@ -11,4 +11,9 @@ export interface CompanyData {
   additionalAddressInfo?: string
   phoneNumber: string
   identificationNumber: string
+  invoiceRecipientTitle: string
+  invoiceRecipientFullName: string
+  invoiceRecipientEmail: string
+  invoiceRecipientPhoneOrMobile: string
+  useAdditionalInvoiceRecipient: boolean
 }

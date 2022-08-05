@@ -3,7 +3,9 @@ import {
   Alert,
   Autocomplete,
   Box,
+  Checkbox,
   Divider,
+  FormControlLabel,
   Skeleton,
   Stack,
   TextField,
@@ -21,10 +23,14 @@ import {
   useChangeCompanyDetailsMutation,
   useCompanyDetailsWithContactInfoQuery,
 } from '@/api/__types__'
+import { getTitleOptions } from '@/auth/components/Registration/constants'
 import { ApolloErrorAlert } from '@/common/components/ApolloErrorAlert'
 import { DEFAULT_FORM_SPACING } from '@/common/components/FormStep/constants'
 import { FormSubmitFooter } from '@/common/components/FormSubmitFooter'
+import { SelectField } from '@/common/components/SelectField'
+import { pxToRemAsString } from '@/theme/utils'
 import {
+  emailValidator,
   requiredStringValidator,
   requiredStringWithoutWhitespace,
 } from '@/utils/form/form-validation.utils'
@@ -48,6 +54,25 @@ const schema: SchemaOf<Record<keyof CompanyData, unknown>> = yup.object({
   phoneNumber: requiredStringValidator(),
   additionalAddressInfo: yup.string(),
   identificationNumber: requiredStringWithoutWhitespace(),
+  invoiceRecipientTitle: yup.string(),
+  invoiceRecipientFullName: yup.string().when('useAdditionalInvoiceRecipient', {
+    is: true,
+    then: requiredStringValidator(),
+    otherwise: yup.string(),
+  }),
+  invoiceRecipientEmail: yup.string().when('useAdditionalInvoiceRecipient', {
+    is: true,
+    then: emailValidator(),
+    otherwise: yup.string(),
+  }),
+  invoiceRecipientPhoneOrMobile: yup
+    .string()
+    .when('useAdditionalInvoiceRecipient', {
+      is: true,
+      then: requiredStringValidator(),
+      otherwise: yup.string(),
+    }),
+  useAdditionalInvoiceRecipient: yup.boolean(),
 })
 
 const resolver = yupResolver(schema)
@@ -70,6 +95,22 @@ export const TaxNumberHeader = (): React.ReactElement => {
       <Typography variant={'body1'} mt={{ xs: 5, sm: 6 }}>
         {t(
           'accountSettings.changeCompanyDataForm.companyIdentificationNumber.description'
+        )}
+      </Typography>
+    </header>
+  )
+}
+
+export const AdditionalInvoiceRecipientHeader = (): React.ReactElement => {
+  const { t } = useTranslation()
+  return (
+    <header>
+      <Typography component={'h2'} variant={'h3'}>
+        {t('accountSettings.changeCompanyDataForm.additionalInvoiceRecipient')}
+      </Typography>
+      <Typography variant={'body1'} mt={{ xs: 5, sm: 6 }}>
+        {t(
+          'accountSettings.changeCompanyDataForm.additionalInvoiceRecipientDesc'
         )}
       </Typography>
     </header>
@@ -114,17 +155,29 @@ const ChangeCompanyDetailsForm = ({
       additionalAddressInfo:
         companyDetails.contactInfo?.additionalAddressInfo || '',
       phoneNumber: companyDetails.contactInfo?.phoneNumber || '',
+      invoiceRecipientTitle:
+        companyDetails?.additionalInvoiceRecipient?.title || '',
+      invoiceRecipientFullName:
+        companyDetails?.additionalInvoiceRecipient?.fullName || '',
+      invoiceRecipientEmail:
+        companyDetails?.additionalInvoiceRecipient?.email || '',
+      invoiceRecipientPhoneOrMobile:
+        companyDetails?.additionalInvoiceRecipient?.phoneOrMobile || '',
+      useAdditionalInvoiceRecipient:
+        !!companyDetails?.additionalInvoiceRecipient,
     }),
     [companyDetails]
   )
 
-  const { register, handleSubmit, formState, control, reset } =
+  const { register, handleSubmit, formState, control, reset, watch } =
     useForm<CompanyData>({
       mode: 'onTouched',
       resolver,
       defaultValues,
     })
-
+  const showAdditionalInvoiceRecipeintFormSection = watch(
+    'useAdditionalInvoiceRecipient'
+  )
   useEffect(() => {
     // reset form when data is re-fetched
     // (check for formState to prevent reset on initial render)
@@ -157,6 +210,15 @@ const ChangeCompanyDetailsForm = ({
           additionalAddressInfo: updatedData.additionalAddressInfo,
           phoneNumber: updatedData.phoneNumber,
         },
+        additionalInvoiceRecipientInput:
+          updatedData.useAdditionalInvoiceRecipient
+            ? {
+                title: updatedData.invoiceRecipientTitle,
+                fullName: updatedData.invoiceRecipientFullName,
+                email: updatedData.invoiceRecipientEmail,
+                phoneOrMobile: updatedData.invoiceRecipientPhoneOrMobile,
+              }
+            : null,
       },
     }).then(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -353,6 +415,96 @@ const ChangeCompanyDetailsForm = ({
               fullWidth
               {...register('phoneNumber')}
             />
+          </Stack>
+        </Box>
+      </Box>
+      <Box component={'section'} sx={formBackgroundSx} mt={8}>
+        <AdditionalInvoiceRecipientHeader />
+        <Box marginTop={{ xs: 9, md: 10 }}>
+          <Stack spacing={DEFAULT_FORM_SPACING}>
+            <Controller
+              control={control}
+              name={'useAdditionalInvoiceRecipient'}
+              render={({ field: { onChange, ref, value } }) => (
+                <FormControlLabel
+                  control={<Checkbox />}
+                  label={'Use additional invoice recipient'}
+                  onChange={onChange}
+                  ref={ref}
+                  // make it controlled
+                  value={
+                    !!value
+                      ? value
+                      : defaultValues.useAdditionalInvoiceRecipient
+                  }
+                />
+              )}
+            />
+            {showAdditionalInvoiceRecipeintFormSection && (
+              <>
+                <Divider />
+                <Stack
+                  // for some reason the spacing does not work when only defining `sm`
+                  direction={{ xs: 'column', sm: 'row', md: 'row' }}
+                  spacing={DEFAULT_FORM_SPACING}
+                >
+                  <Controller
+                    control={control}
+                    name={'invoiceRecipientTitle'}
+                    render={({
+                      field: { onChange, ref, value },
+                      formState: { errors },
+                    }) => (
+                      <SelectField
+                        sx={{
+                          width: { sm: pxToRemAsString(140) },
+                        }}
+                        label={t('accountSettings.editAccountForm.titleLabel')}
+                        error={!!errors?.invoiceRecipientTitle}
+                        helperText={errorMsg(
+                          errors?.invoiceRecipientTitle?.message
+                        )}
+                        ref={ref}
+                        defaultValue={defaultValues?.invoiceRecipientTitle}
+                        options={getTitleOptions(t)}
+                        value={value}
+                        onChange={onChange}
+                        fullWidth
+                        required
+                      />
+                    )}
+                  />
+                  <TextField
+                    label={t('accountSettings.editAccountForm.fullName')}
+                    error={!!errors?.invoiceRecipientFullName}
+                    helperText={errorMsg(
+                      errors?.invoiceRecipientFullName?.message
+                    )}
+                    fullWidth
+                    required
+                    {...register('invoiceRecipientFullName')}
+                  />
+                </Stack>
+                <TextField
+                  label={t('accountSettings.editAccountForm.email')}
+                  error={!!errors?.invoiceRecipientEmail}
+                  helperText={errorMsg(errors?.invoiceRecipientEmail?.message)}
+                  type={'email'}
+                  required
+                  dir={'ltr'} // email always written from left
+                  {...register('invoiceRecipientEmail')}
+                />
+                <TextField
+                  label={t('accountSettings.editAccountForm.phoneNumber')}
+                  error={!!errors?.invoiceRecipientPhoneOrMobile}
+                  helperText={errorMsg(
+                    errors?.invoiceRecipientPhoneOrMobile?.message
+                  )}
+                  required
+                  {...register('invoiceRecipientPhoneOrMobile')}
+                />
+              </>
+            )}
           </Stack>
         </Box>
       </Box>
