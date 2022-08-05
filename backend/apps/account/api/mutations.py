@@ -8,7 +8,7 @@ from sentry_sdk import capture_exception
 from strawberry.types import Info
 from strawberry_django.mutations.fields import get_input_data
 
-from account.api.types import UserChangeInputType
+from account.api.inputs import UserChangeInputType
 from account.email import send_account_data_changed_mail, send_request_email_change_confirm_mail
 from account.models import EmailChangeRequest, LanguageChoices
 

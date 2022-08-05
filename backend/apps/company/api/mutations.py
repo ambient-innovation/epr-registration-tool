@@ -9,7 +9,6 @@ from django.utils import translation
 import strawberry
 from graphql import GraphQLError
 from sentry_sdk import capture_exception
-from strawberry.django import auto
 from strawberry.file_uploads import Upload
 from strawberry.types import Info
 from strawberry_django.mutations.fields import get_input_data
@@ -17,6 +16,7 @@ from strawberry_django.mutations.fields import get_input_data
 from account.email import send_user_confirm_email_notification
 from account.models import User
 from common.api.permissions import IsActivated, IsAuthenticated
+from company.api.inputs import AdditionalInvoiceRecipientInput, CompanyContactInfoInput, CompanyInput
 from company.email import send_company_data_changed_notification
 from company.models import AdditionalInvoiceRecipient, Company, CompanyContactInfo, DistributorType
 from company.utils import generate_unique_registration_number
@@ -98,32 +98,6 @@ def register_company(
         capture_exception(e)
 
     return 'CREATED'
-
-
-@strawberry.django.input(Company)
-class CompanyInput:
-    name: auto
-    distributor_type: strawberry.enum(DistributorType)
-    identification_number: str
-
-
-@strawberry.django.input(CompanyContactInfo)
-class CompanyContactInfoInput:
-    country: auto
-    postal_code: auto
-    city: auto
-    street: auto
-    street_number: auto
-    additional_address_info: auto
-    phone_number: auto
-
-
-@strawberry.django.input(AdditionalInvoiceRecipient)
-class AdditionalInvoiceRecipientInput:
-    email: auto
-    title: auto
-    full_name: auto
-    phone_or_mobile: auto
 
 
 def change_company_details(

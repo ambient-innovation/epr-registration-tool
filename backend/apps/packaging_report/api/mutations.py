@@ -13,7 +13,7 @@ from strawberry.types import Info
 from account.models import User
 from common.api.permissions import IsActivated, IsAuthenticated
 from company.models import Company
-from packaging.api.types import PackagingGroupInput
+from packaging.api.inputs import PackagingGroupInput
 from packaging.models import MaterialPrice
 from packaging_report.email import send_packaging_report_invoice
 from packaging_report.models import FinalSubmission, ForecastSubmission, MaterialRecord, PackagingReport, TimeframeType

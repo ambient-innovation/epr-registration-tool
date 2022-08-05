@@ -97,11 +97,6 @@ class PackagingReportType:
         return getattr(root, 'final_fees', None)
 
 
-@strawberry.input
-class PackagingReportsFilterInput:
-    year: typing.Optional[int]
-
-
 @strawberry.enum
 class PackagingReportsSortingOption(Enum):
     NEWEST_FIRST = 'NEWEST_FIRST'
