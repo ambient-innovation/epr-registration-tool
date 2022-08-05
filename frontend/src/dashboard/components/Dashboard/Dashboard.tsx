@@ -18,7 +18,6 @@ export const Dashboard = (_: Dashboard): React.ReactElement => {
   const { data, loading: loadingCompanyDetails } = useCompanyDetailsQuery()
   const companyDetails = data?.companyDetails
   const { user } = useUser()
-
   const canAddReport = !!companyDetails?.isProfileCompleted
 
   return (

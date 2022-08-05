@@ -7,6 +7,7 @@ export const COMPANY_DETAILS_WITH_CONTACT_INFO = gql`
       name
       distributorType
       identificationNumber
+      isProfileCompleted
       contactInfo {
         postalCode
         streetNumber

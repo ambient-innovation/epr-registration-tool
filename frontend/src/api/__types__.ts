@@ -354,6 +354,7 @@ export type CompanyDetailsWithContactInfoQuery = {
     name: string
     distributorType: DistributorType
     identificationNumber: string
+    isProfileCompleted: boolean
     contactInfo?: {
       __typename?: 'CompanyContactInfoType'
       postalCode?: string | null
@@ -673,6 +674,7 @@ export const CompanyDetailsWithContactInfoDocument = gql`
       name
       distributorType
       identificationNumber
+      isProfileCompleted
       contactInfo {
         postalCode
         streetNumber

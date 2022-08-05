@@ -17,8 +17,8 @@ import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { SchemaOf } from 'yup'
 
+import { COMPANY_DETAILS_WITH_CONTACT_INFO } from '@/accountSettings/components/AccountSettingsSection/ChangeCompanyData/queries'
 import {
-  CompanyDetailsWithContactInfoDocument,
   CompanyDetailsWithContactInfoQuery,
   useChangeCompanyDetailsMutation,
   useCompanyDetailsWithContactInfoQuery,
@@ -138,7 +138,7 @@ const ChangeCompanyDetailsForm = ({
   const { t } = useTranslation()
 
   const [changeCompanyDetails, { error }] = useChangeCompanyDetailsMutation({
-    refetchQueries: [{ query: CompanyDetailsWithContactInfoDocument }],
+    refetchQueries: [COMPANY_DETAILS_WITH_CONTACT_INFO],
   })
 
   const isSubmittedSuccessfulRef = useRef(false)
