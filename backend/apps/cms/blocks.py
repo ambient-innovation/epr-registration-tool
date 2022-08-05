@@ -119,6 +119,32 @@ class ImageWithTextBlock(blocks.StructBlock):
     background = blocks.ChoiceBlock(choices=BackgroundChoices.choices, default=BackgroundChoices.DEFAULT)
 
 
+class FullWidthVideoBlock(blocks.StructBlock):
+    video_url = blocks.URLBlock(help_text=_('YouTube video URL'))
+    heading = blocks.CharBlock(
+        required=False, help_text=_('Check for optical impacts on the video thumbnail before adding a heading')
+    )
+    background = blocks.ChoiceBlock(choices=BackgroundChoices.choices, default=BackgroundChoices.DEFAULT)
+
+    class Meta:
+        label = _('Full width video')
+
+
+class VideoWithTextBlock(blocks.StructBlock):
+    class Meta:
+        label = _('Video with text')
+
+    class OrientationChoices(models.TextChoices):
+        TEXT_FIRST = 'textFirst', _('Text first')
+        VIDEO_FIRST = 'videoFirst', _('Video first')
+
+    video_url = blocks.URLBlock(help_text=_('YouTube video URL'))
+    text = BaseTextBlock()
+
+    orientation = blocks.ChoiceBlock(choices=OrientationChoices.choices, default=OrientationChoices.TEXT_FIRST)
+    background = blocks.ChoiceBlock(choices=BackgroundChoices.choices, default=BackgroundChoices.DEFAULT)
+
+
 class PdfDocumentBlock(DocumentChooserBlock):
     def get_api_representation(self, value, context=None):
         return {
@@ -144,4 +170,6 @@ DEFAULT_BLOCKS = [
     ('fullWidthImage', FullWidthImageBlock()),
     ('imageWithText', ImageWithTextBlock()),
     ('pdfDownload', PdfDownloadBlock()),
+    ('fullWidthVideo', FullWidthVideoBlock()),
+    ('videoWithText', VideoWithTextBlock()),
 ]

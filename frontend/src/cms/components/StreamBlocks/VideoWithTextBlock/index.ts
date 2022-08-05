@@ -1,0 +1,1 @@
+export { VideoWithTextBlock } from './VideoWithTextBlock'
