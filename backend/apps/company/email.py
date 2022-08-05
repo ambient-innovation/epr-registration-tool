@@ -61,7 +61,7 @@ def send_company_data_changed_notification(company):
 
     for user in receiver_list:
         send_translated_email(
-            'registration_complete',
+            'company_data_changed',
             user,
             url=urljoin(settings.FRONTEND_URL, '/account-settings/change-company-data'),
         )

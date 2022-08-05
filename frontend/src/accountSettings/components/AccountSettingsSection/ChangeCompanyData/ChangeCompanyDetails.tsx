@@ -431,6 +431,7 @@ const ChangeCompanyDetailsForm = ({
                   label={'Use additional invoice recipient'}
                   onChange={onChange}
                   ref={ref}
+                  checked={defaultValues.useAdditionalInvoiceRecipient}
                   // make it controlled
                   value={
                     !!value
