@@ -21,6 +21,10 @@ class Echo:
         return value
 
 
+class ExcelSemicolon(csv.excel):
+    delimiter = ';'
+
+
 class CSVExportDataForm(forms.Form):
     year = forms.ChoiceField(help_text=_('You see Years, which has at least one report.'))
     from_month = forms.ChoiceField(choices=Month.choices, initial=1)
@@ -74,7 +78,7 @@ class CSVExportDataForm(forms.Form):
     def export_to_csv(self, year, from_month, to_month, report_type, reports: typing.List[PackagingReport]):
         # see https://docs.djangoproject.com/en/4.0/howto/outputting-csv/#streaming-large-csv-files
         pseudo_buffer = Echo()
-        writer = csv.writer(pseudo_buffer)
+        writer = csv.writer(pseudo_buffer, dialect=ExcelSemicolon)
         header_row = [
             'Report ID',
             'Company ID',
