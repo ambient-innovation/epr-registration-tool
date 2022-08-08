@@ -1,6 +1,8 @@
 import { Box, Typography } from '@mui/material'
 import type { NextPage } from 'next'
+import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 
 import { FormLayout } from '@/common/components/FormLayout'
@@ -21,20 +23,26 @@ const RegistrationPage: NextPage = () => {
       <PageLayout>
         <FormLayout>
           <Typography component={'h1'} variant={'h2'}>
-            {t('common:registrationForm.success.title')}
+            {t('registrationForm.success.title')}
           </Typography>
           <Box p={8} mt={11} bgcolor={'background.light'} borderRadius={3}>
             <Typography component={'h2'} variant={'h2'}>
-              {t('common:registrationForm.success.heading')}
+              {t('registrationForm.success.heading')}
             </Typography>
-            <Typography mt={8}>
-              {t('common:registrationForm.success.desc')}
-            </Typography>
+            <Typography mt={8}>{t('registrationForm.success.desc')}</Typography>
           </Box>
         </FormLayout>
       </PageLayout>
     </>
   )
+}
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale as string, ['common'])),
+    },
+  }
 }
 
 export default RegistrationPage

@@ -24,7 +24,6 @@
     "createNewAccount": "Create new account",
     "generalCompanyInformation": "General company information",
     "step1Title": "Enter general company information",
-    "step1Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
     "companyName": "Name of company",
     "companyDistributorType": {
       "label": "Type of distributor",
@@ -39,7 +38,7 @@
     "country": "Country",
     "contactPerson": "Contact person",
     "step2Title": "Provide a contact person",
-    "step2Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+    "step2Description": "As a registered user you can report the data for your company to this EPR database.",
     "emailHelpText": "Attention: This is the Email your company will use to log in to the EPR Registration Tool.",
     "title": "Title",
     "mr": "Mr.",

@@ -52,7 +52,7 @@ export const Step1 = (_: Step1) => {
     <FormStep onSubmit={handleSubmit(onSubmit)}>
       <FormStepContainer
         title={t('registrationForm.step1Title')}
-        description={t('registrationForm.step1Description')}
+        description={''}
       >
         <Stack spacing={DEFAULT_FORM_SPACING}>
           <TextField
