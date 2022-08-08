@@ -31,6 +31,11 @@
       "importer": "Importer",
       "localProducer": "Local producer"
     },
+    "success": {
+      "title": "Registration successful",
+      "heading": "Thank you for registering",
+      "desc": "Before you can log in, your account must be activated. You will receive an email once your data is successfully verified"
+    },
     "country": "Country",
     "contactPerson": "Contact person",
     "step2Title": "Provide a contact person",
@@ -143,7 +148,6 @@
   },
   "loginForm": {
     "title": "Login to the EPR Registration Tool",
-    "description": "Lorem impsum dolor sit...",
     "rememberMe": "Remember Me",
     "resetPassword": "Reset password",
     "signIn": "Sign in",

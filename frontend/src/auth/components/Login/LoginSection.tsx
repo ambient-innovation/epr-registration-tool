@@ -116,9 +116,6 @@ export const LoginSection = (): React.ReactElement => {
           <Box sx={backgroundSx}>
             <header>
               <Typography variant={'h6'}>{t('loginForm.title')}</Typography>
-              <Typography variant={'body1'} mt={{ xs: 5, sm: 6 }}>
-                {t('loginForm.description')}
-              </Typography>
             </header>
             <Box marginTop={{ xs: 9, md: 10 }}>
               <Stack spacing={DEFAULT_FORM_SPACING}>

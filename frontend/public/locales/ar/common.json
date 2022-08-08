@@ -31,6 +31,11 @@
       "importer": "المستورد",
       "localProducer": "منتج محلي"
     },
+    "success": {
+      "title": "Registration successful",
+      "heading": "Thank you for registering",
+      "desc": "Before you can log in, your account must be activated. You will receive an email once your data is successfully verified"
+    },
     "country": "دولة",
     "contactPerson": "الشخص الذي يمكن الاتصال به",
     "step2Title": "أضف جهة اتصال",
@@ -143,7 +148,6 @@
   },
   "loginForm": {
     "title": "تسجيل الدخول إلى أداة التسجيل EPR",
-    "description": "Lorem impsum dolor sit...",
     "rememberMe": "تذكرني",
     "resetPassword": "إعادة تعيين كلمة المرور",
     "signIn": "تسجيل الدخول",
