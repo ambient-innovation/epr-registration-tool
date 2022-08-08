@@ -261,3 +261,25 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
             )
         ]
         return custom_urls + urls
+
+
+@admin.register(MaterialRecord)
+class MaterialRecordAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
+    fields = (
+        "related_forecast_submission",
+        'related_final_submission',
+        'related_packaging_group',
+        'related_packaging_material',
+        'quantity',
+    )
+
+    list_filter = (
+        'related_packaging_group',
+        'related_packaging_material',
+    )
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_add_permission(self, request, obj=None):
+        return False
