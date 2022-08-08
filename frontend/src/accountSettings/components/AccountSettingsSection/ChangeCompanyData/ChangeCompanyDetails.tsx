@@ -176,7 +176,7 @@ const ChangeCompanyDetailsForm = ({
       resolver,
       defaultValues,
     })
-  const showAdditionalInvoiceRecipeintFormSection = watch(
+  const showAdditionalInvoiceRecipientFormSection = watch(
     'useAdditionalInvoiceRecipient'
   )
   useEffect(() => {
@@ -461,7 +461,7 @@ const ChangeCompanyDetailsForm = ({
                   label={'Use additional invoice recipient'}
                   onChange={onChange}
                   ref={ref}
-                  checked={defaultValues.useAdditionalInvoiceRecipient}
+                  checked={showAdditionalInvoiceRecipientFormSection}
                   // make it controlled
                   value={
                     !!value
@@ -471,7 +471,7 @@ const ChangeCompanyDetailsForm = ({
                 />
               )}
             />
-            {showAdditionalInvoiceRecipeintFormSection && (
+            {showAdditionalInvoiceRecipientFormSection && (
               <>
                 <Divider />
                 <Stack
