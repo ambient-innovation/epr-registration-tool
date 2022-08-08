@@ -168,8 +168,8 @@ class PackagingReport(CommonInfo):
 
 class ForecastSubmission(ReportSubmission):
     class Meta:
-        verbose_name = _("Forecast Submission")
-        verbose_name_plural = _("Forecast Submissions")
+        verbose_name = _("Forecast Report")
+        verbose_name_plural = _("Forecast Reports")
 
     related_report = models.OneToOneField(
         PackagingReport,
@@ -188,8 +188,8 @@ class ForecastSubmission(ReportSubmission):
 
 class FinalSubmission(ReportSubmission):
     class Meta:
-        verbose_name = _("Final Submission")
-        verbose_name_plural = _("Final Submissions")
+        verbose_name = _("Final Report")
+        verbose_name_plural = _("Final Reports")
 
     related_report = models.OneToOneField(
         PackagingReport,
@@ -210,7 +210,7 @@ class FinalSubmission(ReportSubmission):
 class MaterialRecord(CommonInfo):
     related_forecast_submission = models.ForeignKey(
         ForecastSubmission,
-        verbose_name=_('Forecast Submission'),
+        verbose_name=_('Forecast Report'),
         related_name="material_records_queryset",
         on_delete=models.CASCADE,
         null=True,
@@ -218,7 +218,7 @@ class MaterialRecord(CommonInfo):
     )
     related_final_submission = models.ForeignKey(
         FinalSubmission,
-        verbose_name=_('Final Submission'),
+        verbose_name=_('Final Report'),
         related_name="material_records_queryset",
         on_delete=models.CASCADE,
         null=True,
@@ -239,8 +239,8 @@ class MaterialRecord(CommonInfo):
     quantity = models.FloatField(verbose_name=_('Quantity (Kg)'), validators=[validate_greater_than_zero])
 
     class Meta:
-        verbose_name = _("Material record")
-        verbose_name_plural = _("Material records")
+        verbose_name = _("Report Packaging entry")
+        verbose_name_plural = _("Report Packaging entries")
         constraints = (
             (
                 UniqueConstraint(
@@ -253,4 +253,11 @@ class MaterialRecord(CommonInfo):
                     name='unique_material_record_in_report_submission',
                 )
             ),
+        )
+
+    def __str__(self):
+        return (
+            f'Packaging entry No. {self.id} for Forecast Report No. {self.related_forecast_submission_id}'
+            if self.related_forecast_submission_id
+            else f'Packaging entry No. {self.id} for Final Report No. {self.related_final_submission_id}'
         )
