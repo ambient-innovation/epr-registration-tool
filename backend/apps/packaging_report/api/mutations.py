@@ -11,7 +11,7 @@ from strawberry import ID
 from strawberry.types import Info
 
 from account.models import User
-from common.api.permissions import IsActivated, IsAuthenticated
+from common.api.permissions import IsAuthenticated, IsCompanyProfileCompletedAndActive
 from company.models import Company
 from packaging.api.inputs import PackagingGroupInput
 from packaging.models import MaterialPrice
@@ -62,6 +62,7 @@ def packaging_report_forecast_submit(
     packaging_records: typing.List[PackagingGroupInput],
 ) -> str:
     current_user: User = info.context.request.user
+
     now = timezone.now()
     report_date_key = MaterialPrice.get_sort_key(year, start_month)
     now_date_key = MaterialPrice.get_sort_key(now.year, now.month)
@@ -202,11 +203,14 @@ def packaging_report_forecast_update(
 @strawberry.type
 class PackagingReportMutation:
     packaging_report_forecast_submit: str = strawberry.field(
-        resolver=packaging_report_forecast_submit, permission_classes=[IsAuthenticated, IsActivated]
+        resolver=packaging_report_forecast_submit,
+        permission_classes=[IsAuthenticated, IsCompanyProfileCompletedAndActive],
     )
     packaging_report_final_data_submit: str = strawberry.field(
-        resolver=packaging_report_final_data_submit, permission_classes=[IsAuthenticated, IsActivated]
+        resolver=packaging_report_final_data_submit,
+        permission_classes=[IsAuthenticated, IsCompanyProfileCompletedAndActive],
     )
     packaging_report_forecast_update: str = strawberry.field(
-        resolver=packaging_report_forecast_update, permission_classes=[IsAuthenticated, IsActivated]
+        resolver=packaging_report_forecast_update,
+        permission_classes=[IsAuthenticated, IsCompanyProfileCompletedAndActive],
     )

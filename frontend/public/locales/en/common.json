@@ -139,7 +139,8 @@
     "maximumFileSizeExceeded": "The maximum image size is 2MB. Please try a smaller image file.",
     "invalidExtension": "Image format not allowed. Please upload another image (JPG or PNG)",
     "emailNotConfirmed": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link.",
-    "inactiveUser": "Your account has been blocked."
+    "inactiveUser": "Your account has been blocked.",
+    "companyDataNotCompleted": "Please complete your company profile first."
   },
   "internalErrors": {
     "unknownError": "Something unexpected happened. Please reload and try again.",

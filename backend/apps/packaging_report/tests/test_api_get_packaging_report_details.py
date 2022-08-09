@@ -37,7 +37,7 @@ class PackagingReportDetailsQueriesTestCase(BaseApiTestCase):
         super().setUpTestData()
         cls.test_company = baker.make_recipe('company.tests.company')
         cls.test_user = baker.make_recipe('account.tests.user', related_company=cls.test_company)
-        cls.company = baker.make_recipe('company.tests.company', users_queryset=[cls.user])
+        cls.company = cls.create_and_assign_company(cls.user)
 
         cls.packaging_group_1, cls.packaging_group_2 = baker.make_recipe('packaging.tests.packaging_group', _quantity=2)
         cls.material_1, cls.material_2 = baker.make_recipe('packaging.tests.packaging_material', _quantity=2)
@@ -76,6 +76,7 @@ class PackagingReportDetailsQueriesTestCase(BaseApiTestCase):
 
     def test_user_requesting_not_company_report_details(self):
         self.login(self.test_user)
+        self.create_and_assign_company(self.test_user)
         data = self.query_and_load_data(self.QUERY, variables=self.variables)
         packaging_report = data['packagingReportForecastDetails']
         self.assertIsNone(packaging_report)

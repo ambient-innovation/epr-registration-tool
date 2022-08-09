@@ -139,7 +139,8 @@
     "maximumFileSizeExceeded": "الحجم الأقصى للصورة هو 2 ميغا بايت. الرجاء محاولة ملف صورة أصغر.",
     "invalidExtension": "تنسيق الصورة غير مسموح به. يرجى تحميل صورة أخرى (JPG أو PNG)",
     "emailNotConfirmed": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link.",
-    "inactiveUser": "تم حظر حسابك."
+    "inactiveUser": "تم حظر حسابك.",
+    "companyDataNotCompleted": "Please complete your company profile first."
   },
   "internalErrors": {
     "unknownError": "Something unexpected happened. Please reload and try again.",
