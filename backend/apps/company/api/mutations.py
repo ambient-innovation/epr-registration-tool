@@ -55,6 +55,7 @@ def register_company(
         related_company=company,
         language_preference=selected_language,
         is_active=False,
+        has_email_confirmed=False,
     )
     user.set_password(password)
 

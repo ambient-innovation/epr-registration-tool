@@ -9,7 +9,7 @@ from strawberry import ID
 from strawberry.types import Info
 
 from common.api.pagination import CustomPaginator, PaginationInput, PaginationResult, PaginatorType
-from common.api.permissions import IsActivated, IsAuthenticated
+from common.api.permissions import IsAuthenticated, IsCompanyProfileCompletedAndActive
 from packaging.api.inputs import PackagingGroupInput
 from packaging_report.api.inputs import PackagingReportsFilterInput
 from packaging_report.api.types import PackagingReportsSortingOption, PackagingReportType
@@ -151,8 +151,10 @@ class Query:
     )
     packaging_reports = strawberry.field(resolver=packaging_reports, permission_classes=[IsAuthenticated])
     packaging_report_forecast_details = strawberry.field(
-        resolver=packaging_report_forecast_details, permission_classes=[IsAuthenticated, IsActivated]
+        resolver=packaging_report_forecast_details,
+        permission_classes=[IsAuthenticated, IsCompanyProfileCompletedAndActive],
     )
     packaging_report_final_details = strawberry.field(
-        resolver=packaging_report_final_details, permission_classes=[IsAuthenticated, IsActivated]
+        resolver=packaging_report_final_details,
+        permission_classes=[IsAuthenticated, IsCompanyProfileCompletedAndActive],
     )

@@ -68,7 +68,7 @@
     "step1ReadonlyDescription": "Report timeframe is not editable.",
     "startDate": "Forecast start date",
     "packagingEntryNum": "Packaging entry {{num}}",
-    "packagingEntryDescription": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
+    "packagingEntryDescription": "Please enter your quantities for each material in each packaging group. With \"+ADD NEW ENTRY\" you can enter additional packaging groups.",
     "deleteEntry": "Delete entry",
     "addEntry": "Add new entry",
     "selectPackagingGroup": "Please select a packaging group",
@@ -139,7 +139,8 @@
     "maximumFileSizeExceeded": "The maximum image size is 2MB. Please try a smaller image file.",
     "invalidExtension": "Image format not allowed. Please upload another image (JPG or PNG)",
     "emailNotConfirmed": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link.",
-    "inactiveUser": "Your account has been blocked."
+    "inactiveUser": "Your account has been blocked.",
+    "companyDataNotCompleted": "Please complete your company profile first."
   },
   "internalErrors": {
     "unknownError": "Something unexpected happened. Please reload and try again.",
