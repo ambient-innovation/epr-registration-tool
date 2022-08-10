@@ -138,8 +138,8 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={
-                'verbose_name': 'Packaging Report',
-                'verbose_name_plural': 'Packaging Reports',
+                'verbose_name': 'Data Report',
+                'verbose_name_plural': 'Data Reports',
             },
         ),
         migrations.CreateModel(
