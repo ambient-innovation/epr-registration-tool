@@ -1,5 +1,6 @@
 import decimal
 import typing
+from decimal import InvalidOperation
 
 from django.db.models import Case, Count, FloatField, Prefetch, When
 
@@ -25,13 +26,15 @@ def get_packaging_report_fees_estimation(
     from packaging_report.utils import calculate_fees
 
     material_quantities = [(int(m.material_id), m.quantity) for p in packaging_records for m in p.material_records]
-
-    return calculate_fees(
-        timeframe=timeframe,
-        year=year,
-        start_month=start_month,
-        material_quantities=material_quantities,
-    )
+    try:
+        return calculate_fees(
+            timeframe=timeframe,
+            year=year,
+            start_month=start_month,
+            material_quantities=material_quantities,
+        )
+    except InvalidOperation:
+        raise GraphQLError('materialQuantityInvalidDecimal')
 
 
 DEFAULT_PACKAGING_REPORTS_LIMIT = 12
