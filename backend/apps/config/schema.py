@@ -3,9 +3,9 @@ import time
 from django.conf import settings
 
 import strawberry
-from graphql import GraphQLResolveInfo
+from graphql.validation import NoDeprecatedCustomRule, NoSchemaIntrospectionCustomRule
 from sentry_sdk import capture_message, configure_scope
-from strawberry.extensions import Extension
+from strawberry.extensions import AddValidationRules, Extension, QueryDepthLimiter
 
 from account.api.mutations import AccountMutation
 from account.api.queries import UserQuery
@@ -22,7 +22,7 @@ class PerformanceMonitoringExtension(Extension):
     to monitor our application for slow api responses.
     """
 
-    def resolve(self, _next, root, info: GraphQLResolveInfo, *args, **kwargs):
+    def resolve(self, _next, root, info, *args, **kwargs):
         start_time = time.time()
         result = super().resolve(_next, root, info, *args, **kwargs)
         finish_in = (time.time() - start_time) * 1000
@@ -51,4 +51,12 @@ class Mutation(AccountMutation, RegisterCompanyMutation, PackagingReportMutation
     pass
 
 
-schema = strawberry.Schema(query=Query, mutation=Mutation, extensions=[PerformanceMonitoringExtension])
+schema = strawberry.Schema(
+    query=Query,
+    mutation=Mutation,
+    extensions=[
+        PerformanceMonitoringExtension,
+        QueryDepthLimiter(max_depth=10),
+        AddValidationRules([NoSchemaIntrospectionCustomRule, NoDeprecatedCustomRule]),
+    ],
+)
