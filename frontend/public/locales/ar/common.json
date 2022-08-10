@@ -140,7 +140,8 @@
     "invalidExtension": "تنسيق الصورة غير مسموح به. يرجى تحميل صورة أخرى (JPG أو PNG)",
     "emailNotConfirmed": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link.",
     "inactiveUser": "تم حظر حسابك.",
-    "companyDataNotCompleted": "Please complete your company profile first."
+    "companyDataNotCompleted": "Please complete your company profile first.",
+    "materialQuantityInvalidDecimal": "One of the Material quantity is invalid."
   },
   "internalErrors": {
     "unknownError": "Something unexpected happened. Please reload and try again.",

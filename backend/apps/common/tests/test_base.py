@@ -2,14 +2,12 @@ import json
 
 from django.contrib.auth import get_user_model
 from django.http import HttpRequest
-from django.test import TestCase
+from django.test import Client, TestCase
 
 from model_bakery import baker
-from rest_framework.test import APIClient
 
 from account.tests.baker_recipes import SOME_USER_PASSWORD, SUPER_USER_PASSWORD
 from common.tests.graphql_test import GraphQLTestCase
-from config.schema import schema
 
 UserModel = get_user_model()
 
@@ -18,7 +16,6 @@ class BaseTestCase(TestCase):
     AUTO_CREATE_USERS = False
     ALWAYS_LOGIN_USER = False
     super_user = user = None
-    GRAPHQL_SCHEMA = schema
 
     @classmethod
     def setUpTestData(cls):
@@ -27,7 +24,7 @@ class BaseTestCase(TestCase):
             cls.super_user = baker.make_recipe('account.tests.super_user')
             cls.user = baker.make_recipe('account.tests.user')
 
-        cls._client = APIClient(schema=cls.GRAPHQL_SCHEMA)
+        cls._client = Client()
 
     def setUp(self):
         super().setUp()
