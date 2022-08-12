@@ -54,7 +54,7 @@ def register_company(
         phone_or_mobile=user_phone_or_mobile.strip(),
         related_company=company,
         language_preference=selected_language,
-        is_active=False,
+        is_active=True,
         has_email_confirmed=False,
     )
     user.set_password(password)
