@@ -38,7 +38,26 @@ const schema: SchemaOf<Record<keyof FormData, unknown>> = yup
                   .number()
                   .typeError('validations.numberType')
                   .required('validations.required')
-                  .moreThan(0, 'validations.greaterThanZero'),
+                  .moreThan(0, 'validations.greaterThanZero')
+                  .test(
+                    'quantity',
+                    'validations.decimalType',
+                    (value: number | undefined) => {
+                      if (!value) {
+                        return true
+                      }
+                      const isDecimal = new RegExp(/^\d*\.{1}\d*$/).test(
+                        value.toString()
+                      )
+                      const hasTwoPlacesDecimal = new RegExp(
+                        /^\d*\.{1}\d{1,2}$/
+                      ).test(value.toString())
+                      if (isDecimal && !hasTwoPlacesDecimal) {
+                        return false
+                      }
+                      return true
+                    }
+                  ),
               })
             )
             .min(1, 'validations.atLeastOnPackagingMaterial'),

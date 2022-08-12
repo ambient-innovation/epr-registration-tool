@@ -105,6 +105,7 @@
     "reportStartDateValid": "يرجى تحديد تاريخ صالح على شكل شهر سنة: Jan 2024",
     "startDateMin": "لا يمكن أن يكون التاريخ قبل بداية الشهر المقبل",
     "numberType": "الرجاء إدخال رقم صحيح",
+    "decimalType": "only 2 decimal places are allowed",
     "greaterThanZero": "يجب أن يكون أكبر من الصفر أو إزالته.",
     "forecastShouldBeInSameYear": "يجب أن تبدأ التوقعات وتنتهي في نفس العام",
     "atLeastOnPackagingGroup": "مطلوب مجموعة تغليف واحدة على الأقل",

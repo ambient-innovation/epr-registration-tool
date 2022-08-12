@@ -82,8 +82,8 @@ class ReportTypes(models.IntegerChoices):
 
 class PackagingReport(CommonInfo):
     class Meta:
-        verbose_name = _("Packaging Report")
-        verbose_name_plural = _("Packaging Reports")
+        verbose_name = _("Data Report")
+        verbose_name_plural = _("Data Reports")
 
     related_company = models.ForeignKey(
         'company.Company',
