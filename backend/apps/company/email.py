@@ -21,6 +21,8 @@ def send_admin_registration_notification(company: Company):
     company = Company.objects.filter(id=company.id).first()
     company_user = company.users_queryset.first()
     receiver_list = list(UserModel.objects.staff().filter(notification_settings__company_registration=True))
+    if not len(receiver_list):
+        capture_message('No receivers for company registration notification')
 
     for user in receiver_list:
         context = {
@@ -37,8 +39,6 @@ def send_admin_registration_notification(company: Company):
             body_html=body_html,
             to=[user.email],
         )
-    else:
-        capture_message('No receivers for company registration notification')
 
 
 def send_user_registration_complete_notification(company):
@@ -60,11 +60,14 @@ def send_company_data_changed_notification(company):
     assert company is not None
     receiver_list = company.users_queryset.active()
 
+    if not len(receiver_list):
+        with configure_scope() as scope:
+            scope.set_extra("company_id", company.pk)
+            capture_message('No receivers for company data changed notification')
+
     for user in receiver_list:
         send_translated_email(
             'company_data_changed',
             user,
             url=urljoin(settings.FRONTEND_URL, '/account-settings/change-company-data'),
         )
-    else:
-        capture_message(f'No receivers for company data changed notification (company ID={company.id})')
