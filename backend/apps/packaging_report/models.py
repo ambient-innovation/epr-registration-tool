@@ -205,7 +205,7 @@ class ForecastSubmission(ReportSubmission):
 
     related_report = models.OneToOneField(
         PackagingReport,
-        verbose_name=_('Packaging Report'),
+        verbose_name=_('Data Report'),
         related_name='related_forecast',
         on_delete=models.CASCADE,
     )
@@ -225,7 +225,7 @@ class FinalSubmission(ReportSubmission):
 
     related_report = models.OneToOneField(
         PackagingReport,
-        verbose_name=_('Packaging Report'),
+        verbose_name=_('Data Report'),
         related_name='related_final_submission',
         on_delete=models.CASCADE,
     )
@@ -271,8 +271,8 @@ class MaterialRecord(CommonInfo):
     quantity = models.FloatField(verbose_name=_('Quantity (Kg)'), validators=[validate_greater_than_zero])
 
     class Meta:
-        verbose_name = _("Report Packaging entry")
-        verbose_name_plural = _("Report Packaging entries")
+        verbose_name = _("Report packaging entry")
+        verbose_name_plural = _("Report packaging entries")
         constraints = (
             (
                 UniqueConstraint(
