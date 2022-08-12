@@ -55,7 +55,7 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
         self.assertEqual(content['registerCompany'], 'CREATED')
         company = Company.objects.filter(is_active=False, name="Farwell Co").first()
         user = User.objects.filter(
-            email='helmut@local.invalid', is_active=False, related_company__id=company.id
+            email='helmut@local.invalid', is_active=True, has_email_confirmed=False, related_company__id=company.id
         ).first()
         self.assertIsNotNone(company)
         self.assertEqual('en', company.country_code)
@@ -73,7 +73,7 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
         self.assertEqual(content['registerCompany'], 'CREATED')
         company = Company.objects.filter(is_active=False, name="Farwell Co").first()
         user = User.objects.filter(
-            email='helmut@local.invalid', is_active=False, related_company__id=company.id
+            email='helmut@local.invalid', is_active=True, has_email_confirmed=False, related_company__id=company.id
         ).first()
 
         # check language was saved correctly as send in HTTP_ACCEPT_LANGUAGE header

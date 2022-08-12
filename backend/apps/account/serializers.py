@@ -33,14 +33,17 @@ class LoginSerializer(OldLoginSerializer):
         # query user to provide more detailed error messages
         user = UserModel.objects.filter(email=email).first()
 
-        if not user or not user.check_password(password):
+        if not user:
+            raise_validation("invalidCredentials")
+
+        if not user.is_active:
+            raise_validation("inactiveUser")
+
+        if not user.check_password(password):
             raise_validation("invalidCredentials")
 
         if not user.has_email_confirmed:
             raise_validation("emailNotConfirmed")
-
-        if not user.is_active:
-            raise_validation("inactiveUser")
 
         if not user.is_staff:
             company_id = user.related_company_id
