@@ -81,6 +81,10 @@ def packaging_report_forecast_submit(
         created_by=current_user,
         related_company=current_user.related_company,
     )
+
+    if len(report.get_overlapping_reports().values('id')):
+        raise GraphQLError('timeframeOverlap')
+
     try:
         with transaction.atomic():
             report.full_clean()
