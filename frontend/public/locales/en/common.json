@@ -142,7 +142,8 @@
     "emailNotConfirmed": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link.",
     "inactiveUser": "Your account has been blocked.",
     "companyDataNotCompleted": "Please complete your company profile first.",
-    "materialQuantityInvalidDecimal": "An entry on the material quantities is invalid."
+    "materialQuantityInvalidDecimal": "An entry on the material quantities is invalid.",
+    "timeframeOverlap": "Report's timeframe overlaps with already existing Data report(s), please check."
   },
   "internalErrors": {
     "unknownError": "Something unexpected happened. Please reload and try again.",

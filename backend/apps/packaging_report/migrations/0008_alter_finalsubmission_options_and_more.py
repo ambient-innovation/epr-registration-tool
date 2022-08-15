@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('packaging_report', '0007_alter_packagingreport_related_company'),
     ]
@@ -21,7 +20,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterModelOptions(
             name='materialrecord',
-            options={'verbose_name': 'Report Packaging entry', 'verbose_name_plural': 'Report Packaging entries'},
+            options={'verbose_name': 'Report packaging entry', 'verbose_name_plural': 'Report packaging entries'},
         ),
         migrations.AlterField(
             model_name='materialrecord',

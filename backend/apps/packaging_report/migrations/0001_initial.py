@@ -233,7 +233,7 @@ class Migration(migrations.Migration):
                 on_delete=django.db.models.deletion.CASCADE,
                 related_name='related_forecast',
                 to='packaging_report.packagingreport',
-                verbose_name='Packaging Report',
+                verbose_name='Data Report',
             ),
         ),
         migrations.AddConstraint(

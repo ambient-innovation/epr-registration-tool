@@ -4,7 +4,7 @@ from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db.models import UniqueConstraint
+from django.db.models import Q, UniqueConstraint
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
@@ -117,9 +117,41 @@ class PackagingReport(CommonInfo):
 
     objects = PackagingReportQuerySet.as_manager()
 
+    def get_overlapping_reports(self):
+        """
+        return reports which overlap with this report in timeframe
+        """
+        return (
+            PackagingReport.objects
+            # should be in the same year and company
+            .filter(year=self.year, related_company_id=self.related_company_id)
+            .annotate_end_month()
+            .filter(
+                # starts between [current_start, current_end-1]
+                Q(start_month__range=(self.start_month, self.start_month + (self.timeframe - 1)))
+                # OR ends between [current_start, current_end]
+                | Q(end_month__range=(self.start_month, self.start_month + self.timeframe))
+                # OR (starts < current_start AND end > current_end)
+                | Q(start_month__lt=self.start_month, end_month__gt=self.start_month + (self.timeframe - 1))
+                # OR start = current_start
+                | Q(start_month=self.start_month)
+                # OR end = current_end
+                | Q(end_month=self.start_month + (self.timeframe - 1))
+            )
+        )
+
     def clean(self):
         if self.start_month + (self.timeframe - 1) > 12:
             raise ValidationError({"timeframe": _('report has to start and end in same year')}, code="invalidTimeframe")
+        overlap_report_ids = self.get_overlapping_reports().values_list('id', flat=True)
+        overlap_reports_len = len(overlap_report_ids)
+        if overlap_reports_len > 0:
+            message = (
+                f'Reports with No. {*overlap_report_ids,} overlap with this report timeframe.'
+                if overlap_reports_len > 1
+                else f'Report No. {overlap_report_ids[0]} overlaps with this report timeframe.'
+            )
+            raise ValidationError({"timeframe": _(message)}, code="timeframeOverlap")
 
         super().clean()
 
@@ -173,7 +205,7 @@ class ForecastSubmission(ReportSubmission):
 
     related_report = models.OneToOneField(
         PackagingReport,
-        verbose_name=_('Packaging Report'),
+        verbose_name=_('Data Report'),
         related_name='related_forecast',
         on_delete=models.CASCADE,
     )
@@ -193,7 +225,7 @@ class FinalSubmission(ReportSubmission):
 
     related_report = models.OneToOneField(
         PackagingReport,
-        verbose_name=_('Packaging Report'),
+        verbose_name=_('Data Report'),
         related_name='related_final_submission',
         on_delete=models.CASCADE,
     )
@@ -239,8 +271,8 @@ class MaterialRecord(CommonInfo):
     quantity = models.FloatField(verbose_name=_('Quantity (Kg)'), validators=[validate_greater_than_zero])
 
     class Meta:
-        verbose_name = _("Report Packaging entry")
-        verbose_name_plural = _("Report Packaging entries")
+        verbose_name = _("Report packaging entry")
+        verbose_name_plural = _("Report packaging entries")
         constraints = (
             (
                 UniqueConstraint(
