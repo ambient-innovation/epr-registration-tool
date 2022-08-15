@@ -39,7 +39,7 @@
     "contactPerson": "Contact person",
     "step2Title": "Provide a contact person",
     "step2Description": "As a registered user you can report the data for your company to this EPR database.",
-    "emailHelpText": "Attention: This is the Email your company will use to log in to the EPR Registration Tool.",
+    "emailHelpText": "Attention: This is the email address your company will use to log in to the EPR Registration Tool.",
     "title": "Title",
     "mr": "Mr.",
     "mrs": "Mrs.",
@@ -55,7 +55,7 @@
     "month_plural": "{{count}} months"
   },
   "reportForm": {
-    "createSubPageTitle": "Create new Report",
+    "createSubPageTitle": "Submit new Report",
     "updateSubPageTitle": "Update Report Forecast",
     "submitFinalReportSubPageTitle": "Update Report Forecast",
     "successSubPageTitle": "Report successful",
@@ -64,35 +64,35 @@
     "packagingDetails": "Packaging details",
     "estimatedFees": "Estimated fees",
     "step1Title": "Timeframe of report",
-    "step1Description": "Please select start date and duration of the Report.",
+    "step1Description": "Please select start date and duration of the report.",
     "step1ReadonlyDescription": "Report timeframe is not editable.",
     "startDate": "Forecast start date",
     "packagingEntryNum": "Packaging entry {{num}}",
-    "packagingEntryDescription": "Please enter your quantities for each material in each packaging group. With \"+ADD NEW ENTRY\" you can enter additional packaging groups.",
+    "packagingEntryDescription": "Please enter your quantities for each material in each Packaging Group. With \"+ADD NEW ENTRY\" you can enter additional Packaging Groups.",
     "deleteEntry": "Delete entry",
     "addEntry": "Add new entry",
-    "selectPackagingGroup": "Please select a packaging group",
-    "packagingGroup": "Packaging group",
+    "selectPackagingGroup": "Please select a Packaging Group",
+    "packagingGroup": "Packaging Group",
     "step3Title": "Estimated fees",
     "step3Description": "Based on your information we have calculated the following fee.",
     "netPricePlusVat": "Net price plus statutory VAT",
     "material": "Material",
     "addMaterial": "Add another material",
-    "deleteMaterial": "Delete Material",
+    "deleteMaterial": "Delete material",
     "createReportSuccessTitle": "Thank you for reporting",
-    "createReportSuccessDescription": "A Forecast Report is created successfully and you can find it in your dashboard.",
+    "createReportSuccessDescription": "A Forecast Report is created successfully. You can find it in your dashboard.",
     "updateReportSuccessDescription": "Data Report is updated successfully.",
-    "createAnotherReport": "Submit another Report",
+    "createAnotherReport": "Submit another report",
     "proceedToHomepage": "Proceed to homepage",
-    "proceedToDashboard": "Proceed to Dashboard",
+    "proceedToDashboard": "Proceed to dashboard",
     "estimatedFeesResult": "Price {{fees}} JOD",
-    "reportSuccessful": "Report Successful",
-    "reportUpdatedSuccessful": "Report Update Successful",
-    "calculating": "calculating, please wait ...",
+    "reportSuccessful": "Report successful",
+    "reportUpdatedSuccessful": "Report update successful",
+    "calculating": "Calculating, please wait ...",
     "updateReportNoX": "Update Data Report No. {{reportNo}}",
     "submitActualQuantitiesForReportNoX": "Submit actual quantities for Data Report No. {{reportNo}}",
     "reportNoX": "Data Report No. {{reportNo}}",
-    "reportNotFound": "No Report found!"
+    "reportNotFound": "No Data Report found!"
   },
   "validations": {
     "required": "This field is required",
@@ -102,19 +102,19 @@
     "passwordMustHaveLowercase": "The password must contain at least one lowercase letter",
     "passwordMustHaveOneNumber": "The password must contain at least one number",
     "passwordMustHaveSpecialCharacter": "The password must contain at least one special character, e.g., ! @ # ? ]",
-    "reportStartDateValid": "please select valid date in format of Month Year: Jan 2024",
-    "startDateMin": "Date cannot be before start of next month",
-    "numberType": "please enter valid number (for decimal please use Point as separator)",
-    "decimalType": "only 2 decimal places are allowed",
-    "greaterThanZero": "must be bigger than zero or remove it.",
+    "reportStartDateValid": "Please select valid date in format of Month Year: Jan 2024",
+    "startDateMin": "Date cannot be before the start of the next month",
+    "numberType": "Please enter valid number (for decimal please use Point as separator)",
+    "decimalType": "Only 2 decimal places are allowed",
+    "greaterThanZero": "Must be bigger than zero or remove it.",
     "forecastShouldBeInSameYear": "Forecast should start and end in same year",
-    "atLeastOnPackagingGroup": "at least one Packaging group required",
-    "atLeastOnPackagingMaterial": "at least one Material required",
-    "notUniqueGroups": "this packaging group is duplicated",
-    "notUniqueGroupsMaterials": "this material is duplicated in this packaging group",
-    "noWhitespaceAllowed": "no whitespaces allowed",
-    "reportExceedsOneYear": "a report should not exceed a year",
-    "identicalPasswordNotAllowed": "The new password can not be identical with the old password"
+    "atLeastOnPackagingGroup": "At least one Packaging Group required",
+    "atLeastOnPackagingMaterial": "At least one Material required",
+    "notUniqueGroups": "This Packaging Group is duplicated",
+    "notUniqueGroupsMaterials": "This material is duplicated in this Packaging Group",
+    "noWhitespaceAllowed": "No whitespaces allowed",
+    "reportExceedsOneYear": "A report should not exceed a year",
+    "identicalPasswordNotAllowed": "The new password cannot be identical with the old password"
   },
   "serverErrors": {
     "unknownError": "The server failed to handle your request. Please reload and try again.",
@@ -127,7 +127,7 @@
     "inactiveCompany": "You company account has not been activated yet. You will be notified via email once this is done.",
     "missingCompanyRelation": "You cannot login because your account is not associated with a company.",
     "alreadyAuthenticated": "You are signed in with another account. Please log out and try again.",
-    "packagingGroupDoesNotExist": "One of the selected Packaging group does not exist",
+    "packagingGroupDoesNotExist": "One of the selected Packaging Groups does not exist",
     "materialDoesNotExist": "One of the selected Material does not exist",
     "noCompanyAssignedORInactiveCompany": "You have not been assigned to any company or your company account has not been activated yet.",
     "noCompanyAssigned": "You have not been assigned to any company",
@@ -136,13 +136,13 @@
     "profileAlreadyCompleted": "Company Profile already completed",
     "finalReportAlreadySubmitted": "Final Report already submitted",
     "cannotSubmitFinalReportYet": "Final Report cannot be submitted yet",
-    "identicalPasswordNotAllowed": "The new password can not be identical with the old password.",
+    "identicalPasswordNotAllowed": "The new password cannot be identical with the old password.",
     "maximumFileSizeExceeded": "The maximum image size is 2MB. Please try a smaller image file.",
     "invalidExtension": "Image format not allowed. Please upload another image (JPG or PNG)",
     "emailNotConfirmed": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link.",
     "inactiveUser": "Your account has been blocked.",
     "companyDataNotCompleted": "Please complete your company profile first.",
-    "materialQuantityInvalidDecimal": "One of the Material quantity is invalid."
+    "materialQuantityInvalidDecimal": "An entry on the material quantities is invalid."
   },
   "internalErrors": {
     "unknownError": "Something unexpected happened. Please reload and try again.",
@@ -153,7 +153,7 @@
     "rememberMe": "Remember Me",
     "resetPassword": "Reset password",
     "signIn": "Sign in",
-    "registerLink": "No Account Yet? Register Now.",
+    "registerLink": "No account yet? Register now.",
     "loginFailed": "Login failed",
     "resetPasswordRequest": "If this email address was used to create an account, instructions to reset your password will be sent to you. Please check your email.",
     "resetPasswordComplete": "Password successfully updated.",
@@ -165,7 +165,7 @@
     "changePasswordForm": {
       "title": "Password",
       "description1": "Set a new password for your account. After choosing a new password enter your old password for confirmation.",
-      "description2": "To conform with our Strong Password policy, you are required to use a sufficiently strong password. Password must at least 8 characters long and contain upper and lower case letters, a number and a special character.",
+      "description2": "To conform with our Strong Password Policy, you are required to use a sufficiently strong password. Your Password must be at least 8 characters long and contain upper- and lower-case, a number and a special character.",
       "newPassword": "New password",
       "oldPassword": "Old password",
       "oldPasswordHelpText": "Please enter your old password for confirmation",
@@ -173,12 +173,12 @@
       "passwordResetFailed": "Password Reset failed"
     },
     "changeLanguageForm": {
-      "title": "Edit language of correspondance",
+      "title": "Edit language of correspondence",
       "tabTitle": "LANGUAGE",
       "description": "Here you can set the language in which the email correspondence should take place.",
-      "label": "Edit language of correspondance",
+      "label": "Edit language of correspondence",
       "languageChangeFailed": "Language change failed",
-      "notification": "Your language has been updated."
+      "notification": "Your language setting has been updated."
     },
     "changeCompanyDataForm": {
       "title": "Company data",
@@ -191,7 +191,7 @@
         "localProducer": "Local producer"
       },
       "companyCountry": "Country",
-      "companyPostalCode": "Postal Code (optional)",
+      "companyPostalCode": "Postal code (optional)",
       "companyCity": "City",
       "companyStreet": "Street",
       "companyStreetNumber": "Street number (optional)",
@@ -214,7 +214,7 @@
       "title": "Account",
       "description": "Here you can edit and save the data you have entered for your account. Please note that the data provided must be truthful and up to date.",
       "email": "E-mail",
-      "emailHelpText": "Attention: This is the E-Mail your company will use to log in to the EPR Registration Tool.",
+      "emailHelpText": "Attention: This is the email your company will use to log in to the EPR Registration Tool.",
       "emailConfirmNeededHelpText": "⚠️ confirm please your new email address or will be ignored.",
       "titleLabel": "Title",
       "fullName": "Full name",
@@ -239,7 +239,7 @@
     },
     "nextStepActivation": {
       "title": "⏳ One step left ...",
-      "body": "Before you can log in, your account must first be activated. A staff member will now check your registration information. You will receive an email as soon as you account has been activate."
+      "body": "Before you can log in, your account must first be activated. A staff member will now check your registration information. You will receive an email as soon as you account has been activated."
     },
     "accountHasBeenActivated": "Your account has been activated!",
     "accountIsReady": "🚀 Your account is ready",
@@ -249,16 +249,16 @@
   "pageHeader": {
     "languageSwitch": "Language switcher",
     "userMenu": "User menu",
-    "close": "close"
+    "close": "Close"
   },
   "resetPassword": {
     "title": "Reset password",
-    "forgetPasswordTitle": "Forgot Password?",
+    "forgetPasswordTitle": "Forgot password?",
     "forgetPasswordDescription1": "Enter the email address you used when you joined and we'll send you instructions to reset your password.",
     "forgetPasswordDescription2": "For security reasons, we do NOT store your password. So rest assured that we will never send your password via email.",
-    "sendResetInstructions": "Send Reset Instructions",
+    "sendResetInstructions": "Send reset instructions",
     "newPasswordTitle": "Enter new password",
-    "newPasswordDescription": "To conform with our Strong Password policy, you are required to use a sufficiently strong password. Password must at least 8 characters long and contain upper and lower case letters, a number and a special character.",
+    "newPasswordDescription": "To comply with our strong password policy, you are required to use a sufficiently strong password. Your password must be at least 8 characters long and contain upper- and lower-case letters, a number and a special character.",
     "saveNewPassword": "Save new password",
     "resetPasswordFailed": "Reset password failed",
     "serverErrors": {
@@ -289,9 +289,9 @@
         "startsAt": "Start of forecast:",
         "timeframe": "Timeframe of forecast:",
         "estimatedF": "Estimated fees:",
-        "calculatedFees": "Calculated Fees:",
-        "entries": "Packaging Entries:",
-        "month": "month",
+        "calculatedFees": "Calculated fees:",
+        "entries": "Packaging entries:",
+        "month": "Month",
         "editableUntil": "Can be edited until {{endDate}}",
         "forecast": "Forecast",
         "submitActualQuantities": "Submit Actual Quantities",
@@ -312,7 +312,7 @@
       "companyLogoAlt": "Current logo of your company"
     },
     "uploadCompanyLogoDialog": {
-      "title": "Company Logo",
+      "title": "Company logo",
       "description": "Upload a logo for your company account (JPG or PNG). We recommend a resolution of at least 344 x 344 px.",
       "deleteLogo": "Delete logo",
       "uploadLogo": "Upload logo",
@@ -335,7 +335,7 @@
     "completeAccount": "Complete your account",
     "step1Title": "Company Data",
     "companyCountry": "Country",
-    "companyPostalCode": "Postal Code (optional)",
+    "companyPostalCode": "Postal code (optional)",
     "companyCity": "City",
     "companyStreet": "Street",
     "companyStreetNumber": "Street number (optional)",
@@ -352,16 +352,16 @@
   },
   "reset": "Reset",
   "changeEmailConfirm": {
-    "changeEmail": "Change Email",
+    "changeEmail": "Change email address",
     "changeEmailFailed": {
       "incorrectEmailEncode": "Incorrect url encode. Please connect support for help.",
       "requestOutdated": "Change request cannot be proceed after 24 hours.",
-      "userDoesNotExists": "Your account does not exists.",
-      "requestDoesNotExists": "No request to change your email exists.",
-      "emailExists": "Another user has the same email you are trying to change to. Please connect support for help.",
+      "userDoesNotExists": "Your account does not exist.",
+      "requestDoesNotExists": "No request to change your email address exists.",
+      "emailExists": "Another user has the same email address you are trying to change to. Please connect support for help.",
       "invalidToken": "Invalid token. Please connect support for help.",
       "unknownError": "Request failed. Unknown Error occurs, please try again later."
     },
-    "changeEmailSuccess": "Your email has been changed successfully. You have been logged out from all your devices and you can login now again with your new email."
+    "changeEmailSuccess": "Your email address has been changed successfully. You have been logged out from all your devices and you can login now again with your new email address."
   }
 }
