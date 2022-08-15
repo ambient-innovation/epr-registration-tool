@@ -24,7 +24,10 @@ export const headerContainerSx: SxStyles = [
 ]
 
 export const listItemButtonSx: SxStyleObject = {
-  '&.Mui-selected, &:hover': {
+  '&.Mui-selected, &.Mui-selected:hover': {
     backgroundColor: 'primary.light',
+  },
+  '&:hover': {
+    textDecoration: 'underline',
   },
 }
