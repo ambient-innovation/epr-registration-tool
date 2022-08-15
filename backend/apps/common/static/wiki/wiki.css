@@ -1,0 +1,66 @@
+@charset "UTF-8";
+.wiki {
+  --max-text-width: 700px;
+  --max-img-width: 800px;
+  --max-img-width-sm: 500px;
+  --color-dark-gray: #4c4c4c;
+}
+.wiki h2, .wiki h3, .wiki h4, .wiki p, .wiki table, .wiki dl, .wiki ul, .wiki ol {
+  max-width: var(--max-text-width);
+}
+.wiki p {
+  padding: 10px;
+}
+.wiki h2 {
+  font-size: 1.4rem;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  padding: 5px;
+  color: var(--color-dark-gray);
+  border-bottom: 2px dotted var(--color-dark-gray);
+}
+.wiki h2:first-child {
+  margin-top: 0;
+}
+.wiki h2:not(:first-of-type):before {
+  content: "→";
+}
+.wiki h3 {
+  font-size: 1.1rem;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+.wiki h3:before {
+  content: "↪";
+}
+.wiki h4 {
+  font-size: 1rem;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+.wiki h4:before {
+  content: "↪↪";
+}
+.wiki strong {
+  font-weight: bold;
+}
+.wiki dl {
+  display: inline-grid;
+  align-items: center;
+  column-gap: 10px;
+  border-left: 10px solid var(--darkened-bg);
+  padding-left: 10px;
+}
+.wiki dl.dt-aligned-right dt {
+  margin: 0;
+  text-align: right;
+}
+.wiki dl dd {
+  margin-left: 16px;
+}
+.wiki a:before {
+  content: "🔗";
+}
+
+/*# sourceMappingURL=wiki.css.map */

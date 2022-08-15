@@ -3,6 +3,9 @@ from collections import OrderedDict
 from django.conf import settings
 from django.contrib.admin import AdminSite
 from django.contrib.admin.apps import AdminConfig
+from django.urls import path
+
+from common.views import WikiView
 
 
 class CustomAdminConfig(AdminConfig):
@@ -49,3 +52,10 @@ class CustomAdminSite(AdminSite):
         ]
 
         return sorted_app_dict
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path('wiki/', self.admin_view(WikiView.as_view()), name="wiki"),
+        ]
+        return custom_urls + urls
