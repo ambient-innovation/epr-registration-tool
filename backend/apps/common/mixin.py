@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.core.exceptions import ImproperlyConfigured
 from django.views import generic
 
 
@@ -9,15 +8,14 @@ class AdminViewMixin(generic.View):
     """
 
     model = None
+    admin_page_title = None
 
     def get_admin_context(self):
-        if not self.model:
-            raise ImproperlyConfigured(
-                "%(cls)s is missing a model. Define " "%(cls)s.model." % {"cls": self.__class__.__name__}
-            )
         opts = self.model._meta if self.model else None
         return {
             **admin.site.each_context(self.request),
+            'title': self.admin_page_title,
+            'name': self.admin_page_title,
             'opts': opts,
             'app_label': opts.app_label if opts else None,
         }

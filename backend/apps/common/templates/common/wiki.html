@@ -1,0 +1,240 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'wiki/wiki.css' %}">
+{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="{% url 'admin:index' %}">Start</a> ›
+        {{ title }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div id="content-main" class="wiki">
+        <h2>Index</h2>
+        <ol style="list-style-type: none">
+            <li>
+                <a href="#a-chapter-1">1. Accont</a>
+                <ol style="list-style-type: none">
+                    <li>
+                        <a href="#a-chapter-1-1">1.1 Users</a>
+                    </li>
+                    <li>
+                        <a href="#a-chapter-1-2">1.2 Add User</a>
+                    </li>
+                    <li>
+                        <a href="#a-chapter-1-3">1.3 Notification settings</a>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <a href="#a-chapter-2">2. Company</a>
+                <ol style="list-style-type: none">
+
+                    <li>
+                        <a href="#a-chapter-2-1">2.1 Company Registration process</a>
+                        <ol style="list-style-type: none">
+                            <li>
+                                <a href="#a-chapter-2-1-1">2.1.1 User part</a>
+                            </li>
+                            <li>
+                                <a href="#a-chapter-2-1-2">2.1.2 Admin part</a>
+                            </li>
+                        </ol>
+                    </li>
+
+                </ol>
+            </li>
+            </li>
+            <li>
+                <a href="#a-chapter-3">3. Packaging Reports</a>
+                <ol style="list-style-type: none">
+
+                    <li>
+                        <a href="#a-chapter-3-1">3.1 Data Reports</a>
+                        <ol style="list-style-type: none">
+                            <li><a href="#a-chapter-3-1-1">3.1.1 Data Reports</a></li>
+                            <li><a href="#a-chapter-3-1-2">3.1.2 Forecast Reports</a></li>
+                            <li><a href="#a-chapter-3-1-3">3.1.3 Final Reports</a></li>
+                        </ol>
+                    </li>
+                    <li>
+                        <a href="#a-chapter-3-2">3.2 Add Data Report as admin</a>
+                    </li>
+                    <li>
+                        <a href="#a-chapter-3-3">3.3 Export Data Report as CSV</a>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <a href="#a-chapter-4">4. Packaging</a>
+                <ol style="list-style-type: none">
+                    <li><a href="#a-chapter-4-1">4.1 add Packaging Group</a></li>
+                    <li><a href="#a-chapter-4-2">4.2 add material</a></li>
+                </ol>
+            </li>
+        </ol>
+
+
+        <h2 id="a-chapter-1">1. Accont</h2>
+        <h3 id="a-chapter-1-1">1.1 Users</h3>
+
+        <p>
+            In <a href="{% url 'admin:account_user_changelist' %}">Users</a> you see a list of superusers and companies
+            contact persons.
+        </p>
+        <h3 id="a-chapter-1-2">1.2 Add User</h3>
+
+        <p>
+            In <a href="{% url 'admin:account_user_changelist' %}">Users</a> list view, click on "ADD USER +" and fill
+            out the required fields.</p>
+
+        <ul>
+            <li>
+                <b>Active</b>: Designates whether a user account is active or not.
+                Use this flag to deactivate/block a user account
+            </li>
+            <li>
+                <b>Email confirmed</b>: Designates whether a user has confirmed his email address
+            </li>
+        </ul>
+        <h3 id="a-chapter-1-3">1.3 Notification settings</h3>
+
+        <p>
+            In <a href="{% url 'admin:account_notificationsettings_changelist' %}">Notification settings</a> you
+            configure which admins should get an email when a new company account needs to be checked and activated.
+        </p>
+        <p>
+            to mark an admin as reciever for this emails, just click "ADD NOTIFICATION SETTING +"
+        </p>
+
+        <h2 id="a-chapter-2">2. Company</h2>
+        <p>
+            In <a href="{% url 'admin:company_company_changelist' %}">Company</a> you see a list of registered
+            companies. And in details page you see all the data.
+        </p>
+        <h3 id="a-chapter-2-1">2.1 Company Registration process</h3>
+        <p> A company to be able to use the platform and start reporting, it needs to register itself first and has an
+            active account.</p>
+        <h4 id="a-chapter-2-1-1">2.1.1 User part</h4>
+        <p>In <a href="{{ site_url }}/auth/registration">Registration page</a> a user fills out the required data to
+            request registering new company.</p>
+        <p>After submitting the request a new contact person (user) and company are created in admin area and the user
+            will get an email to confirm his email address:</p>
+        <ul>
+            <li>
+                <b>Contact person</b>: the new created user will have the flag "active" checked and "Email
+                confirmed" checked after confirming his email address.
+            </li>
+            <li>
+                <b>Company</b>: the new created company will have the flag "active" uncheck (here is your part
+                as an admin)
+            </li>
+        </ul>
+        <h4 id="a-chapter-2-1-2">2.1.2 Admin part</h4>
+        <p>As configured admin in <a href="{% url 'admin:account_notificationsettings_changelist' %}">Notification
+            settings</a> you will receive an email that new company account is created and the contact person confirmed
+            his email address, to check the company and user data and activate it</p>
+        <p>In company details view, you will see the basic company and contact data, if everything looks good, you just
+            check "active" checkbox and hit save button.</p>
+        <h2 id="a-chapter-3">3. Packaging Reports</h2>
+        <p>
+            In this section we will see the Data Reports created by the users.
+        </p>
+        <h3 id="a-chapter-3-1">3.1 Data Reports</h3>
+        <p>In <a href="{% url 'admin:packaging_report_packagingreport_changelist' %}">Data Reports</a> you see a list of
+            created Data Reports with different status.</p>
+        <p>In the lift side you see some useful filters:</p>
+        <ul>
+            <li>
+                <b>By Status</b>: a Data Report can have different status
+                <div>
+                    <dl>
+                        <dt>Forecast</dt>
+                        <dd>A Report in Forecast timeframe.</dd>
+                        <dt>Payment required</dt>
+                        <dd>The forecast period is over and the user entered the correct data Report data and an invoice
+                            has been created and sent.
+                        </dd>
+                        <dt>No data</dt>
+                        <dd>This can only be possible if the admin create a data report in admin area and never filled
+                            out the forecast data (see chapter 3.2)
+                        </dd>
+                    </dl>
+                </div>
+            </li>
+            <li><b>By Year</b>: Data report selected year</li>
+            <li><b>By Timeframe</b>: Data report selected timeframe</li>
+            <li><b>By Month</b>: Data report selected start month</li>
+        </ul>
+        <h4 id="a-chapter-3-1-1">3.1.1 Data Reports</h4>
+        <p>In <a href="{% url 'admin:packaging_report_packagingreport_changelist' %}">Data Reports</a> you see a list of created data reports, and in the detail page you see: </p>
+        <ul>
+            <li>Company belongs to</li>
+            <li>Selected year</li>
+            <li>Selected start month</li>
+            <li>Timezone in which the report created from</li>
+            <li>Selected Timeframe</li>
+            <li>...</li>
+            <li>Forecast Report: a link to the forecast packaging entries data</li>
+            <li>Final Report: a link to the final packaging entries data</li>
+            <li>Status of the report</li>
+            <li>Invoice file for download in case it exist</li>
+        </ul>
+        <h4 id="a-chapter-3-1-2">3.1.2 Forecast Reports</h4>
+        <p>In <a href="{% url 'admin:packaging_report_forecastsubmission_changelist' %}">Forecast Reports</a> you see the forecasts packaging entries related to Data Reports</p>
+        <h4 id="a-chapter-3-1-3">3.1.3 Final Reports</h4>
+        <p>In <a href="{% url 'admin:packaging_report_finalsubmission_changelist' %}">Final Reports</a> you see the final packaging entries related to Data Reports</p>
+
+        <h3 id="a-chapter-3-2">3.2 Add Data Report as admin</h3>
+        <p>A Data Report should be created by companies in the webpage, but if for some reason, you as admin want to
+            create one using the admin interface:</p>
+        <ol>
+            <p>To create a forecast report:</p>
+            <li>Go to <a href="{% url 'admin:packaging_report_packagingreport_changelist' %}">Data Reports</a> and hit
+                "ADD DATA REPORT +" button and fill out the required data and hit save button.
+            </li>
+            <li>Go to <a href="{% url 'admin:packaging_report_forecastsubmission_changelist' %}">Forecast Report</a> and
+                hit "ADD FORECAST REPORT +" button and select the previously created Data Report and add report packaging
+                entries and hit save button.
+            </li>
+
+        </ol>
+        <ol>
+            <p>To create a final report:</p>
+            <li>Create forecast report</li>
+            <li>Go to <a href="{% url 'admin:packaging_report_finalsubmission_changelist' %}">Final Report</a> and
+                hit "ADD FINAL REPORT +" button and select the previously created Data Report and add report packaging entries
+                and hit save button.
+            </li>
+        </ol>
+        <h3 id="a-chapter-3-3">3.3 Export Data Report as CSV</h3>
+        <p>To export some useful data for reporting as csv file:</p>
+        <p>In <a href="{% url 'admin:packaging_report_packagingreport_changelist' %}">Data Reports</a> hit "EXPORT TO CSV FILE" button</p>
+        <p>Here you define some filters:
+        <ul>
+            <li>Year</li>
+            <li>From month: start month</li>
+            <li>To month: end month</li>
+            <li>Report Type: Forecast or Actual Quantities (Final)</li>
+        </ul>
+        <p>Hit "Export to CSV ⬇️" button to generate and download the file.</p>
+
+
+        <h2 id="a-chapter-4">4. Packaging</h2>
+        <p>In this section you can create packaging groups and materials which used to create Data Reports</p>
+        <h3 id="a-chapter-4-1">4.1 add Packaging Group</h3>
+        <p> In <a href="{% url 'admin:packaging_packaginggroup_changelist' %}">Packaging groups</a> you see a list of
+            created packaging groups, to add new a one hit "ADD PACKAGING GROUP +" button and fill out the required data.</p>
+        <h3 id="a-chapter-4-2">4.2 add Material</h3>
+        <p> In <a href="{% url 'admin:packaging_material_changelist' %}">Materials</a> you see a list of created
+            materials,
+            to add a new one hit "ADD Material +" button and fill out the required data.</p>
+    </div>
+
+
+{% endblock %}
