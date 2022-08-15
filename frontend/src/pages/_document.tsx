@@ -23,12 +23,6 @@ export default class MyDocument extends Document {
             name={'apple-mobile-web-app-status-bar-style'}
             content={theme.palette.primary.light}
           />
-          <link
-            href={
-              'https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600&display=swap'
-            }
-            rel={'stylesheet'}
-          />
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
           {/*eslint-disable-next-line react/no-danger*/}
           {(this.props as any).emotionStyleTags}
