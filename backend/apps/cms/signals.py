@@ -22,7 +22,12 @@ def trigger_frontend_rebuild(sender, **kwargs):
     try:
         api = urljoin(settings.FRONTEND_URL, "/api/webhook")
         slug = kwargs["instance"].slug
-        requests.post(api, data={"secret": settings.NEXTJS_PUBLISH_SECRET, "slug": slug}, verify=False)
+        show_in_menus = kwargs["instance"].show_in_menus
+        requests.post(
+            api,
+            data={"secret": settings.NEXTJS_PUBLISH_SECRET, "slug": slug, "showInMenus": show_in_menus},
+            verify=False,
+        )
     except Exception as e:
         capture_exception(e)
         # Or Trigger frontend rebuild using gitlab pipeline on page publish if the revalidating post failed
