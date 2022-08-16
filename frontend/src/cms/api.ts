@@ -141,3 +141,7 @@ export const fetchAvailablePages = (): Promise<WagtailBasePage[]> => {
 export const fetchMenuPages = (locale: string): Promise<WagtailBasePage[]> => {
   return fetchPagesList({ locale: locale, show_in_menus: true })
 }
+
+export const fetchMenuPagesForRevalidate = (): Promise<WagtailBasePage[]> => {
+  return fetchPagesList({ show_in_menus: true })
+}
