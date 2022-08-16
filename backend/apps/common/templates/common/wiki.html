@@ -27,7 +27,13 @@
                         <a href="#a-chapter-1-2">1.2 Add User</a>
                     </li>
                     <li>
-                        <a href="#a-chapter-1-3">1.3 Notification settings</a>
+                        <a href="#a-chapter-1-3">1.3 Block User</a>
+                    </li>
+                    <li>
+                        <a href="#a-chapter-1-4">1.4 Change User Password</a>
+                    </li>
+                    <li>
+                        <a href="#a-chapter-1-5">1.5 Notification settings</a>
                     </li>
                 </ol>
             </li>
@@ -77,6 +83,9 @@
                     <li><a href="#a-chapter-4-2">4.2 add material</a></li>
                 </ol>
             </li>
+            <li>
+                <a href="#a-chapter-5">5. AXES</a>
+            </li>
         </ol>
 
 
@@ -102,7 +111,30 @@
                 <b>Email confirmed</b>: Designates whether a user has confirmed his email address
             </li>
         </ul>
-        <h3 id="a-chapter-1-3">1.3 Notification settings</h3>
+        <h3 id="a-chapter-1-3">1.3 Block User</h3>
+        <p>
+            To block a user, open details page of a user from <a
+                href="{% url 'admin:account_user_changelist' %}">Users</a>,
+            and uncheck "Active" checkbox.
+        </p>
+        <p>
+            ⚠️ This will block and reset his password to a random one.
+        </p>
+        <p>
+            To active the user again, just check the checkbox "Active" in details page, and the user will be informed to
+            reset his password to a new one to be able to login again.
+        </p>
+        <h3 id="a-chapter-1-4">1.3 Change user password</h3>
+        <p>
+            To change a user password or your password as an admin, in a user details page, click "this form" link
+        </p>
+        <figure class="figure--bordered">
+            <img src="{% static "wiki/change-password.png" %}"/>
+            <figcaption>
+                change password in admin
+            </figcaption>
+        </figure>
+        <h3 id="a-chapter-1-5">1.5 Notification settings</h3>
 
         <p>
             In <a href="{% url 'admin:account_notificationsettings_changelist' %}">Notification settings</a> you
@@ -137,7 +169,8 @@
         </ul>
         <h4 id="a-chapter-2-1-2">2.1.2 Admin part</h4>
         <p>As configured admin in <a href="{% url 'admin:account_notificationsettings_changelist' %}">Notification
-            settings</a> you will receive an email that a new company account is created and the contact person confirmed
+            settings</a> you will receive an email that a new company account is created and the contact person
+            confirmed
             his email address, to check the company and user data and activate it</p>
         <p>In company details view, you will see the basic company and contact data, if everything looks good, you just
             check "active" checkbox and hit save button.</p>
@@ -172,7 +205,8 @@
             <li><b>By Month</b>: Data report selected start month</li>
         </ul>
         <h4 id="a-chapter-3-1-1">3.1.1 Data Reports</h4>
-        <p>In <a href="{% url 'admin:packaging_report_packagingreport_changelist' %}">Data Reports</a> you see a list of created data reports, and in the detail page you see: </p>
+        <p>In <a href="{% url 'admin:packaging_report_packagingreport_changelist' %}">Data Reports</a> you see a list of
+            created data reports, and in the detail page you see: </p>
         <ul>
             <li>Company belongs to</li>
             <li>Selected year</li>
@@ -186,9 +220,11 @@
             <li>Invoice file for download in case it exist</li>
         </ul>
         <h4 id="a-chapter-3-1-2">3.1.2 Forecast Reports</h4>
-        <p>In <a href="{% url 'admin:packaging_report_forecastsubmission_changelist' %}">Forecast Reports</a> you see the forecasts packaging entries related to Data Reports</p>
+        <p>In <a href="{% url 'admin:packaging_report_forecastsubmission_changelist' %}">Forecast Reports</a> you see
+            the forecasts packaging entries related to Data Reports</p>
         <h4 id="a-chapter-3-1-3">3.1.3 Final Reports</h4>
-        <p>In <a href="{% url 'admin:packaging_report_finalsubmission_changelist' %}">Final Reports</a> you see the final packaging entries related to Data Reports</p>
+        <p>In <a href="{% url 'admin:packaging_report_finalsubmission_changelist' %}">Final Reports</a> you see the
+            final packaging entries related to Data Reports</p>
 
         <h3 id="a-chapter-3-2">3.2 Add Data Report as admin</h3>
         <p>A Data Report should be created by companies in the webpage, but if for some reason, you as admin want to
@@ -199,7 +235,8 @@
                 "ADD DATA REPORT +" button and fill out the required data and hit save button.
             </li>
             <li>Go to <a href="{% url 'admin:packaging_report_forecastsubmission_changelist' %}">Forecast Report</a> and
-                hit "ADD FORECAST REPORT +" button and select the previously created Data Report and add report packaging
+                hit "ADD FORECAST REPORT +" button and select the previously created Data Report and add report
+                packaging
                 entries and hit save button.
             </li>
 
@@ -208,13 +245,15 @@
             <p>To create a final report:</p>
             <li>Create forecast report</li>
             <li>Go to <a href="{% url 'admin:packaging_report_finalsubmission_changelist' %}">Final Report</a> and
-                hit "ADD FINAL REPORT +" button and select the previously created Data Report and add report packaging entries
+                hit "ADD FINAL REPORT +" button and select the previously created Data Report and add report packaging
+                entries
                 and hit save button.
             </li>
         </ol>
         <h3 id="a-chapter-3-3">3.3 Export Data Report as CSV</h3>
         <p>To export some useful data for reporting as csv file:</p>
-        <p>In <a href="{% url 'admin:packaging_report_packagingreport_changelist' %}">Data Reports</a> hit "EXPORT TO CSV FILE" button</p>
+        <p>In <a href="{% url 'admin:packaging_report_packagingreport_changelist' %}">Data Reports</a> hit "EXPORT TO
+            CSV FILE" button</p>
         <p>Here you define some filters:
         <ul>
             <li>Year</li>
@@ -229,11 +268,18 @@
         <p>In this section you can create packaging groups and materials which used to create Data Reports</p>
         <h3 id="a-chapter-4-1">4.1 add Packaging Group</h3>
         <p> In <a href="{% url 'admin:packaging_packaginggroup_changelist' %}">Packaging groups</a> you see a list of
-            created packaging groups, to add new a one hit "ADD PACKAGING GROUP +" button and fill out the required data.</p>
+            created packaging groups, to add new a one hit "ADD PACKAGING GROUP +" button and fill out the required
+            data.</p>
         <h3 id="a-chapter-4-2">4.2 add Material</h3>
         <p> In <a href="{% url 'admin:packaging_material_changelist' %}">Materials</a> you see a list of created
             materials,
             to add a new one hit "ADD Material +" button and fill out the required data.</p>
+
+        <h2 id="a-chapter-5">5. AXES</h2>
+        <p>
+           Here you find a log of suspicious/failed/success login attempts to admin.
+        </p>
+        <p>ℹ️ We implemented a simple brute-force attack blocking.</p>
     </div>
 
 

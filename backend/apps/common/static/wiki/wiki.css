@@ -1,7 +1,7 @@
 @charset "UTF-8";
 .wiki {
   --max-text-width: 700px;
-  --max-img-width: 800px;
+  --max-img-width: 700px;
   --max-img-width-sm: 500px;
   --color-dark-gray: #4c4c4c;
 }
@@ -44,6 +44,32 @@
 }
 .wiki strong {
   font-weight: bold;
+}
+.wiki figure {
+  margin: 20px 0;
+  max-width: var(--max-img-width);
+  display: flex;
+  flex-direction: column;
+}
+.wiki figure img {
+  display: block;
+  max-width: 100%;
+}
+.wiki figure figcaption {
+  color: var(--color-base-gray);
+  font-size: 0.8rem;
+  max-width: var(--max-text-width);
+  padding: 10px;
+  background: var(--darkened-bg);
+  display: block;
+  text-align: center;
+}
+.wiki figure.figure--bordered img {
+  border: 1px dashed var(--body-fg);
+  padding: 10px;
+}
+.wiki figure.figure--sm {
+  max-width: var(--max-img-width-sm);
 }
 .wiki dl {
   display: inline-grid;
