@@ -6,6 +6,8 @@ import requests
 from sentry_sdk import capture_exception
 from wagtail.signals import page_published
 
+from cms.models import HomePage
+
 GITLAB_URL = "https://gitlab.ambient-innovation.com"
 PROJECT_ID = 576
 
@@ -21,8 +23,9 @@ def trigger_frontend_rebuild(sender, **kwargs):
     """
     try:
         api = urljoin(settings.FRONTEND_URL, "/api/webhook")
-        slug = kwargs["instance"].slug
         show_in_menus = kwargs["instance"].show_in_menus
+        # in webhook in next js we expect always the home page to be have 'home' slug.
+        slug = 'home' if isinstance(kwargs["instance"], HomePage) else kwargs["instance"].slug
         requests.post(
             api,
             data={"secret": settings.NEXTJS_PUBLISH_SECRET, "slug": slug, "showInMenus": show_in_menus},
