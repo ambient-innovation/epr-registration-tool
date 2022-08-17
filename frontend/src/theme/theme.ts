@@ -58,7 +58,7 @@ declare module '@mui/material' {
 }
 
 /**
- * note: ALWAYS use the theme like this if you need to import it
+ * note: ALWAYS use the theme like this if you need to import it:
  * import { Theme } from '@mui/material'
  * **/
 
