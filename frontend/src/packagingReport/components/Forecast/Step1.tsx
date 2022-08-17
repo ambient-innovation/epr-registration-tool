@@ -9,7 +9,12 @@ import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { SchemaOf } from 'yup'
 
-import { TimeframeType } from '@/api/__types__'
+import {
+  TimeframeType,
+  useHasOverlappingPackagingReportsQuery,
+} from '@/api/__types__'
+import { ApolloErrorAlert } from '@/common/components/ApolloErrorAlert'
+import { ErrorAlert } from '@/common/components/ErrorAlert'
 import { FormStep, FormStepContainer } from '@/common/components/FormStep'
 import { DEFAULT_FORM_SPACING } from '@/common/components/FormStep/constants'
 import {
@@ -65,7 +70,8 @@ const resolver = yupResolver(schema)
 export const Step1 = (_: Step1) => {
   const { initialData, onSubmit, isTimeframeReadonly } = useForecastContext()
   const { t } = useTranslation()
-  const { handleSubmit, control } = useForm<FormData>({
+
+  const { handleSubmit, control, watch } = useForm<FormData>({
     mode: 'onTouched',
     // in Report edit form, the start date validations is not relevant.
     // (in create case the start date should be in the future)
@@ -74,11 +80,27 @@ export const Step1 = (_: Step1) => {
     defaultValues: pick(initialData, ...FIELD_NAMES),
   })
 
+  const { timeframe, startDate } = watch()
+
+  const year = startDate.getFullYear()
+  const startMonth = startDate.getMonth() + 1
+
   const errorMsg = (translationKey: string | undefined): string | undefined =>
     translationKey && (t(translationKey) as string)
 
+  const {
+    data,
+    error: errorCheckingOverlapping,
+    loading: checkingOverlapping,
+  } = useHasOverlappingPackagingReportsQuery({
+    variables: { year, startMonth, timeframe },
+  })
+
+  const hasOverlappingPackagingReports =
+    data?.hasOverlappingPackagingReports ?? false
+
   return (
-    <FormStep onSubmit={handleSubmit(onSubmit)}>
+    <FormStep onSubmit={handleSubmit(onSubmit)} isLoading={checkingOverlapping}>
       <FormStepContainer
         title={t('reportForm.step1Title')}
         description={
@@ -160,6 +182,14 @@ export const Step1 = (_: Step1) => {
               )
             }}
           />
+          {errorCheckingOverlapping && (
+            <ApolloErrorAlert error={errorCheckingOverlapping} />
+          )}
+          {hasOverlappingPackagingReports && (
+            <ErrorAlert title={t('error')}>
+              {t('serverErrors.timeframeOverlap')}
+            </ErrorAlert>
+          )}
         </Stack>
       </FormStepContainer>
     </FormStep>

@@ -37,6 +37,21 @@ def get_packaging_report_fees_estimation(
         raise GraphQLError('materialQuantityInvalidDecimal')
 
 
+def has_overlapping_packaging_reports(
+    info: Info,
+    timeframe: strawberry.enum(TimeframeType),
+    year: int,
+    start_month: int,
+) -> bool:
+    from packaging_report.utils import get_overlapping_reports_for_timeframe
+
+    current_user = info.context.request.user
+    related_company_id = current_user.related_company_id
+    return get_overlapping_reports_for_timeframe(
+        company_id=related_company_id, year=year, start_month=start_month, timeframe=timeframe
+    ).exists()
+
+
 DEFAULT_PACKAGING_REPORTS_LIMIT = 12
 
 
@@ -151,6 +166,9 @@ def packaging_report_final_details(info: Info, packaging_report_id: ID) -> typin
 class Query:
     packaging_report_fees_estimation = strawberry.field(
         resolver=get_packaging_report_fees_estimation, permission_classes=[IsAuthenticated]
+    )
+    has_overlapping_packaging_reports = strawberry.field(
+        resolver=has_overlapping_packaging_reports, permission_classes=[IsCompanyProfileCompletedAndActive]
     )
     packaging_reports = strawberry.field(resolver=packaging_reports, permission_classes=[IsAuthenticated])
     packaging_report_forecast_details = strawberry.field(

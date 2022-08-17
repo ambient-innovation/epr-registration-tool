@@ -285,6 +285,7 @@ export type PaginatorType = {
 export type Query = {
   __typename?: 'Query'
   companyDetails?: Maybe<CompanyType>
+  hasOverlappingPackagingReports: Scalars['Boolean']
   helloWorld: Scalars['String']
   me?: Maybe<UserType>
   packagingGroups: Array<PackagingGroupType>
@@ -293,6 +294,12 @@ export type Query = {
   packagingReportFinalDetails?: Maybe<PackagingReportType>
   packagingReportForecastDetails?: Maybe<PackagingReportType>
   packagingReports: PackagingReportTypePaginationResult
+}
+
+export type QueryHasOverlappingPackagingReportsArgs = {
+  startMonth: Scalars['Int']
+  timeframe: TimeframeType
+  year: Scalars['Int']
 }
 
 export type QueryPackagingReportFeesEstimationArgs = {
@@ -586,6 +593,17 @@ export type PackagingBaseDataQuery = {
     id: string
     name: string
   }>
+}
+
+export type HasOverlappingPackagingReportsQueryVariables = Exact<{
+  startMonth: Scalars['Int']
+  year: Scalars['Int']
+  timeframe: TimeframeType
+}>
+
+export type HasOverlappingPackagingReportsQuery = {
+  __typename?: 'Query'
+  hasOverlappingPackagingReports: boolean
 }
 
 export type PackagingReportFeesEstimationQueryVariables = Exact<{
@@ -1305,6 +1323,53 @@ export type PackagingBaseDataLazyQueryHookResult = ReturnType<
 export type PackagingBaseDataQueryResult = Apollo.QueryResult<
   PackagingBaseDataQuery,
   PackagingBaseDataQueryVariables
+>
+export const HasOverlappingPackagingReportsDocument = gql`
+  query hasOverlappingPackagingReports(
+    $startMonth: Int!
+    $year: Int!
+    $timeframe: TimeframeType!
+  ) {
+    hasOverlappingPackagingReports(
+      startMonth: $startMonth
+      year: $year
+      timeframe: $timeframe
+    )
+  }
+`
+export function useHasOverlappingPackagingReportsQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    HasOverlappingPackagingReportsQuery,
+    HasOverlappingPackagingReportsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<
+    HasOverlappingPackagingReportsQuery,
+    HasOverlappingPackagingReportsQueryVariables
+  >(HasOverlappingPackagingReportsDocument, options)
+}
+export function useHasOverlappingPackagingReportsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    HasOverlappingPackagingReportsQuery,
+    HasOverlappingPackagingReportsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<
+    HasOverlappingPackagingReportsQuery,
+    HasOverlappingPackagingReportsQueryVariables
+  >(HasOverlappingPackagingReportsDocument, options)
+}
+export type HasOverlappingPackagingReportsQueryHookResult = ReturnType<
+  typeof useHasOverlappingPackagingReportsQuery
+>
+export type HasOverlappingPackagingReportsLazyQueryHookResult = ReturnType<
+  typeof useHasOverlappingPackagingReportsLazyQuery
+>
+export type HasOverlappingPackagingReportsQueryResult = Apollo.QueryResult<
+  HasOverlappingPackagingReportsQuery,
+  HasOverlappingPackagingReportsQueryVariables
 >
 export const PackagingReportFeesEstimationDocument = gql`
   query packagingReportFeesEstimation(

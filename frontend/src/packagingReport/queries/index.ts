@@ -13,6 +13,20 @@ export const PACKAGING_BASE_DATA = gql`
   }
 `
 
+export const HAS_OVERLAPPING_PACKAGING_REPORTS = gql`
+  query hasOverlappingPackagingReports(
+    $startMonth: Int!
+    $year: Int!
+    $timeframe: TimeframeType!
+  ) {
+    hasOverlappingPackagingReports(
+      startMonth: $startMonth
+      year: $year
+      timeframe: $timeframe
+    )
+  }
+`
+
 export const PACKAGING_REPORT_FEED_ESTIMATION = gql`
   query packagingReportFeesEstimation(
     $year: Int!
