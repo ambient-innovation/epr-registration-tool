@@ -47,7 +47,7 @@
     "position": "Position",
     "phoneMobileNumber": "Phone / mobile number",
     "step3Title": "Choose a password",
-    "step3Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+    "step3Description": "To comply with our strong password policy, you are required to use a sufficiently strong password. Your Password must be at least 8 characters long and contain upper- and lower-case letters, a number and a special character.",
     "registrationFailed": "Registration failed"
   },
   "timeframe": {
