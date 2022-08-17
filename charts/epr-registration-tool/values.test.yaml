@@ -8,7 +8,7 @@ fullnameOverride: ""
 forceRestartAt: ""
 
 backend:
-  replicaCount: 1
+  replicaCount: 2
   image:
     repository: registry.ambient-innovation.com/giz/epr-registration-tool/backend
     tag: develop
@@ -89,7 +89,7 @@ backend:
     podAffinity: { }
 
 frontend:
-  replicaCount: 1 # Keeping replica number 1 for test environment is fine if you can tolorate occasional down-times during maintenance and other service disruptions for your test environment.
+  replicaCount: 2 # Keeping replica number 1 for test environment is fine if you can tolorate occasional down-times during maintenance and other service disruptions for your test environment.
   image:
     repository: registry.ambient-innovation.com/giz/epr-registration-tool/frontend
     tag: develop # This value will be overwritten by deployment job in gitlab-ci.yml. You do not need to forecast this.
