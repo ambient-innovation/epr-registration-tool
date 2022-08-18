@@ -4,7 +4,7 @@ from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db.models import Q, UniqueConstraint
+from django.db.models import UniqueConstraint
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
@@ -121,23 +121,10 @@ class PackagingReport(CommonInfo):
         """
         return reports which overlap with this report in timeframe
         """
-        return (
-            PackagingReport.objects
-            # should be in the same year and company
-            .filter(year=self.year, related_company_id=self.related_company_id)
-            .annotate_end_month()
-            .filter(
-                # starts between [current_start, current_end-1]
-                Q(start_month__range=(self.start_month, self.start_month + (self.timeframe - 1)))
-                # OR ends between [current_start, current_end]
-                | Q(end_month__range=(self.start_month, self.start_month + self.timeframe))
-                # OR (starts < current_start AND end > current_end)
-                | Q(start_month__lt=self.start_month, end_month__gt=self.start_month + (self.timeframe - 1))
-                # OR start = current_start
-                | Q(start_month=self.start_month)
-                # OR end = current_end
-                | Q(end_month=self.start_month + (self.timeframe - 1))
-            )
+        from packaging_report.utils import get_overlapping_reports_for_timeframe
+
+        return get_overlapping_reports_for_timeframe(
+            company_id=self.related_company_id, year=self.year, start_month=self.start_month, timeframe=self.timeframe
         )
 
     def clean(self):

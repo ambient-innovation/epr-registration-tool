@@ -2,6 +2,7 @@ import typing
 from decimal import Decimal
 
 from django.core.exceptions import ValidationError
+from django.db.models import Q
 
 from packaging.price_utils import calculate_material_fees
 
@@ -33,3 +34,29 @@ def calculate_fees(
         fees = fees + material_fees
 
     return round(fees, 2)
+
+
+def get_overlapping_reports_for_timeframe(company_id, year: int, start_month: int, timeframe: int):
+    """
+    return reports which overlap with this report in timeframe
+    """
+    from packaging_report.models import PackagingReport
+
+    return (
+        PackagingReport.objects
+        # should be in the same year and company
+        .filter(year=year, related_company_id=company_id)
+        .annotate_end_month()
+        .filter(
+            # starts between [current_start, current_end-1]
+            Q(start_month__range=(start_month, start_month + (timeframe - 1)))
+            # OR ends between [current_start, current_end]
+            | Q(end_month__range=(start_month, start_month + timeframe))
+            # OR (starts < current_start AND end > current_end)
+            | Q(start_month__lt=start_month, end_month__gt=start_month + (timeframe - 1))
+            # OR start = current_start
+            | Q(start_month=start_month)
+            # OR end = current_end
+            | Q(end_month=start_month + (timeframe - 1))
+        )
+    )

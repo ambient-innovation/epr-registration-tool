@@ -15,6 +15,7 @@
   "currency": "JOD",
   "kg": "kg",
   "edit": "Edit",
+  "error": "Error",
   "backToDashboard": "back to dashboard",
   "previewAlert": {
     "youAreInPreviewMode": "You are in preview mode",
