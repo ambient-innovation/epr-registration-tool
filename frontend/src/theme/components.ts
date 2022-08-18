@@ -1,5 +1,7 @@
 import { ThemeOptions } from '@mui/material/styles/createTheme'
 
+import { notoSansFontCss } from '@/theme/fontsCss'
+
 import { borderRadius } from './borderRadius'
 import { palette } from './colorsPalette'
 
@@ -10,6 +12,9 @@ declare module '@mui/material/Button' {
 }
 
 export const components: ThemeOptions['components'] = {
+  MuiCssBaseline: {
+    styleOverrides: notoSansFontCss.styles,
+  },
   MuiButtonBase: {
     defaultProps: {
       // No more ripple, on the whole application 💣!
