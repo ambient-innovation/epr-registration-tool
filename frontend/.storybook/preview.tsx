@@ -2,6 +2,7 @@ import { MockedProvider } from '@apollo/client/testing'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 import { addDecorator } from '@storybook/react'
 import i18n from 'i18next'
+import React from 'react'
 import { useEffect } from 'react'
 import { I18nextProvider, initReactI18next } from 'react-i18next'
 

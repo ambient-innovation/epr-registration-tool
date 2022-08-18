@@ -11,7 +11,7 @@ export const fontWeights = {
 }
 
 export const typography: TypographyOptions = {
-  fontFamily: 'Noto Sans, sans-serif',
+  fontFamily: ['Noto Sans', 'sans-serif'].join(','),
   fontWeightLight: 300,
   fontWeightRegular: 400,
   fontWeightMedium: 500,
