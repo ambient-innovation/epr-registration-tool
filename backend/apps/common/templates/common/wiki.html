@@ -18,7 +18,7 @@
         <h2>Index</h2>
         <ol style="list-style-type: none">
             <li>
-                <a href="#a-chapter-1">1. Accont</a>
+                <a href="#a-chapter-1">1. Account</a>
                 <ol style="list-style-type: none">
                     <li>
                         <a href="#a-chapter-1-1">1.1 Users</a>
@@ -42,7 +42,7 @@
                 <ol style="list-style-type: none">
 
                     <li>
-                        <a href="#a-chapter-2-1">2.1 Company Registration process</a>
+                        <a href="#a-chapter-2-1">2.1 Company registration process</a>
                         <ol style="list-style-type: none">
                             <li>
                                 <a href="#a-chapter-2-1-1">2.1.1 User part</a>
@@ -89,13 +89,30 @@
         </ol>
 
 
-        <h2 id="a-chapter-1">1. Accont</h2>
+        <h2 id="a-chapter-1">1. Account</h2>
         <h3 id="a-chapter-1-1">1.1 Users</h3>
 
         <p>
-            In <a href="{% url 'admin:account_user_changelist' %}">Users</a> you see a list of superusers and companies
-            contact persons.
+            In <a href="{% url 'admin:account_user_changelist' %}">Users</a> you can see the list of all users of the EPR Registration Tool. 
+            Basically, two types of users are available, which are "user" and "superuser".
+            The "user" type has only the permission to log in to the website. On the other hand, the "superuser" type represents the admin of the application.
+            The "superuser" can also log in to the website and additionally to the admin interface.
+            In the admin interface the "superuser" has all permissions to create, delete and modify all account, company and report data.
+            As you can see in the image below, it is possible to search for specific users by name or email.
         </p>
+        <p>On the right side you can set the following filter options for the user list.</p>
+        <ul>
+            <li>
+                <b>By superuser status</b>: Filters the list by user type (superuser, user)
+            <li><b>By Email confirmed</b>: Filters the list by user has confirmed his email address or not</li>
+            <li><b>By Active</b>: Filters the list by activated or deactivated user</li>
+        </ul>
+        <figure class="figure--bordered">
+            <img src="{% static "wiki/user-overview.png" %}"/>
+            <figcaption>
+                Overview of users
+            </figcaption>
+        </figure>
         <h3 id="a-chapter-1-2">1.2 Add User</h3>
 
         <p>
@@ -103,6 +120,9 @@
             out the required fields.</p>
 
         <ul>
+            <li>
+                <b>Superuser status</b>: Designates that this user is a superuser and has all permissions without explicitly assigning them.
+            </li>
             <li>
                 <b>Active</b>: Designates whether a user account is active or not.
                 Use this flag to deactivate/block a user account
@@ -131,7 +151,7 @@
         <figure class="figure--bordered">
             <img src="{% static "wiki/change-password.png" %}"/>
             <figcaption>
-                change password in admin
+                Change password in admin
             </figcaption>
         </figure>
         <h3 id="a-chapter-1-5">1.5 Notification settings</h3>
@@ -171,7 +191,7 @@
         <p>As configured admin in <a href="{% url 'admin:account_notificationsettings_changelist' %}">Notification
             settings</a> you will receive an email that a new company account is created and the contact person
             confirmed
-            his email address, to check the company and user data and activate it</p>
+            his email address, to check the company and user data and activate it.</p>
         <p>In company details view, you will see the basic company and contact data, if everything looks good, you just
             check "active" checkbox and hit save button.</p>
         <h2 id="a-chapter-3">3. Packaging Reports</h2>
@@ -181,7 +201,7 @@
         <h3 id="a-chapter-3-1">3.1 Data Reports</h3>
         <p>In <a href="{% url 'admin:packaging_report_packagingreport_changelist' %}">Data Reports</a> you see a list of
             created Data Reports with different status.</p>
-        <p>In the lift side you see some useful filters:</p>
+        <p>On the right side you can find an area with various useful filters that allows you to filter the list of the displayed data reports as follows:</p>
         <ul>
             <li>
                 <b>By Status</b>: a Data Report can have different status
@@ -221,10 +241,10 @@
         </ul>
         <h4 id="a-chapter-3-1-2">3.1.2 Forecast Reports</h4>
         <p>In <a href="{% url 'admin:packaging_report_forecastsubmission_changelist' %}">Forecast Reports</a> you see
-            the forecasts packaging entries related to Data Reports</p>
+            the forecasts packaging entries related to Data Reports.</p>
         <h4 id="a-chapter-3-1-3">3.1.3 Final Reports</h4>
         <p>In <a href="{% url 'admin:packaging_report_finalsubmission_changelist' %}">Final Reports</a> you see the
-            final packaging entries related to Data Reports</p>
+            final packaging entries related to Data Reports.</p>
 
         <h3 id="a-chapter-3-2">3.2 Add Data Report as admin</h3>
         <p>A Data Report should be created by companies in the webpage, but if for some reason, you as admin want to
@@ -265,7 +285,7 @@
 
 
         <h2 id="a-chapter-4">4. Packaging</h2>
-        <p>In this section you can create packaging groups and materials which used to create Data Reports</p>
+        <p>In this section you can create packaging groups and materials which used to create Data Reports.</p>
         <h3 id="a-chapter-4-1">4.1 add Packaging Group</h3>
         <p> In <a href="{% url 'admin:packaging_packaginggroup_changelist' %}">Packaging groups</a> you see a list of
             created packaging groups, to add new a one hit "ADD PACKAGING GROUP +" button and fill out the required
