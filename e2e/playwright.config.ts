@@ -15,12 +15,11 @@ const config: PlaywrightTestConfig = {
     timeout: 10000,
   },
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: process.env.CI
-    ? [["junit", { outputFile: "test-results/junit.xml" }], ["list"]]
-    : "list",
+  reporter: process.env.CI ? "html" : [["list"], ["html"]],
   use: {
-    trace: "on-first-retry",
+    trace: "on",
     actionTimeout: 30 * 1000,
+    baseURL: "http://localhost:3000",
   },
   projects: [
     {

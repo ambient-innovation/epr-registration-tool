@@ -22,9 +22,10 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       target: dev
-    depends_on:
-      - backend
     container_name: epr_tool_frontend
+    # this is needed for the server side request
+    environment:
+      - BACKEND_URL=http://backend:8000/
     volumes:
       - ./frontend:/app
       - /app/node_modules/
@@ -51,6 +52,21 @@ services:
     ports:
       - "8025:8025"  # email inbox interface
       - "1025:1025"  # smtp
+
+# Setup for e2e testing
+  backend_e2e:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: dev
+    container_name: epr_tool_backend_e2e
+    env_file: ./backend/.env.e2e
+    command: "./scripts/run_e2e.sh"
+    volumes:
+      - ./backend/:/app
+    ports:
+      - "8000:8000"
+    restart: "no"
 
 volumes:
   postgres_data:

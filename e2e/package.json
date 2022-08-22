@@ -6,7 +6,8 @@
   "author": "evilbeards@ambient.digital",
   "license": "proprietary",
   "dependencies": {
-    "@playwright/test": "^1.21.1"
+    "@playwright/test": "1.24.2",
+    "playwright": "^1.24.2"
   },
   "scripts": {
     "test:head": "playwright test --headed",

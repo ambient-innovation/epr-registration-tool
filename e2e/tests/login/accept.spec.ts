@@ -1,8 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test("test", async ({ page }) => {
-  // Go to http://localhost:3000/
-  await page.goto("http://localhost:3000/");
+  await page.goto("/");
   // Click text=login
   await Promise.all([
     page.waitForNavigation({ url: "**/login" }),
@@ -10,7 +9,7 @@ test("test", async ({ page }) => {
   ]);
   // Testing Autofocus on input[name="email"]
   // Fill input[name="email"]
-  await page.locator('input[name="email"]').fill("admin@epr.local");
+  await page.locator('input[name="email"]').fill("regular@epr.local");
   // Press Tab
   await page.locator('input[name="email"]').press("Tab");
   // Fill input[name="password"]
