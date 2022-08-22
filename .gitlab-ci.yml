@@ -1,4 +1,4 @@
-image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:stable
+image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16
 
 stages:
   - pre-build
@@ -10,14 +10,15 @@ stages:
 # When using dind, it's wise to use the overlays driver for improved performance.
 variables:
   TEST_HELM_CHART_VERSION: "0.5.3"  # <-- helm chart version for test server
-  DOCKER_DRIVER: overlay2
   IMAGE_TAG_BACKEND: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_REF_SLUG
   IMAGE_TAG_FRONTEND: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_REF_SLUG
   IMAGE_TAG_BACKEND_SHA: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_SHORT_SHA
   IMAGE_TAG_FRONTEND_SHA: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_SHORT_SHA
   FF_ENABLE_BASH_EXIT_CODE_CHECK: "true"
-  DOCKER_HOST: tcp://localhost:2375
-  DOCKER_API_VERSION: "1.39"
+  DOCKER_HOST: tcp://docker:2376
+  DOCKER_TLS_CERTDIR: "/certs"
+  DOCKER_TLS_VERIFY: 1
+  DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
   # variables for backend test
   TEST_POSTGRES_CONTAINER_NAME: epr_tool_db
   TEST_POSTGRES_DB: epr-tool
@@ -26,7 +27,8 @@ variables:
   TEST_POSTGRES_PORT: 5432
 
 services:
-  - ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:18.09-dind
+  - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16-dind
+    alias: docker
 
 backend:lint:
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.9-slim
@@ -355,65 +357,4 @@ check:deploy:test:
   except:
     - /^helm[-/\/].*$/
 
-.playwright_cache:
-  cache:
-    paths:
-      - ms-playwright/
-      - .yarn/
-      - node_modules/
-    key: ms-playwright
-
-e2e:test:
-  stage: post-build
-  needs: [ 'frontend:build-and-push', 'backend:build-and-push' ]
-  tags:
-    - high-load
-  variables:
-    BACKEND_CONTAINER_NAME: epr_backend_test_e2e
-    FRONTEND_CONTAINER_NAME: epr_frontend_test_e2e
-    NETWORK_NAME: epr_e2e_network
-    IMAGE_TAG_E2E: epr_test_e2e
-  extends: .playwright_cache
-  before_script:
-    # login to registry
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker run
-      --name $BACKEND_CONTAINER_NAME
-      -d
-      -p 8000:8000
-      --network="host"
-      -e DJANGO_ALLOWED_HOSTS=127.0.0.1,localhost,0.0.0.0
-      -e DJANGO_CELERY_TASK_ALWAYS_EAGER=True
-      -e DJANGO_SESSION_COOKIE_SECURE=False
-      -e USE_POSTGRES_DATABASE=False
-      -e DJANGO_FRONTEND_URL=localhost:3000
-      $IMAGE_TAG_BACKEND
-      ./scripts/run_e2e.sh
-
-    - docker run
-      --name $FRONTEND_CONTAINER_NAME
-      -d
-      -p 3000:3000
-      --network="host"
-      -e REACT_APP_ENVIRONMENT=E2E
-      -e REACT_APP_BACKEND_URL=http://localhost:8000
-      $IMAGE_TAG_FRONTEND
-  script:
-    - docker run --rm
-      --name playwright
-      --volume  "$(pwd)/e2e":"$(pwd)"
-      --workdir "$(pwd)"
-      --env CI="true"
-      --env PLAYWRIGHT_BROWSERS_PATH="$(pwd)/ms-playwright"
-      --network=host
-      --ipc=host
-      --user "${CURRENT_USER:-pwuser:pwuser}"
-      mcr.microsoft.com/playwright:v1.21.1-focal
-      bash -c 'yarn install --pure-lockfile --cache-folder .yarn; yarn playwright install; yarn playwright test'
-
-  after_script:
-    - docker stop $BACKEND_CONTAINER_NAME && docker rm $BACKEND_CONTAINER_NAME || true
-    - docker stop $FRONTEND_CONTAINER_NAME && docker rm $FRONTEND_CONTAINER_NAME || true
-  except:
-    - /^helm[-/\/].*$/
-    - triggers
+# If you want the e2e job config please check the history
