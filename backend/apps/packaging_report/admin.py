@@ -63,6 +63,14 @@ class FinalSubmissionAdmin(admin.ModelAdmin):
     def has_change_permission(self, request, obj=None):
         return False
 
+    def save_related(self, request, form, formsets, change):
+        super().save_related(request, form, formsets, change)
+        instance = form.instance
+        instance.fees = ReportSubmission.calculate_fees(
+            instance.related_report, instance.material_records_queryset.all()
+        )
+        instance.save()
+
 
 class PackagingReportForm(forms.ModelForm):
     YEAR_CHOICES = []
@@ -220,9 +228,6 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
                 ),
             )
         )
-
-    def has_change_permission(self, request, obj=None):
-        return obj.is_forecast_editable() if obj else True
 
     @admin.display(description='End month')
     def end_month(self, obj: PackagingReport):
