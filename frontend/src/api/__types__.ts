@@ -246,6 +246,7 @@ export type PackagingReportType = {
   invoiceFile?: Maybe<DjangoFileType>
   isFinalReportSubmitted: Scalars['Boolean']
   isForecastEditable: Scalars['Boolean']
+  isPaid: Scalars['Boolean']
   packagingGroupsCount: Scalars['Int']
   startMonth: Scalars['Int']
   timeframe: TimeframeType
@@ -297,6 +298,7 @@ export type Query = {
 }
 
 export type QueryHasOverlappingPackagingReportsArgs = {
+  packagingReportId?: InputMaybe<Scalars['ID']>
   startMonth: Scalars['Int']
   timeframe: TimeframeType
   year: Scalars['Int']
@@ -533,6 +535,7 @@ export type PackagingReportsQuery = {
       isFinalReportSubmitted: boolean
       endDatetime: any
       fees?: any | null
+      isPaid: boolean
       invoiceFile?: { __typename?: 'DjangoFileType'; url: string } | null
     }>
     pageInfo: {
@@ -596,6 +599,7 @@ export type PackagingBaseDataQuery = {
 }
 
 export type HasOverlappingPackagingReportsQueryVariables = Exact<{
+  packagingReportId?: InputMaybe<Scalars['ID']>
   startMonth: Scalars['Int']
   year: Scalars['Int']
   timeframe: TimeframeType
@@ -1113,6 +1117,7 @@ export const PackagingReportsDocument = gql`
         isFinalReportSubmitted
         endDatetime
         fees
+        isPaid
         invoiceFile {
           url
         }
@@ -1326,11 +1331,13 @@ export type PackagingBaseDataQueryResult = Apollo.QueryResult<
 >
 export const HasOverlappingPackagingReportsDocument = gql`
   query hasOverlappingPackagingReports(
+    $packagingReportId: ID
     $startMonth: Int!
     $year: Int!
     $timeframe: TimeframeType!
   ) {
     hasOverlappingPackagingReports(
+      packagingReportId: $packagingReportId
       startMonth: $startMonth
       year: $year
       timeframe: $timeframe

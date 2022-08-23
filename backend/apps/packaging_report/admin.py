@@ -1,7 +1,8 @@
 from django import forms
 from django.conf.locale.es import formats as es_formats
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.db.models import Case, CharField, F, Value, When
+from django.http import HttpResponseRedirect
 from django.urls import path
 from django.utils import timezone
 from django.utils.html import format_html
@@ -11,7 +12,13 @@ import pytz
 from ai_django_core.admin.model_admins.mixins import CommonInfoAdminMixin
 
 from common.models import Month
-from packaging_report.models import FinalSubmission, ForecastSubmission, MaterialRecord, PackagingReport
+from packaging_report.models import (
+    FinalSubmission,
+    ForecastSubmission,
+    MaterialRecord,
+    PackagingReport,
+    ReportSubmission,
+)
 from packaging_report.views import CSVExportDataView
 
 es_formats.DATETIME_FORMAT = "d M Y H:i:s"
@@ -46,6 +53,9 @@ class ForecastSubmissionAdmin(admin.ModelAdmin):
     def has_change_permission(self, request, obj=None):
         return obj.related_report.is_forecast_editable() if obj else True
 
+    def has_module_permission(self, request):
+        return False
+
 
 @admin.register(FinalSubmission)
 class FinalSubmissionAdmin(admin.ModelAdmin):
@@ -61,6 +71,17 @@ class FinalSubmissionAdmin(admin.ModelAdmin):
         return super().get_queryset(request).select_related('related_report')
 
     def has_change_permission(self, request, obj=None):
+        return False
+
+    def save_related(self, request, form, formsets, change):
+        super().save_related(request, form, formsets, change)
+        instance = form.instance
+        instance.fees = ReportSubmission.calculate_fees(
+            instance.related_report, instance.material_records_queryset.all()
+        )
+        instance.save()
+
+    def has_module_permission(self, request):
         return False
 
 
@@ -83,6 +104,7 @@ class PackagingReportForm(forms.ModelForm):
         if 'instance' not in kwargs:
             if 'initial' not in kwargs:
                 kwargs['initial'] = {}
+            kwargs['initial'].update({'year': self.now.year})
             kwargs['initial'].update({'start_month': self.now.month})
         super().__init__(*args, **kwargs)
 
@@ -116,6 +138,7 @@ class StatusFilter(admin.SimpleListFilter):
         return (
             ('forecast', _('Forecast')),
             ('payment-required', _('Payment required')),
+            ('paid', _('Paid')),
             ('no-submission', _('No data')),
         )
 
@@ -162,6 +185,7 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
         'is_forecast_editable',
         'related_forecast',
         'related_final_submission',
+        'is_paid',
         'status',
         'invoice_file',
     )
@@ -184,6 +208,8 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
         MonthFilter,
     )
     readonly_fields = (
+        'invoice_file',
+        'is_paid',
         'related_forecast',
         'end_datetime_display',
         'is_forecast_editable',
@@ -197,6 +223,21 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
 
     class Media:
         css = {'all': ('packaging_report/admin.css',)}
+
+    def response_change(self, request, obj):
+        if "_mark_as_paid" in request.POST:
+            if obj.status == 'payment-required':
+                obj.is_paid = True
+                obj.save()
+                messages.success(request, _('Marked as paid successfully.'))
+            else:
+                messages.error(request, _('Payment is not required yet.'))
+            return HttpResponseRedirect('.')
+        if '_revert_mark_as_paid' in request.POST:
+            obj.is_paid = False
+            obj.save()
+            return HttpResponseRedirect('.')
+        return super().response_change(request, obj)
 
     def get_fields(self, request, obj=None):
         # in add form we don't need all fields
@@ -213,6 +254,7 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
             .annotate(company_name=F('related_company__name'))
             .annotate(
                 status=Case(
+                    When(is_paid=True, then=Value('paid')),
                     When(related_final_submission__isnull=False, then=Value('payment-required')),
                     When(related_forecast__isnull=False, then=Value('forecast')),
                     output_field=CharField(),
@@ -220,9 +262,6 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
                 ),
             )
         )
-
-    def has_change_permission(self, request, obj=None):
-        return obj.is_forecast_editable() if obj else True
 
     @admin.display(description='End month')
     def end_month(self, obj: PackagingReport):
@@ -243,6 +282,8 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
             label = _('Forecast')
         elif status == 'payment-required':
             label = _('Payment required')
+        elif status == 'paid':
+            label = _('Paid')
         else:
             label = _('no data')
         return format_html(
@@ -282,4 +323,7 @@ class MaterialRecordAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
         return False
 
     def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_module_permission(self, request):
         return False

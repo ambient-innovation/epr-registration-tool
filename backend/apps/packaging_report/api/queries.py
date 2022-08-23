@@ -42,13 +42,18 @@ def has_overlapping_packaging_reports(
     timeframe: strawberry.enum(TimeframeType),
     year: int,
     start_month: int,
+    packaging_report_id: typing.Optional[ID] = None,
 ) -> bool:
     from packaging_report.utils import get_overlapping_reports_for_timeframe
 
     current_user = info.context.request.user
     related_company_id = current_user.related_company_id
     return get_overlapping_reports_for_timeframe(
-        company_id=related_company_id, year=year, start_month=start_month, timeframe=timeframe
+        company_id=related_company_id,
+        year=year,
+        start_month=start_month,
+        timeframe=timeframe,
+        exclude_report_id=packaging_report_id,
     ).exists()
 
 

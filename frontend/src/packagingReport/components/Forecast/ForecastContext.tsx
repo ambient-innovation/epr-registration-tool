@@ -30,6 +30,7 @@ export const LAST_STEP_NUMBER = stepNumbers[stepNumbers.length - 1]
 export interface ForecastContextValue {
   data: ForecastData
   initialData: ForecastData
+  packagingReportId?: string
   isTimeframeReadonly: boolean
   isReadonlyForm: boolean
   goToPrevStep: () => void
@@ -169,6 +170,7 @@ export const ForecastProvider: React.FC<{
       activeStep,
       data,
       initialData: defaultData ?? initialData,
+      packagingReportId: packagingReportId,
       // the timeframe is not editable see #12
       isTimeframeReadonly: !!packagingReportId,
       // if both are false this mean it is read only form

@@ -40,6 +40,7 @@ export const palette = {
     black: '#121212',
     white: '#fff',
   },
+  success: { main: '#2E7D32' },
 }
 
 export type ColorPalette = typeof palette

@@ -36,7 +36,9 @@ def calculate_fees(
     return round(fees, 2)
 
 
-def get_overlapping_reports_for_timeframe(company_id, year: int, start_month: int, timeframe: int):
+def get_overlapping_reports_for_timeframe(
+    company_id, year: int, start_month: int, timeframe: int, exclude_report_id=None
+):
     """
     return reports which overlap with this report in timeframe
     """
@@ -59,4 +61,5 @@ def get_overlapping_reports_for_timeframe(company_id, year: int, start_month: in
             # OR end = current_end
             | Q(end_month=start_month + (timeframe - 1))
         )
+        .exclude(pk=exclude_report_id)
     )

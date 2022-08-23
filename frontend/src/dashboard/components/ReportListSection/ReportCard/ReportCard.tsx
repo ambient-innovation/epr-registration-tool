@@ -20,6 +20,7 @@ export type ReportCard = Pick<
   | 'isForecastEditable'
   | 'isFinalReportSubmitted'
   | 'fees'
+  | 'isPaid'
   | 'endDatetime'
 > & { invoiceFile?: Pick<DjangoFileType, 'url'> | null }
 
@@ -34,6 +35,7 @@ export const ReportCard = ({
   isFinalReportSubmitted,
   endDatetime,
   fees,
+  isPaid,
   invoiceFile,
 }: ReportCard): React.ReactElement => {
   const { t } = useTranslation()
@@ -49,12 +51,18 @@ export const ReportCard = ({
     <Chip
       label={
         isFinalReportSubmitted
-          ? 'Payment required'
+          ? isPaid
+            ? 'paid'
+            : 'Payment required'
           : t('dashboard.reportListSection.reportCard.forecast')
       }
       sx={{
         ...statusChipSx,
-        backgroundColor: isFinalReportSubmitted ? 'warning.main' : 'info.main',
+        backgroundColor: isFinalReportSubmitted
+          ? isPaid
+            ? 'success.main'
+            : 'warning.main'
+          : 'info.main',
       }}
       role={'listitem'}
     />

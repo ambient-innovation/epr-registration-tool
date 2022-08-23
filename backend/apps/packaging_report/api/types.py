@@ -56,6 +56,7 @@ class PackagingReportType:
     start_month: auto
     timezone_info: auto
     created_at: auto
+    is_paid: auto
 
     @strawberry.django.field
     def end_datetime(self, root) -> datetime.datetime:

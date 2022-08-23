@@ -64,8 +64,8 @@
                         <a href="#a-chapter-3-1">3.1 Data Reports</a>
                         <ol style="list-style-type: none">
                             <li><a href="#a-chapter-3-1-1">3.1.1 Data Reports</a></li>
-                            <li><a href="#a-chapter-3-1-2">3.1.2 Forecast Reports</a></li>
-                            <li><a href="#a-chapter-3-1-3">3.1.3 Final Reports</a></li>
+                            <li><a href="#a-chapter-3-1-2">3.1.2 Forecast packaging data report</a></li>
+                            <li><a href="#a-chapter-3-1-3">3.1.3 Final packaging data report</a></li>
                         </ol>
                     </li>
                     <li>
@@ -73,6 +73,9 @@
                     </li>
                     <li>
                         <a href="#a-chapter-3-3">3.3 Export Data Report as CSV</a>
+                    </li>
+                    <li>
+                        <a href="#a-chapter-3-4">3.4 Mark Data Report as paid</a>
                     </li>
                 </ol>
             </li>
@@ -239,36 +242,50 @@
             <li>Status of the report</li>
             <li>Invoice file for download in case it exist</li>
         </ul>
-        <h4 id="a-chapter-3-1-2">3.1.2 Forecast Reports</h4>
-        <p>In <a href="{% url 'admin:packaging_report_forecastsubmission_changelist' %}">Forecast Reports</a> you see
-            the forecasts packaging entries related to Data Reports.</p>
-        <h4 id="a-chapter-3-1-3">3.1.3 Final Reports</h4>
-        <p>In <a href="{% url 'admin:packaging_report_finalsubmission_changelist' %}">Final Reports</a> you see the
-            final packaging entries related to Data Reports.</p>
+        <h4 id="a-chapter-3-1-2">3.1.2 Forecast packaging data report</h4>
+        <p>In Data Report Details page you see a link to its Forecast Report details.</p>
+        <figure class="figure--bordered">
+            <img src="{% static "wiki/forecast-link.png" %}"/>
+            <figcaption>
+                Data Report's Forecast link
+            </figcaption>
+        </figure>
+        <h4 id="a-chapter-3-1-3">3.1.3 Final packaging data report</h4>
+        <p>In Data Report Details page you see a link to its Final Report details.</p>
+        <figure class="figure--bordered">
+            <img src="{% static "wiki/final-link.png" %}"/>
+            <figcaption>
+                Data Report's Final link
+            </figcaption>
+        </figure>
 
         <h3 id="a-chapter-3-2">3.2 Add Data Report as admin</h3>
         <p>A Data Report should be created by companies in the webpage, but if for some reason, you as admin want to
             create one using the admin interface:</p>
         <ol>
-            <p>To create a forecast report:</p>
+            <p style="font-weight: bold">→ To create a forecast report:</p>
             <li>Go to <a href="{% url 'admin:packaging_report_packagingreport_changelist' %}">Data Reports</a> and hit
                 "ADD DATA REPORT +" button and fill out the required data and hit save button.
             </li>
-            <li>Go to <a href="{% url 'admin:packaging_report_forecastsubmission_changelist' %}">Forecast Report</a> and
-                hit "ADD FORECAST REPORT +" button and select the previously created Data Report and add report
-                packaging
-                entries and hit save button.
+            <li>Open the new created Data Report and you should see a link in the bottom right corner says "+ add Forecast Data", click on the link and select the previously created Data Report and add report
+                packaging entries and hit save button.
             </li>
+            <figure class="figure--bordered">
+            <img src="{% static "wiki/add-forecast.png" %}"/>
+
+            </figure>
 
         </ol>
         <ol>
-            <p>To create a final report:</p>
-            <li>Create forecast report</li>
-            <li>Go to <a href="{% url 'admin:packaging_report_finalsubmission_changelist' %}">Final Report</a> and
-                hit "ADD FINAL REPORT +" button and select the previously created Data Report and add report packaging
-                entries
-                and hit save button.
+            <p style="font-weight: bold">→ To create a final report:</p>
+            <li>Create forecast report (see the section above)</li>
+            <li>Open the new created Data Report and you should see a link in the bottom right corner says "+ add Final Data", click on the link and select the previously created Data Report and add report packaging
+                entries and hit save button.
             </li>
+              <figure class="figure--bordered">
+            <img src="{% static "wiki/add-final.png" %}"/>
+
+            </figure>
         </ol>
         <h3 id="a-chapter-3-3">3.3 Export Data Report as CSV</h3>
         <p>To export some useful data for reporting as csv file:</p>
@@ -283,6 +300,10 @@
         </ul>
         <p>Hit "Export to CSV ⬇️" button to generate and download the file.</p>
 
+        <h3 id="a-chapter-3-4">3.4 Mark Data Report as paid</h3>
+        <p>After use submitted the Final packaging Data, an invoice is created and send, if the use paid the fee, you need to mark the Data Report as paid. To do that, open the related Data Report,
+            and you should see in the bottom right corner a button called "MARK AS PAID ✅", click on it and confirm.</p>
+        <p>You can revert this action by just clicking on "MARK AS NOT PAID" button in the same place later.</p>
 
         <h2 id="a-chapter-4">4. Packaging</h2>
         <p>In this section you can create packaging groups and materials which used to create Data Reports.</p>
