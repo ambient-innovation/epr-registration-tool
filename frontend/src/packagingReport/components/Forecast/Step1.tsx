@@ -68,7 +68,8 @@ const schema: SchemaOf<Record<keyof FormData, unknown>> = yup
 const resolver = yupResolver(schema)
 
 export const Step1 = (_: Step1) => {
-  const { initialData, onSubmit, isTimeframeReadonly } = useForecastContext()
+  const { initialData, onSubmit, isTimeframeReadonly, packagingReportId } =
+    useForecastContext()
   const { t } = useTranslation()
 
   const { handleSubmit, control, watch } = useForm<FormData>({
@@ -93,7 +94,7 @@ export const Step1 = (_: Step1) => {
     error: errorCheckingOverlapping,
     loading: checkingOverlapping,
   } = useHasOverlappingPackagingReportsQuery({
-    variables: { year, startMonth, timeframe },
+    variables: { packagingReportId, year, startMonth, timeframe },
   })
 
   const hasOverlappingPackagingReports =

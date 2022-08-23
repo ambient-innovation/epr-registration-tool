@@ -189,7 +189,7 @@ type Query {
   packagingGroups: [PackagingGroupType!]!
   packagingMaterials: [MaterialType!]!
   packagingReportFeesEstimation(timeframe: TimeframeType!, year: Int!, startMonth: Int!, packagingRecords: [PackagingGroupInput!]!): Decimal!
-  hasOverlappingPackagingReports(timeframe: TimeframeType!, year: Int!, startMonth: Int!): Boolean!
+  hasOverlappingPackagingReports(timeframe: TimeframeType!, year: Int!, startMonth: Int!, packagingReportId: ID = null): Boolean!
   packagingReports(pagination: PaginationInput = null, filter: PackagingReportsFilterInput = null, sorting: PackagingReportsSortingOption = NEWEST_FIRST): PackagingReportTypePaginationResult!
   packagingReportForecastDetails(packagingReportId: ID!): PackagingReportType
   packagingReportFinalDetails(packagingReportId: ID!): PackagingReportType

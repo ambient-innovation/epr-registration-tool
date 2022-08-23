@@ -297,6 +297,7 @@ export type Query = {
 }
 
 export type QueryHasOverlappingPackagingReportsArgs = {
+  packagingReportId?: InputMaybe<Scalars['ID']>
   startMonth: Scalars['Int']
   timeframe: TimeframeType
   year: Scalars['Int']
@@ -596,6 +597,7 @@ export type PackagingBaseDataQuery = {
 }
 
 export type HasOverlappingPackagingReportsQueryVariables = Exact<{
+  packagingReportId?: InputMaybe<Scalars['ID']>
   startMonth: Scalars['Int']
   year: Scalars['Int']
   timeframe: TimeframeType
@@ -1326,11 +1328,13 @@ export type PackagingBaseDataQueryResult = Apollo.QueryResult<
 >
 export const HasOverlappingPackagingReportsDocument = gql`
   query hasOverlappingPackagingReports(
+    $packagingReportId: ID
     $startMonth: Int!
     $year: Int!
     $timeframe: TimeframeType!
   ) {
     hasOverlappingPackagingReports(
+      packagingReportId: $packagingReportId
       startMonth: $startMonth
       year: $year
       timeframe: $timeframe
