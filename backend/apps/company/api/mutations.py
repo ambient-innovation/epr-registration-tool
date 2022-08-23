@@ -149,6 +149,8 @@ def change_company_details(
         if additional_invoice_recipient and not additional_invoice_recipient_delete:
             additional_invoice_recipient.full_clean()
     except ValidationError as e:
+        if len([error for error in e.error_dict.get('identification_number', []) if error.code == 'unique']):
+            raise GraphQLError('identificationNumberAlreadyExists')
         raise GraphQLError('validationError', original_error=e)
 
     with transaction.atomic():

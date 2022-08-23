@@ -190,7 +190,7 @@ class ExportReportDataTestCase(BaseTestCase):
             [
                 self.report_1.pk,
                 'DE1000000000',
-                'DE1235458',
+                self.company.identification_number,
                 'Farwell Co',
                 2022,
                 'January',
@@ -205,7 +205,7 @@ class ExportReportDataTestCase(BaseTestCase):
             [
                 self.report_1.pk,
                 'DE1000000000',
-                'DE1235458',
+                self.company.identification_number,
                 'Farwell Co',
                 2022,
                 'January',

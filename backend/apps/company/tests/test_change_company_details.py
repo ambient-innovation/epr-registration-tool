@@ -150,6 +150,21 @@ class ChangeCompanyDetailsTestCase(BaseApiTestCase):
             message='validationError',
         )
 
+    def test_change_company_details_identification_number_already_exists(self):
+        baker.make_recipe(
+            'company.tests.company',
+            identification_number=self.DEFAULT_COMPANY_INPUT['identificationNumber'],
+        )
+        self.query_and_assert_error(
+            self.MUTATION,
+            variables={
+                'companyInput': self.DEFAULT_COMPANY_INPUT,
+                'contactInfoInput': self.DEFAULT_CONTACT_INFO_INPUT,
+                'additionalInvoiceRecipientInput': None,
+            },
+            message='identificationNumberAlreadyExists',
+        )
+
     def test_create_company_profile_without_additional_info_no_errors(self):
         content = self.query_and_load_data(
             self.MUTATION,

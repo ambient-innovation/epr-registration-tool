@@ -560,7 +560,12 @@ const ChangeCompanyDetailsForm = ({
       </Box>
       {error && (
         <Box mt={5}>
-          <ApolloErrorAlert error={error} />
+          <ApolloErrorAlert
+            title={t(
+              'common:accountSettings.changeCompanyDataForm.updateFailed'
+            )}
+            error={error}
+          />
         </Box>
       )}
       <FormSubmitFooter

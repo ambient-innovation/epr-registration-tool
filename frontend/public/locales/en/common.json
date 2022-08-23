@@ -144,7 +144,8 @@
     "inactiveUser": "Your account has been blocked.",
     "companyDataNotCompleted": "Please complete your company profile first.",
     "materialQuantityInvalidDecimal": "An entry on the material quantities is invalid.",
-    "timeframeOverlap": "Report's timeframe overlaps with already existing Data report(s), please check."
+    "timeframeOverlap": "Report's timeframe overlaps with already existing Data report(s), please check.",
+    "identificationNumberAlreadyExists": "A company with this VAT / tax number has already been registered."
   },
   "internalErrors": {
     "unknownError": "Something unexpected happened. Please reload and try again.",
@@ -210,7 +211,8 @@
       "updateSuccessMessage": "Your company data has been updated.",
       "noCompanyAssigned": "Your account is not associated with a company",
       "additionalInvoiceRecipient": "Additional invoice recipient",
-      "additionalInvoiceRecipientDesc": " If the invoice should not be sent to you but to the billing department or other recipients of your company, please enter the contact data here."
+      "additionalInvoiceRecipientDesc": " If the invoice should not be sent to you but to the billing department or other recipients of your company, please enter the contact data here.",
+      "updateFailed": "Your company data could not be updated"
     },
     "editAccountForm": {
       "title": "Account",
