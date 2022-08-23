@@ -22,6 +22,7 @@ import {
   CompanyDetailsWithContactInfoQuery,
   useChangeCompanyDetailsMutation,
   useCompanyDetailsWithContactInfoQuery,
+  useUserAccountDataQuery,
 } from '@/api/__types__'
 import { getTitleOptions } from '@/auth/components/Registration/constants'
 import { ApolloErrorAlert } from '@/common/components/ApolloErrorAlert'
@@ -82,6 +83,7 @@ interface ChangeCompanyDetailsForm {
   companyDetails: NonNullable<
     CompanyDetailsWithContactInfoQuery['companyDetails']
   >
+  defaultPhoneNumber?: string
 }
 
 export const TaxNumberHeader = (): React.ReactElement => {
@@ -134,6 +136,7 @@ export const CompanyDataHeader = (): React.ReactElement => {
 
 const ChangeCompanyDetailsForm = ({
   companyDetails,
+  defaultPhoneNumber,
 }: ChangeCompanyDetailsForm): React.ReactElement => {
   const { t } = useTranslation()
 
@@ -148,14 +151,20 @@ const ChangeCompanyDetailsForm = ({
       name: companyDetails.name,
       distributorType: companyDetails.distributorType,
       identificationNumber: companyDetails.identificationNumber,
-      country: companyDetails.contactInfo?.country || '',
+      country:
+        companyDetails.contactInfo?.country ||
+        COUNTRY_OPTIONS.find(
+          (option) => option.value.toLowerCase() === companyDetails.countryCode
+        )?.label ||
+        '',
       city: companyDetails.contactInfo?.city || '',
       postalCode: companyDetails.contactInfo?.postalCode || '',
       street: companyDetails.contactInfo?.street || '',
       streetNumber: companyDetails.contactInfo?.streetNumber || '',
       additionalAddressInfo:
         companyDetails.contactInfo?.additionalAddressInfo || '',
-      phoneNumber: companyDetails.contactInfo?.phoneNumber || '',
+      phoneNumber:
+        companyDetails.contactInfo?.phoneNumber || defaultPhoneNumber || '',
       invoiceRecipientTitle:
         companyDetails?.additionalInvoiceRecipient?.title || '',
       invoiceRecipientFullName:
@@ -167,7 +176,7 @@ const ChangeCompanyDetailsForm = ({
       useAdditionalInvoiceRecipient:
         !!companyDetails?.additionalInvoiceRecipient,
     }),
-    [companyDetails]
+    [companyDetails, defaultPhoneNumber]
   )
 
   const { register, handleSubmit, formState, control, reset, watch } =
@@ -587,6 +596,7 @@ const LoadingState = (): React.ReactElement => {
 
 export const ChangeCompanyDetails = (): React.ReactElement => {
   const { loading, data } = useCompanyDetailsWithContactInfoQuery()
+  const { data: accountData } = useUserAccountDataQuery()
   const { t } = useTranslation()
   return (
     <section>
@@ -597,7 +607,10 @@ export const ChangeCompanyDetails = (): React.ReactElement => {
           {t('common:accountSettings.changeCompanyDataForm.noCompanyAssigned')}
         </Alert>
       ) : (
-        <ChangeCompanyDetailsForm companyDetails={data.companyDetails} />
+        <ChangeCompanyDetailsForm
+          defaultPhoneNumber={accountData?.me?.phoneOrMobile}
+          companyDetails={data.companyDetails}
+        />
       )}
     </section>
   )

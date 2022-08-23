@@ -36,6 +36,7 @@ class CompanyType:
     lastmodified_at: auto
     created_at: auto
     identification_number: auto
+    country_code: str
     is_profile_completed: bool
     contact_info: Optional[CompanyContactInfoType]
     additional_invoice_recipient: Optional[AdditionalInvoiceRecipientType]

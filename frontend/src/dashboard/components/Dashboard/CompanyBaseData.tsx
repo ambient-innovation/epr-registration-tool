@@ -11,7 +11,7 @@ import { defaultGridSx } from '@/theme/layout'
 import { fontWeights } from '@/theme/typography'
 
 export interface CompanyBaseData {
-  companyInformation: Omit<CompanyType, 'logo'> & {
+  companyInformation: Omit<CompanyType, 'logo' | 'countryCode'> & {
     logo?: Pick<ImageType, 'url'> | null
   }
 }

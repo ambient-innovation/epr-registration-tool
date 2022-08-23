@@ -46,6 +46,7 @@ type CompanyType {
   lastmodifiedAt: DateTime!
   createdAt: DateTime!
   identificationNumber: String!
+  countryCode: String!
   isProfileCompleted: Boolean!
   contactInfo(pk: ID): CompanyContactInfoType
   additionalInvoiceRecipient(pk: ID): AdditionalInvoiceRecipientType

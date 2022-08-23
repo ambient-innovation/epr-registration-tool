@@ -73,6 +73,7 @@ export type CompanyType = {
   __typename?: 'CompanyType'
   additionalInvoiceRecipient?: Maybe<AdditionalInvoiceRecipientType>
   contactInfo?: Maybe<CompanyContactInfoType>
+  countryCode: Scalars['String']
   createdAt: Scalars['DateTime']
   distributorType: DistributorType
   id: Scalars['ID']
@@ -362,6 +363,7 @@ export type CompanyDetailsWithContactInfoQuery = {
     distributorType: DistributorType
     identificationNumber: string
     isProfileCompleted: boolean
+    countryCode: string
     contactInfo?: {
       __typename?: 'CompanyContactInfoType'
       postalCode?: string | null
@@ -693,6 +695,7 @@ export const CompanyDetailsWithContactInfoDocument = gql`
       distributorType
       identificationNumber
       isProfileCompleted
+      countryCode
       contactInfo {
         postalCode
         streetNumber
