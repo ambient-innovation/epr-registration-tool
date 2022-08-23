@@ -104,6 +104,7 @@ class PackagingReportForm(forms.ModelForm):
         if 'instance' not in kwargs:
             if 'initial' not in kwargs:
                 kwargs['initial'] = {}
+            kwargs['initial'].update({'year': self.now.year})
             kwargs['initial'].update({'start_month': self.now.month})
         super().__init__(*args, **kwargs)
 
