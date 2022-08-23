@@ -53,6 +53,9 @@ class ForecastSubmissionAdmin(admin.ModelAdmin):
     def has_change_permission(self, request, obj=None):
         return obj.related_report.is_forecast_editable() if obj else True
 
+    def has_module_permission(self, request):
+        return False
+
 
 @admin.register(FinalSubmission)
 class FinalSubmissionAdmin(admin.ModelAdmin):
@@ -77,6 +80,9 @@ class FinalSubmissionAdmin(admin.ModelAdmin):
             instance.related_report, instance.material_records_queryset.all()
         )
         instance.save()
+
+    def has_module_permission(self, request):
+        return False
 
 
 class PackagingReportForm(forms.ModelForm):
