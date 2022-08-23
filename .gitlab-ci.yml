@@ -30,6 +30,7 @@ services:
   - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16-dind
     alias: docker
 
+
 backend:lint:
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.9-slim
   stage: pre-build
@@ -61,6 +62,11 @@ backend:build-and-push:
   needs: [ ]
   tags:
     - normal-load
+  before_script:
+    # this needed, or you will get the error:
+    # "unable to resolve docker endpoint: open /certs/client/ca.pem: no such file or directory"
+    # generating certs is too slow: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/27384
+    - until docker info; do sleep 1; done
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker build
@@ -265,8 +271,12 @@ frontend:build-and-push:
   tags:
     - high-load
   before_script:
-    - docker login -u $CI_DEPENDENCY_PROXY_USER -p $CI_DEPENDENCY_PROXY_PASSWORD $CI_DEPENDENCY_PROXY_SERVER
+    # this needed, or you will get the error:
+    # "unable to resolve docker endpoint: open /certs/client/ca.pem: no such file or directory"
+    # generating certs is too slow: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/27384
+    - until docker info; do sleep 1; done
   script:
+    - docker login -u $CI_DEPENDENCY_PROXY_USER -p $CI_DEPENDENCY_PROXY_PASSWORD $CI_DEPENDENCY_PROXY_SERVER
     - docker build
       --compress
       --cache-from $CI_REGISTRY_IMAGE/frontend:develop
