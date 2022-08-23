@@ -56,10 +56,12 @@ class Company(CommonInfo):
         help_text=_('No user of the company will be able to log in as long the company is inactive.'),
     )
     identification_number = models.CharField(
-        verbose_name=_('National identification number'),
+        verbose_name=_('VAT / tax number'),
         blank=True,
         max_length=255,
         validators=(validate_string_without_whitespaces,),
+        help_text=_('National identification number'),
+        unique=True,
     )
     country_code = models.CharField(
         verbose_name=_('Country code'),

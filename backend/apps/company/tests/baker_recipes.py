@@ -27,6 +27,6 @@ company = Recipe(
     name='Farwell Co',
     distributor_type='IMPORTER',
     is_active=True,
-    identification_number="DE1235458",
+    identification_number=seq("123456789"),
     registration_number=seq('DE', start=REGISTRATION_NUMBER_MIN),
 )
