@@ -15,7 +15,6 @@ const config = {
   SENTRY_RELEASE: process.env.NEXT_PUBLIC_SENTRY_RELEASE,
 
   PREVIEW_SECRET: process.env.PREVIEW_SECRET,
-  PUBLISH_SECRET: process.env.PUBLISH_SECRET,
 }
 
 export default config
