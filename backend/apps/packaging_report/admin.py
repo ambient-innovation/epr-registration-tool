@@ -201,6 +201,7 @@ class PackagingReportAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
         MonthFilter,
     )
     readonly_fields = (
+        'invoice_file',
         'is_paid',
         'related_forecast',
         'end_datetime_display',
