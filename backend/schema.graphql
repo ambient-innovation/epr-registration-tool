@@ -146,6 +146,7 @@ type PackagingReportType {
   startMonth: Int!
   timezoneInfo: String!
   createdAt: DateTime!
+  isPaid: Boolean!
   endDatetime: DateTime!
   fees: Decimal
   finalReport: FinalSubmissionType

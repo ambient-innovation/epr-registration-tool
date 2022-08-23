@@ -7,15 +7,18 @@
   line-height: 166%;
   padding: 0 10px;
 }
-.status-badge--payment-required {
-  background: #ed6c02;
-}
-.status-badge--forecast {
-  background: #0288d1;
-}
 .status-badge span {
   white-space: nowrap;
   color: #fff;
+}
+.status-badge--payment-required {
+  background: #ed6c02;
+}
+.status-badge--paid {
+  background: #2E7D32;
+}
+.status-badge--forecast {
+  background: #0288d1;
 }
 
 /*# sourceMappingURL=admin.css.map */

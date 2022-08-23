@@ -114,6 +114,7 @@ class PackagingReport(CommonInfo):
         null=True,
         blank=True,
     )
+    is_paid = models.BooleanField(_('Paid'), default=False, help_text=_('Whether fee has been paid or not.'))
 
     objects = PackagingReportQuerySet.as_manager()
 
@@ -124,7 +125,11 @@ class PackagingReport(CommonInfo):
         from packaging_report.utils import get_overlapping_reports_for_timeframe
 
         return get_overlapping_reports_for_timeframe(
-            company_id=self.related_company_id, year=self.year, start_month=self.start_month, timeframe=self.timeframe
+            company_id=self.related_company_id,
+            year=self.year,
+            start_month=self.start_month,
+            timeframe=self.timeframe,
+            exclude_report_id=self.pk,
         )
 
     def clean(self):

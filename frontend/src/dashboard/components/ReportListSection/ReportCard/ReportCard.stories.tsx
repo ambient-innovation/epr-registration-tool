@@ -14,6 +14,7 @@ const Template: Story<ReportCard> = (args) => {
 }
 export const EditableForecast = Template.bind({})
 export const NonEditableForecast = Template.bind({})
+export const PaidReport = Template.bind({})
 
 EditableForecast.args = {
   id: '1',
@@ -25,6 +26,7 @@ EditableForecast.args = {
   isForecastEditable: true,
   isFinalReportSubmitted: false,
   fees: null,
+  isPaid: false,
 }
 
 NonEditableForecast.args = {
@@ -37,4 +39,18 @@ NonEditableForecast.args = {
   isForecastEditable: false,
   isFinalReportSubmitted: true,
   fees: 99.99,
+  isPaid: false,
+}
+
+PaidReport.args = {
+  id: '2',
+  createdAt: '2022-03-01 15:26:20.360428+00',
+  startMonth: 5,
+  year: 2022,
+  timeframe: TimeframeType.TWELVE_MONTHS,
+  packagingGroupsCount: 3,
+  isForecastEditable: false,
+  isFinalReportSubmitted: true,
+  fees: 99.99,
+  isPaid: true,
 }

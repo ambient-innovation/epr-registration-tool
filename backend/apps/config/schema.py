@@ -57,6 +57,6 @@ schema = strawberry.Schema(
     extensions=[
         PerformanceMonitoringExtension,
         QueryDepthLimiter(max_depth=10),
-        AddValidationRules([NoSchemaIntrospectionCustomRule, NoDeprecatedCustomRule]),
+        AddValidationRules([NoSchemaIntrospectionCustomRule, NoDeprecatedCustomRule] if not settings.DEBUG else []),
     ],
 )

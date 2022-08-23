@@ -5,16 +5,69 @@
 {% block object-tools %}{% endblock %}
 
 {% block content %}
-
-  {% if original.pk and not original.is_forecast_editable %}
-    <div class='alert alert--info'>
-      <span class='alert__icon'></span>
-        Deadline is reached.
-    </div>
-
-  {% endif %}
-  {{ block.super }}
+    {% if original.pk %}
+        {# case no data #}
+        {% if not original.status %}
+            <div class='alert alert--warn'>
+                <span class='alert__icon'></span>
+                This Data Report has no Forecast Report.
+            </div>
+        {% elif original.is_paid %}
+            <div class='alert alert--info'>
+                <span class='alert__icon'></span>
+                Fee has been paid.
+            </div>
+        {% elif not original.is_forecast_editable and not original.related_final_submission %}
+            <div class='alert alert--info'>
+                <span class='alert__icon'></span>
+                Actual quantities submission is needed.
+            </div>
+        {% endif %}
+    {% endif %}
+    {{ block.super }}
 
 {% endblock %}
+
+
+
+{% block submit_buttons_bottom %}
+
+    {% if original.pk and not original.is_forecast_editable and original.related_final_submission %}
+        <div class="submit-row">
+            {% if not original.is_paid %}
+                <input type="submit" value="Mark as Paid ✅" title="Click here to confirm that the payment is received."
+                       class="default" name="_mark_as_paid">
+            {% elif original.is_paid %}
+                <input type="submit" value="Mark as not Paid" name="_revert_mark_as_paid">
+            {% endif %}
+        </div>
+        <script>
+            const newsletterPreviewButton = Array.from(document.getElementsByName('_mark_as_paid'));
+            newsletterPreviewButton.forEach((button) => {
+                button.addEventListener('click', (e) => {
+                    if (confirm('Are you sure, you want to mark this Report as paid?')) {
+                        button.value = 'Please wait ...'
+                    } else {
+                        e.preventDefault()
+                    }
+                })
+            })
+        </script>
+    {% endif %}
+    {# case no data show add forecast link #}
+    {% if original.pk and not original.status %}
+        <div class="submit-row">
+            <a href="{% url 'admin:packaging_report_forecastsubmission_add' %}" class="addlink">add Forecast Data</a>
+        </div>
+    {# case final data needed show add forecast link #}
+    {% elif original.pk and not original.is_forecast_editable and not original.related_final_submission %}
+        <div class="submit-row">
+            <a href="{% url 'admin:packaging_report_finalsubmission_add' %}" class="addlink">add Final Data</a>
+        </div>
+    {% endif %}
+    {{ block.super }}
+{% endblock %}
+
+
 
 

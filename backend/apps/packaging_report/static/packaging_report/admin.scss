@@ -1,0 +1,27 @@
+.status-badge {
+  display: inline-flex;
+  max-width: 150px;
+  background: #9a9e9f;
+  border-radius: 16px;
+  text-align: center;
+  line-height: 166%;
+  padding: 0 10px;
+
+  span {
+    white-space: nowrap;
+    color: #fff;
+  }
+
+  &--payment-required {
+    background: #ed6c02;
+  }
+
+  &--paid {
+    background: #2E7D32;
+  }
+
+  &--forecast {
+    background: #0288d1;
+  }
+}
+

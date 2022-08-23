@@ -246,6 +246,7 @@ export type PackagingReportType = {
   invoiceFile?: Maybe<DjangoFileType>
   isFinalReportSubmitted: Scalars['Boolean']
   isForecastEditable: Scalars['Boolean']
+  isPaid: Scalars['Boolean']
   packagingGroupsCount: Scalars['Int']
   startMonth: Scalars['Int']
   timeframe: TimeframeType
@@ -534,6 +535,7 @@ export type PackagingReportsQuery = {
       isFinalReportSubmitted: boolean
       endDatetime: any
       fees?: any | null
+      isPaid: boolean
       invoiceFile?: { __typename?: 'DjangoFileType'; url: string } | null
     }>
     pageInfo: {
@@ -1115,6 +1117,7 @@ export const PackagingReportsDocument = gql`
         isFinalReportSubmitted
         endDatetime
         fees
+        isPaid
         invoiceFile {
           url
         }
