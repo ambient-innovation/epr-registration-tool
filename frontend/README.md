@@ -1,5 +1,16 @@
 # EPR Registration Tool | Frontend
 
+## Table of contents
+1. [Run project](#run-project)
+2. [Storybook](#storybook)
+3. [Testing](#testing)
+4. [Linting](#linting)
+5. [Code Formatting](#code-formatting)
+6. [GraphQL Types Generation](#graphql-types-generation)
+7. [Next.js images](#nextjs-images)
+8. [Translations](#translations)
+
+
 ## Run project
 
 **Non Docker setup**
@@ -77,3 +88,12 @@ You will find the generated types and hooks in: `src/api/__types__.ts`
 Please make sure that all `next/image`s use the `layout="repsonsive"` or `"fill"` with
 appropriate `sizes="..."` attribute to make sure, that images are provided in the correct 
 size for different screen sizes. 
+
+## Translations
+
+We currently manage all translations in a single namespace `common`.  
+All translation keys in the JSON files **must be sorted by convention**. 
+
+For PyCharm users, we recommend using the Plugin 
+[Easy I18n](https://plugins.jetbrains.com/plugin/16316-easy-i18n),  
+which provides automatic sorting ("sort translation keys alphabetically").

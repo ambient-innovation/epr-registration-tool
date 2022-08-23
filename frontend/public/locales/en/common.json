@@ -1,371 +1,371 @@
 {
-  "somethingUnexpectedHappened": "Sorry, something unexpected happened ...",
-  "welcome": "Welcome!",
-  "registration": "Registration",
-  "register": "Register",
-  "login": "Login",
-  "next": "Next",
-  "prev": "Prev",
-  "submit": "Submit",
-  "email": "Email",
-  "password": "Password",
-  "loading": "Loading...",
-  "pleaseWait": "Please wait ...",
-  "eprTool": "EPR Registration Tool",
-  "currency": "JOD",
-  "kg": "kg",
-  "edit": "Edit",
-  "error": "Error",
-  "backToDashboard": "back to dashboard",
-  "previewAlert": {
-    "youAreInPreviewMode": "You are in preview mode",
-    "stopPreview": "Stop preview"
-  },
-  "registrationForm": {
-    "createNewAccount": "Create new account",
-    "generalCompanyInformation": "General company information",
-    "step1Title": "Enter general company information",
-    "companyName": "Name of company",
-    "companyDistributorType": {
-      "label": "Type of distributor",
-      "importer": "Importer",
-      "localProducer": "Local producer"
-    },
-    "success": {
-      "title": "Registration successful",
-      "heading": "Thank you for registering",
-      "desc": "Before you can log in, your account must be activated. You will receive an email once your data is successfully verified"
-    },
-    "country": "Country",
-    "contactPerson": "Contact person",
-    "step2Title": "Provide a contact person",
-    "step2Description": "As a registered user you can report the data for your company to this EPR database.",
-    "emailHelpText": "Attention: This is the email address your company will use to log in to the EPR Registration Tool.",
-    "title": "Title",
-    "mr": "Mr.",
-    "mrs": "Mrs.",
-    "fullName": "Full name",
-    "position": "Position",
-    "phoneMobileNumber": "Phone / mobile number",
-    "step3Title": "Choose a password",
-    "step3Description": "To comply with our strong password policy, you are required to use a sufficiently strong password. Your Password must be at least 8 characters long and contain upper- and lower-case letters, a number and a special character.",
-    "registrationFailed": "Registration failed"
-  },
-  "timeframe": {
-    "month_one": "1 month",
-    "month_plural": "{{count}} months"
-  },
-  "reportForm": {
-    "createSubPageTitle": "Submit new Report",
-    "updateSubPageTitle": "Update Report Forecast",
-    "submitFinalReportSubPageTitle": "Update Report Forecast",
-    "successSubPageTitle": "Report successful",
-    "formLabel": "Submit packaging report",
-    "timeframe": "Timeframe",
-    "packagingDetails": "Packaging details",
-    "estimatedFees": "Estimated fees",
-    "step1Title": "Timeframe of report",
-    "step1Description": "Please select start date and duration of the report.",
-    "step1ReadonlyDescription": "Report timeframe is not editable.",
-    "startDate": "Forecast start date",
-    "packagingEntryNum": "Packaging entry {{num}}",
-    "packagingEntryDescription": "Please enter your quantities for each material in each Packaging Group. With \"+ADD NEW ENTRY\" you can enter additional Packaging Groups.",
-    "deleteEntry": "Delete entry",
-    "addEntry": "Add new entry",
-    "selectPackagingGroup": "Please select a Packaging Group",
-    "packagingGroup": "Packaging Group",
-    "step3Title": "Estimated fees",
-    "step3Description": "Based on your information we have calculated the following fee.",
-    "netPricePlusVat": "Net price plus statutory VAT",
-    "material": "Material",
-    "addMaterial": "Add another material",
-    "deleteMaterial": "Delete material",
-    "createReportSuccessTitle": "Thank you for reporting",
-    "createReportSuccessDescription": "A Forecast Report is created successfully. You can find it in your dashboard.",
-    "updateReportSuccessDescription": "Data Report is updated successfully.",
-    "createAnotherReport": "Submit another report",
-    "proceedToHomepage": "Proceed to homepage",
-    "proceedToDashboard": "Proceed to dashboard",
-    "estimatedFeesResult": "Price {{fees}} JOD",
-    "reportSuccessful": "Report successful",
-    "reportUpdatedSuccessful": "Report update successful",
-    "calculating": "Calculating, please wait ...",
-    "updateReportNoX": "Update Data Report No. {{reportNo}}",
-    "submitActualQuantitiesForReportNoX": "Submit actual quantities for Data Report No. {{reportNo}}",
-    "reportNoX": "Data Report No. {{reportNo}}",
-    "reportNotFound": "No Data Report found!"
-  },
-  "validations": {
-    "required": "This field is required",
-    "emailInvalid": "Please enter a valid email address",
-    "passwordTooShort": "The password must consist of at least 8 characters",
-    "passwordMustHaveUppercase": "The password must contain at least one uppercase letter",
-    "passwordMustHaveLowercase": "The password must contain at least one lowercase letter",
-    "passwordMustHaveOneNumber": "The password must contain at least one number",
-    "passwordMustHaveSpecialCharacter": "The password must contain at least one special character, e.g., ! @ # ? ]",
-    "reportStartDateValid": "Please select valid date in format of Month Year: Jan 2024",
-    "startDateMin": "Date cannot be before the start of the next month",
-    "numberType": "Please enter valid number (for decimal please use Point as separator)",
-    "decimalType": "Only 2 decimal places are allowed",
-    "greaterThanZero": "Must be bigger than zero or remove it.",
-    "forecastShouldBeInSameYear": "Forecast should start and end in same year",
-    "atLeastOnPackagingGroup": "At least one Packaging Group required",
-    "atLeastOnPackagingMaterial": "At least one Material required",
-    "notUniqueGroups": "This Packaging Group is duplicated",
-    "notUniqueGroupsMaterials": "This material is duplicated in this Packaging Group",
-    "noWhitespaceAllowed": "No whitespaces allowed",
-    "reportExceedsOneYear": "A report should not exceed a year",
-    "identicalPasswordNotAllowed": "The new password cannot be identical with the old password"
-  },
-  "serverErrors": {
-    "unknownError": "The server failed to handle your request. Please reload and try again.",
-    "generic403": "Request failed with status code 403 (permission denied).",
-    "genericNetworkError": "The server could not be reached. Please check your internet connection and try again.",
-    "permissionDenied": "You have no permission to perform this action.",
-    "validationError": "There seems to be a validation issue with your submitted data.",
-    "userEmailDoesAlreadyExist": "A user with this email address has already been registered with an existing company.",
-    "invalidCredentials": "The credentials you provided are invalid.",
-    "inactiveCompany": "You company account has not been activated yet. You will be notified via email once this is done.",
-    "missingCompanyRelation": "You cannot login because your account is not associated with a company.",
-    "alreadyAuthenticated": "You are signed in with another account. Please log out and try again.",
-    "packagingGroupDoesNotExist": "One of the selected Packaging Groups does not exist",
-    "materialDoesNotExist": "One of the selected Material does not exist",
-    "noCompanyAssignedORInactiveCompany": "You have not been assigned to any company or your company account has not been activated yet.",
-    "noCompanyAssigned": "You have not been assigned to any company",
-    "reportDoesNotExist": "Report does not exist",
-    "reportIsNotEditable": "Report is not editable",
-    "profileAlreadyCompleted": "Company Profile already completed",
-    "finalReportAlreadySubmitted": "Final Report already submitted",
-    "cannotSubmitFinalReportYet": "Final Report cannot be submitted yet",
-    "identicalPasswordNotAllowed": "The new password cannot be identical with the old password.",
-    "maximumFileSizeExceeded": "The maximum image size is 2MB. Please try a smaller image file.",
-    "invalidExtension": "Image format not allowed. Please upload another image (JPG or PNG)",
-    "emailNotConfirmed": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link.",
-    "inactiveUser": "Your account has been blocked.",
-    "companyDataNotCompleted": "Please complete your company profile first.",
-    "materialQuantityInvalidDecimal": "An entry on the material quantities is invalid.",
-    "timeframeOverlap": "Report's timeframe overlaps with already existing Data report(s), please check.",
-    "identificationNumberAlreadyExists": "A company with this VAT / tax number has already been registered."
-  },
-  "internalErrors": {
-    "unknownError": "Something unexpected happened. Please reload and try again.",
-    "imageUploadError": "Image upload failed. Please try with another image file."
-  },
-  "loginForm": {
-    "title": "Login to the EPR Registration Tool",
-    "rememberMe": "Remember Me",
-    "resetPassword": "Reset password",
-    "signIn": "Sign in",
-    "registerLink": "No account yet? Register now.",
-    "loginFailed": "Login failed",
-    "resetPasswordRequest": "If this email address was used to create an account, instructions to reset your password will be sent to you. Please check your email.",
-    "resetPasswordComplete": "Password successfully updated.",
-    "changePasswordComplete": "Password updated. Please sign in with your new password."
-  },
   "accountSettings": {
-    "main": "Account & Settings",
-    "submitChanges": "Save changes",
+    "changeCompanyDataForm": {
+      "additionalInvoiceRecipient": "Additional invoice recipient",
+      "additionalInvoiceRecipientDesc": " If the invoice should not be sent to you but to the billing department or other recipients of your company, please enter the contact data here.",
+      "companyAdditionalAddressInfo": "Additional address info (optional)",
+      "companyCity": "City",
+      "companyCountry": "Country",
+      "companyDistributorType": {
+        "importer": "Importer",
+        "label": "Type of distributor",
+        "localProducer": "Local producer"
+      },
+      "companyIdentificationNumber": {
+        "description": "Please enter (without spaces) the correct VAT number / tax number of your company (may differ from the country where your company is located).",
+        "number": "VAT number / tax number",
+        "title": "National identification number"
+      },
+      "companyName": "Name of company",
+      "companyPhoneNumber": {
+        "hint": "Please enter the phone number with country code prefix (e.g. +44 18081570192 or 44 18081570192)",
+        "label": "Phone number"
+      },
+      "companyPostalCode": "Postal code (optional)",
+      "companyStreet": "Street",
+      "companyStreetNumber": "Street number (optional)",
+      "description": "Here you can edit and save the data you have entered for your company. Please note that the data provided must be truthful and up to date.",
+      "noCompanyAssigned": "Your account is not associated with a company",
+      "tabTitle": "Company data",
+      "title": "Company data",
+      "updateFailed": "Your company data could not be updated",
+      "updateSuccessMessage": "Your company data has been updated."
+    },
+    "changeLanguageForm": {
+      "description": "Here you can set the language in which the email correspondence should take place.",
+      "label": "Edit language of correspondence",
+      "languageChangeFailed": "Language change failed",
+      "notification": "Your language setting has been updated.",
+      "tabTitle": "LANGUAGE",
+      "title": "Edit language of correspondence"
+    },
     "changePasswordForm": {
-      "title": "Password",
       "description1": "Set a new password for your account. After choosing a new password enter your old password for confirmation.",
       "description2": "To conform with our Strong Password Policy, you are required to use a sufficiently strong password. Your Password must be at least 8 characters long and contain upper- and lower-case, a number and a special character.",
       "newPassword": "New password",
       "oldPassword": "Old password",
       "oldPasswordHelpText": "Please enter your old password for confirmation",
+      "passwordResetFailed": "Password Reset failed",
       "submitChangePassword": "Change Password",
-      "passwordResetFailed": "Password Reset failed"
-    },
-    "changeLanguageForm": {
-      "title": "Edit language of correspondence",
-      "tabTitle": "LANGUAGE",
-      "description": "Here you can set the language in which the email correspondence should take place.",
-      "label": "Edit language of correspondence",
-      "languageChangeFailed": "Language change failed",
-      "notification": "Your language setting has been updated."
-    },
-    "changeCompanyDataForm": {
-      "title": "Company data",
-      "tabTitle": "Company data",
-      "description": "Here you can edit and save the data you have entered for your company. Please note that the data provided must be truthful and up to date.",
-      "companyName": "Name of company",
-      "companyDistributorType": {
-        "label": "Type of distributor",
-        "importer": "Importer",
-        "localProducer": "Local producer"
-      },
-      "companyCountry": "Country",
-      "companyPostalCode": "Postal code (optional)",
-      "companyCity": "City",
-      "companyStreet": "Street",
-      "companyStreetNumber": "Street number (optional)",
-      "companyAdditionalAddressInfo": "Additional address info (optional)",
-      "companyPhoneNumber": {
-        "label": "Phone number",
-        "hint": "Please enter the phone number with country code prefix (e.g. +44 18081570192 or 44 18081570192)"
-      },
-      "companyIdentificationNumber": {
-        "title": "National identification number",
-        "description": "Please enter (without spaces) the correct VAT number / tax number of your company (may differ from the country where your company is located).",
-        "number": "VAT number / tax number"
-      },
-      "updateSuccessMessage": "Your company data has been updated.",
-      "noCompanyAssigned": "Your account is not associated with a company",
-      "additionalInvoiceRecipient": "Additional invoice recipient",
-      "additionalInvoiceRecipientDesc": " If the invoice should not be sent to you but to the billing department or other recipients of your company, please enter the contact data here.",
-      "updateFailed": "Your company data could not be updated"
+      "title": "Password"
     },
     "editAccountForm": {
-      "title": "Account",
       "description": "Here you can edit and save the data you have entered for your account. Please note that the data provided must be truthful and up to date.",
       "email": "E-mail",
-      "emailHelpText": "Attention: This is the email your company will use to log in to the EPR Registration Tool.",
       "emailConfirmNeededHelpText": "⚠️ confirm please your new email address or will be ignored.",
-      "titleLabel": "Title",
+      "emailHelpText": "Attention: This is the email your company will use to log in to the EPR Registration Tool.",
       "fullName": "Full name",
-      "position": "Position",
+      "notification": "Your account has been updated.",
       "phoneNumber": "Phone / mobile number",
-      "notification": "Your account has been updated."
-    }
+      "position": "Position",
+      "title": "Account",
+      "titleLabel": "Title"
+    },
+    "main": "Account & Settings",
+    "submitChanges": "Save changes"
   },
   "activation": {
+    "accountHasBeenActivated": "Your account has been activated!",
+    "accountIsReady": "🚀 Your account is ready",
     "activation": "Activation",
-    "emailConfirmation": "Email confirmation",
     "confirmationFailed": "Confirmation failed",
+    "emailConfirmation": "Email confirmation",
     "invalidToken": "The link you followed does not seem to be a valid confirmation link.",
+    "nextStepActivation": {
+      "body": "Before you can log in, your account must first be activated. A staff member will now check your registration information. You will receive an email as soon as you account has been activated.",
+      "title": "⏳ One step left ..."
+    },
     "registration": "Registration",
     "registrationComplete": "Registration complete",
     "serverErrors": {
       "activationLinkInvalid": "The confirmation link you followed is not valid anymore."
     },
     "success": {
-      "title": "Thank you!",
-      "message": "Your email address has been successfully confirmed!"
+      "message": "Your email address has been successfully confirmed!",
+      "title": "Thank you!"
     },
-    "nextStepActivation": {
-      "title": "⏳ One step left ...",
-      "body": "Before you can log in, your account must first be activated. A staff member will now check your registration information. You will receive an email as soon as you account has been activated."
-    },
-    "accountHasBeenActivated": "Your account has been activated!",
-    "accountIsReady": "🚀 Your account is ready",
     "youCanLoginNow": "Everything has been set up and you can now log in."
   },
-  "logout": "Logout",
-  "pageHeader": {
-    "languageSwitch": "Language switcher",
-    "userMenu": "User menu",
-    "close": "Close"
+  "backToDashboard": "back to dashboard",
+  "changeEmailConfirm": {
+    "changeEmail": "Change email address",
+    "changeEmailFailed": {
+      "emailExists": "Another user has the same email address you are trying to change to. Please connect support for help.",
+      "incorrectEmailEncode": "Incorrect url encode. Please connect support for help.",
+      "invalidToken": "Invalid token. Please connect support for help.",
+      "requestDoesNotExists": "No request to change your email address exists.",
+      "requestOutdated": "Change request cannot be proceed after 24 hours.",
+      "unknownError": "Request failed. Unknown Error occurs, please try again later.",
+      "userDoesNotExists": "Your account does not exist."
+    },
+    "changeEmailSuccess": "Your email address has been changed successfully. You have been logged out from all your devices and you can login now again with your new email address."
   },
-  "resetPassword": {
-    "title": "Reset password",
-    "forgetPasswordTitle": "Forgot password?",
-    "forgetPasswordDescription1": "Enter the email address you used when you joined and we'll send you instructions to reset your password.",
-    "forgetPasswordDescription2": "For security reasons, we do NOT store your password. So rest assured that we will never send your password via email.",
-    "sendResetInstructions": "Send reset instructions",
-    "newPasswordTitle": "Enter new password",
-    "newPasswordDescription": "To comply with our strong password policy, you are required to use a sufficiently strong password. Your password must be at least 8 characters long and contain upper- and lower-case letters, a number and a special character.",
-    "saveNewPassword": "Save new password",
-    "resetPasswordFailed": "Reset password failed",
-    "serverErrors": {
-      "reset_password_link_invalid": "The password reset link you tried to use is invalid. This may be due to a typo, or because it has been used already."
+  "companyCompletionForm": {
+    "companyAdditionalAddressInfo": "Additional address info (optional)",
+    "companyCity": "City",
+    "companyCountry": "Country",
+    "companyIdentificationNumber": {
+      "description": "Please enter (without spaces) the correct VAT number / tax number of your company (may differ from the country where your company is located).",
+      "fieldName": "VAT number / tax number",
+      "title": "National identification number"
+    },
+    "companyPhoneNumber": {
+      "hint": "Please enter the phone number with country code prefix (e.g. +44 18081570192 or 44 18081570192)",
+      "label": "Phone number"
+    },
+    "companyPostalCode": "Postal code (optional)",
+    "companyStreet": "Street",
+    "companyStreetNumber": "Street number (optional)",
+    "completeAccount": "Complete your account",
+    "step1Title": "Company Data",
+    "stepTitles": {
+      "identification": "Identification"
     }
   },
+  "currency": "JOD",
   "dashboard": {
-    "main": "Dashboard",
+    "companyBaseData": {
+      "createdAt": "Date of registration",
+      "distributorType": "Company distributor type",
+      "identificationNumber": "Identification number",
+      "lastmodifiedAt": "Last base data update",
+      "registrationNumber": "Registration number"
+    },
+    "companyLogo": {
+      "addLogo": "Add logo",
+      "companyLogoAlt": "Current logo of your company",
+      "editLogo": "Edit logo"
+    },
+    "completionAlert": {
+      "completeYourProfile": "Please complete your profile",
+      "dataNeeded": "Before you can submit a forecast, we still need some data from you. Please click here to complete your profile.",
+      "link": "Complete Now"
+    },
     "header": {
       "greeting": "{{userName}}, welcome to your EPR dashboard",
       "submitNewReport": "Submit new report"
     },
+    "main": "Dashboard",
     "noCompanyAssigned": "You have not been assigned to any company",
     "pleaseLogin": "Please Log In",
-    "completionAlert": {
-      "link": "Complete Now",
-      "completeYourProfile": "Please complete your profile",
-      "dataNeeded": "Before you can submit a forecast, we still need some data from you. Please click here to complete your profile."
-    },
     "reportListSection": {
-      "headline": "Packaging data reporting",
       "description": "Here you can see an overview of your submitted forecasts. You can only submit one forecast per timeframe. Forecasts can be edited as long as the specified timeframe has not yet been reached.",
+      "filterByYear": "Filter by year",
+      "headline": "Packaging data reporting",
       "noReportAddNow": "No Reports available. Add a Report now.",
       "noReportPleaseComplete": "No Reports available. Complete your profile to submit a Report.",
+      "noResultsResetFilter": "Nothing to show. Reset filter to see all reports.",
       "reportCard": {
-        "title": "Data Report No. {{reportNumber}}",
-        "submittedOn": "Submitted on",
-        "startsAt": "Start of forecast:",
-        "timeframe": "Timeframe of forecast:",
-        "estimatedF": "Estimated fees:",
         "calculatedFees": "Calculated fees:",
-        "entries": "Packaging entries:",
-        "month": "Month",
         "editableUntil": "Can be edited until {{endDate}}",
+        "entries": "Packaging entries:",
+        "estimatedF": "Estimated fees:",
         "forecast": "Forecast",
+        "month": "Month",
+        "startsAt": "Start of forecast:",
         "submitActualQuantities": "Submit Actual Quantities",
+        "submittedOn": "Submitted on",
+        "timeframe": "Timeframe of forecast:",
+        "title": "Data Report No. {{reportNumber}}",
         "view": "View",
         "viewInvoice": "View invoice"
       },
-      "filterByYear": "Filter by year",
-      "noResultsResetFilter": "Nothing to show. Reset filter to see all reports.",
       "sorting": "Sorting",
       "sortingOptions": {
         "newestFirst": "Newest first",
         "oldestFirst": "Oldest first"
       }
     },
-    "companyLogo": {
-      "addLogo": "Add logo",
-      "editLogo": "Edit logo",
-      "companyLogoAlt": "Current logo of your company"
-    },
     "uploadCompanyLogoDialog": {
-      "title": "Company logo",
-      "description": "Upload a logo for your company account (JPG or PNG). We recommend a resolution of at least 344 x 344 px.",
-      "deleteLogo": "Delete logo",
-      "uploadLogo": "Upload logo",
       "cancel": "Cancel",
+      "companyLogoAlt": "Preview of your company logo that you would like to be displayed on your dashboard.",
+      "deleteLogo": "Delete logo",
+      "description": "Upload a logo for your company account (JPG or PNG). We recommend a resolution of at least 344 x 344 px.",
       "save": "Save",
-      "companyLogoAlt": "Preview of your company logo that you would like to be displayed on your dashboard."
-    },
-    "companyBaseData": {
-      "distributorType": "Company distributor type",
-      "createdAt": "Date of registration",
-      "lastmodifiedAt": "Last base data update",
-      "registrationNumber": "Registration number",
-      "identificationNumber": "Identification number"
+      "title": "Company logo",
+      "uploadLogo": "Upload logo"
     }
   },
-  "companyCompletionForm": {
-    "stepTitles": {
-      "identification": "Identification"
+  "edit": "Edit",
+  "email": "Email",
+  "eprTool": "EPR Registration Tool",
+  "error": "Error",
+  "internalErrors": {
+    "imageUploadError": "Image upload failed. Please try with another image file.",
+    "unknownError": "Something unexpected happened. Please reload and try again."
+  },
+  "kg": "kg",
+  "loading": "Loading...",
+  "login": "Login",
+  "loginForm": {
+    "changePasswordComplete": "Password updated. Please sign in with your new password.",
+    "loginFailed": "Login failed",
+    "registerLink": "No account yet? Register now.",
+    "rememberMe": "Remember Me",
+    "resetPassword": "Reset password",
+    "resetPasswordComplete": "Password successfully updated.",
+    "resetPasswordRequest": "If this email address was used to create an account, instructions to reset your password will be sent to you. Please check your email.",
+    "signIn": "Sign in",
+    "title": "Login to the EPR Registration Tool"
+  },
+  "logout": "Logout",
+  "next": "Next",
+  "pageHeader": {
+    "close": "Close",
+    "languageSwitch": "Language switcher",
+    "userMenu": "User menu"
+  },
+  "password": "Password",
+  "pleaseWait": "Please wait ...",
+  "prev": "Prev",
+  "previewAlert": {
+    "stopPreview": "Stop preview",
+    "youAreInPreviewMode": "You are in preview mode"
+  },
+  "register": "Register",
+  "registration": "Registration",
+  "registrationForm": {
+    "companyDistributorType": {
+      "importer": "Importer",
+      "label": "Type of distributor",
+      "localProducer": "Local producer"
     },
-    "completeAccount": "Complete your account",
-    "step1Title": "Company Data",
-    "companyCountry": "Country",
-    "companyPostalCode": "Postal code (optional)",
-    "companyCity": "City",
-    "companyStreet": "Street",
-    "companyStreetNumber": "Street number (optional)",
-    "companyAdditionalAddressInfo": "Additional address info (optional)",
-    "companyPhoneNumber": {
-      "label": "Phone number",
-      "hint": "Please enter the phone number with country code prefix (e.g. +44 18081570192 or 44 18081570192)"
+    "companyName": "Name of company",
+    "contactPerson": "Contact person",
+    "country": "Country",
+    "createNewAccount": "Create new account",
+    "emailHelpText": "Attention: This is the email address your company will use to log in to the EPR Registration Tool.",
+    "fullName": "Full name",
+    "generalCompanyInformation": "General company information",
+    "mr": "Mr.",
+    "mrs": "Mrs.",
+    "phoneMobileNumber": "Phone / mobile number",
+    "position": "Position",
+    "registrationFailed": "Registration failed",
+    "step1Title": "Enter general company information",
+    "step2Description": "As a registered user you can report the data for your company to this EPR database.",
+    "step2Title": "Provide a contact person",
+    "step3Description": "To comply with our strong password policy, you are required to use a sufficiently strong password. Your Password must be at least 8 characters long and contain upper- and lower-case letters, a number and a special character.",
+    "step3Title": "Choose a password",
+    "success": {
+      "desc": "Before you can log in, your account must be activated. You will receive an email once your data is successfully verified",
+      "heading": "Thank you for registering",
+      "title": "Registration successful"
     },
-    "companyIdentificationNumber": {
-      "title": "National identification number",
-      "description": "Please enter (without spaces) the correct VAT number / tax number of your company (may differ from the country where your company is located).",
-      "fieldName": "VAT number / tax number"
-    }
+    "title": "Title"
+  },
+  "reportForm": {
+    "addEntry": "Add new entry",
+    "addMaterial": "Add another material",
+    "calculating": "Calculating, please wait ...",
+    "createAnotherReport": "Submit another report",
+    "createReportSuccessDescription": "A Forecast Report is created successfully. You can find it in your dashboard.",
+    "createReportSuccessTitle": "Thank you for reporting",
+    "createSubPageTitle": "Submit new Report",
+    "deleteEntry": "Delete entry",
+    "deleteMaterial": "Delete material",
+    "estimatedFees": "Estimated fees",
+    "estimatedFeesResult": "Price {{fees}} JOD",
+    "formLabel": "Submit packaging report",
+    "material": "Material",
+    "netPricePlusVat": "Net price plus statutory VAT",
+    "packagingDetails": "Packaging details",
+    "packagingEntryDescription": "Please enter your quantities for each material in each Packaging Group. With \"+ADD NEW ENTRY\" you can enter additional Packaging Groups.",
+    "packagingEntryNum": "Packaging entry {{num}}",
+    "packagingGroup": "Packaging Group",
+    "proceedToDashboard": "Proceed to dashboard",
+    "proceedToHomepage": "Proceed to homepage",
+    "reportNoX": "Data Report No. {{reportNo}}",
+    "reportNotFound": "No Data Report found!",
+    "reportSuccessful": "Report successful",
+    "reportUpdatedSuccessful": "Report update successful",
+    "selectPackagingGroup": "Please select a Packaging Group",
+    "startDate": "Forecast start date",
+    "step1Description": "Please select start date and duration of the report.",
+    "step1ReadonlyDescription": "Report timeframe is not editable.",
+    "step1Title": "Timeframe of report",
+    "step3Description": "Based on your information we have calculated the following fee.",
+    "step3Title": "Estimated fees",
+    "submitActualQuantitiesForReportNoX": "Submit actual quantities for Data Report No. {{reportNo}}",
+    "submitFinalReportSubPageTitle": "Update Report Forecast",
+    "successSubPageTitle": "Report successful",
+    "timeframe": "Timeframe",
+    "updateReportNoX": "Update Data Report No. {{reportNo}}",
+    "updateReportSuccessDescription": "Data Report is updated successfully.",
+    "updateSubPageTitle": "Update Report Forecast"
   },
   "reset": "Reset",
-  "changeEmailConfirm": {
-    "changeEmail": "Change email address",
-    "changeEmailFailed": {
-      "incorrectEmailEncode": "Incorrect url encode. Please connect support for help.",
-      "requestOutdated": "Change request cannot be proceed after 24 hours.",
-      "userDoesNotExists": "Your account does not exist.",
-      "requestDoesNotExists": "No request to change your email address exists.",
-      "emailExists": "Another user has the same email address you are trying to change to. Please connect support for help.",
-      "invalidToken": "Invalid token. Please connect support for help.",
-      "unknownError": "Request failed. Unknown Error occurs, please try again later."
+  "resetPassword": {
+    "forgetPasswordDescription1": "Enter the email address you used when you joined and we'll send you instructions to reset your password.",
+    "forgetPasswordDescription2": "For security reasons, we do NOT store your password. So rest assured that we will never send your password via email.",
+    "forgetPasswordTitle": "Forgot password?",
+    "newPasswordDescription": "To comply with our strong password policy, you are required to use a sufficiently strong password. Your password must be at least 8 characters long and contain upper- and lower-case letters, a number and a special character.",
+    "newPasswordTitle": "Enter new password",
+    "resetPasswordFailed": "Reset password failed",
+    "saveNewPassword": "Save new password",
+    "sendResetInstructions": "Send reset instructions",
+    "serverErrors": {
+      "reset_password_link_invalid": "The password reset link you tried to use is invalid. This may be due to a typo, or because it has been used already."
     },
-    "changeEmailSuccess": "Your email address has been changed successfully. You have been logged out from all your devices and you can login now again with your new email address."
-  }
+    "title": "Reset password"
+  },
+  "serverErrors": {
+    "alreadyAuthenticated": "You are signed in with another account. Please log out and try again.",
+    "cannotSubmitFinalReportYet": "Final Report cannot be submitted yet",
+    "companyDataNotCompleted": "Please complete your company profile first.",
+    "emailNotConfirmed": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link.",
+    "finalReportAlreadySubmitted": "Final Report already submitted",
+    "generic403": "Request failed with status code 403 (permission denied).",
+    "genericNetworkError": "The server could not be reached. Please check your internet connection and try again.",
+    "identicalPasswordNotAllowed": "The new password cannot be identical with the old password.",
+    "identificationNumberAlreadyExists": "A company with this VAT / tax number has already been registered.",
+    "inactiveCompany": "You company account has not been activated yet. You will be notified via email once this is done.",
+    "inactiveUser": "Your account has been blocked.",
+    "invalidCredentials": "The credentials you provided are invalid.",
+    "invalidExtension": "Image format not allowed. Please upload another image (JPG or PNG)",
+    "materialDoesNotExist": "One of the selected Material does not exist",
+    "materialQuantityInvalidDecimal": "An entry on the material quantities is invalid.",
+    "maximumFileSizeExceeded": "The maximum image size is 2MB. Please try a smaller image file.",
+    "missingCompanyRelation": "You cannot login because your account is not associated with a company.",
+    "noCompanyAssigned": "You have not been assigned to any company",
+    "noCompanyAssignedORInactiveCompany": "You have not been assigned to any company or your company account has not been activated yet.",
+    "packagingGroupDoesNotExist": "One of the selected Packaging Groups does not exist",
+    "permissionDenied": "You have no permission to perform this action.",
+    "profileAlreadyCompleted": "Company Profile already completed",
+    "reportDoesNotExist": "Report does not exist",
+    "reportIsNotEditable": "Report is not editable",
+    "timeframeOverlap": "Report's timeframe overlaps with already existing Data report(s), please check.",
+    "unknownError": "The server failed to handle your request. Please reload and try again.",
+    "userEmailDoesAlreadyExist": "A user with this email address has already been registered with an existing company.",
+    "validationError": "There seems to be a validation issue with your submitted data."
+  },
+  "somethingUnexpectedHappened": "Sorry, something unexpected happened ...",
+  "submit": "Submit",
+  "timeframe": {
+    "month_one": "1 month",
+    "month_plural": "{{count}} months"
+  },
+  "validations": {
+    "atLeastOnPackagingGroup": "At least one Packaging Group required",
+    "atLeastOnPackagingMaterial": "At least one Material required",
+    "decimalType": "Only 2 decimal places are allowed",
+    "emailInvalid": "Please enter a valid email address",
+    "forecastShouldBeInSameYear": "Forecast should start and end in same year",
+    "greaterThanZero": "Must be bigger than zero or remove it.",
+    "identicalPasswordNotAllowed": "The new password cannot be identical with the old password",
+    "noWhitespaceAllowed": "No whitespaces allowed",
+    "notUniqueGroups": "This Packaging Group is duplicated",
+    "notUniqueGroupsMaterials": "This material is duplicated in this Packaging Group",
+    "numberType": "Please enter valid number (for decimal please use Point as separator)",
+    "passwordMustHaveLowercase": "The password must contain at least one lowercase letter",
+    "passwordMustHaveOneNumber": "The password must contain at least one number",
+    "passwordMustHaveSpecialCharacter": "The password must contain at least one special character, e.g., ! @ # ? ]",
+    "passwordMustHaveUppercase": "The password must contain at least one uppercase letter",
+    "passwordTooShort": "The password must consist of at least 8 characters",
+    "reportExceedsOneYear": "A report should not exceed a year",
+    "reportStartDateValid": "Please select valid date in format of Month Year: Jan 2024",
+    "required": "This field is required",
+    "startDateMin": "Date cannot be before the start of the next month"
+  },
+  "welcome": "Welcome!"
 }

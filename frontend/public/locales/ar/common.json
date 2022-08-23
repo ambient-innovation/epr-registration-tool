@@ -1,371 +1,371 @@
 {
-  "somethingUnexpectedHappened": "عذرا ، حدث شيء غير متوقع ...",
-  "welcome": "اهلا و سهلا!",
-  "registration": "تسجيل",
-  "register": "تسجيل",
-  "login": "تسجيل دخول",
-  "next": "التالي",
-  "prev": "السابق",
-  "submit": "إرسال",
-  "email": "البريد الإلكتروني",
-  "password": "كلمه المرور",
-  "loading": "يرجى الانتظار",
-  "pleaseWait": "Please wait ...",
-  "eprTool": "EPR Registration Tool",
-  "currency": "د.أ",
-  "kg": "كلغ",
-  "edit": "تعديل",
-  "error": "Error",
-  "backToDashboard": "back to dashboard",
-  "previewAlert": {
-    "youAreInPreviewMode": "You are in preview mode",
-    "stopPreview": "Stop preview"
-  },
-  "registrationForm": {
-    "createNewAccount": "انشاء حساب جديد",
-    "generalCompanyInformation": "معلومات عامة عن الشركة",
-    "step1Title": "أدخل معلومات الشركة العامة",
-    "companyName": "أسم الشركة",
-    "companyDistributorType": {
-      "label": "نوع الموزع",
-      "importer": "المستورد",
-      "localProducer": "منتج محلي"
-    },
-    "success": {
-      "title": "Registration successful",
-      "heading": "Thank you for registering",
-      "desc": "Before you can log in, your account must be activated. You will receive an email once your data is successfully verified"
-    },
-    "country": "دولة",
-    "contactPerson": "الشخص الذي يمكن الاتصال به",
-    "step2Title": "أضف جهة اتصال",
-    "step2Description": "أيضًا ، لا يوجد من يحب الألم نفسه أو يسعى إليه أو يرغب فيه لمجرد أنه ألم ، ما لم تكن هناك ظروف عرضية يمكن أن يجلب فيها الكدح والألم متعة كبيرة له. لنأخذ مثالاً تافهًا ، من منا يشارك في أي وقت مضى في تمرين شاق إلا للاستفادة منه.",
-    "emailHelpText": "تنبيه: هذا هو البريد الإلكتروني الذي ستستخدمه شركتك لتسجيل الدخول إلى أداة تسجيل EPR.",
-    "title": "اللقب",
-    "mr": "السيد",
-    "mrs": "السّيدة",
-    "fullName": "الاسم الكامل",
-    "position": "منصب",
-    "phoneMobileNumber": "رقم الهاتف / الجوال",
-    "step3Title": "اختر كلمة مرور",
-    "step3Description": "للامتثال لسياسة كلمة المرور القوية الخاصة بنا ، يتعين عليك استخدام كلمة مرور قوية بدرجة كافية. يجب أن تتكون كلمة المرور الخاصة بك من 8 أحرف على الأقل وتحتوي على أحرف كبيرة وصغيرة ورقم وحرف خاص.",
-    "registrationFailed": "Registration failed"
-  },
-  "timeframe": {
-    "month_one": "1 شهر",
-    "month_plural": "{{count}} اشهر"
-  },
-  "reportForm": {
-    "createSubPageTitle": "إنشاء تقرير جديد",
-    "updateSubPageTitle": "Update Report Forecast",
-    "submitFinalReportSubPageTitle": "Update Report Forecast",
-    "successSubPageTitle": "تم الإبلاغ بنجاح",
-    "formLabel": "إرسال تقرير التعبئة والتغليف",
-    "timeframe": "الإطار الزمني",
-    "packagingDetails": "تفاصيل التعبئة",
-    "estimatedFees": "الرسوم المقدرة",
-    "step1Title": "الإطار الزمني للتقرير",
-    "step1Description": "يرجى تحديد تاريخ البدء ومدة التقرير.",
-    "step1ReadonlyDescription": "تقرير الإطار الزمني غير قابل للتحرير.",
-    "startDate": "تاريخ بدء التوقعات",
-    "packagingEntryNum": "إدخال التغليف {{num}}",
-    "packagingEntryDescription": "لا يوجد من يحب الألم نفسه أو يسعى إليه أو يرغب فيه لمجرد أنه ألم ، ما لم تكن هناك ظروف عرضية.",
-    "deleteEntry": "حذف المدخل",
-    "addEntry": "أضف مدخل جديد",
-    "selectPackagingGroup": "الرجاء تحديد مجموعة حزم",
-    "packagingGroup": "مجموعة التعبئة والتغليف",
-    "step3Title": "الرسوم المقدرة",
-    "step3Description": "بناءً على معلوماتك ، قمنا بحساب الرسوم التالية.",
-    "netPricePlusVat": "السعر الصافي بالإضافة إلى ضريبة القيمة المضافة القانونية",
-    "material": "مواد",
-    "addMaterial": "أضف مادة أخرى",
-    "deleteMaterial": "حذف المادة",
-    "createReportSuccessTitle": "شكرا لك على  التقرير",
-    "createReportSuccessDescription": "تم إنشاء تقرير التنبؤ بنجاح ويمكنك العثور عليه في لوحة المعلومات.",
-    "updateReportSuccessDescription": "تم تحديث تقرير التنبؤ بنجاح.",
-    "createAnotherReport": "إرسال تقرير آخر",
-    "proceedToHomepage": "انتقل إلى الصفحة الرئيسية",
-    "proceedToDashboard": "انتقل إلى لوحة القيادة",
-    "estimatedFeesResult": "السعر {{fees}} د.أ",
-    "reportSuccessful": "تم الإبلاغ بنجاح",
-    "reportUpdatedSuccessful": "تم تعديل الإبلاغ عن بنجاح",
-    "calculating": "جاري الحساب ، من فضلك انتظر ...",
-    "updateReportNoX": "Update Data Report No. {{reportNo}}",
-    "submitActualQuantitiesForReportNoX": "Submit actual quantities for Data Report No. {{reportNo}}",
-    "reportNoX": "Data Report No. {{reportNo}}",
-    "reportNotFound": "No Report found!"
-  },
-  "validations": {
-    "required": "هذه الخانة مطلوبه",
-    "emailInvalid": "يرجى إدخال عنوان بريد إلكتروني صالح",
-    "passwordTooShort": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
-    "passwordMustHaveUppercase": "يجب أن تحتوي كلمة المرور على حرف واحد كبير على الأقل",
-    "passwordMustHaveLowercase": "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل",
-    "passwordMustHaveOneNumber": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل",
-    "passwordMustHaveSpecialCharacter": "يجب أن تحتوي كلمة المرور على حرف خاص واحد على الأقل, على سبيل المثال., ! @ # ? ]",
-    "reportStartDateValid": "يرجى تحديد تاريخ صالح على شكل شهر سنة: Jan 2024",
-    "startDateMin": "لا يمكن أن يكون التاريخ قبل بداية الشهر المقبل",
-    "numberType": "الرجاء إدخال رقم صحيح",
-    "decimalType": "only 2 decimal places are allowed",
-    "greaterThanZero": "يجب أن يكون أكبر من الصفر أو إزالته.",
-    "forecastShouldBeInSameYear": "يجب أن تبدأ التوقعات وتنتهي في نفس العام",
-    "atLeastOnPackagingGroup": "مطلوب مجموعة تغليف واحدة على الأقل",
-    "atLeastOnPackagingMaterial": "مطلوب مادة واحدة على الأقل",
-    "notUniqueGroups": "مجموعة الحزم هذه مكررة",
-    "notUniqueGroupsMaterials": "يجب أن تكون المواد في مجموعات التعبئة والتغليف فريدة من نوعها",
-    "noWhitespaceAllowed": "لا يسمح بالمسافات",
-    "reportExceedsOneYear": "تقرير يتجاوز سنة واحدة",
-    "identicalPasswordNotAllowed": "The new password can not be identical with the old password"
-  },
-  "serverErrors": {
-    "unknownError": "فشل الخادم في معالجة طلبك. يرجى إعادة التحميل وحاول مرة أخرى.",
-    "generic403": "Request failed with status code 403 (permission denied).",
-    "genericNetworkError": "لا يمكن الوصول إلى الخادم. يرجى التحقق من اتصالك بالإنترنت وحاول مرة أخرى.",
-    "permissionDenied": "ليس لديك إذن للقيام بهذا العمل.",
-    "validationError": "يبدو أن هناك مشكلة في التحقق من صحة البيانات المقدمة.",
-    "userEmailDoesAlreadyExist": "مستخدم بعنوان البريد الإلكتروني هذا مسجل بالفعل لشركة قائمة.",
-    "invalidCredentials": "بيانات غير صالحة",
-    "inactiveCompany": "You company account has not been activated yet. You will be notified via email once this is done.",
-    "missingCompanyRelation": "You cannot login because your account is not associated with a company.",
-    "alreadyAuthenticated": "You are signed in with another account. Please log out and try again.",
-    "packagingGroupDoesNotExist": "إحدى مجموعات الحزم المحددة غير موجودة",
-    "materialDoesNotExist": "إحدى المواد المختارة غير موجودة",
-    "noCompanyAssignedORInactiveCompany": "لم يتم تعيينك لأي شركة أو لم يتم تنشيط حساب شركتك بعد.",
-    "noCompanyAssigned": "لم يتم تعيينك لأية شركة",
-    "reportDoesNotExist": "تقرير غير موجود",
-    "reportIsNotEditable": "التقرير غير قابل للتحرير",
-    "profileAlreadyCompleted": "ملف الشركة مكتمل بالفعل",
-    "finalReportAlreadySubmitted": "Final Report already submitted",
-    "cannotSubmitFinalReportYet": "Final Report cannot be submitted yet",
-    "identicalPasswordNotAllowed": "The new password can not be identical with the old password.",
-    "maximumFileSizeExceeded": "الحجم الأقصى للصورة هو 2 ميغا بايت. الرجاء محاولة ملف صورة أصغر.",
-    "invalidExtension": "تنسيق الصورة غير مسموح به. يرجى تحميل صورة أخرى (JPG أو PNG)",
-    "emailNotConfirmed": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link.",
-    "inactiveUser": "تم حظر حسابك.",
-    "companyDataNotCompleted": "Please complete your company profile first.",
-    "materialQuantityInvalidDecimal": "One of the Material quantity is invalid.",
-    "timeframeOverlap": "Report's timeframe overlaps with already existing Data report(s), please check.",
-    "identificationNumberAlreadyExists": "تم تسجيل شركة برقم ضريبة القيمة المضافة / الضريبة هذا بالفعل."
-  },
-  "internalErrors": {
-    "unknownError": "Something unexpected happened. Please reload and try again.",
-    "imageUploadError": "Image upload failed. Please try with another image file."
-  },
-  "loginForm": {
-    "title": "تسجيل الدخول إلى أداة التسجيل EPR",
-    "rememberMe": "تذكرني",
-    "resetPassword": "إعادة تعيين كلمة المرور",
-    "signIn": "تسجيل الدخول",
-    "registerLink": "لا يوجد حساب بعد؟ سجل الان.",
-    "loginFailed": "فشل عملية الدخول",
-    "resetPasswordRequest": "إذا تم استخدام عنوان البريد الإلكتروني هذا لإنشاء حساب ، فسيتم إرسال تعليمات إعادة تعيين كلمة المرور إليك. من فضلك تفقد بريدك الالكتروني.",
-    "resetPasswordComplete": "تم تحديث كلمة المرور بنجاح.",
-    "changePasswordComplete": "Password updated. Please sign in with your new password."
-  },
   "accountSettings": {
-    "main": "Account & Settings",
-    "submitChanges": "Save changes",
+    "changeCompanyDataForm": {
+      "additionalInvoiceRecipient": "Additional invoice recipient",
+      "additionalInvoiceRecipientDesc": " If the invoice should not be sent to you but to the billing department or other recipients of your company, please enter the contact data here.",
+      "companyAdditionalAddressInfo": "Additional address info (optional)",
+      "companyCity": "City",
+      "companyCountry": "Country",
+      "companyDistributorType": {
+        "importer": "Importer",
+        "label": "Type of distributor",
+        "localProducer": "Local producer"
+      },
+      "companyIdentificationNumber": {
+        "description": "Please enter (without spaces) the correct VAT number / tax number of your company (may differ from the country where your company is located).",
+        "number": "VAT number / tax number",
+        "title": "National identification number"
+      },
+      "companyName": "Name of company",
+      "companyPhoneNumber": {
+        "hint": "Please enter the phone number with country code prefix (e.g. +44 18081570192 or 44 18081570192)",
+        "label": "Phone number"
+      },
+      "companyPostalCode": "Postal Code (optional)",
+      "companyStreet": "Street",
+      "companyStreetNumber": "Street number (optional)",
+      "description": "Here you can edit and save the data you have entered for your company. Please note that the data provided must be truthful and up to date.",
+      "noCompanyAssigned": "حسابك غير مرتبط بشركة",
+      "tabTitle": "بيانات الشركة",
+      "title": "بيانات الشركة",
+      "updateFailed": "لا يمكن تحديث بيانات شركتك",
+      "updateSuccessMessage": "تم تحديث بيانات شركتك."
+    },
+    "changeLanguageForm": {
+      "description": "Here you can set the language in which the email correspondence should take place.",
+      "label": "Edit language of correspondance",
+      "languageChangeFailed": "Language change failed",
+      "notification": "Your language has been updated.",
+      "tabTitle": "LANGUAGE",
+      "title": "Edit language of correspondance"
+    },
     "changePasswordForm": {
-      "title": "Password",
       "description1": "Set a new password for your account. After choosing a new password enter your old password for confirmation.",
       "description2": "To conform with our Strong Password policy, you are required to use a sufficiently strong password. Password must at least 8 characters long and contain upper and lower case letters, a number and a special character.",
       "newPassword": "New password",
       "oldPassword": "Old password",
       "oldPasswordHelpText": "Please enter your old password for confirmation",
+      "passwordResetFailed": "Password Reset failed",
       "submitChangePassword": "Change Password",
-      "passwordResetFailed": "Password Reset failed"
-    },
-    "changeLanguageForm": {
-      "title": "Edit language of correspondance",
-      "tabTitle": "LANGUAGE",
-      "description": "Here you can set the language in which the email correspondence should take place.",
-      "label": "Edit language of correspondance",
-      "languageChangeFailed": "Language change failed",
-      "notification": "Your language has been updated."
-    },
-    "changeCompanyDataForm": {
-      "title": "بيانات الشركة",
-      "tabTitle": "بيانات الشركة",
-      "description": "Here you can edit and save the data you have entered for your company. Please note that the data provided must be truthful and up to date.",
-      "companyName": "Name of company",
-      "companyDistributorType": {
-        "label": "Type of distributor",
-        "importer": "Importer",
-        "localProducer": "Local producer"
-      },
-      "companyCountry": "Country",
-      "companyPostalCode": "Postal Code (optional)",
-      "companyCity": "City",
-      "companyStreet": "Street",
-      "companyStreetNumber": "Street number (optional)",
-      "companyAdditionalAddressInfo": "Additional address info (optional)",
-      "companyPhoneNumber": {
-        "label": "Phone number",
-        "hint": "Please enter the phone number with country code prefix (e.g. +44 18081570192 or 44 18081570192)"
-      },
-      "companyIdentificationNumber": {
-        "title": "National identification number",
-        "description": "Please enter (without spaces) the correct VAT number / tax number of your company (may differ from the country where your company is located).",
-        "number": "VAT number / tax number"
-      },
-      "updateSuccessMessage": "تم تحديث بيانات شركتك.",
-      "noCompanyAssigned": "حسابك غير مرتبط بشركة",
-      "additionalInvoiceRecipient": "Additional invoice recipient",
-      "additionalInvoiceRecipientDesc": " If the invoice should not be sent to you but to the billing department or other recipients of your company, please enter the contact data here.",
-      "updateFailed": "لا يمكن تحديث بيانات شركتك"
+      "title": "Password"
     },
     "editAccountForm": {
-      "title": "Account",
       "description": "Here you can edit and save the data you have entered for your account. Please note that the data provided must be truthful and up to date.",
       "email": "E-mail",
-      "emailHelpText": "Attention: This is the E-Mail your company will use to log in to the EPR Registration Tool.",
       "emailConfirmNeededHelpText": "⚠️ confirm please your new email address or will be ignored.",
-      "titleLabel": "Title",
+      "emailHelpText": "Attention: This is the E-Mail your company will use to log in to the EPR Registration Tool.",
       "fullName": "Full name",
-      "position": "Position",
+      "notification": "Your account has been updated.",
       "phoneNumber": "Phone / mobile number",
-      "notification": "Your account has been updated."
-    }
+      "position": "Position",
+      "title": "Account",
+      "titleLabel": "Title"
+    },
+    "main": "Account & Settings",
+    "submitChanges": "Save changes"
   },
   "activation": {
+    "accountHasBeenActivated": "Your account has been activated!",
+    "accountIsReady": "🚀 Your account is ready",
     "activation": "Activation",
-    "emailConfirmation": "Email confirmation",
     "confirmationFailed": "Confirmation failed",
+    "emailConfirmation": "Email confirmation",
     "invalidToken": "The link you followed does not seem to be a valid confirmation link.",
+    "nextStepActivation": {
+      "body": "Before you can log in, your account must first be activated. A staff member will now check your registration information. You will receive an email as soon as you account has been activate.",
+      "title": "⏳ One step left ..."
+    },
     "registration": "Registration",
     "registrationComplete": "Registration complete",
     "serverErrors": {
       "activationLinkInvalid": "The confirmation link you followed is not valid anymore."
     },
     "success": {
-      "title": "Thank you!",
-      "message": "Your email address has been successfully confirmed!"
+      "message": "Your email address has been successfully confirmed!",
+      "title": "Thank you!"
     },
-    "nextStepActivation": {
-      "title": "⏳ One step left ...",
-      "body": "Before you can log in, your account must first be activated. A staff member will now check your registration information. You will receive an email as soon as you account has been activate."
-    },
-    "accountHasBeenActivated": "Your account has been activated!",
-    "accountIsReady": "🚀 Your account is ready",
     "youCanLoginNow": "Everything has been set up and you can now log in."
   },
-  "logout": "Logout",
-  "pageHeader": {
-    "languageSwitch": "محوّل اللغة",
-    "userMenu": "قائمة المستخدم",
-    "close": "أغلق"
+  "backToDashboard": "back to dashboard",
+  "changeEmailConfirm": {
+    "changeEmail": "Change Email",
+    "changeEmailFailed": {
+      "emailExists": "Another user has the same email you are trying to change to. Please connect support for help.",
+      "incorrectEmailEncode": "Incorrect url encode. Please connect support for help.",
+      "invalidToken": "Invalid token. Please connect support for help.",
+      "requestDoesNotExists": "No request to change your email exists.",
+      "requestOutdated": "Change request cannot be proceed after 24 hours.",
+      "unknownError": "Request failed. Unknown Error occurs, please try again later.",
+      "userDoesNotExists": "Your account does not exists."
+    },
+    "changeEmailSuccess": "Your email has been changed successfully. You have been logged out from all your devices and you can login now again with your new email."
   },
-  "resetPassword": {
-    "title": "إعادة تعيين كلمة المرور",
-    "forgetPasswordTitle": "هل نسيت كلمة السر؟",
-    "forgetPasswordDescription1": "أدخل عنوان البريد الإلكتروني الذي استخدمته عند انضمامك وسنرسل لك تعليمات لإعادة تعيين كلمة المرور الخاصة بك.",
-    "forgetPasswordDescription2": "لأسباب أمنية ، لا نقوم بتخزين كلمة المرور الخاصة بك. لذا كن مطمئنًا إلى أننا لن نرسل كلمة مرورك أبدًا عبر البريد الإلكتروني.",
-    "sendResetInstructions": "إرسال تعليمات إعادة التعيين",
-    "newPasswordTitle": "أدخل كلمة مرور جديدة",
-    "newPasswordDescription": "للتوافق مع سياسة كلمة المرور القوية الخاصة بنا ، يتعين عليك استخدام كلمة مرور قوية بدرجة كافية. يجب أن تتكون كلمة المرور من 8 أحرف على الأقل وأن تحتوي على أحرف كبيرة وصغيرة ورقم وحرف خاص.",
-    "saveNewPassword": "احفظ كلمة المرور الجديدة",
-    "resetPasswordFailed": "فشل إعادة تعيين كلمة المرور",
-    "serverErrors": {
-      "reset_password_link_invalid": "رابط إعادة تعيين كلمة المرور الذي حاولت استخدامه غير صالح. قد يكون هذا بسبب خطأ إملائي ، أو لأنه تم استخدامه بالفعل."
+  "companyCompletionForm": {
+    "companyAdditionalAddressInfo": "Additional address info (optional)",
+    "companyCity": "City",
+    "companyCountry": "Country",
+    "companyIdentificationNumber": {
+      "description": "Please enter (without spaces) the correct VAT number / tax number of your company (may differ from the country where your company is located).",
+      "fieldName": "VAT number / tax number",
+      "title": "National identification number"
+    },
+    "companyPhoneNumber": {
+      "hint": "Please enter the phone number with country code prefix (e.g. +44 18081570192 or 44 18081570192)",
+      "label": "Phone number"
+    },
+    "companyPostalCode": "Postal Code (optional)",
+    "companyStreet": "Street",
+    "companyStreetNumber": "Street number (optional)",
+    "completeAccount": "Complete your account",
+    "step1Title": "Company Data",
+    "stepTitles": {
+      "identification": "Identification"
     }
   },
+  "currency": "د.أ",
   "dashboard": {
-    "main": "لوحة القيادة",
+    "companyBaseData": {
+      "createdAt": "تاريخ التسجيل",
+      "distributorType": "نوع موزع الشركة",
+      "identificationNumber": "رقم الهوية",
+      "lastmodifiedAt": "آخر تحديث لبيانات القاعدة",
+      "registrationNumber": "رقم التسجيل"
+    },
+    "companyLogo": {
+      "addLogo": "أضف الشعار",
+      "companyLogoAlt": "الشعار الحالي لشركتك",
+      "editLogo": "تحرير الشعار"
+    },
+    "completionAlert": {
+      "completeYourProfile": "يرجى استكمال ملف التعريف الخاص بك",
+      "dataNeeded": "قبل أن تتمكن من إرسال توقعات ، ما زلنا بحاجة إلى بعض البيانات منك. الرجاء الضغط هنا لإكمال ملف التعريف الخاص بك.",
+      "link": "أكمل الآن"
+    },
     "header": {
       "greeting": "{{userName}}, مرحبًا بك في لوحة تحكم EPR",
       "submitNewReport": "إرسال تقرير جديد"
     },
+    "main": "لوحة القيادة",
     "noCompanyAssigned": "لم يتم تعيينك لأية شركة",
     "pleaseLogin": "الرجاء تسجيل الدخول",
-    "completionAlert": {
-      "link": "أكمل الآن",
-      "completeYourProfile": "يرجى استكمال ملف التعريف الخاص بك",
-      "dataNeeded": "قبل أن تتمكن من إرسال توقعات ، ما زلنا بحاجة إلى بعض البيانات منك. الرجاء الضغط هنا لإكمال ملف التعريف الخاص بك."
-    },
     "reportListSection": {
-      "headline": "إعداد تقارير البيانات",
       "description": "هنا يمكنك الاطلاع على نظرة عامة على توقعاتك المرسلة. يمكنك فقط تقديم توقع واحد لكل إطار زمني. يمكن تعديل التوقعات طالما لم يتم الوصول إلى الإطار الزمني المحدد.",
+      "filterByYear": "تصفية حسب السنة",
+      "headline": "إعداد تقارير البيانات",
       "noReportAddNow": "No Reports available. Add a Report now.",
       "noReportPleaseComplete": "No Reports available. Complete your profile to submit a Report.",
+      "noResultsResetFilter": "Nothing to show. Reset filter to see all reports.",
       "reportCard": {
-        "title": "رقم تقرير البيانات {{reportNumber}}",
-        "submittedOn": "تم إرساله",
-        "startsAt": "بداية التوقعات:",
-        "timeframe": "الإطار الزمني للتنبؤات:",
-        "estimatedF": "الرسوم المقدرة:",
         "calculatedFees": "الرسوم:",
-        "entries": "إدخالات التغليف:",
-        "month": "شهر",
         "editableUntil": "يمكن التحرير حتى {{endDate}}",
+        "entries": "إدخالات التغليف:",
+        "estimatedF": "الرسوم المقدرة:",
         "forecast": "تنبؤ بالمناخ",
+        "month": "شهر",
+        "startsAt": "بداية التوقعات:",
         "submitActualQuantities": "إرسال الكميات الفعلية",
+        "submittedOn": "تم إرساله",
+        "timeframe": "الإطار الزمني للتنبؤات:",
+        "title": "رقم تقرير البيانات {{reportNumber}}",
         "view": "رأي",
         "viewInvoice": "عرض الفاتورة"
       },
-      "filterByYear": "تصفية حسب السنة",
-      "noResultsResetFilter": "Nothing to show. Reset filter to see all reports.",
       "sorting": "فرز",
       "sortingOptions": {
         "newestFirst": "الأحدث أولاً",
         "oldestFirst": "الأقدم أولا"
       }
     },
-    "companyLogo": {
-      "addLogo": "أضف الشعار",
-      "editLogo": "تحرير الشعار",
-      "companyLogoAlt": "الشعار الحالي لشركتك"
-    },
     "uploadCompanyLogoDialog": {
-      "title": "شعار الشركة",
-      "description": "قم بتحميل شعار لحساب شركتك (JPG أو PNG). نوصي بدرجة دقة لا تقل عن 344 × 344 بكسل.",
-      "deleteLogo": "حذف الشعار",
-      "uploadLogo": "تحميل الشعار",
       "cancel": "يلغي",
+      "companyLogoAlt": "معاينة شعار شركتك الذي ترغب في عرضه على لوحة المعلومات الخاصة بك.",
+      "deleteLogo": "حذف الشعار",
+      "description": "قم بتحميل شعار لحساب شركتك (JPG أو PNG). نوصي بدرجة دقة لا تقل عن 344 × 344 بكسل.",
       "save": "يحفظ",
-      "companyLogoAlt": "معاينة شعار شركتك الذي ترغب في عرضه على لوحة المعلومات الخاصة بك."
-    },
-    "companyBaseData": {
-      "distributorType": "نوع موزع الشركة",
-      "createdAt": "تاريخ التسجيل",
-      "lastmodifiedAt": "آخر تحديث لبيانات القاعدة",
-      "registrationNumber": "رقم التسجيل",
-      "identificationNumber": "رقم الهوية"
+      "title": "شعار الشركة",
+      "uploadLogo": "تحميل الشعار"
     }
   },
-  "companyCompletionForm": {
-    "stepTitles": {
-      "identification": "Identification"
+  "edit": "تعديل",
+  "email": "البريد الإلكتروني",
+  "eprTool": "EPR Registration Tool",
+  "error": "Error",
+  "internalErrors": {
+    "imageUploadError": "Image upload failed. Please try with another image file.",
+    "unknownError": "Something unexpected happened. Please reload and try again."
+  },
+  "kg": "كلغ",
+  "loading": "يرجى الانتظار",
+  "login": "تسجيل دخول",
+  "loginForm": {
+    "changePasswordComplete": "Password updated. Please sign in with your new password.",
+    "loginFailed": "فشل عملية الدخول",
+    "registerLink": "لا يوجد حساب بعد؟ سجل الان.",
+    "rememberMe": "تذكرني",
+    "resetPassword": "إعادة تعيين كلمة المرور",
+    "resetPasswordComplete": "تم تحديث كلمة المرور بنجاح.",
+    "resetPasswordRequest": "إذا تم استخدام عنوان البريد الإلكتروني هذا لإنشاء حساب ، فسيتم إرسال تعليمات إعادة تعيين كلمة المرور إليك. من فضلك تفقد بريدك الالكتروني.",
+    "signIn": "تسجيل الدخول",
+    "title": "تسجيل الدخول إلى أداة التسجيل EPR"
+  },
+  "logout": "Logout",
+  "next": "التالي",
+  "pageHeader": {
+    "close": "أغلق",
+    "languageSwitch": "محوّل اللغة",
+    "userMenu": "قائمة المستخدم"
+  },
+  "password": "كلمه المرور",
+  "pleaseWait": "Please wait ...",
+  "prev": "السابق",
+  "previewAlert": {
+    "stopPreview": "Stop preview",
+    "youAreInPreviewMode": "You are in preview mode"
+  },
+  "register": "تسجيل",
+  "registration": "تسجيل",
+  "registrationForm": {
+    "companyDistributorType": {
+      "importer": "المستورد",
+      "label": "نوع الموزع",
+      "localProducer": "منتج محلي"
     },
-    "completeAccount": "Complete your account",
-    "step1Title": "Company Data",
-    "companyCountry": "Country",
-    "companyPostalCode": "Postal Code (optional)",
-    "companyCity": "City",
-    "companyStreet": "Street",
-    "companyStreetNumber": "Street number (optional)",
-    "companyAdditionalAddressInfo": "Additional address info (optional)",
-    "companyPhoneNumber": {
-      "label": "Phone number",
-      "hint": "Please enter the phone number with country code prefix (e.g. +44 18081570192 or 44 18081570192)"
+    "companyName": "أسم الشركة",
+    "contactPerson": "الشخص الذي يمكن الاتصال به",
+    "country": "دولة",
+    "createNewAccount": "انشاء حساب جديد",
+    "emailHelpText": "تنبيه: هذا هو البريد الإلكتروني الذي ستستخدمه شركتك لتسجيل الدخول إلى أداة تسجيل EPR.",
+    "fullName": "الاسم الكامل",
+    "generalCompanyInformation": "معلومات عامة عن الشركة",
+    "mr": "السيد",
+    "mrs": "السّيدة",
+    "phoneMobileNumber": "رقم الهاتف / الجوال",
+    "position": "منصب",
+    "registrationFailed": "Registration failed",
+    "step1Title": "أدخل معلومات الشركة العامة",
+    "step2Description": "أيضًا ، لا يوجد من يحب الألم نفسه أو يسعى إليه أو يرغب فيه لمجرد أنه ألم ، ما لم تكن هناك ظروف عرضية يمكن أن يجلب فيها الكدح والألم متعة كبيرة له. لنأخذ مثالاً تافهًا ، من منا يشارك في أي وقت مضى في تمرين شاق إلا للاستفادة منه.",
+    "step2Title": "أضف جهة اتصال",
+    "step3Description": "للامتثال لسياسة كلمة المرور القوية الخاصة بنا ، يتعين عليك استخدام كلمة مرور قوية بدرجة كافية. يجب أن تتكون كلمة المرور الخاصة بك من 8 أحرف على الأقل وتحتوي على أحرف كبيرة وصغيرة ورقم وحرف خاص.",
+    "step3Title": "اختر كلمة مرور",
+    "success": {
+      "desc": "Before you can log in, your account must be activated. You will receive an email once your data is successfully verified",
+      "heading": "Thank you for registering",
+      "title": "Registration successful"
     },
-    "companyIdentificationNumber": {
-      "title": "National identification number",
-      "description": "Please enter (without spaces) the correct VAT number / tax number of your company (may differ from the country where your company is located).",
-      "fieldName": "VAT number / tax number"
-    }
+    "title": "اللقب"
+  },
+  "reportForm": {
+    "addEntry": "أضف مدخل جديد",
+    "addMaterial": "أضف مادة أخرى",
+    "calculating": "جاري الحساب ، من فضلك انتظر ...",
+    "createAnotherReport": "إرسال تقرير آخر",
+    "createReportSuccessDescription": "تم إنشاء تقرير التنبؤ بنجاح ويمكنك العثور عليه في لوحة المعلومات.",
+    "createReportSuccessTitle": "شكرا لك على  التقرير",
+    "createSubPageTitle": "إنشاء تقرير جديد",
+    "deleteEntry": "حذف المدخل",
+    "deleteMaterial": "حذف المادة",
+    "estimatedFees": "الرسوم المقدرة",
+    "estimatedFeesResult": "السعر {{fees}} د.أ",
+    "formLabel": "إرسال تقرير التعبئة والتغليف",
+    "material": "مواد",
+    "netPricePlusVat": "السعر الصافي بالإضافة إلى ضريبة القيمة المضافة القانونية",
+    "packagingDetails": "تفاصيل التعبئة",
+    "packagingEntryDescription": "لا يوجد من يحب الألم نفسه أو يسعى إليه أو يرغب فيه لمجرد أنه ألم ، ما لم تكن هناك ظروف عرضية.",
+    "packagingEntryNum": "إدخال التغليف {{num}}",
+    "packagingGroup": "مجموعة التعبئة والتغليف",
+    "proceedToDashboard": "انتقل إلى لوحة القيادة",
+    "proceedToHomepage": "انتقل إلى الصفحة الرئيسية",
+    "reportNoX": "Data Report No. {{reportNo}}",
+    "reportNotFound": "No Report found!",
+    "reportSuccessful": "تم الإبلاغ بنجاح",
+    "reportUpdatedSuccessful": "تم تعديل الإبلاغ عن بنجاح",
+    "selectPackagingGroup": "الرجاء تحديد مجموعة حزم",
+    "startDate": "تاريخ بدء التوقعات",
+    "step1Description": "يرجى تحديد تاريخ البدء ومدة التقرير.",
+    "step1ReadonlyDescription": "تقرير الإطار الزمني غير قابل للتحرير.",
+    "step1Title": "الإطار الزمني للتقرير",
+    "step3Description": "بناءً على معلوماتك ، قمنا بحساب الرسوم التالية.",
+    "step3Title": "الرسوم المقدرة",
+    "submitActualQuantitiesForReportNoX": "Submit actual quantities for Data Report No. {{reportNo}}",
+    "submitFinalReportSubPageTitle": "Update Report Forecast",
+    "successSubPageTitle": "تم الإبلاغ بنجاح",
+    "timeframe": "الإطار الزمني",
+    "updateReportNoX": "Update Data Report No. {{reportNo}}",
+    "updateReportSuccessDescription": "تم تحديث تقرير التنبؤ بنجاح.",
+    "updateSubPageTitle": "Update Report Forecast"
   },
   "reset": "إعادة ضبط",
-  "changeEmailConfirm": {
-    "changeEmail": "Change Email",
-    "changeEmailFailed": {
-      "incorrectEmailEncode": "Incorrect url encode. Please connect support for help.",
-      "requestOutdated": "Change request cannot be proceed after 24 hours.",
-      "userDoesNotExists": "Your account does not exists.",
-      "requestDoesNotExists": "No request to change your email exists.",
-      "emailExists": "Another user has the same email you are trying to change to. Please connect support for help.",
-      "invalidToken": "Invalid token. Please connect support for help.",
-      "unknownError": "Request failed. Unknown Error occurs, please try again later."
+  "resetPassword": {
+    "forgetPasswordDescription1": "أدخل عنوان البريد الإلكتروني الذي استخدمته عند انضمامك وسنرسل لك تعليمات لإعادة تعيين كلمة المرور الخاصة بك.",
+    "forgetPasswordDescription2": "لأسباب أمنية ، لا نقوم بتخزين كلمة المرور الخاصة بك. لذا كن مطمئنًا إلى أننا لن نرسل كلمة مرورك أبدًا عبر البريد الإلكتروني.",
+    "forgetPasswordTitle": "هل نسيت كلمة السر؟",
+    "newPasswordDescription": "للتوافق مع سياسة كلمة المرور القوية الخاصة بنا ، يتعين عليك استخدام كلمة مرور قوية بدرجة كافية. يجب أن تتكون كلمة المرور من 8 أحرف على الأقل وأن تحتوي على أحرف كبيرة وصغيرة ورقم وحرف خاص.",
+    "newPasswordTitle": "أدخل كلمة مرور جديدة",
+    "resetPasswordFailed": "فشل إعادة تعيين كلمة المرور",
+    "saveNewPassword": "احفظ كلمة المرور الجديدة",
+    "sendResetInstructions": "إرسال تعليمات إعادة التعيين",
+    "serverErrors": {
+      "reset_password_link_invalid": "رابط إعادة تعيين كلمة المرور الذي حاولت استخدامه غير صالح. قد يكون هذا بسبب خطأ إملائي ، أو لأنه تم استخدامه بالفعل."
     },
-    "changeEmailSuccess": "Your email has been changed successfully. You have been logged out from all your devices and you can login now again with your new email."
-  }
+    "title": "إعادة تعيين كلمة المرور"
+  },
+  "serverErrors": {
+    "alreadyAuthenticated": "You are signed in with another account. Please log out and try again.",
+    "cannotSubmitFinalReportYet": "Final Report cannot be submitted yet",
+    "companyDataNotCompleted": "Please complete your company profile first.",
+    "emailNotConfirmed": "Your email address is not confirmed yet. Please check your email inbox including the spam folder and follow the confirmation link.",
+    "finalReportAlreadySubmitted": "Final Report already submitted",
+    "generic403": "Request failed with status code 403 (permission denied).",
+    "genericNetworkError": "لا يمكن الوصول إلى الخادم. يرجى التحقق من اتصالك بالإنترنت وحاول مرة أخرى.",
+    "identicalPasswordNotAllowed": "The new password can not be identical with the old password.",
+    "identificationNumberAlreadyExists": "تم تسجيل شركة برقم ضريبة القيمة المضافة / الضريبة هذا بالفعل.",
+    "inactiveCompany": "You company account has not been activated yet. You will be notified via email once this is done.",
+    "inactiveUser": "تم حظر حسابك.",
+    "invalidCredentials": "بيانات غير صالحة",
+    "invalidExtension": "تنسيق الصورة غير مسموح به. يرجى تحميل صورة أخرى (JPG أو PNG)",
+    "materialDoesNotExist": "إحدى المواد المختارة غير موجودة",
+    "materialQuantityInvalidDecimal": "One of the Material quantity is invalid.",
+    "maximumFileSizeExceeded": "الحجم الأقصى للصورة هو 2 ميغا بايت. الرجاء محاولة ملف صورة أصغر.",
+    "missingCompanyRelation": "You cannot login because your account is not associated with a company.",
+    "noCompanyAssigned": "لم يتم تعيينك لأية شركة",
+    "noCompanyAssignedORInactiveCompany": "لم يتم تعيينك لأي شركة أو لم يتم تنشيط حساب شركتك بعد.",
+    "packagingGroupDoesNotExist": "إحدى مجموعات الحزم المحددة غير موجودة",
+    "permissionDenied": "ليس لديك إذن للقيام بهذا العمل.",
+    "profileAlreadyCompleted": "ملف الشركة مكتمل بالفعل",
+    "reportDoesNotExist": "تقرير غير موجود",
+    "reportIsNotEditable": "التقرير غير قابل للتحرير",
+    "timeframeOverlap": "Report's timeframe overlaps with already existing Data report(s), please check.",
+    "unknownError": "فشل الخادم في معالجة طلبك. يرجى إعادة التحميل وحاول مرة أخرى.",
+    "userEmailDoesAlreadyExist": "مستخدم بعنوان البريد الإلكتروني هذا مسجل بالفعل لشركة قائمة.",
+    "validationError": "يبدو أن هناك مشكلة في التحقق من صحة البيانات المقدمة."
+  },
+  "somethingUnexpectedHappened": "عذرا ، حدث شيء غير متوقع ...",
+  "submit": "إرسال",
+  "timeframe": {
+    "month_one": "1 شهر",
+    "month_plural": "{{count}} اشهر"
+  },
+  "validations": {
+    "atLeastOnPackagingGroup": "مطلوب مجموعة تغليف واحدة على الأقل",
+    "atLeastOnPackagingMaterial": "مطلوب مادة واحدة على الأقل",
+    "decimalType": "only 2 decimal places are allowed",
+    "emailInvalid": "يرجى إدخال عنوان بريد إلكتروني صالح",
+    "forecastShouldBeInSameYear": "يجب أن تبدأ التوقعات وتنتهي في نفس العام",
+    "greaterThanZero": "يجب أن يكون أكبر من الصفر أو إزالته.",
+    "identicalPasswordNotAllowed": "The new password can not be identical with the old password",
+    "noWhitespaceAllowed": "لا يسمح بالمسافات",
+    "notUniqueGroups": "مجموعة الحزم هذه مكررة",
+    "notUniqueGroupsMaterials": "يجب أن تكون المواد في مجموعات التعبئة والتغليف فريدة من نوعها",
+    "numberType": "الرجاء إدخال رقم صحيح",
+    "passwordMustHaveLowercase": "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل",
+    "passwordMustHaveOneNumber": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل",
+    "passwordMustHaveSpecialCharacter": "يجب أن تحتوي كلمة المرور على حرف خاص واحد على الأقل, على سبيل المثال., ! @ # ? ]",
+    "passwordMustHaveUppercase": "يجب أن تحتوي كلمة المرور على حرف واحد كبير على الأقل",
+    "passwordTooShort": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+    "reportExceedsOneYear": "تقرير يتجاوز سنة واحدة",
+    "reportStartDateValid": "يرجى تحديد تاريخ صالح على شكل شهر سنة: Jan 2024",
+    "required": "هذه الخانة مطلوبه",
+    "startDateMin": "لا يمكن أن يكون التاريخ قبل بداية الشهر المقبل"
+  },
+  "welcome": "اهلا و سهلا!"
 }
