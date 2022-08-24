@@ -25,6 +25,7 @@ const mockCompany1: CompanyType = {
   distributorType: DistributorType.IMPORTER,
   identificationNumber: '123456789',
   isProfileCompleted: true,
+  countryCode: 'en',
   logo: {
     height: 375,
     name: 'ea6cbd1d-12d7-4c90-a636-2f7620417b6e.jpeg',
