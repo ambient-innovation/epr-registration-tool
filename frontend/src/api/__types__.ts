@@ -167,6 +167,7 @@ export type Mutation = {
   changeLanguage: Scalars['String']
   changePassword: Scalars['String']
   packagingReportFinalDataSubmit: Scalars['String']
+  packagingReportForecastDelete: Scalars['String']
   packagingReportForecastSubmit: Scalars['String']
   packagingReportForecastUpdate: Scalars['String']
   registerCompany: Scalars['String']
@@ -197,6 +198,10 @@ export type MutationChangePasswordArgs = {
 
 export type MutationPackagingReportFinalDataSubmitArgs = {
   packagingRecords: Array<PackagingGroupInput>
+  packagingReportId: Scalars['ID']
+}
+
+export type MutationPackagingReportForecastDeleteArgs = {
   packagingReportId: Scalars['ID']
 }
 
@@ -512,6 +517,15 @@ export type CompanyDetailsQuery = {
       street: string
     } | null
   } | null
+}
+
+export type PackagingReportForecastDeleteMutationVariables = Exact<{
+  packagingReportId: Scalars['ID']
+}>
+
+export type PackagingReportForecastDeleteMutation = {
+  __typename?: 'Mutation'
+  packagingReportForecastDelete: string
 }
 
 export type PackagingReportsQueryVariables = Exact<{
@@ -1097,6 +1111,37 @@ export type CompanyDetailsQueryResult = Apollo.QueryResult<
   CompanyDetailsQuery,
   CompanyDetailsQueryVariables
 >
+export const PackagingReportForecastDeleteDocument = gql`
+  mutation packagingReportForecastDelete($packagingReportId: ID!) {
+    packagingReportForecastDelete(packagingReportId: $packagingReportId)
+  }
+`
+export type PackagingReportForecastDeleteMutationFn = Apollo.MutationFunction<
+  PackagingReportForecastDeleteMutation,
+  PackagingReportForecastDeleteMutationVariables
+>
+export function usePackagingReportForecastDeleteMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    PackagingReportForecastDeleteMutation,
+    PackagingReportForecastDeleteMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    PackagingReportForecastDeleteMutation,
+    PackagingReportForecastDeleteMutationVariables
+  >(PackagingReportForecastDeleteDocument, options)
+}
+export type PackagingReportForecastDeleteMutationHookResult = ReturnType<
+  typeof usePackagingReportForecastDeleteMutation
+>
+export type PackagingReportForecastDeleteMutationResult =
+  Apollo.MutationResult<PackagingReportForecastDeleteMutation>
+export type PackagingReportForecastDeleteMutationOptions =
+  Apollo.BaseMutationOptions<
+    PackagingReportForecastDeleteMutation,
+    PackagingReportForecastDeleteMutationVariables
+  >
 export const PackagingReportsDocument = gql`
   query packagingReports(
     $pagination: PaginationInput!

@@ -128,6 +128,7 @@ type Mutation {
   packagingReportForecastSubmit(timeframe: TimeframeType!, year: Int!, startMonth: Int!, tzInfo: String!, packagingRecords: [PackagingGroupInput!]!): String!
   packagingReportFinalDataSubmit(packagingReportId: ID!, packagingRecords: [PackagingGroupInput!]!): String!
   packagingReportForecastUpdate(packagingReportId: ID!, packagingRecords: [PackagingGroupInput!]!): String!
+  packagingReportForecastDelete(packagingReportId: ID!): String!
 }
 
 input PackagingGroupInput {

@@ -87,6 +87,7 @@
     "youCanLoginNow": "Everything has been set up and you can now log in."
   },
   "backToDashboard": "back to dashboard",
+  "cancel": "إلغاء",
   "changeEmailConfirm": {
     "changeEmail": "Change Email",
     "changeEmailFailed": {
@@ -149,6 +150,10 @@
     "noCompanyAssigned": "لم يتم تعيينك لأية شركة",
     "pleaseLogin": "الرجاء تسجيل الدخول",
     "reportListSection": {
+      "deleteReport": "حذف التقرير",
+      "deleteReportDialog": {
+        "description": "Are you sure you want to delete this report? The data cannot be restored afterwards."
+      },
       "description": "هنا يمكنك الاطلاع على نظرة عامة على توقعاتك المرسلة. يمكنك فقط تقديم توقع واحد لكل إطار زمني. يمكن تعديل التوقعات طالما لم يتم الوصول إلى الإطار الزمني المحدد.",
       "filterByYear": "تصفية حسب السنة",
       "headline": "إعداد تقارير البيانات",
@@ -186,6 +191,7 @@
       "uploadLogo": "تحميل الشعار"
     }
   },
+  "delete": "حذف",
   "edit": "تعديل",
   "email": "البريد الإلكتروني",
   "eprTool": "EPR Registration Tool",
@@ -333,6 +339,7 @@
     "permissionDenied": "ليس لديك إذن للقيام بهذا العمل.",
     "profileAlreadyCompleted": "ملف الشركة مكتمل بالفعل",
     "reportDoesNotExist": "تقرير غير موجود",
+    "reportIsNotDeletable": "التقرير غير قابل للحذف",
     "reportIsNotEditable": "التقرير غير قابل للتحرير",
     "timeframeOverlap": "Report's timeframe overlaps with already existing Data report(s), please check.",
     "unknownError": "فشل الخادم في معالجة طلبك. يرجى إعادة التحميل وحاول مرة أخرى.",

@@ -87,6 +87,7 @@
     "youCanLoginNow": "Everything has been set up and you can now log in."
   },
   "backToDashboard": "back to dashboard",
+  "cancel": "Cancel",
   "changeEmailConfirm": {
     "changeEmail": "Change email address",
     "changeEmailFailed": {
@@ -149,6 +150,10 @@
     "noCompanyAssigned": "You have not been assigned to any company",
     "pleaseLogin": "Please Log In",
     "reportListSection": {
+      "deleteReport": "Delete report",
+      "deleteReportDialog": {
+        "description": "Are you sure you want to delete this report? The data cannot be restored afterwards."
+      },
       "description": "Here you can see an overview of your submitted forecasts. You can only submit one forecast per timeframe. Forecasts can be edited as long as the specified timeframe has not yet been reached.",
       "filterByYear": "Filter by year",
       "headline": "Packaging data reporting",
@@ -186,6 +191,7 @@
       "uploadLogo": "Upload logo"
     }
   },
+  "delete": "Delete",
   "edit": "Edit",
   "email": "Email",
   "eprTool": "EPR Registration Tool",
@@ -333,6 +339,7 @@
     "permissionDenied": "You have no permission to perform this action.",
     "profileAlreadyCompleted": "Company Profile already completed",
     "reportDoesNotExist": "Report does not exist",
+    "reportIsNotDeletable": "Report is not deletable",
     "reportIsNotEditable": "Report is not editable",
     "timeframeOverlap": "Report's timeframe overlaps with already existing Data report(s), please check.",
     "unknownError": "The server failed to handle your request. Please reload and try again.",
