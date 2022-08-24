@@ -89,6 +89,11 @@ backend:post-build-checks:
     - normal-load
   variables:
     GIT_STRATEGY: none
+  before_script:
+    # this needed, or you will get the error:
+    # "unable to resolve docker endpoint: open /certs/client/ca.pem: no such file or directory"
+    # generating certs is too slow: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/27384
+    - until docker info; do sleep 1; done
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker run
