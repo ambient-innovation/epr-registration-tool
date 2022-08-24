@@ -204,6 +204,27 @@ def packaging_report_forecast_update(
     return 'UPDATED'
 
 
+def packaging_report_forecast_delete(info: Info, packaging_report_id: ID):
+    current_user: User = info.context.request.user
+    report: PackagingReport = (
+        PackagingReport.objects.visible_for(current_user)
+        .filter(pk=packaging_report_id)
+        .select_related('related_forecast')
+        .first()
+    )
+
+    if not report:
+        raise GraphQLError('reportDoesNotExist')
+
+    # check if this report is editable at this time
+    if not getattr(report, 'related_forecast', None) or not report.is_forecast_editable():
+        raise GraphQLError('reportIsNotDeletable')
+
+    report.delete()
+
+    return 'DELETED'
+
+
 @strawberry.type
 class PackagingReportMutation:
     packaging_report_forecast_submit: str = strawberry.field(
@@ -216,5 +237,9 @@ class PackagingReportMutation:
     )
     packaging_report_forecast_update: str = strawberry.field(
         resolver=packaging_report_forecast_update,
+        permission_classes=[IsAuthenticated, IsCompanyProfileCompletedAndActive],
+    )
+    packaging_report_forecast_delete: str = strawberry.field(
+        resolver=packaging_report_forecast_delete,
         permission_classes=[IsAuthenticated, IsCompanyProfileCompletedAndActive],
     )

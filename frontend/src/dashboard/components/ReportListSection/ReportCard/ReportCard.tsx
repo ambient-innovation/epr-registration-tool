@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 
 import { DjangoFileType, PackagingReportType } from '@/api/__types__'
 import { timeframeDisplayValue } from '@/common/contants'
+import { CardMenu } from '@/dashboard/components/ReportListSection/ReportCard/CardMenu/CardMenu'
 import { ROUTES } from '@/routes'
 
 import { cardContentSx, statusChipSx } from './ReportCard.styles'
@@ -120,6 +121,9 @@ export const ReportCard = ({
           >
             {actionButton}
           </Stack>
+          <Box ml={{ xs: 'auto', md: 2 }}>
+            <CardMenu reportId={reportId} canDelete={isForecastEditable} />
+          </Box>
         </Box>
         <Typography variant={'caption'}>
           {`${t(
