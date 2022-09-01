@@ -165,6 +165,25 @@ class ChangeCompanyDetailsTestCase(BaseApiTestCase):
             message='identificationNumberAlreadyExists',
         )
 
+    def test_create_company_profile_without_identification_number_fails(self):
+        self.query_and_assert_error(
+            self.MUTATION,
+            variables={
+                'companyInput': {
+                    'name': 'Farwell Co (updated)',
+                    'distributorType': 'LOCAL_PRODUCER',
+                },
+                'contactInfoInput': {
+                    **self.DEFAULT_CONTACT_INFO_INPUT,
+                    'postalCode': None,
+                    'streetNumber': None,
+                    'additionalAddressInfo': None,
+                },
+                'additionalInvoiceRecipientInput': None,
+            },
+            message='identificationNumberRequired',
+        )
+
     def test_create_company_profile_without_additional_info_no_errors(self):
         content = self.query_and_load_data(
             self.MUTATION,

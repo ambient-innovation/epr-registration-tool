@@ -55,7 +55,7 @@ const schema: SchemaOf<Record<keyof CompanyData, unknown>> = yup.object({
   streetNumber: yup.string(),
   phoneNumber: requiredStringValidator(),
   additionalAddressInfo: yup.string(),
-  identificationNumber: requiredStringWithoutWhitespace(),
+  identificationNumber: requiredStringWithoutWhitespace().nullable(),
   invoiceRecipientTitle: yup.string(),
   invoiceRecipientFullName: yup.string().when('useAdditionalInvoiceRecipient', {
     is: true,
