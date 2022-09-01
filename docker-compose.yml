@@ -23,7 +23,7 @@ services:
       dockerfile: Dockerfile
       target: dev
     container_name: epr_tool_frontend
-    # this is needed for the server side request
+    # this env variable is needed for the server side request, as we use here the dev build
     environment:
       - BACKEND_URL=http://backend:8000/
     volumes:
@@ -54,14 +54,31 @@ services:
       - "1025:1025"  # smtp
 
 # Setup for e2e testing
-  backend_e2e:
+  e2efrontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      # we need to provide here the host network as requests to the backend need to be done to fetch and generate CMS
+      # pages while build
+      network: host
+      target: test
+    container_name: epr_tool_frontend_e2e
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules/
+      - /app/.next
+    ports:
+      - "3000:3000"
+    restart: "no"
+
+  e2ebackend:
     build:
       context: ./backend
       dockerfile: Dockerfile
       target: dev
     container_name: epr_tool_backend_e2e
-    env_file: ./backend/.env.e2e
     command: "./scripts/run_e2e.sh"
+    env_file: ./backend/.env.e2e
     volumes:
       - ./backend/:/app
     ports:

@@ -20,4 +20,5 @@ test("test", async ({ page }) => {
 
   // Assert Login-Button does not exist on page anymore
   await expect(await page.locator("button[text=login]")).toHaveCount(0);
+  await expect(await page).toHaveURL("dashboard");
 });

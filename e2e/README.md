@@ -6,9 +6,13 @@
 
 Run backend container `backend_e2e` that is starting with a empty test db and loads needed fixtures.
 
-        docker compose up backend_e2e
+        docker compose up e2ebackend
 
-Additionally, run the frontend locally. Switch to the frontend directory `./frontend` and run following command:
+Additionally, run the frontend in docker.
+
+        docker compose up e2efrontend
+
+Or you can run your frontend also locally. Switch to the frontend directory `./frontend` and run following command:
 
         yarn dev
 
