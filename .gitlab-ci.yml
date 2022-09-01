@@ -12,13 +12,15 @@ variables:
   TEST_HELM_CHART_VERSION: "0.5.3"  # <-- helm chart version for test server
   IMAGE_TAG_BACKEND: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_REF_SLUG
   IMAGE_TAG_FRONTEND: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_REF_SLUG
+  IMAGE_TAG_FRONTEND_E2E: $CI_REGISTRY_IMAGE/frontende2e:$CI_COMMIT_REF_SLUG
   IMAGE_TAG_BACKEND_SHA: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_SHORT_SHA
   IMAGE_TAG_FRONTEND_SHA: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_SHORT_SHA
   FF_ENABLE_BASH_EXIT_CODE_CHECK: "true"
+  DOCKER_DRIVER: overlay2
   DOCKER_HOST: tcp://docker:2376
-  DOCKER_TLS_CERT_DIR: "/certs"
   DOCKER_TLS_VERIFY: 1
-  DOCKER_CERT_PATH: "$DOCKER_TLS_CERT_DIR/client"
+  DOCKER_TLS_CERTDIR: "/certs"
+  DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
   # variables for backend test
   TEST_POSTGRES_CONTAINER_NAME: epr_tool_db
   TEST_POSTGRES_DB: epr-tool
@@ -67,15 +69,16 @@ backend:build-and-push:
     # "unable to resolve docker endpoint: open /certs/client/ca.pem: no such file or directory"
     # generating certs is too slow: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/27384
     - until docker info; do sleep 1; done
-  script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker build
+  script:
+    - DOCKER_BUILDKIT=1 docker build
       --compress
-      --cache-from $CI_REGISTRY_IMAGE/backend:develop
+      --cache-from $IMAGE_TAG_BACKEND
+      --build-arg BUILDKIT_INLINE_CACHE=1
       -t $IMAGE_TAG_BACKEND
       -t $IMAGE_TAG_BACKEND_SHA
-      --build-arg BUILDKIT_INLINE_CACHE=1
       ./backend
+
     - docker push $IMAGE_TAG_BACKEND
     - docker push $IMAGE_TAG_BACKEND_SHA
   except:
@@ -94,14 +97,13 @@ backend:post-build-checks:
     # "unable to resolve docker endpoint: open /certs/client/ca.pem: no such file or directory"
     # generating certs is too slow: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/27384
     - until docker info; do sleep 1; done
-  script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  script:
     - docker run
       --rm --entrypoint=/bin/bash
       -e USE_POSTGRES_DATABASE=False
       $IMAGE_TAG_BACKEND
       -c "./scripts/check_migrations.sh && ./scripts/check_graphql_schema.sh"
-
   except:
     - /^helm[-/\/].*$/
     - triggers
@@ -122,8 +124,14 @@ backend:test:
         path: 'coverage/report.xml'
   coverage: '/TOTAL.*\s+(\d+.?\d*%)$/'
   before_script:
+    # this needed, or you will get the error:
+    # "unable to resolve docker endpoint: open /certs/client/ca.pem: no such file or directory"
+    # generating certs is too slow: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/27384
+    - until docker info; do sleep 1; done
+
     # login to registry
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+
     # start DB container
     - docker run
       --name $TEST_POSTGRES_CONTAINER_NAME
@@ -280,9 +288,10 @@ frontend:build-and-push:
     # "unable to resolve docker endpoint: open /certs/client/ca.pem: no such file or directory"
     # generating certs is too slow: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/27384
     - until docker info; do sleep 1; done
-  script:
     - docker login -u $CI_DEPENDENCY_PROXY_USER -p $CI_DEPENDENCY_PROXY_PASSWORD $CI_DEPENDENCY_PROXY_SERVER
-    - docker build
+  script:
+    - DOCKER_BUILDKIT=1 docker build
+      --target prod
       --compress
       --cache-from $CI_REGISTRY_IMAGE/frontend:develop
       -t $IMAGE_TAG_FRONTEND
@@ -373,3 +382,112 @@ check:deploy:test:
     - /^helm[-/\/].*$/
 
 # If you want the e2e job config please check the history
+
+.playwright_cache:
+  cache:
+    paths:
+      - ms-playwright/
+      - .yarn/
+      - node_modules/
+    key: ms-playwright
+
+e2e:test:
+  stage: post-build
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16
+  needs: [ 'backend:build-and-push']
+  artifacts:
+    when: always
+    paths:
+      - e2e/playwright-report/
+      - e2e/test-results/
+  extends: .playwright_cache
+  tags:
+    - very-high-load
+  variables:
+    FF_NETWORK_PER_BUILD: "true"
+    FRONTEND_CONTAINER_NAME: epr_frontend_test_e2e
+
+    DJANGO_ALLOWED_HOSTS: 127.0.0.1,localhost,0.0.0.0
+    DJANGO_CELERY_TASK_ALWAYS_EAGER: "True"
+    USE_POSTGRES_DATABASE: "False"
+    DJANGO_SESSION_COOKIE_SECURE: "False"
+    DJANGO_SERVER_URL: http://localhost:8000
+    DJANGO_FRONTEND_URL: http://localhost:3000
+    DJANGO_CORS_ORIGIN_WHITELIST: http://0.0.0.0:8000,http://0.0.0.0:3000,http://localhost:8000,http://localhost:3000,http://127.0.0.1:3000,http://localhost:9009,http://127.0.0.1:9009
+    DJANGO_CSRF_TRUSTED_ORIGINS: http://0.0.0.0:8000,http://0.0.0.0:3000,http://localhost:8000,http://localhost:3000,http://127.0.0.1:3000,http://127.0.0.1:8000
+    DJANGO_DEBUG: "True"
+    DJANGO_GRAPHQL_CSRF_EXEMPT: "True"
+    AXES_ENABLED: "False"
+    ENABLE_DEBUG_TOOLBAR: "False"
+    DJANGO_COOKIE_DOMAIN: localhost
+
+    # Overwrite default request/limit of "very-high-load".
+    # This is only possible because it will still request a complete node,
+    # so the approach of "take whatever you want" cannot break other pipelines.
+    KUBERNETES_CPU_REQUEST: "100m"
+    KUBERNETES_CPU_LIMIT: "200m"
+    KUBERNETES_MEMORY_REQUEST: "400Mi"
+    KUBERNETES_MEMORY_LIMIT: "800Mi"
+
+    KUBERNETES_HELPER_CPU_REQUEST: "100m"
+    KUBERNETES_HELPER_CPU_LIMIT: "200m"
+    KUBERNETES_HELPER_MEMORY_REQUEST: "500Mi"
+    KUBERNETES_HELPER_MEMORY_LIMIT: "1000Mi"
+
+    KUBERNETES_SERVICE_CPU_REQUEST: "100m"
+    KUBERNETES_SERVICE_CPU_LIMIT: "3800m"
+    KUBERNETES_SERVICE_MEMORY_REQUEST: "1000Mi"
+    KUBERNETES_SERVICE_MEMORY_LIMIT: "14000Mi"
+  services:
+    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16-dind
+      alias: docker
+    - name: $IMAGE_TAG_BACKEND
+      entrypoint: ["/bin/sh"]
+      command: ["./scripts/run_e2e.sh"]
+  before_script:
+    # this needed, or you will get the error:
+    # "unable to resolve docker endpoint: open /certs/client/ca.pem: no such file or directory"
+    # generating certs is too slow: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/27384
+    - until docker info; do sleep 1; done
+
+    # login to registry
+    - docker login -u $CI_DEPENDENCY_PROXY_USER -p $CI_DEPENDENCY_PROXY_PASSWORD $CI_DEPENDENCY_PROXY_SERVER
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+
+    # wait for backend service
+    - sleep 5
+
+    # build production build with test env. See --target test. Build also needs to be connected to host network as
+    # CMS pages will be fetched while build and generated.
+    - DOCKER_BUILDKIT=1 docker build
+      --target test
+      --compress
+      --network=host
+      -t $IMAGE_TAG_FRONTEND_E2E
+      --build-arg BUILDKIT_INLINE_CACHE=1
+      --build-arg DOCKER_IMAGE_PREFIX=${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/
+      ./frontend
+
+    - docker run
+      --name $FRONTEND_CONTAINER_NAME
+      -d
+      --network=host
+      $IMAGE_TAG_FRONTEND_E2E
+  script:
+    - docker run --rm
+      --name playwright
+      --volume  "$(pwd)/e2e":"$(pwd)"
+      --workdir "$(pwd)"
+      --env CI="true"
+      --env PLAYWRIGHT_BROWSERS_PATH="$(pwd)/ms-playwright"
+      --network=host
+      --ipc=host
+      --user "${CURRENT_USER:-pwuser:pwuser}"
+      mcr.microsoft.com/playwright:v1.21.1-focal
+      bash -c 'yarn install --pure-lockfile --cache-folder .yarn; yarn playwright install; yarn playwright test'
+
+  after_script:
+    - docker stop $FRONTEND_CONTAINER_NAME && docker rm $FRONTEND_CONTAINER_NAME || true
+  except:
+    - /^helm[-/\/].*$/
+    - triggers

@@ -16,11 +16,12 @@ test("test", async ({ page }) => {
   // user will be redirected to dashboard
   await page.waitForURL("**/dashboard");
 
-  //click on submit report to navigate to the report form
+  // click on submit report to navigate to the report form
   await page.locator("text=Submit new report").click();
   await page.waitForURL("**/report/forecast/add");
 
   // navigate to second step as first step is already prefilled
+  await page.waitForSelector("text=Next");
   await page.locator("text=Next").first().click();
 
   await page
@@ -37,7 +38,7 @@ test("test", async ({ page }) => {
   await page.locator('text=kgQuantity * >> input[type="text"]').fill("10");
 
   // Click text=Add new entry
-  await page.locator("text=Add new entry").click();
+  await page.locator("*css=button >> text=Add new entry").click();
 
   // Click [aria-label="Open"] >> nth=3
   await page.locator('[aria-label="Open"]').nth(3).click();

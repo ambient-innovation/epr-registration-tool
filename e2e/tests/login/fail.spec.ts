@@ -24,4 +24,5 @@ test("test", async ({ page }) => {
   await expect(
     page.locator("text=The credentials you provided are invalid.")
   ).toBeTruthy();
+  await expect(await page).not.toHaveURL("dashboard");
 });

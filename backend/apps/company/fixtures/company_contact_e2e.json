@@ -1,0 +1,20 @@
+[
+  {
+    "model": "company.companycontactinfo",
+    "pk": 1,
+    "fields": {
+      "created_at": "2022-08-30T20:26:35.912Z",
+      "created_by": null,
+      "lastmodified_at": "2022-08-30T20:26:35.916Z",
+      "lastmodified_by": null,
+      "country": "Afghanistan",
+      "postal_code": "",
+      "city": "Cologne",
+      "street": "SomeStreet",
+      "street_number": "",
+      "phone_number": "4342234234423",
+      "additional_address_info": "",
+      "related_company_id": 1
+    }
+  }
+]

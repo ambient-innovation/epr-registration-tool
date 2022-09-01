@@ -34,6 +34,60 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN yarn build
 
+# Rebuild the source code only when needed
+# This stage is needed so env variables are loaded on build time of nextjs and CMS pages can be fetched and generated
+FROM deps AS builder-test
+
+ENV NODE_ENV test
+
+WORKDIR /app
+
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+# Next.js collects completely anonymous telemetry data about general usage.
+# Learn more here: https://nextjs.org/telemetry
+# disable telemetry during the build.
+ENV NEXT_TELEMETRY_DISABLED 1
+
+RUN yarn build
+
+# Test image, copy all the files and run next
+# We use this for e2e testing.
+FROM builder-test AS test
+WORKDIR /app
+
+ENV NODE_ENV test
+
+# https://nextjs.org/docs/api-reference/next/image#built-in-loaders
+# https://nextjs.org/docs/messages/sharp-missing-in-production
+RUN yarn add sharp
+
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
+
+COPY --from=builder-test /app/next-i18next.config.js ./
+COPY --from=builder-test /app/next.config.js ./
+COPY --from=builder-test /app/public ./public
+COPY --from=builder-test /app/package.json ./package.json
+
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder-test --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder-test --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# user should own this dir to be able to create cache dir for example
+RUN chown -R nextjs:nodejs ./.next
+
+USER nextjs
+
+EXPOSE 3000
+
+ENV PORT 3000
+
+CMD ["yarn", "start"]
+
+
 # Production image, copy all the files and run next
 FROM builder AS prod
 WORKDIR /app

@@ -7,7 +7,9 @@
       "name": "Testing company",
       "distributor_type": "IMPORTER",
       "is_active": true,
-      "registration_number": "EN6574770209"
+      "registration_number": "EN6574770209",
+      "identification_number": "43424324234234243",
+      "country_code": "en"
     }
   }
 ]
