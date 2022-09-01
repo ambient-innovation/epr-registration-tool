@@ -80,7 +80,7 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
         self.assertEqual('ar', user.language_preference)
 
         # check mail was send in correct language as send in user.language_preference
-        self.assertEqual('مرحبًا بك في أداة تسجيل EPR', mail.outbox[0].subject)
+        self.assertEqual('أداة تسجيل EPR | يرجى تأكيد عنوان البريد الإلكتروني الخاص بك', mail.outbox[0].subject)
 
     def test_register_a_company_with_invalid_company_name(self):
         self.mutation_params['companyName'] = '  '

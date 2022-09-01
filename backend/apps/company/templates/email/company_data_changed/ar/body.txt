@@ -1,7 +1,11 @@
-Dear {{ user.display_name }}
+عزيزي/عزيزتي {{ user.display_name }}
 
-Your company's data has recently been changed.
+أداة تسجيل EPR| تم تغيير بيانات الشركة المرتبطة بحسابك مؤخرً
 
-View changed data: {{ url }}
 
-Please get in touch with us if you have not initiated these changes.
+سجل الدخول الآن وتحقق من البيانات {{ url }}
+
+تم تغيير بيانات الشركة المرتبطة بحسابك مؤخرًا.
+إذا طلبت هذه التغييرات ، يمكنك تجاهل هذا البريد الإلكتروني.
+
+إذا  شعرت أن البريد الإلكتروني  الوارد مشبوهاً، يرجى التحقق من بياناتك وتغيير كلمة السر الخاصة بك.

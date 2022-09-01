@@ -1,11 +1,11 @@
-Dear {{ user.display_name }}
+عزيزي/عزيزتي  {{ user.display_name }}
 
-EPR Registration Tool | فاتورة تقرير البيانات
+تقرير فاتورة التعبئة والتغليف |  نظام تسجيل EPR
 
-فاتورة تقرير البيانات
 
-{{ packaging_report_id }} هذه فاتورة رقم تقرير البيانات
+{{ packaging_report_id }} رقم تقرير فاتورة التعبئة و التغليف
+
 
 {{ url }}
 
-هذه فاتورة رقم تقرير البيانات  {{ packaging_report_id }}.
+ها هو رقم تقريرك لفاتورة التعبئة و التغليف . {{ packaging_report_id }}.

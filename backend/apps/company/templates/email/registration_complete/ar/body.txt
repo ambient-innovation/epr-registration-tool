@@ -1,5 +1,6 @@
-Dear {{ user.display_name }}
+عزيزي/عزيزتي  {{ user.display_name }}
 
-Your EPR account has been successfully activated.
+تم تفعيل حساب نظام تسجيل EPR الخاص بك بنجاح
 
-Login now: {{ url }}
+
+تسجيل الدخول الآن {{ url }}

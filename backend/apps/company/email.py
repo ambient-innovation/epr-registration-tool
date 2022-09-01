@@ -6,7 +6,7 @@ from django.urls import reverse
 
 from sentry_sdk import capture_message, configure_scope
 
-from common.email import render_email, send_html_email, send_translated_email
+from common.email import send_translated_email
 from company.models import Company
 
 UserModel = get_user_model()
@@ -25,20 +25,7 @@ def send_admin_registration_notification(company: Company):
         capture_message('No receivers for company registration notification')
 
     for user in receiver_list:
-        context = {
-            'user': user,
-            'company': company,
-            'company_user': company_user,
-            'url': absolute_edit_company_url,
-            'frontend_url': settings.FRONTEND_URL,
-        }
-        subject, body_plain, body_html = render_email('new_registration', context)
-        send_html_email(
-            subject=subject,
-            body_plain=body_plain,
-            body_html=body_html,
-            to=[user.email],
-        )
+        send_translated_email('new_registration', user, company_user=company_user, url=absolute_edit_company_url)
 
 
 def send_user_registration_complete_notification(company):
