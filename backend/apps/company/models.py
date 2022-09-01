@@ -58,6 +58,7 @@ class Company(CommonInfo):
     identification_number = models.CharField(
         verbose_name=_('VAT / tax number'),
         blank=True,
+        null=True,
         max_length=255,
         validators=(validate_string_without_whitespaces,),
         help_text=_('National identification number'),

@@ -115,6 +115,9 @@ def change_company_details(
     except CompanyContactInfo.DoesNotExist:
         contact_info = CompanyContactInfo(related_company=company)
 
+    if not company_input.identification_number:
+        raise GraphQLError('identificationNumberRequired')
+
     company_input_data = get_input_data(CompanyInput, company_input)
     contact_info_input_data = get_input_data(CompanyContactInfoInput, contact_info_input)
     additional_invoice_recipient_data = (
