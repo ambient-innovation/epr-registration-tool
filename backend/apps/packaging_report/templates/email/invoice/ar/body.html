@@ -1,15 +1,15 @@
-{% extends "email/base/base_en.html" %}
+{% extends "email/base/base_ar.html" %}
 
 {% block title %}
-  EPR Registration Tool | فاتورة تقرير البيانات
+  أداة تسجيل EPR | فاتورة تقرير البيانات
 {% endblock %}
 
 {% block preheader %}
-  فاتورة تقرير البيانات
+ تقرير فاتورة التعبئة والتغليف |  نظام تسجيل EPR
 {% endblock %}
 
 {% block heading %}
- {{ packaging_report_id }} هذه فاتورة رقم تقرير البيانات
+ {{ packaging_report_id }} رقم تقرير فاتورة التعبئة و التغليف
 {% endblock %}
 
 {% block linktext %}
@@ -18,6 +18,6 @@
 
 {% block info %}
   <p>
-   هذه فاتورة رقم تقرير البيانات  {{ packaging_report_id }}.
+   ها هو رقم تقريرك لفاتورة التعبئة و التغليف . {{ packaging_report_id }}.
   </p>
 {% endblock %}

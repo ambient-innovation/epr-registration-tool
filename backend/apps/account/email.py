@@ -30,7 +30,7 @@ def send_request_email_change_confirm_mail(user, email_change_request):
     """
     new_email = user.email_change_request.email
     send_translated_email(
-        'reset_password',
+        'change_email',
         user,
         url=email_change_request.get_change_email_link(),
         new_email=new_email,
