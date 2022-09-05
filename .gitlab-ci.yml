@@ -1,8 +1,13 @@
+include:
+  - template: Security/Container-Scanning.gitlab-ci.yml
+
 image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16
 
 stages:
   - pre-build
   - build
+  - security
+  - security_results
   - post-build
   - deploy
   - post-deploy
@@ -10,17 +15,21 @@ stages:
 # When using dind, it's wise to use the overlays driver for improved performance.
 variables:
   TEST_HELM_CHART_VERSION: "0.5.3"  # <-- helm chart version for test server
+
   IMAGE_TAG_BACKEND: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_REF_SLUG
   IMAGE_TAG_FRONTEND: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_REF_SLUG
   IMAGE_TAG_FRONTEND_E2E: $CI_REGISTRY_IMAGE/frontende2e:$CI_COMMIT_REF_SLUG
   IMAGE_TAG_BACKEND_SHA: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_SHORT_SHA
   IMAGE_TAG_FRONTEND_SHA: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_SHORT_SHA
+
   FF_ENABLE_BASH_EXIT_CODE_CHECK: "true"
+
   DOCKER_DRIVER: overlay2
   DOCKER_HOST: tcp://docker:2376
   DOCKER_TLS_VERIFY: 1
   DOCKER_TLS_CERTDIR: "/certs"
   DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
+
   # variables for backend test
   TEST_POSTGRES_CONTAINER_NAME: epr_tool_db
   TEST_POSTGRES_DB: epr-tool
@@ -46,18 +55,33 @@ backend:lint:
     - /^helm[-/\/].*$/
     - triggers
 
-backend:security-check:
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.9-slim
-  stage: pre-build
+# Backend container scan
+container_scanning:
   tags:
     - low-load
+  stage: security
+  variables:
+    GIT_STRATEGY: fetch
+    DOCKER_IMAGE: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_REF_SLUG
+    CS_DEFAULT_BRANCH_IMAGE: $CI_REGISTRY_IMAGE/backend:develop
+    CS_SEVERITY_THRESHOLD: HIGH
+    CS_DISABLE_LANGUAGE_VULNERABILITY_SCAN: "false" #https://docs.gitlab.com/ee/user/application_security/container_scanning/#report-language-specific-findings
+    CS_IGNORE_UNFIXED: "true"
+    DOCKER_FILE: backend/Dockerfile
+
+check security scan results backend:
+  stage: security_results
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/alpine:latest
+  dependencies:
+    - container_scanning
+  tags:
+    - low-load
+  before_script:
+    - apk update && apk add jq
   script:
-    - cd backend
-    - ./scripts/packages_security_check.sh
+    - jq -e "( .vulnerabilities | length ) == 0" ./gl-container-scanning-report.json
   allow_failure: true
-  except:
-    - /^helm[-/\/].*$/
-    - triggers
+
 
 backend:build-and-push:
   stage: build
@@ -264,19 +288,31 @@ frontend:test:
     - /^helm[-/\/].*$/
     - triggers
 
-frontend:security-check:
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:14-alpine
-  stage: pre-build
+# Frontend container scan
+container_scanning_frontend:
+  extends: container_scanning
+  stage: security
+  variables:
+    GIT_STRATEGY: fetch
+    DOCKER_IMAGE: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_REF_SLUG
+    CS_DEFAULT_BRANCH_IMAGE: $CI_REGISTRY_IMAGE/frontend:develop
+    CS_SEVERITY_THRESHOLD: HIGH
+    CS_DISABLE_LANGUAGE_VULNERABILITY_SCAN: "false" #https://docs.gitlab.com/ee/user/application_security/container_scanning/#report-language-specific-findings
+    CS_IGNORE_UNFIXED: "true"
+    DOCKER_FILE: frontend/Dockerfile
+
+check security scan results frontend:
+  stage: security_results
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/alpine:latest
+  dependencies:
+    - container_scanning_frontend
   tags:
     - low-load
+  before_script:
+    - apk update && apk add jq
   script:
-    - cd frontend
-    # https://classic.yarnpkg.com/en/docs/cli/audit/#toc-yarn-audit - Only fail at "high" or "critical"
-    - yarn audit --groups dependencies || if [ $? -lt 8 ]; then exit 0; else exit 1; fi
+    - jq -e "( .vulnerabilities | length ) == 0" ./gl-container-scanning-report.json
   allow_failure: true
-  except:
-    - /^helm[-/\/].*$/
-    - triggers
 
 frontend:build-and-push:
   stage: build
