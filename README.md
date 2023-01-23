@@ -35,13 +35,26 @@
    - setup first wagtail page
 2. Follow "Run project" instructions in [frontend README](./frontend/README.md)
 
-
 ## Deployment
 
-- Our deployment setup pretty much follows the Ambient default approach
-- The deployment is fully automated through GitLab [CI/CD pipelines](.gitlab-ci.yml).  
-- Secrets like the database password are stored in GitLab secrets and are injected at build time  
-  Example: `--set backend.db.password=$DB_PASSWORD` in [deployment job](.gitlab-ci.yml)
+In order to run this application, you need to start three separate components: 
+- A postgres database (postgres version 11.8), where we recommend to provide a managed database
+- The backend application, which is written in Django
+- The frontend application, which is written in Next.JS and hence also runs server-side
+
+### Kubernetes
+
+We strongly recommend deploying this application in a Kubernetes environment, because this makes it easy to scale the different parts of the application depending on the load and to ensure availability through redundancy.
+
+You can use the provided [helm charts](./charts/epr-registration-tool) to install the application. In this setup we assume a managed Postgres database is provided and linked through the values set under the "db" section of the [values file](./charts/epr-registration-tool/values.yaml).
+
+### Other setups
+ 
+You can also install this application in other docker-based setups such as AWS ECS or even on a root server. However, we disencourage installing this application on traditional servers, because of the disadvantages in scalability and availability. 
+
+To install on a root server, you can manually start a docker container for the frontend and backend as well as the database. Alternatively you can use docker-compose in a similar way as the provided [docker-compose setup](./docker-compose.yml) that we use for local development. 
+
+To install this application without using docker, you can use the provided dependency management tools ([Pypi](./backend/Pipfile) in the backend and [npm](./frontend/package.json) in the frontend).
 
 ## Helm Charts
 
