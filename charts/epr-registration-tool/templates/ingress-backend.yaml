@@ -5,7 +5,7 @@
 {{- else if .Values.ingress.secretName -}}
 {{- $secretName = .Values.ingress.secretName -}}
 {{- end -}}
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ include "epr-tool.fullname" . }}-backend
@@ -31,7 +31,10 @@ spec:
       http:
         paths:
           - path: "/"
+            pathType: ImplementationSpecific
             backend:
-              serviceName: {{ include "epr-tool.fullname" . }}-backend
-              servicePort: 8000
+              service:
+                name: {{ include "epr-tool.fullname" . }}-backend
+                port:
+                  number: 8000
 {{- end }}
