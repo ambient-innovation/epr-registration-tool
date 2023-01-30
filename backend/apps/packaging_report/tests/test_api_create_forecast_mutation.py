@@ -166,13 +166,7 @@ class PackagingReportSubmissionTestCase(BaseApiTestCase):
         self.query_and_assert_error(
             self.MUTATION,
             variables=variables,
-            message='validationError',
-            message_dict={
-                'start_month': ['Value 20 is not a valid choice.'],
-                'timeframe': [
-                    'report has to start and end in same year',
-                ],
-            },
+            message='startDateIsInvalid',
         )
 
     def test_submit_new_packaging_report_start_date_validation_timeframe(self):
@@ -191,8 +185,7 @@ class PackagingReportSubmissionTestCase(BaseApiTestCase):
         self.query_and_assert_error(
             self.MUTATION,
             variables=variables,
-            message='validationError',
-            message_dict={'timeframe': ['report has to start and end in same year']},
+            message='startDateIsInvalid',
         )
 
     def test_submit_new_packaging_report_start_date_validation_should_validate_timezone(self):
