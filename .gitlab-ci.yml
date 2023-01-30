@@ -9,7 +9,7 @@ stages:
 
 # When using dind, it's wise to use the overlays driver for improved performance.
 variables:
-  TEST_HELM_CHART_VERSION: "0.5.3"  # <-- helm chart version for test server
+  TEST_HELM_CHART_VERSION: "0.6.0"  # <-- helm chart version for test server
   IMAGE_TAG_BACKEND: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_REF_SLUG
   IMAGE_TAG_FRONTEND: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_REF_SLUG
   IMAGE_TAG_FRONTEND_E2E: $CI_REGISTRY_IMAGE/frontende2e:$CI_COMMIT_REF_SLUG
