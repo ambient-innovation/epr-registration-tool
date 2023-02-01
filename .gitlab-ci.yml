@@ -237,7 +237,6 @@ deploy:test:
       $RELEASE_NAME $CATALOG_NAME/$HELM_CHART_NAME
   only:
     - develop
-    - fix/test-cluster-deployment
   except:
     - /^helm[-/\/].*$/
 
@@ -513,4 +512,3 @@ e2e:test:
   except:
     - /^helm[-/\/].*$/
     - triggers
-    - fix/test-cluster-deployment
