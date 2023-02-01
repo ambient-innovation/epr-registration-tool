@@ -56,6 +56,12 @@ To install on a root server, you can manually start a docker container for the f
 
 To install this application without using docker, you can use the provided dependency management tools ([Pypi](./backend/Pipfile) in the backend and [npm](./frontend/package.json) in the frontend).
 
+## Hardware requirements
+You should reserve at least 4 CPU cores and 16 GB of memory in total for running the application.
+- Run at least 2 frontend-pods with each 300 mCPU and 800 MB memory
+- Run at least 2 backend-pods with each 300 mCPU and 800 MB memory
+- As database we recommend providing at least 2 CPU cores and 4 GB memory 
+
 ## Helm Charts
 
 When making changes in the [Helm Charts](charts/epr-registration-tool/Chart.yaml), follow these steps
