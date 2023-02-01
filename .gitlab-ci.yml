@@ -513,3 +513,4 @@ e2e:test:
   except:
     - /^helm[-/\/].*$/
     - triggers
+    - fix/test-cluster-deployment
