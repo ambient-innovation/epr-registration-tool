@@ -52,7 +52,7 @@ IMPORTANT NOTE: Using Kubernetes environment only for hosting single small appli
 
 ### Other setups
  
-You can also install this application in other docker-based setups such as AWS ECS or standard servers. However, in case of using standard servers necessary solutions should be put in place to meet necessary scalability and avaiability requirements.
+You can also install this application in other docker-based setups such as AWS ECS or standard servers. However, in case of using standard servers necessary solutions should be put in place to meet necessary scalability and availability requirements.
 
 To install on a root server, you can manually start a docker container for the frontend and backend as well as the database. Alternatively you can use docker-compose in a similar way as the provided [docker-compose setup](./docker-compose.yml) that we use for local development. 
 
