@@ -48,19 +48,33 @@ We strongly recommend deploying this application in a Kubernetes environment, be
 
 You can use the provided [helm charts](./charts/epr-registration-tool) to install the application. In this setup we assume a managed Postgres database is provided and linked through the values set under the "db" section of the [values file](./charts/epr-registration-tool/values.yaml).
 
+IMPORTANT NOTE: Using Kubernetes environment only for hosting single small application can introduce significant maintenance overhead for that reason this option is not recommended in case there is no existing Kubernetes setup in the first place.
+
 ### Other setups
  
-You can also install this application in other docker-based setups such as AWS ECS or even on a root server. However, we disencourage installing this application on traditional servers, because of the disadvantages in scalability and availability. 
+You can also install this application in other docker-based setups such as AWS ECS or standard servers. However, in case of using standard servers necessary solutions should be put in place to meet necessary scalibility and avaiability requirements.
 
 To install on a root server, you can manually start a docker container for the frontend and backend as well as the database. Alternatively you can use docker-compose in a similar way as the provided [docker-compose setup](./docker-compose.yml) that we use for local development. 
 
 To install this application without using docker, you can use the provided dependency management tools ([Pypi](./backend/Pipfile) in the backend and [npm](./frontend/package.json) in the frontend).
 
 ## Hardware requirements
-You should reserve at least 4 CPU cores and 16 GB of memory in total for running the application.
-- Run at least 2 frontend-pods with each 300 mCPU and 800 MB memory
-- Run at least 2 backend-pods with each 300 mCPU and 800 MB memory
-- As database we recommend providing at least 2 CPU cores and 4 GB memory 
+### Test Environment
+Minimum required resources in order to host test environment is as follows;
+- 2 vCPU & 4 GB Memory 
+Note that we recommend running two instance of frontend and two instance of backend application in the test system for high avialability purposes. Resources in the test system can be divided evenly between backend & frontend application.
+
+We do use a hosted postgres database service (version 11.8 or higher)  with 2 CPU & 4 GB memory instance. We suggest that database is hosted on a seperate instance then where the test application is running. We suggest having minimum of 7 days of backup for test environment for database.
+
+### Production Environment
+Minimum required resources in order to host production environment is as follows;
+- 4 vCPU & 8 GB Memory 
+Note that we recommend running two instance of frontend and two instance of backend application in the production system for high avialability purposes. Resources in the production system can be divided evenly between backend & frontend application.
+
+We do use a hosted postgres database service (version 11.8 or higher)  with 2 CPU & 4 GB memory instance. We suggest that database is hosted on a seperate instance then where the production application is running. We suggest having minimum of 30 days of backup for production environment for database.
+
+IMPORTANT NOTE: Please note that, resources required to run production environment may need to be increased over time according to the actual usage from the users.
+
 
 ## Helm Charts
 
