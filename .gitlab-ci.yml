@@ -13,8 +13,8 @@ variables:
   IMAGE_TAG_BACKEND: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_REF_SLUG
   IMAGE_TAG_FRONTEND: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_REF_SLUG
   IMAGE_TAG_FRONTEND_E2E: $CI_REGISTRY_IMAGE/frontende2e:$CI_COMMIT_REF_SLUG
-  IMAGE_TAG_BACKEND_SHA: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_SHORT_SHA
-  IMAGE_TAG_FRONTEND_SHA: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_SHORT_SHA
+  IMAGE_TAG_BACKEND_SHA: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
+  IMAGE_TAG_FRONTEND_SHA: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
   FF_ENABLE_BASH_EXIT_CODE_CHECK: "true"
   DOCKER_DRIVER: overlay2
   DOCKER_HOST: tcp://docker:2376
@@ -179,8 +179,8 @@ backend:test:
     --set backend.db.password=$DB_PASSWORD
     --set backend.django.secretKey=$DJANGO_SECRET
     --set backend.rebuildFrontendTrigger.token=$DJANGO_REBUILD_FRONTEND_TRIGGER_TOKEN
-    --set backend.image.tag=$CI_COMMIT_SHORT_SHA
-    --set frontend.image.tag=$CI_COMMIT_SHORT_SHA
+    --set backend.image.tag=$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
+    --set frontend.image.tag=$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
     --set forceRestartAt=${CI_JOB_ID} $RANCHER_APP_NAME $HELM_CHART_VERSION ||
     rancher apps install
     --namespace $NAMESPACE
@@ -190,8 +190,8 @@ backend:test:
     --set backend.db.password=$DB_PASSWORD
     --set backend.django.secretKey=$DJANGO_SECRET
     --set backend.rebuildFrontendTrigger.token=$DJANGO_REBUILD_FRONTEND_TRIGGER_TOKEN
-    --set backend.image.tag=$CI_COMMIT_SHORT_SHA
-    --set frontend.image.tag=$CI_COMMIT_SHORT_SHA
+    --set backend.image.tag=$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
+    --set frontend.image.tag=$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
     --version $HELM_CHART_VERSION
     --no-prompt $RANCHER2_PROJECT_ID:$CATALOG_NAME-$HELM_CHART_NAME $RANCHER_APP_NAME
 
@@ -231,8 +231,8 @@ deploy:test:
       --set backend.db.password=$DB_PASSWORD
       --set backend.django.secretKey=$DJANGO_SECRET
       --set backend.rebuildFrontendTrigger.token=$DJANGO_REBUILD_FRONTEND_TRIGGER_TOKEN
-      --set backend.image.tag=$CI_COMMIT_SHORT_SHA
-      --set frontend.image.tag=$CI_COMMIT_SHORT_SHA
+      --set backend.image.tag=$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
+      --set frontend.image.tag=$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
       --set forceRestartAt=${CI_JOB_ID}
       $RELEASE_NAME $CATALOG_NAME/$HELM_CHART_NAME
   only:
