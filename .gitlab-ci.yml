@@ -9,7 +9,7 @@ stages:
 
 # When using dind, it's wise to use the overlays driver for improved performance.
 variables:
-  TEST_HELM_CHART_VERSION: "0.6.0"  # <-- helm chart version for test server
+  TEST_HELM_CHART_VERSION: "1.0.0"  # <-- helm chart version for test server
   IMAGE_TAG_BACKEND: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_REF_SLUG
   IMAGE_TAG_FRONTEND: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_REF_SLUG
   IMAGE_TAG_FRONTEND_E2E: $CI_REGISTRY_IMAGE/frontende2e:$CI_COMMIT_REF_SLUG
@@ -240,6 +240,45 @@ deploy:test:
   except:
     - /^helm[-/\/].*$/
 
+deploy:test-to-new-infra:
+  stage: deploy
+  tags:
+    - low-load
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/alpine/k8s:1.25.13
+  variables:
+    TARGET_CLUSTER: test-ambient-eks
+    CATALOG_NAME: epr-registration-tool-test
+    HELM_CHART_VERSION: $TEST_HELM_CHART_VERSION
+    HELM_CHART_NAME: epr-tool
+    NAMESPACE: epr-registration-tool-test
+    TARGET_VALUES_YAML_PATH: "./charts/epr-registration-tool-migration/values.test.yaml"
+    RELEASE_NAME: epr-registration-tool-test
+  environment:
+    name: test
+    url: https://api.epr-test.ambient.digital
+  script:
+    - echo "Authenticating."
+    - export AWS_DEFAULT_REGION=eu-central-1
+    - export AWS_ACCESS_KEY_ID=$DEPLOYMENT_AWS_ACCESS_KEY_ID
+    - export AWS_SECRET_ACCESS_KEY=$DEPLOYMENT_AWS_SECRET_ACCESS_KEY
+    - echo "Fetching target cluster kubeconfig for deployment."
+    - aws eks update-kubeconfig --name $TARGET_CLUSTER
+    - echo "Adding catalog from https://chartmuseum.ambient-innovation.com/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME"
+    - helm repo add $CATALOG_NAME
+      https://chartmuseum.ambient-innovation.com/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+      --username $CHARTMUSEUM_USER
+      --password $CHARTMUSEUM_PASSWORD
+    - echo "Deploying."
+    - helm upgrade -n $NAMESPACE --version $HELM_CHART_VERSION --install 
+      -f $TARGET_VALUES_YAML_PATH
+      --set backend.image.tag=$CI_COMMIT_SHORT_SHA
+      --set frontend.image.tag=$CI_COMMIT_SHORT_SHA
+      --set forceRestartAt=${CI_JOB_ID}
+      $RELEASE_NAME $CATALOG_NAME/$HELM_CHART_NAME
+  only:
+    - develop
+  except:
+    - /^helm[-/\/].*$/
 
 frontend:lint:
   stage: pre-build

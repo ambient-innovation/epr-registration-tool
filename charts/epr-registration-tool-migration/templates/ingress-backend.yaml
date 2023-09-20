@@ -1,0 +1,40 @@
+{{- if .Values.ingress.enabled -}}
+{{- $secretName := "" -}}
+{{- if .Values.ingress.useLetsEncrypt -}}
+{{- $secretName = include "epr-tool.fullname" . }}
+{{- else if .Values.ingress.secretName -}}
+{{- $secretName = .Values.ingress.secretName -}}
+{{- end -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "epr-tool.fullname" . }}-backend
+  labels:
+    app.kubernetes.io/name: {{ include "epr-tool.name" . }}-backend
+    helm.sh/chart: {{ include "epr-tool.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  annotations:
+    {{- if .Values.ingress.useLetsEncrypt }}
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    {{- end }}
+spec:
+{{- if .Values.ingress.secretName }}
+  tls:
+    - hosts:
+        - {{ .Values.ingress.host.backend | quote }}
+      secretName: {{ $secretName }}-backend
+{{- end }}
+  rules:
+    - host: {{ .Values.ingress.host.backend | quote }}
+      http:
+        paths:
+          - path: "/"
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ include "epr-tool.fullname" . }}-backend
+                port:
+                  number: 8000
+{{- end }}
