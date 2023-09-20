@@ -11,7 +11,7 @@ class PrivateMediaStorage(S3Boto3Storage):
     object_parameters = {'ContentDisposition': 'attachment'}
     location = settings.AWS_PRIVATE_MEDIA_LOCATION
     querystring_expire = 3600  # seconds until the generated link expires
-    default_acl = 'private'
+    default_acl = 'bucket-owner-full-control'
     file_overwrite = True
     custom_domain = False
 
