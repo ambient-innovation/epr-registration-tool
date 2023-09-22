@@ -37,6 +37,7 @@ spec:
               optional: false
         resources:
         {{- toYaml .Values.initjob.resources | nindent 12 }}
+        {{ if $.Values.awsSecretManager.enabled }}
         volumeMounts:
           - name: aws-backend-secret
             mountPath: "/mnt/secrets-store"
