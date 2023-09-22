@@ -31,9 +31,8 @@ backend: # Do NOT run database migrations within your backend deployment. Use in
   aws:
     enabled: false
     bucketName: ""
-    accessKeyId: ""
-    secretAccessKey: ""
     sesEnabled: true
+    sesSourceARN: ""
   axes:
     enabled: true
     reset: false
@@ -92,6 +91,9 @@ backend: # Do NOT run database migrations within your backend deployment. Use in
   affinity:
     nodeAffinity: { }
     podAffinity: { }
+  serviceAccount:
+    enabled: false
+    serviceAccountName: ""
 
 frontend:
   replicaCount: 1 # Keeping replica number 1 for test environment is fine if you can tolorate occasional down-times during maintenance and other service disruptions for your test environment.
@@ -135,8 +137,6 @@ frontend:
 
 ingress:
   enabled: true
-  useLetsEncrypt: true
-  secretName: epr-tool-le
   host:
     backend: ""
     frontend: ""
@@ -156,3 +156,6 @@ initjob:
     requests:
       cpu: 50m
       memory: 400Mi
+
+awsSecretManager:
+  enabled: false

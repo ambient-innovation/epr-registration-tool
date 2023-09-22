@@ -26,9 +26,8 @@ backend:
   aws:
     enabled: true
     bucketName: "epr-registration-tool-test"
-    accessKeyId: "" # set in git-lab secrets
-    secretAccessKey: "" # set in git-lab secrets
     sesEnabled: true
+    sesSourceARN: "arn:aws:ses:eu-central-1:501196553680:identity/ambient.digital"
   axes:
     enabled: true
     reset: false
@@ -87,6 +86,9 @@ backend:
   affinity:
     nodeAffinity: { }
     podAffinity: { }
+  serviceAccount:
+    enabled: true
+    serviceAccountName: epr-registration-tool
 
 frontend:
   replicaCount: 2 # Keeping replica number 1 for test environment is fine if you can tolorate occasional down-times during maintenance and other service disruptions for your test environment.
@@ -129,9 +131,6 @@ frontend:
     podAffinity: { }
 
 ingress:
-  enabled: true
-  useLetsEncrypt: true
-  secretName: epr-tool-le
   host:
     backend: api.epr-tool.ambient.digital
     frontend: epr-tool.ambient.digital
@@ -151,3 +150,6 @@ initjob:
     requests:
       cpu: 50m
       memory: 400Mi
+
+awsSecretManager:
+  enabled: true

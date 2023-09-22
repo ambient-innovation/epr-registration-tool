@@ -24,6 +24,9 @@ spec:
         app.kubernetes.io/name: {{ include "epr-tool.name" . }}-backend
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
+      {{ if $.Values.backend.serviceAccount.enabled }}
+      serviceAccountName: {{ .Values.backend.serviceAccount.serviceAccountName }}
+      {{ end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}"
@@ -36,7 +39,7 @@ spec:
                 name: {{ include "epr-tool.fullname" . }}-backend
                 optional: false
             - secretRef:
-                name: {{ include "epr-tool.fullname" . }}-django-secret
+                name: {{ include "epr-tool.fullname" . }}-backend
                 optional: false
           ports:
             - name: http
@@ -48,6 +51,21 @@ spec:
             {{- toYaml .Values.backend.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.backend.resources | nindent 12 }}
+          {{ if $.Values.awsSecretManager.enabled }}
+          volumeMounts:
+            - name: aws-backend-secret
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+          {{ end }}
+      {{ if $.Values.awsSecretManager.enabled }}
+      volumes:
+        - name: backend-secret
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: {{ include "epr-tool.fullname" . }}-backend
+      {{ end }}
       imagePullSecrets:
         - name: ai-registry
       {{- with .Values.backend.nodeSelector }}

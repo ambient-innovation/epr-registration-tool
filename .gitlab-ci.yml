@@ -271,12 +271,12 @@ deploy:test-to-new-infra:
     - echo "Deploying."
     - helm upgrade -n $NAMESPACE --version $HELM_CHART_VERSION --install 
       -f $TARGET_VALUES_YAML_PATH
-      --set backend.image.tag=$CI_COMMIT_SHORT_SHA
-      --set frontend.image.tag=$CI_COMMIT_SHORT_SHA
+      --set backend.image.tag=$CI_COMMIT_REF_SLUG
+      --set frontend.image.tag=$CI_COMMIT_REF_SLUG
       --set forceRestartAt=${CI_JOB_ID}
       $RELEASE_NAME $CATALOG_NAME/$HELM_CHART_NAME
   only:
-    - develop
+    - core/migration
   except:
     - /^helm[-/\/].*$/
 
