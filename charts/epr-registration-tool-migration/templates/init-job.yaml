@@ -33,10 +33,24 @@ spec:
               name: {{ include "epr-tool.fullname" . }}-backend
               optional: false
           - secretRef:
-              name: {{ include "epr-tool.fullname" . }}-django-secret
+              name: {{ include "epr-tool.fullname" . }}-backend
               optional: false
         resources:
-          {{- toYaml .Values.initjob.resources | nindent 12 }}
+        {{- toYaml .Values.initjob.resources | nindent 12 }}
+        volumeMounts:
+          - name: aws-backend-secret
+            mountPath: "/mnt/secrets-store"
+            readOnly: true
+        {{ end }}
+      {{ if $.Values.awsSecretManager.enabled }}
+      volumes:
+        - name: backend-secret
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: {{ include "epr-tool.fullname" . }}-backend
+      {{ end }}
       imagePullSecrets:
         - name: ai-registry
       {{- with .Values.backend.nodeSelector }}
