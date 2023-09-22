@@ -39,13 +39,13 @@ spec:
         {{- toYaml .Values.initjob.resources | nindent 12 }}
         {{ if $.Values.awsSecretManager.enabled }}
         volumeMounts:
-          - name: aws-backend-secret
+          - name: backend
             mountPath: "/mnt/secrets-store"
             readOnly: true
         {{ end }}
       {{ if $.Values.awsSecretManager.enabled }}
       volumes:
-        - name: backend-secret
+        - name: backend
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
