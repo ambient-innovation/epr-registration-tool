@@ -33,7 +33,7 @@ services:
     alias: docker
 
 
-backend:lint:
+.backend:lint:
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.9-slim
   stage: pre-build
   tags:
@@ -46,7 +46,7 @@ backend:lint:
     - /^helm[-/\/].*$/
     - triggers
 
-backend:security-check:
+.backend:security-check:
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.9-slim
   stage: pre-build
   tags:
@@ -85,7 +85,7 @@ backend:build-and-push:
     - /^helm[-/\/].*$/
     - triggers
 
-backend:post-build-checks:
+.backend:post-build-checks:
   stage: post-build
   needs: [ "backend:build-and-push" ]
   tags:
@@ -108,7 +108,7 @@ backend:post-build-checks:
     - /^helm[-/\/].*$/
     - triggers
 
-backend:test:
+.backend:test:
   allow_failure: true
   stage: post-build
   needs: [ "backend:build-and-push" ]
@@ -281,7 +281,7 @@ deploy:test-to-new-infra:
   except:
     - /^helm[-/\/].*$/
 
-frontend:lint:
+.frontend:lint:
   stage: pre-build
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:current-alpine
   tags:
@@ -303,7 +303,7 @@ frontend:lint:
     - triggers
 
 
-frontend:test:
+.frontend:test:
   stage: pre-build
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:current-alpine
   tags:
@@ -325,7 +325,7 @@ frontend:test:
     - /^helm[-/\/].*$/
     - triggers
 
-frontend:security-check:
+.frontend:security-check:
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:14-alpine
   stage: pre-build
   tags:
@@ -452,7 +452,7 @@ check:deploy:test:
       - node_modules/
     key: ms-playwright
 
-e2e:test:
+.e2e:test:
   stage: post-build
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16
   needs: [ 'backend:build-and-push']
