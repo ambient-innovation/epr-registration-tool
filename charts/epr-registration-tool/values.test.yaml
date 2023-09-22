@@ -26,9 +26,8 @@ backend:
   aws:
     enabled: true
     bucketName: "epr-registration-tool-test"
-    accessKeyId: "" # set in git-lab secrets
-    secretAccessKey: "" # set in git-lab secrets
     sesEnabled: true
+    sesSourceARN: "arn:aws:ses:eu-central-1:501196553680:identity/ambient.digital"
   axes:
     enabled: true
     reset: false
@@ -51,8 +50,8 @@ backend:
     token: ""  # passed through in GitLab secrets
   resources:
     limits:
-      cpu: 300m # When there are high number of request served, CPU usage goes much more above your baseline usage. In order to accomodate that, you can set 4 or 6 times of your baseline CPU usage, for example, if your request is 50m, make your limit 300m.  If your request is 200m, go for 800m.
-      memory: 800Mi # Most applications more or less have stable memory usage, for that reason limit can be set close to your memory request. As a rule of thumb, you can use 1.5x or 2x of your request as a limit in order to accomodate occasional memory peaks.
+      cpu: 500m # When there are high number of request served, CPU usage goes much more above your baseline usage. In order to accomodate that, you can set 4 or 6 times of your baseline CPU usage, for example, if your request is 50m, make your limit 300m.  If your request is 200m, go for 800m.
+      memory: 1000Mi # Most applications more or less have stable memory usage, for that reason limit can be set close to your memory request. As a rule of thumb, you can use 1.5x or 2x of your request as a limit in order to accomodate occasional memory peaks.
     requests:
       cpu: 50m # Most workloads are idling most of the time, for that reason, you can request relatively low CPU as a baseline. Check out your workload metrics in Rancher to see what is approximately the baseline of CPU consumption.
       memory: 400Mi # For memory request, see your workload metrics in Rancher and set memory request slightly above baseline of your memory usage, for example, if your memory usage is around 360Mi, set your request 400Mi.
@@ -87,6 +86,9 @@ backend:
   affinity:
     nodeAffinity: { }
     podAffinity: { }
+  serviceAccount:
+    enabled: true
+    serviceAccountName: epr-registration-tool
 
 frontend:
   replicaCount: 2 # Keeping replica number 1 for test environment is fine if you can tolorate occasional down-times during maintenance and other service disruptions for your test environment.
@@ -97,8 +99,8 @@ frontend:
     forceRestartAt: ""
   resources: # Please note that, limits and requests should be properly set for your deployment. These values have to be changed accordingly. Comments regarding request and limits below are for a reference only, needs forecast according to different workloads, but if you have no idea at all, they can be good advice to start with.
     limits:
-      cpu: 300m # When there are high number of request served, CPU usage goes much more above your baseline usage. In order to accomodate that, you can set 4 or 6 times of your baseline CPU usage, for example, if your request is 50m, make your limit 300m.  If your request is 200m, go for 800m.
-      memory: 800Mi # Most applications more or less have stable memory usage, for that reason limit can be set close to your memory request. As a rule of thumb, you can use 1.5x or 2x of your request as a limit in order to accomodate occasional memory peaks.
+      cpu: 500m # When there are high number of request served, CPU usage goes much more above your baseline usage. In order to accomodate that, you can set 4 or 6 times of your baseline CPU usage, for example, if your request is 50m, make your limit 300m.  If your request is 200m, go for 800m.
+      memory: 1000Mi # Most applications more or less have stable memory usage, for that reason limit can be set close to your memory request. As a rule of thumb, you can use 1.5x or 2x of your request as a limit in order to accomodate occasional memory peaks.
     requests:
       cpu: 50m # Most workloads are idling most of the time, for that reason, you can request relatively low CPU as a baseline. Check out your workload metrics in Rancher to see what is approximately the baseline of CPU consumption.
       memory: 400Mi # For memory request, see your workload metrics in Rancher and set memory request slightly above baseline of your memory usage, for example, if your memory usage is around 360Mi, set your request 400Mi.
@@ -129,9 +131,6 @@ frontend:
     podAffinity: { }
 
 ingress:
-  enabled: true
-  useLetsEncrypt: true
-  secretName: epr-tool-le
   host:
     backend: api.epr-tool.ambient.digital
     frontend: epr-tool.ambient.digital
@@ -142,7 +141,7 @@ ingress:
 # Initjob will use same image as your backend image.
 initjob:
   enabled: true
-  command: [ "/bin/migrations.sh" ]
+  command: [ "./scripts/migrations.sh" ]
   commandArgs: [ "" ]
   resources: # Please note that, limits and requests should be properly set for your deployment. These values have to be changed accordingly. Comments regarding request and limits below are for a reference only, needs forecast according to different workloads, but if you have no idea at all, they can be good advice to start with.
     limits:
@@ -151,3 +150,6 @@ initjob:
     requests:
       cpu: 50m
       memory: 400Mi
+
+awsSecretManager:
+  enabled: true

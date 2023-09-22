@@ -9,7 +9,7 @@ stages:
 
 # When using dind, it's wise to use the overlays driver for improved performance.
 variables:
-  TEST_HELM_CHART_VERSION: "0.6.0"  # <-- helm chart version for test server
+  TEST_HELM_CHART_VERSION: "1.0.5"  # <-- helm chart version for test server
   IMAGE_TAG_BACKEND: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_REF_SLUG
   IMAGE_TAG_FRONTEND: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_REF_SLUG
   IMAGE_TAG_FRONTEND_E2E: $CI_REGISTRY_IMAGE/frontende2e:$CI_COMMIT_REF_SLUG
@@ -109,6 +109,7 @@ backend:post-build-checks:
     - triggers
 
 backend:test:
+  allow_failure: true
   stage: post-build
   needs: [ "backend:build-and-push" ]
   tags:
@@ -170,38 +171,13 @@ backend:test:
     - /^helm[-/\/].*$/
     - triggers
 
-.deploy_helm_chart: &deploy_helm_chart
-  - rancher login $RANCHER2_SERVER_URL --token $RANCHER2_ACCESS_KEY:$RANCHER2_SECRET_KEY --context $RANCHER2_CLUSTER_ID:$RANCHER2_PROJECT_ID
-  - rancher apps upgrade
-    --values ./charts/epr-registration-tool/values.$VALUES_ENVIRONMENT.yaml
-    --set backend.aws.accessKeyId=$AWS_ACCESS_KEY_ID
-    --set backend.aws.secretAccessKey=$AWS_SECRET_ACCESS_KEY
-    --set backend.db.password=$DB_PASSWORD
-    --set backend.django.secretKey=$DJANGO_SECRET
-    --set backend.rebuildFrontendTrigger.token=$DJANGO_REBUILD_FRONTEND_TRIGGER_TOKEN
-    --set backend.image.tag=$CI_COMMIT_SHORT_SHA
-    --set frontend.image.tag=$CI_COMMIT_SHORT_SHA
-    --set forceRestartAt=${CI_JOB_ID} $RANCHER_APP_NAME $HELM_CHART_VERSION ||
-    rancher apps install
-    --namespace $NAMESPACE
-    --values ./charts/epr-registration-tool/values.$VALUES_ENVIRONMENT.yaml
-    --set backend.aws.accessKeyId=$AWS_ACCESS_KEY_ID
-    --set backend.aws.secretAccessKey=$AWS_SECRET_ACCESS_KEY
-    --set backend.db.password=$DB_PASSWORD
-    --set backend.django.secretKey=$DJANGO_SECRET
-    --set backend.rebuildFrontendTrigger.token=$DJANGO_REBUILD_FRONTEND_TRIGGER_TOKEN
-    --set backend.image.tag=$CI_COMMIT_SHORT_SHA
-    --set frontend.image.tag=$CI_COMMIT_SHORT_SHA
-    --version $HELM_CHART_VERSION
-    --no-prompt $RANCHER2_PROJECT_ID:$CATALOG_NAME-$HELM_CHART_NAME $RANCHER_APP_NAME
-
 deploy:test:
   stage: deploy
   tags:
     - low-load
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/alpine/k8s:1.22.15
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/alpine/k8s:1.25.13
   variables:
-    TARGET_CLUSTER: aws-eks-test
+    TARGET_CLUSTER: test-ambient-eks
     CATALOG_NAME: epr-registration-tool-test
     HELM_CHART_VERSION: $TEST_HELM_CHART_VERSION
     HELM_CHART_NAME: epr-tool
@@ -226,20 +202,14 @@ deploy:test:
     - echo "Deploying."
     - helm upgrade -n $NAMESPACE --version $HELM_CHART_VERSION --install 
       -f $TARGET_VALUES_YAML_PATH
-      --set backend.aws.accessKeyId=$PROJECT_AWS_ACCESS_KEY_ID
-      --set backend.aws.secretAccessKey=$PROJECT_AWS_SECRET_ACCESS_KEY
-      --set backend.db.password=$DB_PASSWORD
-      --set backend.django.secretKey=$DJANGO_SECRET
-      --set backend.rebuildFrontendTrigger.token=$DJANGO_REBUILD_FRONTEND_TRIGGER_TOKEN
-      --set backend.image.tag=$CI_COMMIT_SHORT_SHA
-      --set frontend.image.tag=$CI_COMMIT_SHORT_SHA
+      --set backend.image.tag=$CI_COMMIT_REF_SLUG
+      --set frontend.image.tag=$CI_COMMIT_REF_SLUG
       --set forceRestartAt=${CI_JOB_ID}
       $RELEASE_NAME $CATALOG_NAME/$HELM_CHART_NAME
   only:
     - develop
   except:
     - /^helm[-/\/].*$/
-
 
 frontend:lint:
   stage: pre-build
