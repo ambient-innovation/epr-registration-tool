@@ -141,8 +141,8 @@ ingress:
 # Initjob will use same image as your backend image.
 initjob:
   enabled: true
-  command: [ "/bin/scripts/migrations.sh" ]
-  commandArgs: [ "" ]
+  command: [ "/bin/sh" ]
+  commandArgs: [ "./scripts/migrations.sh" ]
   resources: # Please note that, limits and requests should be properly set for your deployment. These values have to be changed accordingly. Comments regarding request and limits below are for a reference only, needs forecast according to different workloads, but if you have no idea at all, they can be good advice to start with.
     limits:
       cpu: 300m
