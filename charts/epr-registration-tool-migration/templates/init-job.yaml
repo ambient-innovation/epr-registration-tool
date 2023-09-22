@@ -21,6 +21,9 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/managed-by: {{ .Release.Service }}
     spec:
+      {{ if $.Values.backend.serviceAccount.enabled }}
+      serviceAccountName: {{ .Values.backend.serviceAccount.serviceAccountName }}
+      {{ end }}
       restartPolicy: OnFailure
       containers:
       - name: init-job
