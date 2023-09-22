@@ -68,6 +68,7 @@ env = environ.Env(
     DJANGO_EMAIL_HOST=(str, None),
     DJANGO_EMAIL_PORT=(str, None),
     DJANGO_AWS_SES_ENABLED=(bool, False),
+    AWS_SES_SOURCE_ARN=(str, None),
     DJANGO_DEFAULT_FROM_EMAIL=(str, 'noreply@ambient.digital'),
     # Gitlab
     DJANGO_REBUILD_FRONTEND_TRIGGER_REF=(str, ''),
@@ -406,6 +407,7 @@ if env.bool('DJANGO_AWS_SES_ENABLED') and env('AWS_ACCESS_KEY_ID') and env('AWS_
     EMAIL_BACKEND = 'django_ses.SESBackend'
     AWS_SES_REGION_NAME = 'eu-central-1'
     AWS_SES_REGION_ENDPOINT = 'email.eu-central-1.amazonaws.com'
+    AWS_SES_SOURCE_ARN = env.str('AWS_SES_SOURCE_ARN')
 else:
     EMAIL_BACKEND = env.str('DJANGO_EMAIL_BACKEND')
     EMAIL_HOST = env.str('DJANGO_EMAIL_HOST')
