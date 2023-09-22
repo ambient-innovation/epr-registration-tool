@@ -255,7 +255,7 @@ deploy:test-to-new-infra:
     TARGET_VALUES_YAML_PATH: "./charts/epr-registration-tool-migration/values.test.yaml"
     RELEASE_NAME: epr-registration-tool-test
   environment:
-    name: test
+    name: migration-test
     url: https://api.epr-test.ambient.digital
   script:
     - echo "Authenticating."
