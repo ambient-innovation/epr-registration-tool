@@ -33,7 +33,7 @@ services:
     alias: docker
 
 
-.backend:lint:
+backend:lint:
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.9-slim
   stage: pre-build
   tags:
@@ -46,7 +46,7 @@ services:
     - /^helm[-/\/].*$/
     - triggers
 
-.backend:security-check:
+backend:security-check:
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.9-slim
   stage: pre-build
   tags:
@@ -85,7 +85,7 @@ backend:build-and-push:
     - /^helm[-/\/].*$/
     - triggers
 
-.backend:post-build-checks:
+backend:post-build-checks:
   stage: post-build
   needs: [ "backend:build-and-push" ]
   tags:
@@ -108,7 +108,7 @@ backend:build-and-push:
     - /^helm[-/\/].*$/
     - triggers
 
-.backend:test:
+backend:test:
   allow_failure: true
   stage: post-build
   needs: [ "backend:build-and-push" ]
@@ -171,77 +171,7 @@ backend:build-and-push:
     - /^helm[-/\/].*$/
     - triggers
 
-.deploy_helm_chart: &deploy_helm_chart
-  - rancher login $RANCHER2_SERVER_URL --token $RANCHER2_ACCESS_KEY:$RANCHER2_SECRET_KEY --context $RANCHER2_CLUSTER_ID:$RANCHER2_PROJECT_ID
-  - rancher apps upgrade
-    --values ./charts/epr-registration-tool/values.$VALUES_ENVIRONMENT.yaml
-    --set backend.aws.accessKeyId=$AWS_ACCESS_KEY_ID
-    --set backend.aws.secretAccessKey=$AWS_SECRET_ACCESS_KEY
-    --set backend.db.password=$DB_PASSWORD
-    --set backend.django.secretKey=$DJANGO_SECRET
-    --set backend.rebuildFrontendTrigger.token=$DJANGO_REBUILD_FRONTEND_TRIGGER_TOKEN
-    --set backend.image.tag=$CI_COMMIT_SHORT_SHA
-    --set frontend.image.tag=$CI_COMMIT_SHORT_SHA
-    --set forceRestartAt=${CI_JOB_ID} $RANCHER_APP_NAME $HELM_CHART_VERSION ||
-    rancher apps install
-    --namespace $NAMESPACE
-    --values ./charts/epr-registration-tool/values.$VALUES_ENVIRONMENT.yaml
-    --set backend.aws.accessKeyId=$AWS_ACCESS_KEY_ID
-    --set backend.aws.secretAccessKey=$AWS_SECRET_ACCESS_KEY
-    --set backend.db.password=$DB_PASSWORD
-    --set backend.django.secretKey=$DJANGO_SECRET
-    --set backend.rebuildFrontendTrigger.token=$DJANGO_REBUILD_FRONTEND_TRIGGER_TOKEN
-    --set backend.image.tag=$CI_COMMIT_SHORT_SHA
-    --set frontend.image.tag=$CI_COMMIT_SHORT_SHA
-    --version $HELM_CHART_VERSION
-    --no-prompt $RANCHER2_PROJECT_ID:$CATALOG_NAME-$HELM_CHART_NAME $RANCHER_APP_NAME
-
 deploy:test:
-  stage: deploy
-  tags:
-    - low-load
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/alpine/k8s:1.22.15
-  variables:
-    TARGET_CLUSTER: aws-eks-test
-    CATALOG_NAME: epr-registration-tool-test
-    HELM_CHART_VERSION: $TEST_HELM_CHART_VERSION
-    HELM_CHART_NAME: epr-tool
-    NAMESPACE: epr-registration-tool-test
-    TARGET_VALUES_YAML_PATH: "./charts/epr-registration-tool/values.test.yaml"
-    RELEASE_NAME: epr-registration-tool-test
-  environment:
-    name: test
-    url: https://api.epr-test.ambient.digital
-  script:
-    - echo "Authenticating."
-    - export AWS_DEFAULT_REGION=eu-central-1
-    - export AWS_ACCESS_KEY_ID=$DEPLOYMENT_AWS_ACCESS_KEY_ID
-    - export AWS_SECRET_ACCESS_KEY=$DEPLOYMENT_AWS_SECRET_ACCESS_KEY
-    - echo "Fetching target cluster kubeconfig for deployment."
-    - aws eks update-kubeconfig --name $TARGET_CLUSTER
-    - echo "Adding catalog from https://chartmuseum.ambient-innovation.com/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME"
-    - helm repo add $CATALOG_NAME
-      https://chartmuseum.ambient-innovation.com/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
-      --username $CHARTMUSEUM_USER
-      --password $CHARTMUSEUM_PASSWORD
-    - echo "Deploying."
-    - helm upgrade -n $NAMESPACE --version $HELM_CHART_VERSION --install 
-      -f $TARGET_VALUES_YAML_PATH
-      --set backend.aws.accessKeyId=$PROJECT_AWS_ACCESS_KEY_ID
-      --set backend.aws.secretAccessKey=$PROJECT_AWS_SECRET_ACCESS_KEY
-      --set backend.db.password=$DB_PASSWORD
-      --set backend.django.secretKey=$DJANGO_SECRET
-      --set backend.rebuildFrontendTrigger.token=$DJANGO_REBUILD_FRONTEND_TRIGGER_TOKEN
-      --set backend.image.tag=$CI_COMMIT_SHORT_SHA
-      --set frontend.image.tag=$CI_COMMIT_SHORT_SHA
-      --set forceRestartAt=${CI_JOB_ID}
-      $RELEASE_NAME $CATALOG_NAME/$HELM_CHART_NAME
-  only:
-    - develop
-  except:
-    - /^helm[-/\/].*$/
-
-deploy:test-to-new-infra:
   stage: deploy
   tags:
     - low-load
@@ -252,7 +182,7 @@ deploy:test-to-new-infra:
     HELM_CHART_VERSION: $TEST_HELM_CHART_VERSION
     HELM_CHART_NAME: epr-tool
     NAMESPACE: epr-registration-tool-test
-    TARGET_VALUES_YAML_PATH: "./charts/epr-registration-tool-migration/values.test.yaml"
+    TARGET_VALUES_YAML_PATH: "./charts/epr-registration-tool/values.test.yaml"
     RELEASE_NAME: epr-registration-tool-test
   environment:
     name: migration-test
@@ -277,11 +207,11 @@ deploy:test-to-new-infra:
       --set forceRestartAt=${CI_JOB_ID}
       $RELEASE_NAME $CATALOG_NAME/$HELM_CHART_NAME
   only:
-    - core/migration
+    - develop
   except:
     - /^helm[-/\/].*$/
 
-.frontend:lint:
+frontend:lint:
   stage: pre-build
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:current-alpine
   tags:
@@ -303,7 +233,7 @@ deploy:test-to-new-infra:
     - triggers
 
 
-.frontend:test:
+frontend:test:
   stage: pre-build
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:current-alpine
   tags:
@@ -325,7 +255,7 @@ deploy:test-to-new-infra:
     - /^helm[-/\/].*$/
     - triggers
 
-.frontend:security-check:
+frontend:security-check:
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:14-alpine
   stage: pre-build
   tags:
@@ -372,7 +302,7 @@ helm:lint:
   tags:
     - low-load
   script:
-    - cd charts/epr-registration-tool-migration
+    - cd charts/epr-registration-tool
     - helm lint .
   only:
     - /^helm[-/\/].*$/
@@ -384,7 +314,7 @@ helm:render:
   tags:
     - low-load
   script:
-    - cd charts/epr-registration-tool-migration
+    - cd charts/epr-registration-tool
     - echo "The rendering is done so that if linting for your helm chart passes but you see YAML error in the Rancher, you can have a look to renderings to see if something looks wrong, which makes it easy for you to debug."
     - echo "Rendering test values."
     - helm template --debug --values values.test.yaml .
@@ -400,7 +330,7 @@ helm:deploy:
   script:
     - VERSION=${CI_COMMIT_REF_SLUG:5}
     - VERSION=`echo $VERSION | tr - .`
-    - cd charts/epr-registration-tool-migration
+    - cd charts/epr-registration-tool
     - helm package .
     - apk update
     - apk add curl
@@ -452,7 +382,7 @@ check:deploy:test:
       - node_modules/
     key: ms-playwright
 
-.e2e:test:
+e2e:test:
   stage: post-build
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16
   needs: [ 'backend:build-and-push']
