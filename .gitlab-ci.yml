@@ -400,7 +400,7 @@ helm:deploy:
   script:
     - VERSION=${CI_COMMIT_REF_SLUG:5}
     - VERSION=`echo $VERSION | tr - .`
-    - cd charts/epr-registration-tool
+    - cd charts/epr-registration-tool-migration
     - helm package .
     - apk update
     - apk add curl
