@@ -350,28 +350,6 @@ helm:refresh:
   only:
     - /^helm[-/\/].*$/
 
-check:deploy:test:
-  stage: post-deploy
-  tags:
-    - low-load
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/alpine:3.14.1
-  variables:
-    RANCHER_CONTEXT_ID: c-rg9xd:p-mcxjf
-    RANCHER_APP_NAME: epr-registration-tool-test
-  script:
-    - export RANCHER_PROJ_ID=$(echo $RANCHER_CONTEXT_ID | cut -d":" -f2-)
-    - apk add curl
-    - sleep 15
-    - 'curl --location --request GET "$RANCHER2_SERVER_URL/project/$RANCHER_CONTEXT_ID/apps/$RANCHER_PROJ_ID:$RANCHER_APP_NAME" --header "Authorization: Bearer $RANCHER2_ACCESS_KEY:$RANCHER2_SECRET_KEY" > output.json'
-    - cat output.json | grep transitioning | grep error > transitioning-error.log || true
-    - '[ -s transitioning-error.log ] && echo "file not empty, there is an error" && (cat output.json | grep transitioningMessage) &&  exit 1 || echo "file empty, no error"'
-    - echo "Please check Rancher > Your Project > Apps > Your App Name to see if there is any error."
-    - echo "If you do not see any error, it is likely that deployment took longer and that is why the check failed. In that case, just re-run this job to see if it passes now."
-  only:
-    - develop
-  except:
-    - /^helm[-/\/].*$/
-
 # If you want the e2e job config please check the history
 
 .playwright_cache:
