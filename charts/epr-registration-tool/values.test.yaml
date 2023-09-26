@@ -12,7 +12,7 @@ backend:
   image:
     repository: registry.ambient-innovation.com/giz/epr-registration-tool/backend
     tag: develop
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   command:
     - ./scripts/run_prod.sh
   django:
