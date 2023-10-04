@@ -15,7 +15,7 @@ import { RegistrationData } from './types'
 
 const stepNumbers = [0, 1, 2] as const
 
-export type StepNumber = typeof stepNumbers[number]
+export type StepNumber = (typeof stepNumbers)[number]
 
 export const LAST_STEP_NUMBER = stepNumbers[stepNumbers.length - 1]
 

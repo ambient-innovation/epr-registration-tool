@@ -8,4 +8,4 @@
 export const DEFAULT_LOCALE = 'en'
 export const LOCALES = ['en', 'ar'] as const
 
-export type LocaleType = typeof LOCALES[number]
+export type LocaleType = (typeof LOCALES)[number]
