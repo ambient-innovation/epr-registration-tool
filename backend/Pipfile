@@ -6,44 +6,43 @@ name = "pypi"
 [packages]
 # django
 django = "==4.0.4"
-django-environ = "==0.8.1"
-psycopg2 = "==2.9.3"
+django-environ = "~=0.8.1"
+psycopg2 = "~=2.9.3"
 # django testing
 model-bakery = "*"
 # api
-strawberry-graphql-django = "==0.2.5"                                   # graphql library
-strawberry-graphql = {extras = ["debug-server"], version = "0.111.1"}   # django plugin for strawberry
+strawberry-graphql-django = "~=0.2.5"                                   # graphql library
+strawberry-graphql = {extras = ["debug-server"], version = "~=0.111.1"} # django plugin for strawberry
 # security
 django-cors-headers = "~=3.12.0"                                        # Cross-Origin-Request headers
 django-axes = "*"                                                       # prevent brute-force attacks
 # deployment
-gunicorn = "==20.1.0"
-whitenoise = "==6.0.0"
+gunicorn = "~=20.1.0"
+whitenoise = "~=6.0.0"
 # other
 django-ses = "~=3.0.1"                                                  # AWS SES mailing
 sentry-sdk = "~=1.5.4"                                                  # loggin / reporting
-ai-django-core = "==5.14.1"                                             # various useful helper functions    
+ai-django-core = "~=5.14.1"                                             # various useful helper functions
 pyyaml = "*"                                                            # to be able to load yaml fixtures
-django-modeltranslation = "==0.18.2"                                    # Handle translations in Django-Admin
+django-modeltranslation = "~=0.18.2"                                    # Handle translations in Django-Admin
 django-ai-kit-auth = "~=2.0.0"                                          # Provides helper functions for auth
 djangorestframework = "~=3.13.1"                                        # Required by django-ai-kit-auth
-time-machine = "==2.7.0"                                                # override system time for running tests with fixed date
-weasyprint = "==55.0"                                                   # For creating PDFs
-django-storages = "==1.12.3"                                            # Custom storage backends for Django
-boto3 = "==1.24.17"                                                     # AWS S3 connector
+time-machine = "~=2.7.0"                                                # override system time for running tests with fixed date
+weasyprint = "~=55.0"                                                   # For creating PDFs
+django-storages = "~=1.12.3"                                            # Custom storage backends for Django
+boto3 = "~=1.24.17"                                                     # AWS S3 connector
 wagtail = "~=3.0.1"
 wagtail-localize = "~=1.2.1"                                            # Multi lang support for Wagtail
 wagtail-headless-preview = "~=0.3.0"                                    # Enable wagtail preview via REST
 beautifulsoup4 = "*"
-coverage = "==6.4.2"                                                    # to create coverage report
-unittest-xml-reporting = "==3.0.2"                                      # Tool for analyzing code coverage in CI pipeline
+coverage = "~=6.4.2"                                                    # to create coverage report
+unittest-xml-reporting = "~=3.0.2"                                      # Tool for analyzing code coverage in CI pipeline
 
 [dev-packages]
 flake8 = "==4.0.1"
 pep8-naming = "==0.12.1"
 black = "==22.3.0"
 isort = "==5.10.1"
-coverage = "==6.3.2"
 django-debug-toolbar = "==3.4.0"
 
 [requires]
