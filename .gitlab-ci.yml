@@ -110,7 +110,6 @@ backend:post-build-checks:
     alias: docker
 
 backend:test:
-  allow_failure: true
   stage: post-build
   needs: [ "backend:build-and-push" ]
   tags:
