@@ -10,7 +10,7 @@ export interface CompanyData {
   streetNumber?: string
   additionalAddressInfo?: string
   phoneNumber: string
-  identificationNumber?: string | null
+  identificationNumber: string
   invoiceRecipientTitle: string
   invoiceRecipientFullName: string
   invoiceRecipientEmail: string

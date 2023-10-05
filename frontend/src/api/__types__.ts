@@ -65,7 +65,7 @@ export type CompanyContactInfoType = {
 
 export type CompanyInput = {
   distributorType: DistributorType
-  identificationNumber?: InputMaybe<Scalars['String']>
+  identificationNumber: Scalars['String']
   name: Scalars['String']
 }
 
@@ -77,20 +77,12 @@ export type CompanyType = {
   createdAt: Scalars['DateTime']
   distributorType: DistributorType
   id: Scalars['ID']
-  identificationNumber?: Maybe<Scalars['String']>
+  identificationNumber: Scalars['String']
   isProfileCompleted: Scalars['Boolean']
   lastmodifiedAt: Scalars['DateTime']
   logo?: Maybe<ImageType>
   name: Scalars['String']
   registrationNumber: Scalars['String']
-}
-
-export type CompanyTypeAdditionalInvoiceRecipientArgs = {
-  pk?: InputMaybe<Scalars['ID']>
-}
-
-export type CompanyTypeContactInfoArgs = {
-  pk?: InputMaybe<Scalars['ID']>
 }
 
 export enum DistributorType {
@@ -368,7 +360,7 @@ export type CompanyDetailsWithContactInfoQuery = {
     id: string
     name: string
     distributorType: DistributorType
-    identificationNumber?: string | null
+    identificationNumber: string
     isProfileCompleted: boolean
     countryCode: string
     contactInfo?: {
@@ -501,7 +493,7 @@ export type CompanyDetailsQuery = {
     name: string
     registrationNumber: string
     distributorType: DistributorType
-    identificationNumber?: string | null
+    identificationNumber: string
     createdAt: any
     lastmodifiedAt: any
     isProfileCompleted: boolean

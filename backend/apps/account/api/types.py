@@ -1,7 +1,7 @@
 import typing
 
 import strawberry
-from strawberry.django import auto
+from strawberry import auto
 
 from account.models import EmailChangeRequest, LanguageChoices, User
 

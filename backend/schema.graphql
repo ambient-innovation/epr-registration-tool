@@ -35,7 +35,7 @@ type CompanyContactInfoType {
 input CompanyInput {
   name: String!
   distributorType: DistributorType!
-  identificationNumber: String
+  identificationNumber: String!
 }
 
 type CompanyType {
@@ -45,11 +45,11 @@ type CompanyType {
   distributorType: DistributorType!
   lastmodifiedAt: DateTime!
   createdAt: DateTime!
-  identificationNumber: String
+  identificationNumber: String!
   countryCode: String!
   isProfileCompleted: Boolean!
-  contactInfo(pk: ID): CompanyContactInfoType
-  additionalInvoiceRecipient(pk: ID): AdditionalInvoiceRecipientType
+  contactInfo: CompanyContactInfoType
+  additionalInvoiceRecipient: AdditionalInvoiceRecipientType
   logo: ImageType
 }
 
@@ -150,13 +150,13 @@ type PackagingReportType {
   createdAt: DateTime!
   isPaid: Boolean!
   endDatetime: DateTime!
-  fees: Decimal
-  finalReport: FinalSubmissionType
-  forecast: ForecastSubmissionType
   invoiceFile: DjangoFileType
-  isFinalReportSubmitted: Boolean!
-  isForecastEditable: Boolean!
   packagingGroupsCount: Int!
+  forecast: ForecastSubmissionType
+  finalReport: FinalSubmissionType
+  isForecastEditable: Boolean!
+  isFinalReportSubmitted: Boolean!
+  fees: Decimal
 }
 
 type PackagingReportTypePaginationResult {

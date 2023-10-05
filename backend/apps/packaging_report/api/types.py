@@ -4,7 +4,7 @@ import typing
 from enum import Enum
 
 import strawberry
-from strawberry.django import auto
+from strawberry import auto
 from strawberry_django import DjangoFileType
 
 from packaging.api.types import MaterialType, PackagingGroupType
@@ -51,7 +51,7 @@ class FinalSubmissionType:
 @strawberry.django.type(PackagingReport)
 class PackagingReportType:
     id: auto
-    timeframe: TimeframeType
+    timeframe: strawberry.enum(TimeframeType)
     year: auto
     start_month: auto
     timezone_info: auto

@@ -2,7 +2,7 @@ import typing
 from typing import Optional
 
 import strawberry
-from strawberry.django import auto
+from strawberry import auto
 
 from common.api.types import ImageType
 from company.models import AdditionalInvoiceRecipient, Company, CompanyContactInfo, DistributorType
@@ -35,7 +35,7 @@ class CompanyType:
     distributor_type: strawberry.enum(DistributorType)
     lastmodified_at: auto
     created_at: auto
-    identification_number: auto
+    identification_number: str
     country_code: str
     is_profile_completed: bool
     contact_info: Optional[CompanyContactInfoType]

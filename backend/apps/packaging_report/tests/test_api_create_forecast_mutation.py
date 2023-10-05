@@ -1,8 +1,9 @@
 from datetime import datetime
 
-import time_machine
 from django.core.exceptions import ValidationError
 from django.utils.timezone import make_aware
+
+import time_machine
 from model_bakery import baker
 
 from common.tests.test_base import BaseApiTestCase

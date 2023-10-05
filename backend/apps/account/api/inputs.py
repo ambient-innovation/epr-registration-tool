@@ -1,5 +1,5 @@
 import strawberry
-from strawberry_django import auto
+from strawberry import auto
 
 from account.models import User
 
