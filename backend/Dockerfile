@@ -1,6 +1,6 @@
-FROM python:3.9 as base
+FROM python:3.9-bookworm as base
 
-RUN apt-get update && apt-get install -y gettext \
+RUN apt-get update && apt-get install --no-install-recommends -y gettext \
   # Cleanup apt cache
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
@@ -45,12 +45,12 @@ EXPOSE 8000
 CMD ["./scripts/run_dev.sh"]
 
 ### Prod image
-FROM python:3.9-slim as prod
+FROM python:3.9-slim-bookworm as prod
 
 ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update \
-  && apt-get install -y \
+  && apt-get install --no-install-recommends -y \
   libxml2 \
   libssl3 \
   libcairo2 \
