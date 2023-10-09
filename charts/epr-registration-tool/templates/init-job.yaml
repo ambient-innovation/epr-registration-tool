@@ -40,13 +40,10 @@ spec:
               optional: false
         resources:
         {{- toYaml .Values.initjob.resources | nindent 12 }}
-        {{ if $.Values.awsSecretManager.enabled }}
         volumeMounts:
           - name: backend
             mountPath: "/mnt/secrets-store"
             readOnly: true
-        {{ end }}
-      {{ if $.Values.awsSecretManager.enabled }}
       volumes:
         - name: backend
           csi:
@@ -54,15 +51,10 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: {{ include "epr-tool.fullname" . }}-backend
-      {{ end }}
       imagePullSecrets:
         - name: ai-registry
       {{- with .Values.backend.nodeSelector }}
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.backend.affinity }}
-      affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.backend.tolerations }}

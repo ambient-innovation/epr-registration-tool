@@ -39,10 +39,26 @@ spec:
             - name: http
               containerPort: 3000
               protocol: TCP
-          livenessProbe:
-            {{- toYaml .Values.frontend.livenessProbe | nindent 12 }}
-          readinessProbe:
-            {{- toYaml .Values.frontend.readinessProbe | nindent 12 }}
+          livenessProbe: # Pay attention -> This setting let you configure a periodic check to make sure that your web app is still alive. If it is considered problematic, your web app automatically will be restarted.
+            failureThreshold: 3 # The application will be unhealthy after this number of failures.
+            httpGet: # You need to adjust where to send http get request according to your own application.
+              path: /
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 5 # Wait number of seconds before performing first check.
+            periodSeconds: 5 # Wait number of seconds between each check.
+            successThreshold: 1
+            timeoutSeconds: 10 # Number of seconds to wait for timeout on each request.
+          readinessProbe: # Pay attention -> This setting is used to determine whether - for the initial boot of your application - your application is ready to start receiving traffic or not.
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 5 # If your application needs a lot of initial delay (e.g. more than 10-15 seconds) check what is slowing the boot time and check if there is anything you can do to speed up the boot time. If you are not sure what to do, ask to Ops team for guidance.
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 10
           resources:
             {{- toYaml .Values.frontend.resources | nindent 12 }}
       imagePullSecrets:
@@ -51,9 +67,7 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.frontend.affinity }}
       affinity:
-        {{- toYaml . | nindent 8 }}
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
@@ -67,7 +81,6 @@ spec:
                     values:
                     - {{ $.Release.Name }}
               topologyKey: "kubernetes.io/hostname"
-      {{- end }}
       {{- with .Values.frontend.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}

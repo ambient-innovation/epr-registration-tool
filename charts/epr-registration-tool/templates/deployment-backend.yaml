@@ -45,19 +45,38 @@ spec:
             - name: http
               containerPort: 8000
               protocol: TCP
-          livenessProbe:
-            {{- toYaml .Values.backend.livenessProbe | nindent 12 }}
-          readinessProbe:
-            {{- toYaml .Values.backend.readinessProbe | nindent 12 }}
+          livenessProbe: # Pay attention -> This setting let you configure a periodic check to make sure that your web app is still alive. If it is considered problematic, your web app automatically will be restarted.
+            failureThreshold: 10 # The application will be unhealthy after this number of failures.
+            httpGet: # You need to adjust where to send http get request according to your own application.
+              httpHeaders:
+                - name: Host
+                  value: localhost
+              path: /admin/
+              port: 8000
+              scheme: HTTP
+            initialDelaySeconds: 30 # Wait number of seconds before performing first check.
+            periodSeconds: 15 # Wait number of seconds between each check.
+            successThreshold: 1
+            timeoutSeconds: 15 # Number of seconds to wait for timeout on each request.
+          readinessProbe: # Pay attention -> This setting is used to determine whether - for the initial boot of your application - your application is ready to start receiving traffic or not.
+            failureThreshold: 10 # The application will be unhealthy after this number of failures.
+            httpGet:
+              httpHeaders:
+                - name: Host
+                  value: localhost
+              path: /admin/
+              port: 8000
+              scheme: HTTP
+            initialDelaySeconds: 30 # If your application needs a lot of initial delay (e.g. more than 10-15 seconds) check what is slowing the boot time and check if there is anything you can do to speed up the boot time. If you are not sure what to do, ask to Ops team for guidance.
+            periodSeconds: 15
+            successThreshold: 1
+            timeoutSeconds: 15
           resources:
             {{- toYaml .Values.backend.resources | nindent 12 }}
-          {{ if $.Values.awsSecretManager.enabled }}
           volumeMounts:
             - name: backend
               mountPath: "/mnt/secrets-store"
               readOnly: true
-          {{ end }}
-      {{ if $.Values.awsSecretManager.enabled }}
       volumes:
         - name: backend
           csi:
@@ -65,16 +84,13 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: {{ include "epr-tool.fullname" . }}-backend
-      {{ end }}
       imagePullSecrets:
         - name: ai-registry
       {{- with .Values.backend.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.backend.affinity }}
       affinity:
-        {{- toYaml . | nindent 8 }}
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
@@ -88,7 +104,6 @@ spec:
                     values:
                     - {{ $.Release.Name }}
               topologyKey: "kubernetes.io/hostname"
-      {{- end }}
       {{- with .Values.backend.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}

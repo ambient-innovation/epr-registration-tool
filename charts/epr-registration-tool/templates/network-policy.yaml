@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "epr-tool.fullname" . }}-allow-from-ingress
+  labels: # Every kubernetes object needs to have some common labels as shown below. If you are going to create new kubernetes object from scratch, please add these labels accordingly.
+    app.kubernetes.io/name: {{ include "epr-tool.name" . }}-allow-from-ingress # Keep this label consistent with name metadata. You will most likely need to forecast "workshop" part according to _helpers.tpl file.
+    helm.sh/chart: {{ include "epr-tool.chart" . }} # You would most likely only forecast "workshop" part accordingly to how it is named in _helpers.tpl file.
+    app.kubernetes.io/instance: {{ .Release.Name }} # This is same for every kubernetes object. Do not forecast.
+    app.kubernetes.io/managed-by: {{ .Release.Service }} # This is same for every kubernetes object. Do not forecast.
+spec:
+  podSelector: {} # This selects all pods in the namespace the policy is applied to.
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:  # Allow traffic coming from ingress.
+        matchLabels:
+          name: ingress-nginx
+    - podSelector: {} # Allow traffic coming from pods within same namespace.
+  egress: # Allow all outgoing traffic
+  - {}
