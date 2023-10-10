@@ -32,11 +32,6 @@ FROM dev-build-python as dev
 COPY . /app/
 WORKDIR /app
 
-RUN addgroup --system --gid 1001 backend
-RUN adduser --system --uid 1001 backend-user-dev && chown -R backend-user-dev /app
-
-USER backend-user-dev
-
 # Django-env expects this file to exist and prints warnings, but we use docker compose env vars.
 RUN touch ./apps/config/.env
 
