@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 # django
-django = "~=4.0"
+django = "~=4.1"
 django-environ = "~=0.8"
 psycopg2 = "~=2.9"
 # django testing
@@ -31,8 +31,8 @@ time-machine = "~=2.7"                                                # override
 weasyprint = "~=55.0"                                                   # For creating PDFs
 django-storages = "~=1.12"                                            # Custom storage backends for Django
 boto3 = "~=1.24"                                                     # AWS S3 connector
-wagtail = "~=3.0"
-wagtail-localize = "~=1.2"                                            # Multi lang support for Wagtail
+wagtail = "~=4.0"
+wagtail-localize = "~=1.6"                                            # Multi lang support for Wagtail
 wagtail-headless-preview = "~=0.3"                                    # Enable wagtail preview via REST
 beautifulsoup4 = "*"
 coverage = "~=6.4"                                                    # to create coverage report
