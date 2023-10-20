@@ -35,5 +35,6 @@ class CompanyActivationNotificationsTestCase(BaseTestCase):
         send_user_registration_complete_notification(company)
 
         self.assertEqual(2, len(mail.outbox))
-        self.assertEqual(['user2@local.local'], mail.outbox[0].to)
-        self.assertEqual(['user1@local.local'], mail.outbox[1].to)
+        receivers_emails = [*mail.outbox[0].to, *mail.outbox[1].to]
+        self.assertIn('user1@local.local', receivers_emails)
+        self.assertIn('user2@local.local', receivers_emails)

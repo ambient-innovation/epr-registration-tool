@@ -261,7 +261,7 @@ class PackagingReportSubmissionTestCase(BaseApiTestCase):
         with self.assertRaises(ValidationError) as context:
             test_report_3.full_clean()
         self.assertEqual(
-            'Reports with No. (3, 2) overlap with this report timeframe.',
+            'Reports with No. (2, 3) overlap with this report timeframe.',
             context.exception.message_dict['timeframe'][0],
         )
 

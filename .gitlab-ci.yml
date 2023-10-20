@@ -132,7 +132,7 @@ backend:test:
       -e POSTGRES_DB=$TEST_POSTGRES_DB
       -e POSTGRES_USER=$TEST_POSTGRES_USERNAME
       -e POSTGRES_PASSWORD=$TEST_POSTGRES_PASSWORD
-      library/postgres:11.8-alpine
+      library/postgres:14-alpine
   script:
     # wait for db
     - sleep 5
@@ -250,6 +250,7 @@ frontend:test:
     - /^helm[-/\/].*$/
     - triggers
 
+# check https://github.com/ambient-innovation/gitlab-trivy-checks
 license_scanning:
   stage: post-build
   interruptible: true

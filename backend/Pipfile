@@ -11,27 +11,27 @@ psycopg2 = "~=2.9"
 # django testing
 model-bakery = "*"
 # api
-strawberry-graphql-django = "~=0.2"                                   # graphql library
-strawberry-graphql = {extras = ["debug-server"], version = "~=0.193"} # django plugin for strawberry
+strawberry-graphql-django = "~=0.2"                                   # Graphql library
+strawberry-graphql = {extras = ["debug-server"], version = "~=0.193"} # Django plugin for strawberry
 # security
 django-cors-headers = "~=3.12"                                        # Cross-Origin-Request headers
-django-axes = "*"                                                       # prevent brute-force attacks
+django-axes = "*"                                                     # Prevent brute-force attacks
 # deployment
 gunicorn = "~=20.1"
 whitenoise = "~=6.0"
 # other
 django-ses = "~=3.5"                                                  # AWS SES mailing
-sentry-sdk = "~=1.14"                                                  # loggin / reporting
-ai-django-core = "~=5.14"                                             # various useful helper functions
-pyyaml = "*"                                                            # to be able to load yaml fixtures
+sentry-sdk = "~=1.14"                                                 # Loggin / Reporting
+ai-django-core = "~=5.14"                                             # Various useful helper functions
+pyyaml = "*"                                                          # To be able to load yaml fixtures
 django-modeltranslation = "~=0.18"                                    # Handle translations in Django-Admin
 django-ai-kit-auth = "~=2.0"                                          # Provides helper functions for auth
 djangorestframework = "~=3.13"                                        # Required by django-ai-kit-auth
-time-machine = "~=2.7"                                                # override system time for running tests with fixed date
-weasyprint = "~=55.0"                                                   # For creating PDFs
+time-machine = "~=2.7"                                                # Override system time for running tests with fixed date
+weasyprint = "~=55.0"                                                 # For creating PDFs
 django-storages = "~=1.12"                                            # Custom storage backends for Django
 boto3 = "~=1.24"                                                     # AWS S3 connector
-wagtail = "~=4.0"
+wagtail = "~=5.0"
 wagtail-localize = "~=1.6"                                            # Multi lang support for Wagtail
 wagtail-headless-preview = "~=0.3"                                    # Enable wagtail preview via REST
 beautifulsoup4 = "*"
