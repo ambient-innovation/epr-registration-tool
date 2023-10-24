@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   backend:
-    build: 
+    build:
       context: ./backend
       dockerfile: Dockerfile
       target: dev
@@ -34,7 +34,7 @@ services:
     restart: "no"
 
   db:
-    image: library/postgres:11.8-alpine
+    image: library/postgres:14-alpine
     container_name: epr_tool_db
     environment:
       POSTGRES_DB: epr-tool
@@ -53,7 +53,7 @@ services:
       - "8025:8025"  # email inbox interface
       - "1025:1025"  # smtp
 
-# Setup for e2e testing
+  # Setup for e2e testing
   e2efrontend:
     build:
       context: ./frontend

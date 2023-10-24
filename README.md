@@ -125,3 +125,18 @@ You may need to install pre-commit if not already installed
     A submission either represents the forecast data OR the final data ("actual quantities""
   </dd>
 </dl>
+
+
+## Maintenance
+### Backend
+```shell
+ # We use Tilde ~ with fixed major and minor version "~=X.Y", this will look for compatible versions on update.  
+ pipenv update
+```
+### Frontend
+```shell
+# List all outdated packages (major, minor, patch).
+yarn outdated
+# only upgrade to patch and minor releases
+yarn upgrade
+```

@@ -1,6 +1,6 @@
-FROM python:3.9 as base
+FROM python:3.9-bookworm as base
 
-RUN apt-get update && apt-get install -y gettext \
+RUN apt-get update && apt-get install --no-install-recommends -y gettext \
   # Cleanup apt cache
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
@@ -32,11 +32,6 @@ FROM dev-build-python as dev
 COPY . /app/
 WORKDIR /app
 
-RUN addgroup --system --gid 1001 backend
-RUN adduser --system --uid 1001 backend-user-dev && chown -R backend-user-dev /app
-
-USER backend-user-dev
-
 # Django-env expects this file to exist and prints warnings, but we use docker compose env vars.
 RUN touch ./apps/config/.env
 
@@ -45,12 +40,12 @@ EXPOSE 8000
 CMD ["./scripts/run_dev.sh"]
 
 ### Prod image
-FROM python:3.9-slim as prod
+FROM python:3.9-slim-bookworm as prod
 
 ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update \
-  && apt-get install -y \
+  && apt-get install --no-install-recommends -y \
   libxml2 \
   libssl3 \
   libcairo2 \

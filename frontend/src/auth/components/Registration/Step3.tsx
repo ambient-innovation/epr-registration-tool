@@ -12,7 +12,7 @@ import { useRegistrationContext } from './RegistrationContext'
 import { RegistrationData } from './types'
 
 const FIELD_NAMES = ['password'] as const
-type FieldName = typeof FIELD_NAMES[number]
+type FieldName = (typeof FIELD_NAMES)[number]
 type FormData = Pick<RegistrationData, FieldName>
 
 export type Step3 = Record<string, never>

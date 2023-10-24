@@ -6,7 +6,6 @@ import strawberry
 from graphql import GraphQLError
 from sentry_sdk import capture_exception
 from strawberry.types import Info
-from strawberry_django.mutations.fields import get_input_data
 
 from account.api.inputs import UserChangeInputType
 from account.email import send_account_data_changed_mail, send_request_email_change_confirm_mail
@@ -48,9 +47,7 @@ def change_user_password(info: Info, old_password: str, new_password: str) -> st
 def change_user_account(info: Info, account_data: UserChangeInputType) -> str:
     user = info.context.request.user
 
-    account_data_dict = {
-        key: value and value.strip() for key, value in get_input_data(UserChangeInputType, account_data).items()
-    }
+    account_data_dict = {key: value and value.strip() for key, value in vars(account_data).items()}
     delete_old_change_request = False
     email_input = account_data_dict.pop('email', None)
     old_email_change_request = getattr(user, 'email_change_request', None)

@@ -115,6 +115,7 @@ class PackagingReportSubmissionTestCase(BaseApiTestCase):
             message='startDateIsInvalid',
         )
 
+    @time_machine.travel(make_aware(datetime(year=2023, month=8, day=1)))
     def test_submit_new_packaging_report_overlap_with_another(self):
         self._create_packaging_report(2023, 8, 3)
 
@@ -136,6 +137,7 @@ class PackagingReportSubmissionTestCase(BaseApiTestCase):
             message='timeframeOverlap',
         )
 
+    @time_machine.travel(make_aware(datetime(year=2023, month=8, day=1)))
     def test_submit_new_packaging_report_without_records(self):
         variables = {
             "year": 2023,
@@ -259,7 +261,7 @@ class PackagingReportSubmissionTestCase(BaseApiTestCase):
         with self.assertRaises(ValidationError) as context:
             test_report_3.full_clean()
         self.assertEqual(
-            'Reports with No. (3, 2) overlap with this report timeframe.',
+            'Reports with No. (2, 3) overlap with this report timeframe.',
             context.exception.message_dict['timeframe'][0],
         )
 

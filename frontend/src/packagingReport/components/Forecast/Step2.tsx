@@ -16,7 +16,7 @@ import { ForecastData } from './types'
 
 const FIELD_NAMES = ['packagingRecords'] as const
 
-type FieldName = typeof FIELD_NAMES[number]
+type FieldName = (typeof FIELD_NAMES)[number]
 export type FormData = Pick<ForecastData, FieldName>
 
 export type Step2 = Record<string, never>

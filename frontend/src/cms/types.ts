@@ -1,7 +1,7 @@
 import { LocaleType } from '@/config/i18n'
 
 export const PAGE_TYPES = ['cms.StandardPage', 'cms.HomePage'] as const
-export type WagtailPageType = typeof PAGE_TYPES[number]
+export type WagtailPageType = (typeof PAGE_TYPES)[number]
 
 interface WagtailMeta<T extends WagtailPageType> {
   type: T

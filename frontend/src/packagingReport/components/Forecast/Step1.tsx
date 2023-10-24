@@ -33,7 +33,7 @@ import { ForecastData } from './types'
 
 const FIELD_NAMES = ['startDate', 'timeframe'] as const
 
-type FieldName = typeof FIELD_NAMES[number]
+type FieldName = (typeof FIELD_NAMES)[number]
 type FormData = Pick<ForecastData, FieldName>
 
 export type Step1 = Record<string, never>

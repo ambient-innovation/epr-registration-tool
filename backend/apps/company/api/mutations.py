@@ -11,7 +11,6 @@ from graphql import GraphQLError
 from sentry_sdk import capture_exception
 from strawberry.file_uploads import Upload
 from strawberry.types import Info
-from strawberry_django.mutations.fields import get_input_data
 
 from account.email import send_user_confirm_email_notification
 from account.models import User
@@ -118,12 +117,10 @@ def change_company_details(
     if not company_input.identification_number:
         raise GraphQLError('identificationNumberRequired')
 
-    company_input_data = get_input_data(CompanyInput, company_input)
-    contact_info_input_data = get_input_data(CompanyContactInfoInput, contact_info_input)
+    company_input_data = vars(company_input)
+    contact_info_input_data = vars(contact_info_input)
     additional_invoice_recipient_data = (
-        get_input_data(AdditionalInvoiceRecipientInput, additional_invoice_recipient_input)
-        if additional_invoice_recipient_input
-        else {}
+        vars(additional_invoice_recipient_input) if additional_invoice_recipient_input else {}
     )
 
     additional_invoice_recipient_delete = not bool(additional_invoice_recipient_data)

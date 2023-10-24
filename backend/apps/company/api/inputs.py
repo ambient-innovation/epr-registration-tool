@@ -1,5 +1,5 @@
 import strawberry
-from strawberry.django import auto
+from strawberry import auto
 
 from company.models import AdditionalInvoiceRecipient, Company, CompanyContactInfo, DistributorType
 

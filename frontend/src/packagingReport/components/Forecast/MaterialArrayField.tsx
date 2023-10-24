@@ -103,7 +103,7 @@ export const MaterialArrayField = ({
                 }
                 helperText={errorMsg(
                   errors.packagingRecords?.[nestIndex]?.materialRecords?.[index]
-                    ?.quantity?.message
+                    ?.quantity?.message as string
                 )}
                 required
                 fullWidth

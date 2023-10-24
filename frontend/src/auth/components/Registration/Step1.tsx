@@ -21,7 +21,7 @@ const FIELD_NAMES = [
   'countryCode',
 ] as const
 
-type FieldName = typeof FIELD_NAMES[number]
+type FieldName = (typeof FIELD_NAMES)[number]
 type FormData = Pick<RegistrationData, FieldName>
 
 export type Step1 = Record<string, never>

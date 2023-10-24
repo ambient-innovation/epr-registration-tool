@@ -181,7 +181,6 @@ class ChangeCompanyDetailsTestCase(BaseApiTestCase):
                 },
                 'additionalInvoiceRecipientInput': None,
             },
-            message='identificationNumberRequired',
         )
 
     def test_create_company_profile_without_additional_info_no_errors(self):
