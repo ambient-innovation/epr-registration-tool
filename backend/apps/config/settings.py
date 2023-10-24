@@ -96,16 +96,16 @@ if 'test' in sys.argv or 'test_coverage' in sys.argv:
 DEBUG = env.bool('DJANGO_DEBUG')
 
 # Application definition
-DJANGO_APPS = [
+DJANGO_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-]
+)
 
-THIRD_PARTY_APPS = [
+THIRD_PARTY_APPS = (
     'axes',
     'strawberry.django',
     'rest_framework',
@@ -132,9 +132,9 @@ THIRD_PARTY_APPS = [
     'wagtail_headless_preview',
     'modelcluster',
     'taggit',
-]
+)
 
-LOCAL_APPS = [
+LOCAL_APPS = (
     'config.admin.CustomAdminConfig',
     'common',
     'packaging',
@@ -142,7 +142,7 @@ LOCAL_APPS = [
     'account',
     'company',
     'cms',
-]
+)
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
