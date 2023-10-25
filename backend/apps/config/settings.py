@@ -429,7 +429,7 @@ WAGTAIL_HEADLESS_PREVIEW = {
     },
     "LIVE_PREVIEW": False,  # requires web sockets
     "SERVE_BASE_URL": None,  # can be used for HeadlessServeMixin
-    "REDIRECT_ON_PREVIEW": True,  # set to True to redirect to the preview instead of using the Wagtail default
+    "REDIRECT_ON_PREVIEW": False,  # use wagtail default because of live preview feature
 }
 
 # has to match next.js env variable `PREVIEW_SECRET`
