@@ -38,7 +38,7 @@
 ## Deployment
 
 In order to run this application, you need to start three separate components: 
-- A postgres database (postgres version 11.8), where we recommend to provide a managed database
+- A postgres database (postgres version 14), where we recommend to provide a managed database
 - The backend application, which is written in Django
 - The frontend application, which is written in Next.JS and hence also runs server-side
 
@@ -64,14 +64,14 @@ Minimum required resources in order to host test environment is as follows;
 - 2 vCPU & 4 GB Memory 
 Note that we recommend running two instance of frontend and two instance of backend application in the test system for high avialability purposes. Resources in the test system can be divided evenly between backend & frontend application.
 
-We do use a hosted postgres database service (version 11.8 or higher)  with 2 CPU & 4 GB memory instance. We suggest that database is hosted on a seperate instance then where the test application is running. We suggest having minimum of 7 days of backup for test environment for database.
+We do use a hosted postgres database service (version 14 or higher)  with 2 CPU & 4 GB memory instance. We suggest that database is hosted on a seperate instance then where the test application is running. We suggest having minimum of 7 days of backup for test environment for database.
 
 ### Production Environment
 Minimum required resources in order to host production environment is as follows;
 - 4 vCPU & 8 GB Memory 
 Note that we recommend running two instance of frontend and two instance of backend application in the production system for high avialability purposes. Resources in the production system can be divided evenly between backend & frontend application.
 
-We do use a hosted postgres database service (version 11.8 or higher)  with 2 CPU & 4 GB memory instance. We suggest that database is hosted on a seperate instance then where the production application is running. We suggest having minimum of 30 days of backup for production environment for database.
+We do use a hosted postgres database service (version 14 or higher)  with 2 CPU & 4 GB memory instance. We suggest that database is hosted on a seperate instance then where the production application is running. We suggest having minimum of 30 days of backup for production environment for database.
 
 IMPORTANT NOTE: Please note that, resources required to run production environment may need to be increased over time according to the actual usage from the users.
 
