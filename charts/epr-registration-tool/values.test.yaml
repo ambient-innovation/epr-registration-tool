@@ -66,7 +66,7 @@ frontend:
   image:
     repository: registry.ambient-innovation.com/giz/epr-registration-tool/frontend
     tag: develop # This value will be overwritten by deployment job in gitlab-ci.yml. You do not need to forecast this.
-    pullPolicy: IfNotPresent
+    pullPolicy: Always # We trigger a build to rebuild the static site, but keeping the same image tag, so we need always to replace it on deployment. 
     forceRestartAt: ""
   resources: # Please note that, limits and requests should be properly set for your deployment. These values have to be changed accordingly. Comments regarding request and limits below are for a reference only, needs forecast according to different workloads, but if you have no idea at all, they can be good advice to start with.
     limits:
