@@ -22,6 +22,10 @@ RUN chmod +x /bin/migrations.sh
 
 RUN pipenv install --system --verbose --deploy
 
+# pipenv license is configured badly, because they past the whole license text instead of just the name. 
+# To go around this, we decided to unistall pipenv in the prod image.
+RUN pip uninstall -y pipenv
+
 FROM base as dev-build-python
 
 RUN pipenv install --system --verbose --deploy --dev
