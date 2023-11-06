@@ -283,6 +283,8 @@ container_scanning_backend:
     IMAGE: $IMAGE_TAG_BACKEND
     DIRECTORY: "backend"
 
+# In case of failing but no artifacts uploaded, you can use this api, just replace set job-id of the `check trivy scan results`
+# https://gitlab.ambient-innovation.com/giz/epr-registration-tool/-/jobs/<job-id>/artifacts/download?file_type=codequality 
 check trivy scan results:
   needs:
     - license_scanning
