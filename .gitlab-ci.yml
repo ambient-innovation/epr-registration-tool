@@ -253,19 +253,17 @@ frontend:test:
 # check https://github.com/ambient-innovation/gitlab-trivy-checks
 license_scanning:
   stage: post-build
+  tags:
+    - low-load
+  needs: ["frontend:build-and-push"]
   interruptible: true
+   # We won't get the license scanner job to 0 errors, so we have to allow failure
+  allow_failure: true
   variables:
     IMAGE: $IMAGE_TAG_FRONTEND
-  except:
-    - /^helm[-/\/].*$/
-    - triggers
-
-container_scanning:
-  stage: post-build
-  interruptible: true
-  variables:
-    IMAGE: $IMAGE_TAG_FRONTEND
-    DIRECTORY: "frontend"
+    EXIT_CODE_ON_FINDINGS: 1
+    SEVERITY: "HIGH,CRITICAL,UNKNOWN"
+    TRIVY_YAML: epr-trivy.yaml
   except:
     - /^helm[-/\/].*$/
     - triggers
@@ -273,12 +271,30 @@ container_scanning:
 license_scanning_backend:
   extends:
     - license_scanning
+  needs: ["backend:build-and-push"]  
   variables:
     IMAGE: $IMAGE_TAG_BACKEND
+    EXIT_CODE_ON_FINDINGS: 1
+    SEVERITY: "CRITICAL,UNKNOWN"
+    TRIVY_YAML: epr-trivy.yaml
+
+container_scanning:
+  stage: post-build
+  tags:
+    - low-load
+  needs: ["frontend:build-and-push"]  
+  interruptible: true 
+  variables:
+    IMAGE: $IMAGE_TAG_FRONTEND
+    DIRECTORY: "frontend"
+  except:
+    - /^helm[-/\/].*$/
+    - triggers
 
 container_scanning_backend:
   extends:
     - container_scanning
+  needs: ["backend:build-and-push"]  
   variables:
     IMAGE: $IMAGE_TAG_BACKEND
     DIRECTORY: "backend"
@@ -287,11 +303,8 @@ container_scanning_backend:
 # https://gitlab.ambient-innovation.com/giz/epr-registration-tool/-/jobs/<job-id>/artifacts/download?file_type=codequality 
 check trivy scan results:
   needs:
-    - license_scanning
     - container_scanning
-    - license_scanning_backend
     - container_scanning_backend
-  # We won't get the license scanner job to 0 errors, so we have to allow failure
   allow_failure: true
   except:
     - /^helm[-/\/].*$/
