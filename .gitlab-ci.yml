@@ -1,7 +1,7 @@
 include:
   - remote: https://raw.githubusercontent.com/ambient-innovation/gitlab-trivy-checks/main/gitlab-trivy-checks.yaml
 
-image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16
+image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:${DOCKER_VERSION}
 
 stages:
   - pre-build
@@ -22,7 +22,7 @@ variables:
   FF_ENABLE_BASH_EXIT_CODE_CHECK: "true"
   DOCKER_DRIVER: overlay2
   DOCKER_HOST: tcp://docker:2376
-  DOCKER_VERSION: 20.10.16 # This needed for the security scanning
+  DOCKER_VERSION: "24.0.6" # This needed for the security scanning
   DOCKER_TLS_VERIFY: 1
   DOCKER_TLS_CERTDIR: "/certs"
   DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
@@ -72,7 +72,7 @@ backend:build-and-push:
     - /^helm[-/\/].*$/
     - triggers
   services:
-    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16-dind
+    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:${DOCKER_VERSION}-dind
       alias: docker
 
 backend:post-build-checks:
@@ -98,7 +98,7 @@ backend:post-build-checks:
     - /^helm[-/\/].*$/
     - triggers
   services:
-    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16-dind
+    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:${DOCKER_VERSION}-dind
       alias: docker
 
 backend:test:
@@ -163,7 +163,7 @@ backend:test:
     - /^helm[-/\/].*$/
     - triggers
   services:
-    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16-dind
+    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:${DOCKER_VERSION}-dind
       alias: docker
 
 deploy:test:
@@ -337,7 +337,7 @@ frontend:build-and-push:
   except:
     - /^helm[-/\/].*$/
   services:
-    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16-dind
+    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:${DOCKER_VERSION}-dind
       alias: docker
 
 helm:lint:
@@ -406,7 +406,7 @@ helm:refresh:
 
 e2e:test:
   stage: post-build
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:${DOCKER_VERSION}
   needs: [ 'backend:build-and-push' ]
   artifacts:
     when: always
@@ -452,7 +452,7 @@ e2e:test:
     KUBERNETES_SERVICE_MEMORY_REQUEST: "1000Mi"
     KUBERNETES_SERVICE_MEMORY_LIMIT: "14000Mi"
   services:
-    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16-dind
+    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:${DOCKER_VERSION}-dind
       alias: docker
     - name: $IMAGE_TAG_BACKEND
       entrypoint: [ "/bin/sh" ]
