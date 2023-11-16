@@ -208,7 +208,7 @@ deploy:test:
 
 frontend:lint:
   stage: pre-build
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:current-alpine
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:18.18.2-bullseye-slim
   tags:
     - low-load
   cache:
@@ -230,7 +230,7 @@ frontend:lint:
 
 frontend:test:
   stage: pre-build
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:current-alpine
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:18.18.2-bullseye-slim
   tags:
     - normal-load
   needs:
@@ -261,9 +261,7 @@ license_scanning:
   allow_failure: true
   variables:
     IMAGE: $IMAGE_TAG_FRONTEND
-    EXIT_CODE_ON_FINDINGS: 1
-    SEVERITY: "HIGH,CRITICAL,UNKNOWN"
-    TRIVY_YAML: epr-trivy.yaml
+    TRIVY_YAML: trivy.yaml
   except:
     - /^helm[-/\/].*$/
     - triggers
@@ -274,9 +272,7 @@ license_scanning_backend:
   needs: ["backend:build-and-push"]  
   variables:
     IMAGE: $IMAGE_TAG_BACKEND
-    EXIT_CODE_ON_FINDINGS: 1
-    SEVERITY: "CRITICAL,UNKNOWN"
-    TRIVY_YAML: epr-trivy.yaml
+    TRIVY_YAML: trivy.yaml
 
 container_scanning:
   stage: post-build
