@@ -1,15 +1,17 @@
 license:
-    confidencelevel: "0.9"
-    notice:
-        - PSFL
-        - BSD-3-Clause # Example license
-        - LGPL with exceptions
-        - (MPL-2.0 OR Apache-2.0)
-        - (MIT OR GPL-3.0)
-        - (MIT OR WTFPL)
-        - MPLv2
-        - (MPL-2.0 OR Apache-2.0)
-        - (MIT OR WTFPL)
-        - MPLv2
-        - (MPL-2.0 OR Apache-2.0)
-        - MPLv2
+  confidencelevel: "0.9"
+  notice:
+    - PSFL
+    - BSD-3-Clause # Example license
+    - LGPL with exceptions
+    - (MPL-2.0 OR Apache-2.0)
+    - (MIT OR GPL-3.0)
+    - (MIT OR WTFPL)
+    - MPLv2
+    - (MPL-2.0 OR Apache-2.0)
+    - (MIT OR WTFPL)
+    - MPLv2
+    - (MPL-2.0 OR Apache-2.0)
+    - MPLv2
+    - Apache-2.0
+    - ISC License (ISCL)
