@@ -1,6 +1,6 @@
 # Install dependencies only when needed
 ARG DOCKER_IMAGE_PREFIX=""
-FROM ${DOCKER_IMAGE_PREFIX}node:18.18.2-bullseye-slim AS deps
+FROM ${DOCKER_IMAGE_PREFIX}node:18.18.2-bullseye AS deps
 
 WORKDIR /app
 COPY package.json yarn.lock ./
