@@ -1,0 +1,35 @@
+# This networkpolicy basically prevents applications running in another namespace to communicate with your application.
+# You most likely do not want completely random project to have ability to call your services internally so that is why we created this network policy.
+
+# Please do not confuse this with using your backend.your-awesome-project.com url to communicate with backend from your frontend.
+# When you use public domain, it means communication happening through public internet and this is not a internal communication anymore.
+
+# If you were to communicate a service internally across your pods, you would be using an internal url such as this: http://target-service.target-namespace.svc.cluster.local
+# Note that, internal communication is encourged whenever possible. Reason why we have this rule is, we do not want different and irrelevant projects
+# to have ability to communicate with each other in the same cluster since this is creating an unnecessary security risk.
+
+# If you need to enable communication across different namespaces, please consult to official
+# documentation for further details and/or consult your secret hero: https://kubernetes.io/docs/concepts/services-networking/network-policies/
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "epr-tool.fullname" . }}-allow-from-ingress-and-within-namespace
+  labels:
+    app.kubernetes.io/name: {{ include "epr-tool.name" . }}-allow-from-ingress-and-within-namespace
+    helm.sh/chart: {{ include "epr-tool.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  podSelector: {} # This selects all pods in the namespace the policy is applied to.
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+      - namespaceSelector:  # Allow traffic coming from ingress.
+          matchLabels:
+            name: ingress-nginx
+      - podSelector: {} # Allow traffic coming from pods within same namespace.
+  egress: # Allow all outgoing traffic
+    - {}
