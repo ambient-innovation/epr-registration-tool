@@ -1,7 +1,7 @@
 include:
   - remote: https://raw.githubusercontent.com/ambient-innovation/gitlab-trivy-checks/main/gitlab-trivy-checks.yaml
 
-image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16
+image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:${DOCKER_VERSION}
 
 stages:
   - pre-build
@@ -22,7 +22,7 @@ variables:
   FF_ENABLE_BASH_EXIT_CODE_CHECK: "true"
   DOCKER_DRIVER: overlay2
   DOCKER_HOST: tcp://docker:2376
-  DOCKER_VERSION: 20.10.16 # This needed for the security scanning
+  DOCKER_VERSION: "24.0.6" # This needed for the security scanning
   DOCKER_TLS_VERIFY: 1
   DOCKER_TLS_CERTDIR: "/certs"
   DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
@@ -72,7 +72,7 @@ backend:build-and-push:
     - /^helm[-/\/].*$/
     - triggers
   services:
-    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16-dind
+    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:${DOCKER_VERSION}-dind
       alias: docker
 
 backend:post-build-checks:
@@ -98,7 +98,7 @@ backend:post-build-checks:
     - /^helm[-/\/].*$/
     - triggers
   services:
-    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16-dind
+    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:${DOCKER_VERSION}-dind
       alias: docker
 
 backend:test:
@@ -163,7 +163,7 @@ backend:test:
     - /^helm[-/\/].*$/
     - triggers
   services:
-    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16-dind
+    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:${DOCKER_VERSION}-dind
       alias: docker
 
 deploy:test:
@@ -208,7 +208,7 @@ deploy:test:
 
 frontend:lint:
   stage: pre-build
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:current-alpine
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:18.18.2-bullseye-slim
   tags:
     - low-load
   cache:
@@ -230,7 +230,7 @@ frontend:lint:
 
 frontend:test:
   stage: pre-build
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:current-alpine
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:18.18.2-bullseye-slim
   tags:
     - normal-load
   needs:
@@ -253,19 +253,15 @@ frontend:test:
 # check https://github.com/ambient-innovation/gitlab-trivy-checks
 license_scanning:
   stage: post-build
+  tags:
+    - low-load
+  needs: ["frontend:build-and-push"]
   interruptible: true
+   # We won't get the license scanner job to 0 errors, so we have to allow failure
+  allow_failure: true
   variables:
     IMAGE: $IMAGE_TAG_FRONTEND
-  except:
-    - /^helm[-/\/].*$/
-    - triggers
-
-container_scanning:
-  stage: post-build
-  interruptible: true
-  variables:
-    IMAGE: $IMAGE_TAG_FRONTEND
-    DIRECTORY: "frontend"
+    TRIVY_YAML: trivy.yaml
   except:
     - /^helm[-/\/].*$/
     - triggers
@@ -273,12 +269,28 @@ container_scanning:
 license_scanning_backend:
   extends:
     - license_scanning
+  needs: ["backend:build-and-push"]  
   variables:
     IMAGE: $IMAGE_TAG_BACKEND
+    TRIVY_YAML: trivy.yaml
+
+container_scanning:
+  stage: post-build
+  tags:
+    - low-load
+  needs: ["frontend:build-and-push"]  
+  interruptible: true 
+  variables:
+    IMAGE: $IMAGE_TAG_FRONTEND
+    DIRECTORY: "frontend"
+  except:
+    - /^helm[-/\/].*$/
+    - triggers
 
 container_scanning_backend:
   extends:
     - container_scanning
+  needs: ["backend:build-and-push"]  
   variables:
     IMAGE: $IMAGE_TAG_BACKEND
     DIRECTORY: "backend"
@@ -287,11 +299,8 @@ container_scanning_backend:
 # https://gitlab.ambient-innovation.com/giz/epr-registration-tool/-/jobs/<job-id>/artifacts/download?file_type=codequality 
 check trivy scan results:
   needs:
-    - license_scanning
     - container_scanning
-    - license_scanning_backend
     - container_scanning_backend
-  # We won't get the license scanner job to 0 errors, so we have to allow failure
   allow_failure: true
   except:
     - /^helm[-/\/].*$/
@@ -324,7 +333,7 @@ frontend:build-and-push:
   except:
     - /^helm[-/\/].*$/
   services:
-    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16-dind
+    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:${DOCKER_VERSION}-dind
       alias: docker
 
 helm:lint:
@@ -393,7 +402,7 @@ helm:refresh:
 
 e2e:test:
   stage: post-build
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:${DOCKER_VERSION}
   needs: [ 'backend:build-and-push' ]
   artifacts:
     when: always
@@ -439,7 +448,7 @@ e2e:test:
     KUBERNETES_SERVICE_MEMORY_REQUEST: "1000Mi"
     KUBERNETES_SERVICE_MEMORY_LIMIT: "14000Mi"
   services:
-    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10.16-dind
+    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:${DOCKER_VERSION}-dind
       alias: docker
     - name: $IMAGE_TAG_BACKEND
       entrypoint: [ "/bin/sh" ]

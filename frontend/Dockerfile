@@ -4,6 +4,7 @@ FROM ${DOCKER_IMAGE_PREFIX}node:16-alpine AS deps
 
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
+RUN apk update && apk upgrade && apk add --no-cache --upgrade libcrypto3 libssl3
 WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
@@ -63,8 +64,8 @@ ENV NODE_ENV test
 # https://nextjs.org/docs/messages/sharp-missing-in-production
 RUN yarn add sharp
 
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
+RUN addgroup --gid 1001 --system nodejs
+RUN adduser --system nextjs --uid 1001
 
 COPY --from=builder-test /app/next-i18next.config.js ./
 COPY --from=builder-test /app/next.config.js ./
@@ -98,8 +99,8 @@ ENV NODE_ENV production
 # https://nextjs.org/docs/messages/sharp-missing-in-production
 RUN yarn add sharp
 
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
+RUN addgroup --gid 1001 --system nodejs
+RUN adduser --system nextjs --uid 1001
 
 COPY --from=builder /app/next-i18next.config.js ./
 COPY --from=builder /app/next.config.js ./

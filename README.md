@@ -140,3 +140,17 @@ yarn outdated
 # only upgrade to patch and minor releases
 yarn upgrade
 ```
+
+## License scanning
+We took out license scanning jobs from a check scanning result job (check trivy scan results) as we want this to show only the security check issues results. 
+Check trivy scan results: filters out the operations system license issues and show only installed packages issues, so
+to see the license scanning results, check pls the job logs itself, and ignore the first table (OS Packages (license)).
+
+- `epr-trivy.yaml`: Lists all unknown licenses to ignore them in the check result, and the license which we are fine with.
+- `.trivyignore`: File to list all the ignored security issues (we don't have one)
+
+### Notes:
+- GPL license: Such packages are most likely fine if used in the backend because we don't distribute the package to the users, 
+  but might require you to disclose the sourcecode to every user if used in the frontend. Check with the Privacy Circle if in doubt.
+
+For more pls check [gitlab-trivy-license-checks](https://github.com/ambient-innovation/gitlab-trivy-license-checks)
