@@ -1,5 +1,14 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { i18n } = require('./next-i18next.config')
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const dns = require('dns')
+
+// node18 uses ipv6 by default
+// Using "localhost" as backend URL causes a fetch error `ECONNREFUSED`
+// So far, we know of two ways to solve this problem:
+// 1. Use 127.0.0.1 instead of localhost, which causes other issues with CORS
+// 2. Use ipv4first as default result order <-- this is what we do here
+dns.setDefaultResultOrder('ipv4first')
 
 const nextConfig = {
   i18n,
