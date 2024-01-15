@@ -407,7 +407,7 @@ if env.bool('DJANGO_AWS_SES_ENABLED') and env('AWS_ACCESS_KEY_ID') and env('AWS_
     EMAIL_BACKEND = 'django_ses.SESBackend'
     AWS_SES_REGION_NAME = 'eu-central-1'
     AWS_SES_REGION_ENDPOINT = 'email.eu-central-1.amazonaws.com'
-    AWS_SES_SOURCE_ARN = env.str('AWS_SES_SOURCE_ARN')
+    AWS_SES_SOURCE_ARN = AWS_SES_FROM_ARN = AWS_SES_RETURN_PATH_ARN = env.str('AWS_SES_SOURCE_ARN')
 else:
     EMAIL_BACKEND = env.str('DJANGO_EMAIL_BACKEND')
     EMAIL_HOST = env.str('DJANGO_EMAIL_HOST')
