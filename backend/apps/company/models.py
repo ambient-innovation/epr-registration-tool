@@ -5,7 +5,7 @@ from django.core.validators import MinLengthValidator, validate_email
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from ai_django_core.models import CommonInfo
+from ambient_toolbox.models import CommonInfo
 
 from account.models import UserTitle
 from common.storage_backend import private_file_storage

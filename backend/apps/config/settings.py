@@ -110,7 +110,7 @@ THIRD_PARTY_APPS = (
     'strawberry.django',
     'rest_framework',
     'corsheaders',
-    'ai_django_core',
+    'ambient_toolbox',
     'ai_kit_auth',
     'modeltranslation',
     'storages',

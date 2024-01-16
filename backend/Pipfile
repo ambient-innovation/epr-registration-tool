@@ -22,7 +22,7 @@ whitenoise = "~=6.0"
 # other
 django-ses = "~=3.5"                                                  # AWS SES mailing
 sentry-sdk = "~=1.14"                                                 # Loggin / Reporting
-ai-django-core = "~=5.14"                                             # Various useful helper functions
+ambient-toolbox = "~=9.4.0"                                           # Various useful helper functions
 pyyaml = "*"                                                          # To be able to load yaml fixtures
 django-modeltranslation = "~=0.18"                                    # Handle translations in Django-Admin
 django-ai-kit-auth = "~=2.0"                                          # Provides helper functions for auth

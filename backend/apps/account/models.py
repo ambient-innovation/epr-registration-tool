@@ -9,7 +9,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from ai_django_core.models import CommonInfo
+from ambient_toolbox.models import CommonInfo
 from rest_framework.reverse import reverse
 
 from account.managers import UserManager, UserQuerySet
