@@ -60,8 +60,6 @@ env = environ.Env(
     DJANGO_SENTRY_DSN=(str, ''),
     DJANGO_SENTRY_ENV=(str, 'local'),
     # AWS
-    AWS_ACCESS_KEY_ID=(str, None),
-    AWS_SECRET_ACCESS_KEY=(str, None),
     AWS_BUCKET_NAME=(str, None),
     # Email
     DJANGO_EMAIL_BACKEND=(str, 'django.core.mail.backends.console.EmailBackend'),
@@ -369,10 +367,6 @@ AI_KIT_AUTH = {
 
 # --- AWS --- #
 
-if env('AWS_ACCESS_KEY_ID') and env('AWS_SECRET_ACCESS_KEY'):
-    AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-
 AWS_PUBLIC_MEDIA_LOCATION = ''
 AWS_PRIVATE_MEDIA_LOCATION = ''
 # We store media files in S3 if available
@@ -403,7 +397,7 @@ else:
 
 DEFAULT_FROM_EMAIL = env.str('DJANGO_DEFAULT_FROM_EMAIL')
 
-if env.bool('DJANGO_AWS_SES_ENABLED') and env('AWS_ACCESS_KEY_ID') and env('AWS_SECRET_ACCESS_KEY'):
+if env.bool('DJANGO_AWS_SES_ENABLED') and env.str('AWS_SES_SOURCE_ARN'):
     EMAIL_BACKEND = 'django_ses.SESBackend'
     AWS_SES_REGION_NAME = 'eu-central-1'
     AWS_SES_REGION_ENDPOINT = 'email.eu-central-1.amazonaws.com'
