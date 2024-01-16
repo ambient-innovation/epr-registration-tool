@@ -9,7 +9,7 @@ from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 import pytz
-from ai_django_core.admin.model_admins.mixins import CommonInfoAdminMixin
+from ambient_toolbox.admin.model_admins.mixins import CommonInfoAdminMixin
 
 from common.models import Month
 from packaging_report.models import (

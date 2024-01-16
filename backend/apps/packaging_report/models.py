@@ -8,7 +8,7 @@ from django.db.models import UniqueConstraint
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from ai_django_core.models import CommonInfo
+from ambient_toolbox.models import CommonInfo
 from dateutil.relativedelta import relativedelta
 
 from common.models import Month

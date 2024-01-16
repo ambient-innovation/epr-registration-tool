@@ -4,7 +4,7 @@ from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
-from ai_django_core.admin.model_admins.mixins import CommonInfoAdminMixin
+from ambient_toolbox.admin.model_admins.mixins import CommonInfoAdminMixin
 from sentry_sdk import capture_exception
 
 from account.models import User

@@ -492,7 +492,7 @@ e2e:test:
       --network=host
       --ipc=host
       --user "${CURRENT_USER:-pwuser:pwuser}"
-      mcr.microsoft.com/playwright:v1.21.1-focal
+      mcr.microsoft.com/playwright:v1.24.2-focal
       bash -c 'yarn install --pure-lockfile --cache-folder .yarn; yarn playwright install; yarn playwright test'
 
   after_script:
