@@ -1,6 +1,6 @@
 # Install dependencies only when needed
 ARG DOCKER_IMAGE_PREFIX=""
-FROM ${DOCKER_IMAGE_PREFIX}node:16-alpine AS deps
+FROM ${DOCKER_IMAGE_PREFIX}node:18.19-alpine AS deps
 
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
@@ -51,7 +51,10 @@ COPY . .
 # disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN yarn build
+# Whe need to set ipv4first as Node17/18 using ipv6 as default for localhost what leads to issues while building.
+# https://github.com/node-fetch/node-fetch/issues/1624
+RUN NODE_OPTIONS=--dns-result-order=ipv4first yarn build
+
 
 # Test image, copy all the files and run next
 # We use this for e2e testing.
