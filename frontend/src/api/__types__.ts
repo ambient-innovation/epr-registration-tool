@@ -77,7 +77,7 @@ export type CompanyType = {
   createdAt: Scalars['DateTime']
   distributorType: DistributorType
   id: Scalars['ID']
-  identificationNumber: Scalars['String']
+  identificationNumber?: Maybe<Scalars['String']>
   isProfileCompleted: Scalars['Boolean']
   lastmodifiedAt: Scalars['DateTime']
   logo?: Maybe<ImageType>
@@ -360,7 +360,7 @@ export type CompanyDetailsWithContactInfoQuery = {
     id: string
     name: string
     distributorType: DistributorType
-    identificationNumber: string
+    identificationNumber?: string | null
     isProfileCompleted: boolean
     countryCode: string
     contactInfo?: {
@@ -493,7 +493,7 @@ export type CompanyDetailsQuery = {
     name: string
     registrationNumber: string
     distributorType: DistributorType
-    identificationNumber: string
+    identificationNumber?: string | null
     createdAt: any
     lastmodifiedAt: any
     isProfileCompleted: boolean

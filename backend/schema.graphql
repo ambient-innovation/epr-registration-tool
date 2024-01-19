@@ -45,7 +45,7 @@ type CompanyType {
   distributorType: DistributorType!
   lastmodifiedAt: DateTime!
   createdAt: DateTime!
-  identificationNumber: String!
+  identificationNumber: String
   countryCode: String!
   isProfileCompleted: Boolean!
   contactInfo: CompanyContactInfoType

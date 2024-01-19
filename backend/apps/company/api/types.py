@@ -35,7 +35,7 @@ class CompanyType:
     distributor_type: strawberry.enum(DistributorType)
     lastmodified_at: auto
     created_at: auto
-    identification_number: str
+    identification_number: auto
     country_code: str
     is_profile_completed: bool
     contact_info: Optional[CompanyContactInfoType]
