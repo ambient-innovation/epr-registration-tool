@@ -195,7 +195,7 @@ deploy:test:
       --username $CHARTMUSEUM_USER
       --password $CHARTMUSEUM_PASSWORD
     - echo "Deploying."
-    - helm upgrade -n $NAMESPACE --version $HELM_CHART_VERSION --install
+    - helm upgrade -n $NAMESPACE --version $HELM_CHART_VERSION --wait --install
       -f $TARGET_VALUES_YAML_PATH
       --set backend.image.tag=$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
       --set frontend.image.tag=$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
@@ -255,9 +255,9 @@ license_scanning:
   stage: post-build
   tags:
     - low-load
-  needs: ["frontend:build-and-push"]
+  needs: [ "frontend:build-and-push" ]
   interruptible: true
-   # We won't get the license scanner job to 0 errors, so we have to allow failure
+  # We won't get the license scanner job to 0 errors, so we have to allow failure
   allow_failure: true
   variables:
     IMAGE: $IMAGE_TAG_FRONTEND
@@ -269,7 +269,7 @@ license_scanning:
 license_scanning_backend:
   extends:
     - license_scanning
-  needs: ["backend:build-and-push"]  
+  needs: [ "backend:build-and-push" ]
   variables:
     IMAGE: $IMAGE_TAG_BACKEND
     TRIVY_YAML: trivy.yaml
@@ -278,8 +278,8 @@ container_scanning:
   stage: post-build
   tags:
     - low-load
-  needs: ["frontend:build-and-push"]  
-  interruptible: true 
+  needs: [ "frontend:build-and-push" ]
+  interruptible: true
   variables:
     IMAGE: $IMAGE_TAG_FRONTEND
     DIRECTORY: "frontend"
@@ -290,7 +290,7 @@ container_scanning:
 container_scanning_backend:
   extends:
     - container_scanning
-  needs: ["backend:build-and-push"]  
+  needs: [ "backend:build-and-push" ]
   variables:
     IMAGE: $IMAGE_TAG_BACKEND
     DIRECTORY: "backend"
