@@ -55,7 +55,7 @@ const schema: SchemaOf<Record<keyof CompanyData, unknown>> = yup.object({
   streetNumber: yup.string(),
   phoneNumber: requiredStringValidator(),
   additionalAddressInfo: yup.string(),
-  identificationNumber: requiredStringWithoutWhitespace().nullable(),
+  identificationNumber: requiredStringWithoutWhitespace(),
   invoiceRecipientTitle: yup.string(),
   invoiceRecipientFullName: yup.string().when('useAdditionalInvoiceRecipient', {
     is: true,
@@ -150,7 +150,7 @@ const ChangeCompanyDetailsForm = ({
     () => ({
       name: companyDetails.name,
       distributorType: companyDetails.distributorType,
-      identificationNumber: companyDetails.identificationNumber,
+      identificationNumber: companyDetails?.identificationNumber || '',
       country:
         companyDetails.contactInfo?.country ||
         COUNTRY_OPTIONS.find(
