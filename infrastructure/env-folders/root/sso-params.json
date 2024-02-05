@@ -1,0 +1,7 @@
+{
+    "Parameters": {
+        "CommonEnv": "root",
+        "CommonProject": "epr-tool",
+        "LegacyBucketNameTest": "epr-registration-tool-test"
+    }
+}
