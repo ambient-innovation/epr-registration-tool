@@ -196,6 +196,7 @@ deploy:test:
       --password $CHARTMUSEUM_PASSWORD
     - echo "Deploying."
     - helm upgrade -n $NAMESPACE --version $HELM_CHART_VERSION --wait --install
+      --timeout 10m0s
       -f $TARGET_VALUES_YAML_PATH
       --set backend.image.tag=$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
       --set frontend.image.tag=$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
