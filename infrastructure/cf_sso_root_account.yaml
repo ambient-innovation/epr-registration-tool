@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Parameters:
+# Common Parameters
+  CommonEnv:
+    Type: String
+  CommonProject: 
+    Type: String
+  LegacyBucketNameTest:
+    Type: String
+
+# Nested Stacks
+Resources:
+  ProjectSSOResources:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      Parameters:
+        CommonProject: !Ref CommonProject
+      TemplateURL:
+        Fn::Sub:
+          - "${NestedStackBucketURL}/${RootStackName}/${NestedStackFile}"
+          - NestedStackBucketURL: !Sub "https://ambient-shared-${CommonEnv}-cloudformation-nested-stack-deployments.s3.eu-central-1.amazonaws.com"
+            RootStackName: !Sub "${CommonEnv}-${CommonProject}-sso-root-stack"
+            NestedStackFile: "project-sso.yaml"
+
+  IamLegacyS3AccessPolicyTest:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      Parameters:
+        CommonEnv: test
+        CommonProject: !Ref CommonProject
+        BucketName: !Ref LegacyBucketNameTest
+      TemplateURL:
+        Fn::Sub:
+          - "${NestedStackBucketURL}/${RootStackName}/${NestedStackFile}"
+          - NestedStackBucketURL: !Sub "https://ambient-shared-${CommonEnv}-cloudformation-nested-stack-deployments.s3.eu-central-1.amazonaws.com"
+            RootStackName: !Sub "${CommonEnv}-${CommonProject}-sso-root-stack"
+            NestedStackFile: "iam-policy-legacy.yaml"

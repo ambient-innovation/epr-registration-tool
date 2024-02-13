@@ -1,0 +1,14 @@
+[
+    {
+        "ParameterKey": "CommonEnv",
+        "UsePreviousValue": true
+    },
+    {
+        "ParameterKey": "CommonProject",
+        "UsePreviousValue": true
+    },
+    {
+        "ParameterKey": "LegacyBucketNameTest",
+        "UsePreviousValue": true
+    }
+]

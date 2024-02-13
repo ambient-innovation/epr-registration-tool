@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Creates necessary permissions for deployment of project by developers'
+
+Parameters:
+  # Env: There is no need for Env variable here since both test and prod values will be created in root account in this stack.
+  CommonProject: 
+    Type: String
+
+Resources:
+  TestProjectAccessPermissionSet:
+    Type: AWS::SSO::PermissionSet
+    Properties:
+      InstanceArn: 'arn:aws:sso:::instance/ssoins-6987d5e341e16630' # Ambient SSO ID, Do not change.
+      Name: !Sub 'test-${CommonProject}-legacy'
+      SessionDuration: 'PT8H'
+      ManagedPolicies:
+        - 'arn:aws:iam::aws:policy/AWSCloudShellFullAccess'
+      CustomerManagedPolicyReferences:
+        # Project Specific Policies
+        - Name: !Sub 'test.${CommonProject}-legacy-s3-access.policy'
+
+  AssignTestProjectAccessPermissionSetToAWSGroup:
+    Type: AWS::SSO::Assignment
+    Properties:
+      InstanceArn: 'arn:aws:sso:::instance/ssoins-6987d5e341e16630' # Ambient SSO ID, Do not change.
+      PermissionSetArn: !GetAtt TestProjectAccessPermissionSet.PermissionSetArn
+      TargetId: '501196553680' # Root AWS Account
+      TargetType: 'AWS_ACCOUNT'
+      PrincipalType: 'GROUP'
+      PrincipalId: '99672fa88a-55994434-bd04-41b7-9e54-ca993f950d76' # In this case we set it to "general-developers" group ID. Each Ambient team have their own unique AWS Group ID. Replace this according to your own team.

@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Parameters:
+  CommonEnv:
+    Type: String
+  CommonProject: 
+    Type: String
+  BucketName:
+    Type: String
+    Description: Name of the Bucket in the root account
+
+Resources:
+  S3AccessPolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      ManagedPolicyName: !Sub '${CommonEnv}.${CommonProject}-legacy-s3-access.policy'
+      Description: !Sub "Grants access to the contents of s3 bucket ${BucketName}"
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: 'S3ListAllBuckets'
+            Effect: 'Allow'
+            Action: 
+              - 's3:ListAllMyBuckets'
+            Resource: '*'
+          - Sid: 'S3AccessOnBucket'
+            Action:
+              - 's3:*'
+            Resource: 
+              - !Sub 'arn:aws:s3:::${BucketName}'
+            Effect: 'Allow'
+          - Sid: 'S3AccessOnBucketContent'
+            Action:
+              - 's3:*'
+            Resource: 
+              - !Sub 'arn:aws:s3:::${BucketName}/*'
+            Effect: 'Allow'
