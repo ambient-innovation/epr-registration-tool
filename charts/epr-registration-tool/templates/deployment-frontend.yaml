@@ -61,6 +61,11 @@ spec:
             timeoutSeconds: 10
           resources:
             {{- toYaml .Values.frontend.resources | nindent 12 }}
+          securityContext:
+            runAsUser: 1001
+            runAsGroup: 1001
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
       imagePullSecrets:
         - name: ai-registry
       {{- with .Values.frontend.nodeSelector }}

@@ -77,6 +77,11 @@ spec:
             - name: backend
               mountPath: "/mnt/secrets-store"
               readOnly: true
+          securityContext:
+            runAsUser: 1001
+            runAsGroup: 1001
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
       volumes:
         - name: backend
           csi:
