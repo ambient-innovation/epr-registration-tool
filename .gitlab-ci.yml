@@ -379,18 +379,6 @@ helm:deploy:
   only:
     - /^helm[-/\/].*$/
 
-# Edit RANCHER_CONTEXT_ID according to your own Rancher project. DO NOT LEAVE DEFAULT VALUE.
-# See the link for further info: https://ambient327.sharepoint.com/sites/AmbientInnovationGmbH/_layouts/OneNote.aspx?id=%2Fsites%2FAmbientInnovationGmbH%2FFreigegebene%20Dokumente%2FGeneral%2FAMBIENT%20Knowledge%20Base&wd=target%2850.3%20%E2%80%93%20GitLab-CI%20Pipelines.one%7CA273004C-DD0F-4FAF-B13B-7C56670C2086%2FAuto-refresh%20helm-charts%20in%20Pipeline%7CA935A3D5-EDE1-426C-9029-421684800787%2F%29
-helm:refresh:
-  stage: post-deploy
-  variables:
-    RANCHER_CONTEXT_ID: c-rg9xd:p-mcxjf
-  trigger:
-    project: ai/rancher-catalog-refresh-cross-project-pipeline
-    branch: trigger
-  only:
-    - /^helm[-/\/].*$/
-
 # If you want the e2e job config please check the history
 
 .playwright_cache:
