@@ -16,7 +16,13 @@ from apps.company.models import Company
 from apps.packaging.api.inputs import PackagingGroupInput
 from apps.packaging.models import MaterialPrice
 from apps.packaging_report.email import send_packaging_report_invoice
-from apps.packaging_report.models import FinalSubmission, ForecastSubmission, MaterialRecord, PackagingReport, TimeframeType
+from apps.packaging_report.models import (
+    FinalSubmission,
+    ForecastSubmission,
+    MaterialRecord,
+    PackagingReport,
+    TimeframeType,
+)
 
 
 def clean_material_records_input_for_forecast(

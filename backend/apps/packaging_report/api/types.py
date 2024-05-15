@@ -8,7 +8,13 @@ from strawberry import auto
 from strawberry_django import DjangoFileType
 
 from apps.packaging.api.types import MaterialType, PackagingGroupType
-from apps.packaging_report.models import FinalSubmission, ForecastSubmission, MaterialRecord, PackagingReport, TimeframeType
+from apps.packaging_report.models import (
+    FinalSubmission,
+    ForecastSubmission,
+    MaterialRecord,
+    PackagingReport,
+    TimeframeType,
+)
 
 
 @strawberry.django.type(MaterialRecord)
