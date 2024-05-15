@@ -7,16 +7,16 @@ from django.utils.translation import gettext_lazy as _
 
 from ambient_toolbox.models import CommonInfo
 
-from account.models import UserTitle
-from common.storage_backend import private_file_storage
-from company.managers import CompanyQuerySet
-from company.validators import (
+from apps.account.models import UserTitle
+from apps.common.storage_backend import private_file_storage
+from apps.company.managers import CompanyQuerySet
+from apps.company.validators import (
     validate_allowed_image_formats,
     validate_is_lower_case,
     validate_max_image_size,
     validate_string_without_whitespaces,
 )
-from config import settings
+from apps.config import settings
 
 
 class DistributorType(models.TextChoices):

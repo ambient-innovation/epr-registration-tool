@@ -1,7 +1,7 @@
 from model_bakery import seq
 from model_bakery.recipe import Recipe
 
-from company.utils import REGISTRATION_NUMBER_MIN
+from apps.company.utils import REGISTRATION_NUMBER_MIN
 
 company_contact_info = Recipe(
     'company.CompanyContactInfo',

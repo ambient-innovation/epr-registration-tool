@@ -4,7 +4,7 @@ from decimal import Decimal
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 
-from packaging.price_utils import calculate_material_fees
+from apps.packaging.price_utils import calculate_material_fees
 
 
 def calculate_fees(
@@ -42,7 +42,7 @@ def get_overlapping_reports_for_timeframe(
     """
     return reports which overlap with this report in timeframe
     """
-    from packaging_report.models import PackagingReport
+    from apps.packaging_report.models import PackagingReport
 
     return (
         PackagingReport.objects

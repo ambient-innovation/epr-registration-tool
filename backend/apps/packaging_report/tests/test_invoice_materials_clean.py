@@ -7,10 +7,10 @@ from django.utils.timezone import make_aware
 import time_machine
 from model_bakery import baker
 
-from common.tests.test_base import BaseTestCase
-from packaging_report.invoice import InvoiceService
-from packaging_report.invoice_file import InvoicePdf
-from packaging_report.models import PackagingReport, TimeframeType
+from apps.common.tests.test_base import BaseTestCase
+from apps.packaging_report.invoice import InvoiceService
+from apps.packaging_report.invoice_file import InvoicePdf
+from apps.packaging_report.models import PackagingReport, TimeframeType
 
 
 @time_machine.travel(make_aware(datetime(year=2023, month=1, day=1)))

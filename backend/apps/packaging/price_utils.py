@@ -2,11 +2,11 @@ from decimal import Decimal
 
 from django.core.exceptions import ValidationError
 
-from packaging_report.models import TimeframeType
+from apps.packaging_report.models import TimeframeType
 
 
 def get_material_price_at(material_id: int, year: int, month: int):
-    from packaging.models import MaterialPrice
+    from apps.packaging.models import MaterialPrice
 
     sort_key = MaterialPrice.get_sort_key(year, month)
     return (

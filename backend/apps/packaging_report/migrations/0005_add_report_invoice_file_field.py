@@ -2,7 +2,7 @@
 
 from django.db import migrations, models
 
-import common.storage_backend
+import apps.common.storage_backend
 
 
 class Migration(migrations.Migration):
@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 blank=True,
                 max_length=255,
                 null=True,
-                storage=common.storage_backend.private_file_storage,
+                storage=apps.common.storage_backend.private_file_storage,
                 upload_to='invoices',
                 verbose_name='Invoice File',
             ),

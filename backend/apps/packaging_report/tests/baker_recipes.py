@@ -1,6 +1,6 @@
 from model_bakery.recipe import Recipe, foreign_key
 
-from packaging_report.models import TimeframeType
+from apps.packaging_report.models import TimeframeType
 
 packaging_report = Recipe(
     'packaging_report.PackagingReport',

@@ -7,8 +7,8 @@ import pytz
 import time_machine
 from model_bakery import baker
 
-from common.tests.test_base import BaseApiTestCase
-from packaging_report.models import ForecastSubmission, MaterialRecord, PackagingReport, TimeframeType
+from apps.common.tests.test_base import BaseApiTestCase
+from apps.packaging_report.models import ForecastSubmission, MaterialRecord, PackagingReport, TimeframeType
 
 
 class PackagingReportUpdateTestCase(BaseApiTestCase):

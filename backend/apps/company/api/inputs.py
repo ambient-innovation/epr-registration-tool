@@ -1,7 +1,7 @@
 import strawberry
 from strawberry import auto
 
-from company.models import AdditionalInvoiceRecipient, Company, CompanyContactInfo, DistributorType
+from apps.company.models import AdditionalInvoiceRecipient, Company, CompanyContactInfo, DistributorType
 
 
 @strawberry.django.input(Company)

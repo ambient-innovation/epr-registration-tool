@@ -4,8 +4,8 @@ from typing import Optional
 import strawberry
 from strawberry import auto
 
-from common.api.types import ImageType
-from company.models import AdditionalInvoiceRecipient, Company, CompanyContactInfo, DistributorType
+from apps.common.api.types import ImageType
+from apps.company.models import AdditionalInvoiceRecipient, Company, CompanyContactInfo, DistributorType
 
 
 @strawberry.django.type(CompanyContactInfo)

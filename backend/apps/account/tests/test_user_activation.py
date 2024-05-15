@@ -5,8 +5,8 @@ from ai_kit_auth.services import get_activation_url
 from model_bakery import baker
 from rest_framework import reverse
 
-from account.email import send_user_confirm_email_notification
-from common.tests.test_base import BaseTestCase
+from apps.account.email import send_user_confirm_email_notification
+from apps.common.tests.test_base import BaseTestCase
 
 
 class UserActivationTestCase(BaseTestCase):

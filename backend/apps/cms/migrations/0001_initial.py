@@ -7,7 +7,7 @@ import wagtail.blocks
 import wagtail.fields
 import wagtail.images.blocks
 
-import cms.headless_mixin
+import apps.cms.headless_mixin
 
 
 class Migration(migrations.Migration):
@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(cms.headless_mixin.CustomHeadlessMixin, 'wagtailcore.page'),
+            bases=(apps.cms.headless_mixin.CustomHeadlessMixin, 'wagtailcore.page'),
         ),
         migrations.CreateModel(
             name='StandardPage',
@@ -81,6 +81,6 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(cms.headless_mixin.CustomHeadlessMixin, 'wagtailcore.page'),
+            bases=(apps.cms.headless_mixin.CustomHeadlessMixin, 'wagtailcore.page'),
         ),
     ]

@@ -6,8 +6,8 @@ import wagtail.blocks
 import wagtail.fields
 import wagtail.images.blocks
 
-import cms.blocks
-import cms.validators
+import apps.cms.blocks
+import apps.cms.validators
 
 
 class Migration(migrations.Migration):
@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
                                 ('heading', wagtail.blocks.CharBlock()),
                                 (
                                     'body',
-                                    cms.blocks.CustomRichTextBlock(
+                                    apps.cms.blocks.CustomRichTextBlock(
                                         features=['h3', 'bold', 'italic', 'ul', 'ol', 'link']
                                     ),
                                 ),
@@ -101,7 +101,7 @@ class Migration(migrations.Migration):
                                             ('heading', wagtail.blocks.CharBlock()),
                                             (
                                                 'body',
-                                                cms.blocks.CustomRichTextBlock(
+                                                apps.cms.blocks.CustomRichTextBlock(
                                                     features=['h3', 'bold', 'italic', 'ul', 'ol', 'link']
                                                 ),
                                             ),
@@ -151,7 +151,7 @@ class Migration(migrations.Migration):
                                             ('heading', wagtail.blocks.CharBlock()),
                                             (
                                                 'body',
-                                                cms.blocks.CustomRichTextBlock(
+                                                apps.cms.blocks.CustomRichTextBlock(
                                                     features=['h3', 'bold', 'italic', 'ul', 'ol', 'link']
                                                 ),
                                             ),
@@ -174,9 +174,9 @@ class Migration(migrations.Migration):
                                 (
                                     'files',
                                     wagtail.blocks.ListBlock(
-                                        child_block=cms.blocks.PdfDocumentBlock(
+                                        child_block=apps.cms.blocks.PdfDocumentBlock(
                                             help_text='Please select a PDF file',
-                                            validators=(cms.validators.validate_is_pdf,),
+                                            validators=(apps.cms.validators.validate_is_pdf,),
                                         )
                                     ),
                                 ),
@@ -200,7 +200,7 @@ class Migration(migrations.Migration):
                                 ('heading', wagtail.blocks.CharBlock()),
                                 (
                                     'body',
-                                    cms.blocks.CustomRichTextBlock(
+                                    apps.cms.blocks.CustomRichTextBlock(
                                         features=['h3', 'bold', 'italic', 'ul', 'ol', 'link']
                                     ),
                                 ),
@@ -272,7 +272,7 @@ class Migration(migrations.Migration):
                                             ('heading', wagtail.blocks.CharBlock()),
                                             (
                                                 'body',
-                                                cms.blocks.CustomRichTextBlock(
+                                                apps.cms.blocks.CustomRichTextBlock(
                                                     features=['h3', 'bold', 'italic', 'ul', 'ol', 'link']
                                                 ),
                                             ),
@@ -322,7 +322,7 @@ class Migration(migrations.Migration):
                                             ('heading', wagtail.blocks.CharBlock()),
                                             (
                                                 'body',
-                                                cms.blocks.CustomRichTextBlock(
+                                                apps.cms.blocks.CustomRichTextBlock(
                                                     features=['h3', 'bold', 'italic', 'ul', 'ol', 'link']
                                                 ),
                                             ),
@@ -345,9 +345,9 @@ class Migration(migrations.Migration):
                                 (
                                     'files',
                                     wagtail.blocks.ListBlock(
-                                        child_block=cms.blocks.PdfDocumentBlock(
+                                        child_block=apps.cms.blocks.PdfDocumentBlock(
                                             help_text='Please select a PDF file',
-                                            validators=(cms.validators.validate_is_pdf,),
+                                            validators=(apps.cms.validators.validate_is_pdf,),
                                         )
                                     ),
                                 ),

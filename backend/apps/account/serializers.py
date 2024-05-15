@@ -50,7 +50,7 @@ class LoginSerializer(OldLoginSerializer):
             if not company_id:
                 raise_validation("missingCompanyRelation")
 
-            from company.models import Company
+            from apps.company.models import Company
 
             if not Company.objects.filter(id=company_id, is_active=True).exists():
                 raise_validation("inactiveCompany")

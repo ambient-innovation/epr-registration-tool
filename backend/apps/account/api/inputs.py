@@ -1,7 +1,7 @@
 import strawberry
 from strawberry import auto
 
-from account.models import User
+from apps.account.models import User
 
 
 @strawberry.django.input(User)

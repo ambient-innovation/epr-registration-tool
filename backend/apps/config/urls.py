@@ -15,12 +15,11 @@ from wagtail.documents import urls as wagtaildocs_urls
 from wagtail.urls import serve_pattern
 from wagtail.views import serve
 
-from account import views
-from account.views import ConfirmUserEmailChangeView
-from cms.api.router import api_router
-from cms.headless_mixin import CustomHeadlessMixin
-
-from .schema import schema
+from apps.account import views
+from apps.account.views import ConfirmUserEmailChangeView
+from apps.cms.api.router import api_router
+from apps.cms.headless_mixin import CustomHeadlessMixin
+from apps.config.schema import schema
 
 auth_patterns = (
     [

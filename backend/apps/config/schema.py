@@ -7,13 +7,13 @@ from graphql.validation import NoDeprecatedCustomRule, NoSchemaIntrospectionCust
 from sentry_sdk import capture_message, configure_scope
 from strawberry.extensions import AddValidationRules, Extension, QueryDepthLimiter
 
-from account.api.mutations import AccountMutation
-from account.api.queries import UserQuery
-from company.api.mutations import RegisterCompanyMutation
-from company.api.query import Query as CompanyQuery
-from packaging.api.queries import PackagingQuery
-from packaging_report.api.mutations import PackagingReportMutation
-from packaging_report.api.queries import Query as PackagingReportQuery
+from apps.account.api.mutations import AccountMutation
+from apps.account.api.queries import UserQuery
+from apps.company.api.mutations import RegisterCompanyMutation
+from apps.company.api.query import Query as CompanyQuery
+from apps.packaging.api.queries import PackagingQuery
+from apps.packaging_report.api.mutations import PackagingReportMutation
+from apps.packaging_report.api.queries import Query as PackagingReportQuery
 
 
 class PerformanceMonitoringExtension(Extension):

@@ -1,7 +1,7 @@
 import strawberry
 from strawberry import auto
 
-from packaging.models import Material, PackagingGroup
+from apps.packaging.models import Material, PackagingGroup
 
 
 @strawberry.django.type(PackagingGroup)

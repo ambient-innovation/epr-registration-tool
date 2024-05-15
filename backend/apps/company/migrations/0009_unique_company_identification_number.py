@@ -2,7 +2,7 @@
 
 from django.db import migrations, models
 
-import company.validators
+import apps.company.validators
 
 
 def make_identification_numbers_unique(apps, schema_editor):
@@ -50,7 +50,7 @@ class Migration(migrations.Migration):
                 help_text='National identification number',
                 max_length=255,
                 unique=True,
-                validators=[company.validators.validate_string_without_whitespaces],
+                validators=[apps.company.validators.validate_string_without_whitespaces],
                 verbose_name='VAT / tax number',
             ),
         ),

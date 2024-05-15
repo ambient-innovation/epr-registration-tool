@@ -3,8 +3,8 @@ from django.contrib import auth
 
 from model_bakery import baker
 
-from account.models import EmailChangeRequest
-from common.tests.test_base import BaseTestCase
+from apps.account.models import EmailChangeRequest
+from apps.common.tests.test_base import BaseTestCase
 
 
 class ConfirmEmailChangeTestCase(BaseTestCase):

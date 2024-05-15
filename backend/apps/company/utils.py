@@ -15,7 +15,7 @@ def generate_registration_number(country_code: str) -> str:
 
 
 def generate_unique_registration_number(company) -> str:
-    from company.models import Company
+    from apps.company.models import Company
 
     attempt = 1
     while attempt < 10:

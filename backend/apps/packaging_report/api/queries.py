@@ -9,12 +9,12 @@ from graphql import GraphQLError
 from strawberry import ID
 from strawberry.types import Info
 
-from common.api.pagination import CustomPaginator, PaginationInput, PaginationResult, PaginatorType
-from common.api.permissions import IsAuthenticated, IsCompanyProfileCompletedAndActive
-from packaging.api.inputs import PackagingGroupInput
-from packaging_report.api.inputs import PackagingReportsFilterInput
-from packaging_report.api.types import PackagingReportsSortingOption, PackagingReportType
-from packaging_report.models import PackagingReport, TimeframeType
+from apps.common.api.pagination import CustomPaginator, PaginationInput, PaginationResult, PaginatorType
+from apps.common.api.permissions import IsAuthenticated, IsCompanyProfileCompletedAndActive
+from apps.packaging.api.inputs import PackagingGroupInput
+from apps.packaging_report.api.inputs import PackagingReportsFilterInput
+from apps.packaging_report.api.types import PackagingReportsSortingOption, PackagingReportType
+from apps.packaging_report.models import PackagingReport, TimeframeType
 
 
 def get_packaging_report_fees_estimation(
@@ -23,7 +23,7 @@ def get_packaging_report_fees_estimation(
     start_month: int,
     packaging_records: typing.List[PackagingGroupInput],
 ) -> decimal.Decimal:
-    from packaging_report.utils import calculate_fees
+    from apps.packaging_report.utils import calculate_fees
 
     material_quantities = [(int(m.material_id), m.quantity) for p in packaging_records for m in p.material_records]
     try:
@@ -44,7 +44,7 @@ def has_overlapping_packaging_reports(
     start_month: int,
     packaging_report_id: typing.Optional[ID] = None,
 ) -> bool:
-    from packaging_report.utils import get_overlapping_reports_for_timeframe
+    from apps.packaging_report.utils import get_overlapping_reports_for_timeframe
 
     current_user = info.context.request.user
     related_company_id = current_user.related_company_id

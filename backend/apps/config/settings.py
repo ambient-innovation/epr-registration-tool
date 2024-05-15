@@ -133,13 +133,13 @@ THIRD_PARTY_APPS = (
 )
 
 LOCAL_APPS = (
-    'config.admin.CustomAdminConfig',
-    'common',
-    'packaging',
-    'packaging_report',
-    'account',
-    'company',
-    'cms',
+    'apps.config.admin.CustomAdminConfig',
+    'apps.common',
+    'apps.packaging',
+    'apps.packaging_report',
+    'apps.account',
+    'apps.company',
+    'apps.cms',
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

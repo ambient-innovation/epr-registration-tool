@@ -5,7 +5,7 @@ from django.contrib.admin import AdminSite
 from django.contrib.admin.apps import AdminConfig
 from django.urls import path
 
-from common.views import WikiView
+from apps.common.views import WikiView
 
 
 class CustomAdminConfig(AdminConfig):

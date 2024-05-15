@@ -2,10 +2,10 @@ from django.db.models import Prefetch
 
 from model_bakery import baker
 
-from common.tests.test_base import BaseTestCase
-from packaging_report.forms import CSVExportDataForm
-from packaging_report.models import PackagingReport, ReportTypes, TimeframeType
-from packaging_report.views import CSVExportDataView
+from apps.common.tests.test_base import BaseTestCase
+from apps.packaging_report.forms import CSVExportDataForm
+from apps.packaging_report.models import PackagingReport, ReportTypes, TimeframeType
+from apps.packaging_report.views import CSVExportDataView
 
 
 class ExportReportDataTestCase(BaseTestCase):

@@ -1,7 +1,7 @@
 from modeltranslation.decorators import register
 from modeltranslation.translator import TranslationOptions
 
-from packaging.models import Material, PackagingGroup
+from apps.packaging.models import Material, PackagingGroup
 
 
 @register(PackagingGroup)

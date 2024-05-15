@@ -2,7 +2,7 @@
 
 from django.db import migrations, models
 
-import company.validators
+import apps.company.validators
 
 
 class Migration(migrations.Migration):
@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 max_length=255,
                 null=True,
                 unique=True,
-                validators=[company.validators.validate_string_without_whitespaces],
+                validators=[apps.company.validators.validate_string_without_whitespaces],
                 verbose_name='VAT / tax number',
             ),
         ),

@@ -1,7 +1,7 @@
 import pytz
 
-from common.tests.test_base import BaseApiTestCase
-from common.utils import make_local_datetime_at
+from apps.common.tests.test_base import BaseApiTestCase
+from apps.common.utils import make_local_datetime_at
 
 
 class UtilsTestCase(BaseApiTestCase):

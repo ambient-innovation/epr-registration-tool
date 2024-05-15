@@ -2,8 +2,8 @@ from django.core import mail
 
 from model_bakery import baker
 
-from common.tests.test_base import BaseTestCase
-from company.email import send_admin_registration_notification, send_user_registration_complete_notification
+from apps.common.tests.test_base import BaseTestCase
+from apps.company.email import send_admin_registration_notification, send_user_registration_complete_notification
 
 
 class CompanyActivationNotificationsTestCase(BaseTestCase):

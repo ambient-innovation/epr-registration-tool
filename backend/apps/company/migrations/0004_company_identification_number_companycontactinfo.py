@@ -5,7 +5,7 @@ import django.utils.timezone
 from django.conf import settings
 from django.db import migrations, models
 
-from company import validators
+from apps.company import validators
 
 
 class Migration(migrations.Migration):

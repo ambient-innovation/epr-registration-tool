@@ -11,10 +11,10 @@ from django.utils.translation import gettext_lazy as _
 from ambient_toolbox.models import CommonInfo
 from dateutil.relativedelta import relativedelta
 
-from common.models import Month
-from common.storage_backend import private_file_storage
-from common.validators import validate_greater_than_zero
-from packaging_report.managers import PackagingReportQuerySet
+from apps.common.models import Month
+from apps.common.storage_backend import private_file_storage
+from apps.common.validators import validate_greater_than_zero
+from apps.packaging_report.managers import PackagingReportQuerySet
 
 
 def validate_report_month(value):
@@ -45,7 +45,7 @@ class ReportSubmission(CommonInfo):
 
     @staticmethod
     def calculate_fees(packaging_report, material_records):
-        from packaging_report.utils import calculate_fees as _calculate_fees
+        from apps.packaging_report.utils import calculate_fees as _calculate_fees
 
         material_quantities = [(m.related_packaging_material_id, m.quantity) for m in material_records]
 
@@ -122,7 +122,7 @@ class PackagingReport(CommonInfo):
         """
         return reports which overlap with this report in timeframe
         """
-        from packaging_report.utils import get_overlapping_reports_for_timeframe
+        from apps.packaging_report.utils import get_overlapping_reports_for_timeframe
 
         return get_overlapping_reports_for_timeframe(
             company_id=self.related_company_id,
@@ -178,7 +178,7 @@ class PackagingReport(CommonInfo):
         return timezone.now() <= end_datetime if end_datetime else True
 
     def generate_invoice_file(self, user_pk):
-        from packaging_report.invoice_file import InvoicePdf
+        from apps.packaging_report.invoice_file import InvoicePdf
 
         return InvoicePdf(self.pk, user_pk).generate_pdf()
 

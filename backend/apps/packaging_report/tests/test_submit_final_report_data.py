@@ -6,8 +6,8 @@ from django.utils.timezone import make_aware
 import time_machine
 from model_bakery import baker
 
-from common.tests.test_base import BaseApiTestCase
-from packaging_report.models import PackagingReport, TimeframeType
+from apps.common.tests.test_base import BaseApiTestCase
+from apps.packaging_report.models import PackagingReport, TimeframeType
 
 
 class PackagingReportUpdateTestCase(BaseApiTestCase):

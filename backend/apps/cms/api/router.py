@@ -4,7 +4,7 @@ from wagtail.documents.api.v2.views import DocumentsAPIViewSet
 from wagtail.images.api.v2.views import ImagesAPIViewSet
 
 # Create the router. "wagtailapi" is the URL namespace
-from cms.api.views import PagePreviewAPIViewSet
+from apps.cms.api.views import PagePreviewAPIViewSet
 
 api_router = WagtailAPIRouter('wagtailapi')
 

@@ -2,10 +2,10 @@ from django.db.models import Prefetch
 
 from dateutil.relativedelta import relativedelta
 
-from account.models import User
-from common.pdf_generate import PDFService
-from packaging_report.invoice import InvoiceService
-from packaging_report.models import PackagingReport
+from apps.account.models import User
+from apps.common.pdf_generate import PDFService
+from apps.packaging_report.invoice import InvoiceService
+from apps.packaging_report.models import PackagingReport
 
 
 class InvoicePdf(PDFService):

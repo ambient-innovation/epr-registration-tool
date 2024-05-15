@@ -7,9 +7,9 @@ from django.utils.translation import gettext_lazy as _
 from ambient_toolbox.admin.model_admins.mixins import CommonInfoAdminMixin
 from sentry_sdk import capture_exception
 
-from account.models import User
-from company.email import send_user_registration_complete_notification
-from company.models import AdditionalInvoiceRecipient, Company, CompanyContactInfo
+from apps.account.models import User
+from apps.company.email import send_user_registration_complete_notification
+from apps.company.models import AdditionalInvoiceRecipient, Company, CompanyContactInfo
 
 
 class CompanyUserInline(admin.StackedInline):
@@ -153,7 +153,7 @@ class CompanyAdmin(CommonInfoAdminMixin, admin.ModelAdmin):
         return actions
 
     def save_model(self, request, obj, form, change):
-        from company.utils import generate_unique_registration_number
+        from apps.company.utils import generate_unique_registration_number
 
         if not obj.registration_number:
             obj.registration_number = generate_unique_registration_number(obj)

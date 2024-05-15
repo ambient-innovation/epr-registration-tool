@@ -12,8 +12,8 @@ from django.utils.translation import gettext_lazy as _
 from ambient_toolbox.models import CommonInfo
 from rest_framework.reverse import reverse
 
-from account.managers import UserManager, UserQuerySet
-from common.utils import base64_encode
+from apps.account.managers import UserManager, UserQuerySet
+from apps.common.utils import base64_encode
 
 
 class UserTitle(models.TextChoices):

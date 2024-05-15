@@ -3,9 +3,9 @@ import typing
 from django.conf import settings
 from django.contrib.auth import get_user_model
 
-from common.email import render_translated_email, send_html_email
-from company.models import AdditionalInvoiceRecipient
-from packaging_report.models import PackagingReport
+from apps.common.email import render_translated_email, send_html_email
+from apps.company.models import AdditionalInvoiceRecipient
+from apps.packaging_report.models import PackagingReport
 
 UserModel = get_user_model()
 

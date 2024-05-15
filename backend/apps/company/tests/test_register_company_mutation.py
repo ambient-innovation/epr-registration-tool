@@ -2,9 +2,9 @@ from django.core import mail
 
 from model_bakery import baker
 
-from account.models import User
-from common.tests.test_base import BaseApiTestCase
-from company.models import Company
+from apps.account.models import User
+from apps.common.tests.test_base import BaseApiTestCase
+from apps.company.models import Company
 
 
 class RegisterCompanyMutationTestCase(BaseApiTestCase):

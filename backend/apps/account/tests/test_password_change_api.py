@@ -1,4 +1,4 @@
-from common.tests.test_base import BaseApiTestCase
+from apps.common.tests.test_base import BaseApiTestCase
 
 
 class AccountChangeLanguageMutationTestCase(BaseApiTestCase):

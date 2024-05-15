@@ -1,7 +1,7 @@
 from model_bakery import baker
 
-from account.tests.baker_recipes import SOME_USER_PASSWORD
-from common.tests.test_base import BaseTestCase
+from apps.account.tests.baker_recipes import SOME_USER_PASSWORD
+from apps.common.tests.test_base import BaseTestCase
 
 
 class UserDeactivationTestCase(BaseTestCase):

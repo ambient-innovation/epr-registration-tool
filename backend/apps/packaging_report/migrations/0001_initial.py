@@ -6,8 +6,8 @@ import django.utils.timezone
 from django.conf import settings
 from django.db import migrations, models
 
-import common.validators
-import packaging_report.models
+import apps.common.validators
+import apps.packaging_report.models
 
 
 class Migration(migrations.Migration):
@@ -102,7 +102,7 @@ class Migration(migrations.Migration):
                             (11, 'November'),
                             (12, 'December'),
                         ],
-                        validators=[packaging_report.models.validate_report_month],
+                        validators=[apps.packaging_report.models.validate_report_month],
                         verbose_name='Start Month',
                     ),
                 ),
@@ -110,7 +110,7 @@ class Migration(migrations.Migration):
                     'timezone_info',
                     models.CharField(
                         max_length=32,
-                        validators=[packaging_report.models.validate_report_timezone],
+                        validators=[apps.packaging_report.models.validate_report_timezone],
                         verbose_name='Timezone info',
                     ),
                 ),
@@ -159,7 +159,7 @@ class Migration(migrations.Migration):
                 (
                     'quantity',
                     models.FloatField(
-                        validators=[common.validators.validate_greater_than_zero], verbose_name='Quantity (Kg)'
+                        validators=[apps.common.validators.validate_greater_than_zero], verbose_name='Quantity (Kg)'
                     ),
                 ),
                 (

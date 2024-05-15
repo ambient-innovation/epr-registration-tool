@@ -2,8 +2,8 @@ from unittest.mock import patch
 
 from model_bakery import baker
 
-from common.tests.test_base import BaseTestCase
-from company.utils import generate_registration_number, generate_unique_registration_number
+from apps.common.tests.test_base import BaseTestCase
+from apps.company.utils import generate_registration_number, generate_unique_registration_number
 
 
 class RegistrationNumberTestCase(BaseTestCase):

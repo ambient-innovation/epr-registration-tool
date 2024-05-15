@@ -5,7 +5,7 @@ from django.utils.timezone import make_aware
 import time_machine
 from model_bakery import baker
 
-from common.tests.test_base import BaseApiTestCase
+from apps.common.tests.test_base import BaseApiTestCase
 
 
 class PackagingReportQueriesTestCase(BaseApiTestCase):
