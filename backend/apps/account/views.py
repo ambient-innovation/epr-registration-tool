@@ -15,9 +15,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from sentry_sdk import capture_exception
 
-from apps.common.utils import base64_decode, parse_url_with_params
 from apps.account.models import EmailChangeRequest, User
 from apps.account.serializers import LoginSerializer
+from apps.common.utils import base64_decode, parse_url_with_params
 
 UserModel = get_user_model()
 
