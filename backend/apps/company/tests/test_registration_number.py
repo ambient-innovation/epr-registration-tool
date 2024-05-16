@@ -25,18 +25,18 @@ class RegistrationNumberTestCase(BaseTestCase):
         with self.assertRaises(AssertionError):
             generate_registration_number(None)
 
-    @patch('company.utils.generate_registration_number')
+    @patch('apps.company.utils.generate_registration_number')
     def test_generate_unique_registration_number(self, mock_randint):
-        baker.make_recipe('company.tests.company', registration_number='foo')
-        company = baker.prepare_recipe('company.tests.company')
+        baker.make_recipe('apps.company.tests.company', registration_number='foo')
+        company = baker.prepare_recipe('apps.company.tests.company')
         mock_randint.side_effect = ['foo', 'foo', 'bar']
         generate_unique_registration_number(company)
         self.assertEqual(3, mock_randint.call_count)
 
-    @patch('company.utils.generate_registration_number', return_value='foo')
+    @patch('apps.company.utils.generate_registration_number', return_value='foo')
     def test_generate_unique_registration_number_fails_after_10_attempts(self, mock_randint):
-        baker.make_recipe('company.tests.company', registration_number='foo')
-        company = baker.prepare_recipe('company.tests.company')
+        baker.make_recipe('apps.company.tests.company', registration_number='foo')
+        company = baker.prepare_recipe('apps.company.tests.company')
         with self.assertRaises(Exception) as context:
             generate_unique_registration_number(company)
         self.assertEqual(

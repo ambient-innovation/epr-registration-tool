@@ -53,7 +53,9 @@ class AccountChangeMutationTestCase(BaseApiTestCase):
 
     def test_change_making_second_change_request_deletes_old(self):
         baker.make_recipe(
-            'account.tests.email_change_request', email='iAmTheNewOldEmail@epr.local', related_user=self.user
+            'apps.account.tests.email_change_request',
+            email='iAmTheNewOldEmail@epr.local',
+            related_user=self.user,
         )
 
         self.assertTrue(hasattr(self.user, 'email_change_request'))

@@ -21,8 +21,8 @@ class BaseTestCase(TestCase):
     def setUpTestData(cls):
         super().setUpTestData()
         if cls.AUTO_CREATE_USERS:
-            cls.super_user = baker.make_recipe('account.tests.super_user')
-            cls.user = baker.make_recipe('account.tests.user')
+            cls.super_user = baker.make_recipe('apps.account.tests.super_user')
+            cls.user = baker.make_recipe('apps.account.tests.user')
 
         cls._client = Client()
 
@@ -51,8 +51,8 @@ class BaseTestCase(TestCase):
 
     @staticmethod
     def create_and_assign_company(user):
-        company = baker.make_recipe('company.tests.company', users_queryset=[user])
-        baker.make_recipe('company.tests.company_contact_info', related_company=company)
+        company = baker.make_recipe('apps.company.tests.company', users_queryset=[user])
+        baker.make_recipe('apps.company.tests.company_contact_info', related_company=company)
         return company
 
     def login_normal_user(self):

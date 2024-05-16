@@ -12,7 +12,7 @@ class UserDeactivationTestCase(BaseTestCase):
 
         See `ai_kit_auth.signals.invalidate_tokens_on_user_deactivation`
         """
-        user = baker.make_recipe('account.tests.user')
+        user = baker.make_recipe('apps.account.tests.user')
         self.assertEqual(True, user.check_password(SOME_USER_PASSWORD))
         user.is_active = False
         user.save()

@@ -46,7 +46,7 @@ class ChangeCompanyDetailsTestCase(BaseApiTestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        cls.company = baker.make_recipe('company.tests.company', users_queryset=[cls.user])
+        cls.company = baker.make_recipe('apps.company.tests.company', users_queryset=[cls.user])
 
     def assert_default_values(self, company, contact_info):
         self.assertEqual('Farwell Co (updated)', company.name)
@@ -103,7 +103,7 @@ class ChangeCompanyDetailsTestCase(BaseApiTestCase):
 
     def test_change_company_details_with_existing_contact_info(self):
         contact_info_before_change = baker.make_recipe(
-            'company.tests.company_contact_info',
+            'apps.company.tests.company_contact_info',
             related_company=self.company,
         )
         country_before_change = contact_info_before_change.country
@@ -152,7 +152,7 @@ class ChangeCompanyDetailsTestCase(BaseApiTestCase):
 
     def test_change_company_details_identification_number_already_exists(self):
         baker.make_recipe(
-            'company.tests.company',
+            'apps.company.tests.company',
             identification_number=self.DEFAULT_COMPANY_INPUT['identificationNumber'],
         )
         self.query_and_assert_error(
@@ -242,7 +242,7 @@ class ChangeCompanyDetailsTestCase(BaseApiTestCase):
         )
 
     def test_delete_additional_invoice_recipient(self):
-        baker.make_recipe('company.tests.additional_invoice_recipient', related_company=self.company)
+        baker.make_recipe('apps.company.tests.additional_invoice_recipient', related_company=self.company)
         self.assertIsNotNone(self.company.related_additional_invoice_recipient)
 
         content = self.query_and_load_data(
@@ -262,7 +262,7 @@ class ChangeCompanyDetailsTestCase(BaseApiTestCase):
 
     def test_update_additional_invoice_recipient(self):
         baker.make_recipe(
-            'company.tests.additional_invoice_recipient', related_company=self.company, email='test@test.test'
+            'apps.company.tests.additional_invoice_recipient', related_company=self.company, email='test@test.test'
         )
         content = self.query_and_load_data(
             self.MUTATION,

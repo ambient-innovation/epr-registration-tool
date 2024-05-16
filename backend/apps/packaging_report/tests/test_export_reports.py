@@ -19,9 +19,11 @@ class ExportReportDataTestCase(BaseTestCase):
 
     @classmethod
     def create_packaging_base_data(cls):
-        cls.packaging_group_1, cls.packaging_group_2 = baker.make_recipe('packaging.tests.packaging_group', _quantity=2)
+        cls.packaging_group_1, cls.packaging_group_2 = baker.make_recipe(
+            'apps.packaging.tests.packaging_group', _quantity=2
+        )
 
-        cls.material_1, cls.material_2 = baker.make_recipe('packaging.tests.packaging_material', _quantity=2)
+        cls.material_1, cls.material_2 = baker.make_recipe('apps.packaging.tests.packaging_material', _quantity=2)
         # material No. 1 prices
         cls.make_material_price(cls.material_1, 2021, 1, 10)
         cls.make_material_price(cls.material_1, 2021, 3, 20)
@@ -85,11 +87,11 @@ class ExportReportDataTestCase(BaseTestCase):
         # report_3: 06.2021 -> 08.2021, has forecast.
         # report_4: 09.2021 -> 11.2021, has forecast.
         cls.company = cls.create_and_assign_company(cls.user)
-        cls.company_2 = baker.make_recipe('company.tests.company', users_queryset=[cls.super_user], name='Abc')
-        baker.make_recipe('company.tests.company_contact_info', related_company=cls.company_2)
+        cls.company_2 = baker.make_recipe('apps.company.tests.company', users_queryset=[cls.super_user], name='Abc')
+        baker.make_recipe('apps.company.tests.company_contact_info', related_company=cls.company_2)
         cls.create_packaging_base_data()
         cls.report_1 = baker.make_recipe(
-            'packaging_report.tests.packaging_report',
+            'apps.packaging_report.tests.packaging_report',
             related_company=cls.company,
             timeframe=TimeframeType.TWELVE_MONTHS,
             start_month=1,
@@ -98,7 +100,7 @@ class ExportReportDataTestCase(BaseTestCase):
         cls.create_forecast(cls.report_1)
         cls.create_final_submission(cls.report_1)
         cls.report_2 = baker.make_recipe(
-            'packaging_report.tests.packaging_report',
+            'apps.packaging_report.tests.packaging_report',
             related_company=cls.company_2,
             timeframe=TimeframeType.THREE_MONTHS,
             start_month=4,
@@ -107,7 +109,7 @@ class ExportReportDataTestCase(BaseTestCase):
         cls.create_forecast(cls.report_2)
         cls.create_final_submission(cls.report_2)
         cls.report_3 = baker.make_recipe(
-            'packaging_report.tests.packaging_report',
+            'apps.packaging_report.tests.packaging_report',
             related_company=cls.company,
             timeframe=TimeframeType.THREE_MONTHS,
             start_month=6,
@@ -116,7 +118,7 @@ class ExportReportDataTestCase(BaseTestCase):
         cls.create_forecast(cls.report_3)
 
         cls.report_4 = baker.make_recipe(
-            'packaging_report.tests.packaging_report',
+            'apps.packaging_report.tests.packaging_report',
             related_company=cls.company_2,
             timeframe=TimeframeType.THREE_MONTHS,
             start_month=9,

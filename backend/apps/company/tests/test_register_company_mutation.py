@@ -119,7 +119,7 @@ class RegisterCompanyMutationTestCase(BaseApiTestCase):
         )
 
     def test_register_a_company_with_duplicated_user_email(self):
-        baker.make_recipe('account.tests.user', email='helmut@local.invalid')
+        baker.make_recipe('apps.account.tests.user', email='helmut@local.invalid')
         self.query_and_assert_error(
             self.MUTATION,
             variables=self.mutation_params,

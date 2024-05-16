@@ -56,26 +56,28 @@ class PackagingReportQueriesTestCase(BaseApiTestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        cls.company = baker.make_recipe('company.tests.company')
-        cls.user = baker.make_recipe('account.tests.user', related_company=cls.company)
-        cls.packaging_group_1, cls.packaging_group_2 = baker.make_recipe('packaging.tests.packaging_group', _quantity=2)
-        cls.material_1, cls.material_2 = baker.make_recipe('packaging.tests.packaging_material', _quantity=2)
+        cls.company = baker.make_recipe('apps.company.tests.company')
+        cls.user = baker.make_recipe('apps.account.tests.user', related_company=cls.company)
+        cls.packaging_group_1, cls.packaging_group_2 = baker.make_recipe(
+            'apps.packaging.tests.packaging_group', _quantity=2
+        )
+        cls.material_1, cls.material_2 = baker.make_recipe('apps.packaging.tests.packaging_material', _quantity=2)
         cls.packaging_report_in_forecast = baker.make_recipe(
-            'packaging_report.tests.packaging_report',
+            'apps.packaging_report.tests.packaging_report',
             related_company=cls.company,
             timeframe=TimeframeType.THREE_MONTHS,
             year=2022,
             start_month=5,
         )
         cls.packaging_report_not_editable_without_final_data = baker.make_recipe(
-            'packaging_report.tests.packaging_report',
+            'apps.packaging_report.tests.packaging_report',
             related_company=cls.company,
             timeframe=TimeframeType.THREE_MONTHS,
             year=2022,
             start_month=1,
         )
         cls.packaging_report_with_final_data = baker.make_recipe(
-            'packaging_report.tests.packaging_report',
+            'apps.packaging_report.tests.packaging_report',
             related_company=cls.company,
             timeframe=TimeframeType.THREE_MONTHS,
             year=2021,
@@ -136,7 +138,7 @@ class PackagingReportQueriesTestCase(BaseApiTestCase):
         self.query_and_assert_error(self.QUERY, message='not_authenticated')
 
     def test_packaging_reports_query_without_company(self):
-        user = baker.make_recipe('account.tests.user')
+        user = baker.make_recipe('apps.account.tests.user')
         self.login(user)
         self.create_and_assign_company(user)
         data = self.query_and_load_data(self.QUERY)

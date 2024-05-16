@@ -7,4 +7,4 @@ class CmsConfig(AppConfig):
 
     def ready(self):
         # run file to register signals
-        import cms.signals  # noqa
+        import apps.cms.signals  # noqa

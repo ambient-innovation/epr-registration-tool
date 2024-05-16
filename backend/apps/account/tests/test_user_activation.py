@@ -13,7 +13,7 @@ class UserActivationTestCase(BaseTestCase):
     ACTIVATION_URL = reverse.reverse_lazy('auth_api:activate')
 
     def test_send_user_activation_notification(self):
-        user = baker.make_recipe('account.tests.user')
+        user = baker.make_recipe('apps.account.tests.user')
         send_user_confirm_email_notification(user)
 
         self.assertEqual(1, len(mail.outbox))
@@ -21,10 +21,10 @@ class UserActivationTestCase(BaseTestCase):
         self.assertEqual('noreply@ambient.digital', mail.outbox[0].from_email)
 
     def test_activate_email_api(self):
-        company = baker.make_recipe('company.tests.company', is_active=False)
-        user = baker.make_recipe('account.tests.user', has_email_confirmed=False, related_company=company)
+        company = baker.make_recipe('apps.company.tests.company', is_active=False)
+        user = baker.make_recipe('apps.account.tests.user', has_email_confirmed=False, related_company=company)
         # receiver of admin notification
-        admin = baker.make_recipe('account.tests.super_user')
+        admin = baker.make_recipe('apps.account.tests.super_user')
         baker.make('account.NotificationSettings', related_user=admin)
 
         self.assertEqual(False, user.has_email_confirmed)

@@ -34,14 +34,14 @@ class PackagingReportSubmissionTestCase(BaseApiTestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        # baker.make_recipe('company.tests.company', users_queryset=[cls.user])
+        # baker.make_recipe('apps.company.tests.company', users_queryset=[cls.user])
         cls.company = cls.create_and_assign_company(cls.user)
-        cls.packaging_group = baker.make_recipe('packaging.tests.packaging_group')
-        cls.material = baker.make_recipe('packaging.tests.packaging_material')
+        cls.packaging_group = baker.make_recipe('apps.packaging.tests.packaging_group')
+        cls.material = baker.make_recipe('apps.packaging.tests.packaging_material')
 
     def _create_packaging_report(self, year, start_month, timeframe, company=None):
         return baker.make_recipe(
-            'packaging_report.tests.packaging_report',
+            'apps.packaging_report.tests.packaging_report',
             related_company=self.company if not company else company,
             timeframe=timeframe,
             year=year,

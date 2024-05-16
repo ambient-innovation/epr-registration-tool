@@ -30,10 +30,10 @@ class PackagingReportUpdateTestCase(BaseApiTestCase):
     def setUpTestData(cls):
         super().setUpTestData()
         cls.company = cls.create_and_assign_company(cls.user)
-        cls.packaging_group = baker.make_recipe('packaging.tests.packaging_group')
-        cls.material = baker.make_recipe('packaging.tests.packaging_material')
+        cls.packaging_group = baker.make_recipe('apps.packaging.tests.packaging_group')
+        cls.material = baker.make_recipe('apps.packaging.tests.packaging_material')
         cls.packaging_report = baker.make_recipe(
-            'packaging_report.tests.packaging_report',
+            'apps.packaging_report.tests.packaging_report',
             related_company=cls.company,
             start_month=1,
             year=2022,
@@ -81,7 +81,7 @@ class PackagingReportUpdateTestCase(BaseApiTestCase):
     )
     def test_update_packaging_report_is_editable_in_last_minutes(self):
         packaging_report: PackagingReport = baker.make_recipe(
-            'packaging_report.tests.packaging_report',
+            'apps.packaging_report.tests.packaging_report',
             related_company=self.company,
             start_month=1,
             year=2022,
@@ -97,7 +97,7 @@ class PackagingReportUpdateTestCase(BaseApiTestCase):
     )
     def test_update_packaging_report_is_not_editable_timezone(self):
         packaging_report: PackagingReport = baker.make_recipe(
-            'packaging_report.tests.packaging_report',
+            'apps.packaging_report.tests.packaging_report',
             related_company=self.company,
             start_month=1,
             year=2022,

@@ -25,12 +25,12 @@ class PackagingBaseDataTestCase(BaseApiTestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        baker.make_recipe('packaging.tests.packaging_group')
-        baker.make_recipe('packaging.tests.packaging_group')
-        cls.packaging_material = baker.make_recipe('packaging.tests.packaging_material')
-        baker.make_recipe('packaging.tests.packaging_material_price', related_material=cls.packaging_material)
+        baker.make_recipe('apps.packaging.tests.packaging_group')
+        baker.make_recipe('apps.packaging.tests.packaging_group')
+        cls.packaging_material = baker.make_recipe('apps.packaging.tests.packaging_material')
+        baker.make_recipe('apps.packaging.tests.packaging_material_price', related_material=cls.packaging_material)
         baker.make_recipe(
-            'packaging.tests.packaging_material_price',
+            'apps.packaging.tests.packaging_material_price',
             start_year=2023,
             start_month=6,
             price_per_kg=6,

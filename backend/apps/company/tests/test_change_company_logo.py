@@ -36,7 +36,7 @@ class ChangeCompanyLogoMutationTestCase(BaseApiTestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        cls.company = baker.make_recipe('company.tests.company', users_queryset=[cls.user])
+        cls.company = baker.make_recipe('apps.company.tests.company', users_queryset=[cls.user])
 
     def test_upload_jpg_logo(self):
         content = self.query_and_load_data(
