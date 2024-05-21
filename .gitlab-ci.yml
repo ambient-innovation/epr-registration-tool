@@ -296,6 +296,17 @@ container_scanning_backend:
     IMAGE: $IMAGE_TAG_BACKEND
     DIRECTORY: "backend"
 
+# This job will scan "aws" directory for config errors. 
+# This folder contains my cloudformation stacks.
+config_scanning:
+  variables:
+    DIRECTORY: aws
+    TRIVY_IGNOREFILE_DIR: .trivyignore.yaml
+  allow_failure: true
+  tags:
+    - low-load
+  interruptible: true
+
 # In case of failing but no artifacts uploaded, you can use this api, just replace set job-id of the `check trivy scan results`
 # https://gitlab.ambient-innovation.com/giz/epr-registration-tool/-/jobs/<job-id>/artifacts/download?file_type=codequality 
 check trivy scan results:
