@@ -15,10 +15,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from sentry_sdk import capture_exception
 
-from common.utils import base64_decode, parse_url_with_params
-
-from .models import EmailChangeRequest, User
-from .serializers import LoginSerializer
+from apps.account.models import EmailChangeRequest, User
+from apps.account.serializers import LoginSerializer
+from apps.common.utils import base64_decode, parse_url_with_params
 
 UserModel = get_user_model()
 
@@ -89,7 +88,7 @@ class ActivateUser(OldActivateUser):
             # notify admins about newly registered company
             company = user.related_company
             if company and not company.is_active:
-                from company.email import send_admin_registration_notification
+                from apps.company.email import send_admin_registration_notification
 
                 try:
                     send_admin_registration_notification(company=company)

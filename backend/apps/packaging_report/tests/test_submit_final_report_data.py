@@ -6,8 +6,8 @@ from django.utils.timezone import make_aware
 import time_machine
 from model_bakery import baker
 
-from common.tests.test_base import BaseApiTestCase
-from packaging_report.models import PackagingReport, TimeframeType
+from apps.common.tests.test_base import BaseApiTestCase
+from apps.packaging_report.models import PackagingReport, TimeframeType
 
 
 class PackagingReportUpdateTestCase(BaseApiTestCase):
@@ -29,11 +29,11 @@ class PackagingReportUpdateTestCase(BaseApiTestCase):
     def setUpTestData(cls):
         super().setUpTestData()
         cls.company = cls.create_and_assign_company(cls.user)
-        cls.packaging_group = baker.make_recipe('packaging.tests.packaging_group')
-        cls.material = baker.make_recipe('packaging.tests.packaging_material')
+        cls.packaging_group = baker.make_recipe('apps.packaging.tests.packaging_group')
+        cls.material = baker.make_recipe('apps.packaging.tests.packaging_material')
 
         baker.make_recipe(
-            'packaging.tests.packaging_material_price',
+            'apps.packaging.tests.packaging_material_price',
             start_year=2020,
             start_month=6,
             price_per_kg=15,
@@ -41,7 +41,7 @@ class PackagingReportUpdateTestCase(BaseApiTestCase):
         )
         # Data Report No. 1
         cls.packaging_report_1 = baker.make_recipe(
-            'packaging_report.tests.packaging_report',
+            'apps.packaging_report.tests.packaging_report',
             related_company=cls.company,
             start_month=1,
             year=2022,
@@ -61,7 +61,7 @@ class PackagingReportUpdateTestCase(BaseApiTestCase):
         )
         # Data Report No. 2
         cls.packaging_report_2 = baker.make_recipe(
-            'packaging_report.tests.packaging_report',
+            'apps.packaging_report.tests.packaging_report',
             related_company=cls.company,
             start_month=1,
             year=2022,

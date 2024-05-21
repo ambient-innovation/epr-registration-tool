@@ -3,7 +3,7 @@ import typing
 from strawberry import BasePermission
 from strawberry.types import Info
 
-from company.models import Company
+from apps.company.models import Company
 
 
 class IsAuthenticated(BasePermission):

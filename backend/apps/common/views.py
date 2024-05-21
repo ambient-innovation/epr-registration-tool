@@ -1,7 +1,7 @@
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
 
-from common.mixin import AdminViewMixin
+from apps.common.mixin import AdminViewMixin
 
 
 class WikiView(AdminViewMixin, generic.TemplateView):

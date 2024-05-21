@@ -5,7 +5,7 @@ from django.utils.timezone import make_aware
 import time_machine
 from model_bakery import baker
 
-from common.tests.test_base import BaseApiTestCase
+from apps.common.tests.test_base import BaseApiTestCase
 
 
 class PackagingReportQueriesTestCase(BaseApiTestCase):
@@ -30,26 +30,26 @@ class PackagingReportQueriesTestCase(BaseApiTestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        cls.packaging_group = baker.make_recipe('packaging.tests.packaging_group')
-        cls.packaging_group_2 = baker.make_recipe('packaging.tests.packaging_group')
-        cls.material = baker.make_recipe('packaging.tests.packaging_material')
-        cls.material_2 = baker.make_recipe('packaging.tests.packaging_material')
+        cls.packaging_group = baker.make_recipe('apps.packaging.tests.packaging_group')
+        cls.packaging_group_2 = baker.make_recipe('apps.packaging.tests.packaging_group')
+        cls.material = baker.make_recipe('apps.packaging.tests.packaging_material')
+        cls.material_2 = baker.make_recipe('apps.packaging.tests.packaging_material')
         baker.make_recipe(
-            'packaging.tests.packaging_material_price',
+            'apps.packaging.tests.packaging_material_price',
             start_year=2022,
             start_month=4,
             price_per_kg=6,
             related_material=cls.material,
         )
         baker.make_recipe(
-            'packaging.tests.packaging_material_price',
+            'apps.packaging.tests.packaging_material_price',
             start_year=2022,
             start_month=5,
             price_per_kg=10,
             related_material=cls.material,
         )
         baker.make_recipe(
-            'packaging.tests.packaging_material_price',
+            'apps.packaging.tests.packaging_material_price',
             start_year=2020,
             start_month=6,
             price_per_kg=15,

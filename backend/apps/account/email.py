@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 
 from ai_kit_auth.services import get_activation_url
 
-from common.email import send_translated_email
+from apps.common.email import send_translated_email
 
 UserModel = get_user_model()
 

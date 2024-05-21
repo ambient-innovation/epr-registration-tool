@@ -5,9 +5,9 @@ from wagtail import blocks
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 
-from cms.image_utils import get_image_placeholder
-from cms.utils import get_page_for_id, get_page_type, parse_internal_link
-from cms.validators import validate_is_pdf
+from apps.cms.image_utils import get_image_placeholder
+from apps.cms.utils import get_page_for_id, get_page_type, parse_internal_link
+from apps.cms.validators import validate_is_pdf
 
 DEFAULT_RICH_TEXT_FEATURES = ['h3', 'bold', 'italic', 'ul', 'ol', 'link']
 

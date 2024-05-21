@@ -2,7 +2,7 @@
 from django.core import validators
 from django.db import migrations, models
 
-from company.utils import generate_registration_number
+from apps.company.utils import generate_registration_number
 
 
 def populate_registration_numbers(apps, schema_editor):

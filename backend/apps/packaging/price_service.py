@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Optional, Tuple
 
-from packaging.models import Material, MaterialPrice
+from apps.packaging.models import Material, MaterialPrice
 
 
 class PriceService:

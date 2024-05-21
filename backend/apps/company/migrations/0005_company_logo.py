@@ -2,8 +2,8 @@
 
 from django.db import migrations, models
 
-import common.storage_backend
-import company.validators
+import apps.common.storage_backend
+import apps.company.validators
 
 
 class Migration(migrations.Migration):
@@ -20,11 +20,11 @@ class Migration(migrations.Migration):
                 blank=True,
                 max_length=255,
                 null=True,
-                storage=common.storage_backend.private_file_storage,
+                storage=apps.common.storage_backend.private_file_storage,
                 upload_to='logos',
                 validators=[
-                    company.validators.validate_max_image_size,
-                    company.validators.validate_allowed_image_formats,
+                    apps.company.validators.validate_max_image_size,
+                    apps.company.validators.validate_allowed_image_formats,
                 ],
                 verbose_name='Logo',
             ),

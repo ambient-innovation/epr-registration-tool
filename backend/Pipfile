@@ -17,7 +17,7 @@ strawberry-graphql = {extras = ["debug-server"], version = "~=0.193"} # Django p
 django-cors-headers = "~=3.12"                                        # Cross-Origin-Request headers
 django-axes = "*"                                                     # Prevent brute-force attacks
 # deployment
-gunicorn = "~=20.1"
+gunicorn = "~=22.0"
 whitenoise = "~=6.0"
 # other
 django-ses = "~=3.5"                                                  # AWS SES mailing

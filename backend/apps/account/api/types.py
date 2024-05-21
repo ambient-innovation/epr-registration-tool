@@ -3,7 +3,7 @@ import typing
 import strawberry
 from strawberry import auto
 
-from account.models import EmailChangeRequest, LanguageChoices, User
+from apps.account.models import EmailChangeRequest, LanguageChoices, User
 
 
 @strawberry.django.type(EmailChangeRequest)

@@ -2,7 +2,7 @@ from django.test import TestCase
 
 from model_bakery import baker
 
-from packaging.price_utils import get_material_price_at
+from apps.packaging.price_utils import get_material_price_at
 
 
 class PriceServiceTestCase(TestCase):

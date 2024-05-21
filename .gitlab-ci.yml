@@ -296,6 +296,17 @@ container_scanning_backend:
     IMAGE: $IMAGE_TAG_BACKEND
     DIRECTORY: "backend"
 
+# This job will scan "aws" directory for config errors. 
+# This folder contains my cloudformation stacks.
+config_scanning:
+  variables:
+    DIRECTORY: aws
+    TRIVY_IGNOREFILE_DIR: .trivyignore.yaml
+  allow_failure: true
+  tags:
+    - low-load
+  interruptible: true
+
 # In case of failing but no artifacts uploaded, you can use this api, just replace set job-id of the `check trivy scan results`
 # https://gitlab.ambient-innovation.com/giz/epr-registration-tool/-/jobs/<job-id>/artifacts/download?file_type=codequality 
 check trivy scan results:
@@ -376,18 +387,6 @@ helm:deploy:
     - apk update
     - apk add curl
     - status=$(curl -i -X POST -s -o /dev/null -w "%{http_code}" -u "$CHARTMUSEUM_USER:$CHARTMUSEUM_PASSWORD" --data-binary "@epr-tool-$VERSION.tgz" https://chartmuseum.ambient-innovation.com/api/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/charts &> /dev/stdout) && if [ $status -gt 300 ]; then echo "Failed with HTTP CODE $status"; exit 1; else echo "success"; fi
-  only:
-    - /^helm[-/\/].*$/
-
-# Edit RANCHER_CONTEXT_ID according to your own Rancher project. DO NOT LEAVE DEFAULT VALUE.
-# See the link for further info: https://ambient327.sharepoint.com/sites/AmbientInnovationGmbH/_layouts/OneNote.aspx?id=%2Fsites%2FAmbientInnovationGmbH%2FFreigegebene%20Dokumente%2FGeneral%2FAMBIENT%20Knowledge%20Base&wd=target%2850.3%20%E2%80%93%20GitLab-CI%20Pipelines.one%7CA273004C-DD0F-4FAF-B13B-7C56670C2086%2FAuto-refresh%20helm-charts%20in%20Pipeline%7CA935A3D5-EDE1-426C-9029-421684800787%2F%29
-helm:refresh:
-  stage: post-deploy
-  variables:
-    RANCHER_CONTEXT_ID: c-rg9xd:p-mcxjf
-  trigger:
-    project: ai/rancher-catalog-refresh-cross-project-pipeline
-    branch: trigger
   only:
     - /^helm[-/\/].*$/
 

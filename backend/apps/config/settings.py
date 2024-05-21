@@ -21,9 +21,6 @@ from corsheaders.defaults import default_methods
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 ROOT_DIR = environ.Path(__file__) - 2
 
-# To make apps are findable without a prefix
-sys.path.append(str(BASE_DIR / "apps"))
-
 env = environ.Env(
     # Django
     DJANGO_DEBUG=(bool, False),
@@ -133,13 +130,13 @@ THIRD_PARTY_APPS = (
 )
 
 LOCAL_APPS = (
-    'config.admin.CustomAdminConfig',
-    'common',
-    'packaging',
-    'packaging_report',
-    'account',
-    'company',
-    'cms',
+    'apps.config.admin.CustomAdminConfig',
+    'apps.common',
+    'apps.packaging',
+    'apps.packaging_report',
+    'apps.account',
+    'apps.company',
+    'apps.cms',
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -184,7 +181,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = 'apps.config.urls'
 
 TEMPLATES = [
     {
@@ -202,7 +199,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = 'apps.config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -230,11 +227,11 @@ else:
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'account.password_validation.MinimumLengthValidator'},
-    {'NAME': 'account.password_validation.ContainsUppercaseLetterValidator'},
-    {'NAME': 'account.password_validation.ContainsLowercaseLetterValidator'},
-    {'NAME': 'account.password_validation.ContainsNumberValidator'},
-    {'NAME': 'account.password_validation.ContainsSpecialCharacterValidator'},
+    {'NAME': 'apps.account.password_validation.MinimumLengthValidator'},
+    {'NAME': 'apps.account.password_validation.ContainsUppercaseLetterValidator'},
+    {'NAME': 'apps.account.password_validation.ContainsLowercaseLetterValidator'},
+    {'NAME': 'apps.account.password_validation.ContainsNumberValidator'},
+    {'NAME': 'apps.account.password_validation.ContainsSpecialCharacterValidator'},
 ]
 
 # Internationalization
@@ -267,7 +264,7 @@ AUTHENTICATION_BACKENDS = [
     # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
     'axes.backends.AxesBackend',
     # Django ModelBackend is the default authentication backend.
-    "account.auth_backend.CustomModelBackend",
+    "apps.account.auth_backend.CustomModelBackend",
 ]
 
 ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
@@ -280,7 +277,7 @@ CORS_ALLOW_CREDENTIALS = True
 # --> this is needed so next.js can receive the csrf token directly from the browser
 CSRF_USE_SESSIONS = False
 
-CSRF_FAILURE_VIEW = 'account.views.csrf_failure'
+CSRF_FAILURE_VIEW = 'apps.account.views.csrf_failure'
 CSRF_COOKIE_DOMAIN = env.str('DJANGO_COOKIE_DOMAIN')
 CSRF_TRUSTED_ORIGINS = env.list('DJANGO_CSRF_TRUSTED_ORIGINS')
 
@@ -362,7 +359,7 @@ AI_KIT_AUTH = {
         "REGISTER": False,
     },
     "USER_IDENTITY_FIELDS": ('email',),
-    'SEND_RESET_PW_MAIL': 'account.email.send_reset_password_mail',
+    'SEND_RESET_PW_MAIL': 'apps.account.email.send_reset_password_mail',
 }
 
 # --- AWS --- #

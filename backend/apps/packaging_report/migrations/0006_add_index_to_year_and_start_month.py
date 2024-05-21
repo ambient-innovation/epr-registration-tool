@@ -2,7 +2,7 @@
 
 from django.db import migrations, models
 
-import packaging_report.models
+import apps.packaging_report.models
 
 
 class Migration(migrations.Migration):
@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
                     (12, 'December'),
                 ],
                 db_index=True,
-                validators=[packaging_report.models.validate_report_month],
+                validators=[apps.packaging_report.models.validate_report_month],
                 verbose_name='Start Month',
             ),
         ),

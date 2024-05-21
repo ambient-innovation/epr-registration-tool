@@ -2,7 +2,7 @@ from django.core.management import BaseCommand
 
 from strawberry.printer import print_schema
 
-from config.schema import schema
+from apps.config.schema import schema
 
 
 def export_schema():

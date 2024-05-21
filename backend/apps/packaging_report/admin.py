@@ -11,15 +11,15 @@ from django.utils.translation import gettext_lazy as _
 import pytz
 from ambient_toolbox.admin.model_admins.mixins import CommonInfoAdminMixin
 
-from common.models import Month
-from packaging_report.models import (
+from apps.common.models import Month
+from apps.packaging_report.models import (
     FinalSubmission,
     ForecastSubmission,
     MaterialRecord,
     PackagingReport,
     ReportSubmission,
 )
-from packaging_report.views import CSVExportDataView
+from apps.packaging_report.views import CSVExportDataView
 
 es_formats.DATETIME_FORMAT = "d M Y H:i:s"
 

@@ -3,8 +3,8 @@ from wagtail.api import APIField
 from wagtail.fields import StreamField
 from wagtail.models import Page
 
-from cms.blocks import DEFAULT_BLOCKS
-from cms.headless_mixin import CustomHeadlessMixin
+from apps.cms.blocks import DEFAULT_BLOCKS
+from apps.cms.headless_mixin import CustomHeadlessMixin
 
 
 class AbstractStandardPage(CustomHeadlessMixin, Page):

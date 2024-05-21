@@ -5,8 +5,8 @@ from django.utils.translation import gettext_lazy as _
 
 from modeltranslation.admin import TranslationAdmin
 
-from packaging.models import Material, MaterialPrice, PackagingGroup
-from packaging.price_utils import get_material_latest_price
+from apps.packaging.models import Material, MaterialPrice, PackagingGroup
+from apps.packaging.price_utils import get_material_latest_price
 
 
 class MaterialPriceForm(forms.ModelForm):

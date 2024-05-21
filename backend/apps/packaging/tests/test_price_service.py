@@ -2,7 +2,7 @@ from django.test import TestCase
 
 from model_bakery import baker
 
-from packaging.price_service import PriceService
+from apps.packaging.price_service import PriceService
 
 
 class PriceServiceTestCase(TestCase):

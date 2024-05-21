@@ -3,7 +3,7 @@ from typing import Optional
 import strawberry
 from strawberry.types import Info
 
-from account.api.types import UserType
+from apps.account.api.types import UserType
 
 
 @strawberry.type

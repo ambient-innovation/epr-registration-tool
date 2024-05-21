@@ -7,10 +7,10 @@ from django.utils.timezone import make_aware
 import time_machine
 from model_bakery import baker
 
-from common.tests.test_base import BaseTestCase
-from packaging_report.invoice import InvoiceService
-from packaging_report.invoice_file import InvoicePdf
-from packaging_report.models import PackagingReport, TimeframeType
+from apps.common.tests.test_base import BaseTestCase
+from apps.packaging_report.invoice import InvoiceService
+from apps.packaging_report.invoice_file import InvoicePdf
+from apps.packaging_report.models import PackagingReport, TimeframeType
 
 
 @time_machine.travel(make_aware(datetime(year=2023, month=1, day=1)))
@@ -20,7 +20,11 @@ class MaterialGroupInvoiceServiceTestCase(BaseTestCase):
     @staticmethod
     def make_material_price(material, year, month, price):
         baker.make(
-            'packaging.MaterialPrice', related_material=material, start_year=year, start_month=month, price_per_kg=price
+            'packaging.MaterialPrice',
+            related_material=material,
+            start_year=year,
+            start_month=month,
+            price_per_kg=price,
         )
 
     @classmethod
@@ -28,7 +32,10 @@ class MaterialGroupInvoiceServiceTestCase(BaseTestCase):
         super().setUpTestData()
 
         cls.company = cls.create_and_assign_company(cls.user)
-        cls.packaging_group_1, cls.packaging_group_2 = baker.make_recipe('packaging.tests.packaging_group', _quantity=2)
+        cls.packaging_group_1, cls.packaging_group_2 = baker.make_recipe(
+            'apps.packaging.tests.packaging_group',
+            _quantity=2,
+        )
 
         cls.material_1 = baker.make('packaging.Material', name='PET')
         cls.material_2 = baker.make('packaging.Material', name='Metal cans')
@@ -55,7 +62,7 @@ class MaterialGroupInvoiceServiceTestCase(BaseTestCase):
         cls.make_material_price(cls.material_3, 2022, 9, 19.9)
 
         cls.packaging_report = baker.make_recipe(
-            'packaging_report.tests.packaging_report',
+            'apps.packaging_report.tests.packaging_report',
             related_company=cls.company,
             timeframe=TimeframeType.TWELVE_MONTHS,
             start_month=1,
@@ -88,7 +95,7 @@ class MaterialGroupInvoiceServiceTestCase(BaseTestCase):
 
     def test_clean_material_records_for_invoice_one_month_report(self):
         packaging_report = baker.make_recipe(
-            'packaging_report.tests.packaging_report',
+            'apps.packaging_report.tests.packaging_report',
             related_company=self.company,
             timeframe=TimeframeType.MONTH,
             start_month=1,
@@ -135,7 +142,7 @@ class MaterialGroupInvoiceServiceTestCase(BaseTestCase):
 
     def test_clean_material_records_for_invoice_last_month_report(self):
         packaging_report = baker.make_recipe(
-            'packaging_report.tests.packaging_report',
+            'apps.packaging_report.tests.packaging_report',
             related_company=self.company,
             timeframe=TimeframeType.MONTH,
             start_month=12,
@@ -155,9 +162,13 @@ class MaterialGroupInvoiceServiceTestCase(BaseTestCase):
                 Prefetch('related_final_submission', to_attr='final_submission'),
                 Prefetch('final_submission__material_records_queryset', to_attr='material_records'),
                 Prefetch(
-                    'final_submission__material_records__related_packaging_material', to_attr='packaging_material'
+                    'final_submission__material_records__related_packaging_material',
+                    to_attr='packaging_material',
                 ),
-                Prefetch('final_submission__material_records__related_packaging_group', to_attr='packaging_group'),
+                Prefetch(
+                    'final_submission__material_records__related_packaging_group',
+                    to_attr='packaging_group',
+                ),
             )
             .first()
         )
@@ -182,13 +193,17 @@ class MaterialGroupInvoiceServiceTestCase(BaseTestCase):
 
     def test_clean_material_records_for_invoice_three_months_report(self):
         packaging_report = baker.make_recipe(
-            'packaging_report.tests.packaging_report',
+            'apps.packaging_report.tests.packaging_report',
             related_company=self.company,
             timeframe=TimeframeType.THREE_MONTHS,
             start_month=2,
             year=2022,
         )
-        final_submission = baker.make('packaging_report.FinalSubmission', related_report=packaging_report, fees=600)
+        final_submission = baker.make(
+            'packaging_report.FinalSubmission',
+            related_report=packaging_report,
+            fees=600,
+        )
         baker.make(
             'packaging_report.MaterialRecord',
             related_final_submission=final_submission,

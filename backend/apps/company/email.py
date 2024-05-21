@@ -6,8 +6,8 @@ from django.urls import reverse
 
 from sentry_sdk import capture_message, configure_scope
 
-from common.email import send_translated_email
-from company.models import Company
+from apps.common.email import send_translated_email
+from apps.company.models import Company
 
 UserModel = get_user_model()
 

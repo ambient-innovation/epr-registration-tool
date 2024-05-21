@@ -154,3 +154,13 @@ to see the license scanning results, check pls the job logs itself, and ignore t
   but might require you to disclose the sourcecode to every user if used in the frontend. Check with the Privacy Circle if in doubt.
 
 For more pls check [gitlab-trivy-license-checks](https://github.com/ambient-innovation/gitlab-trivy-license-checks)
+
+## Push Mirror from Gitlab to Github
+The project repository is mirrored from Gitlab to Github using push mirroring mechanism provided in Gitlab.
+More info about push mirroring [here](https://docs.gitlab.com/ee/user/project/repository/mirror/push.html#set-up-a-push-mirror-from-gitlab-to-github).
+
+Shortly after a push to Gitlab repository, the Github repository of the project should be updated. If this
+does not happen automatically, please check if fine-grained Github access token is expired. Please contact
+Ambient ops to create a new token.
+
+A push mirror can also be forced by Gitlab maintainers of the project. Select Settings > Repository. Expand Mirroring repositories. Press Update now.

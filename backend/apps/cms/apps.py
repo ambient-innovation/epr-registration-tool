@@ -3,8 +3,8 @@ from django.apps import AppConfig
 
 class CmsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'cms'
+    name = 'apps.cms'
 
     def ready(self):
         # run file to register signals
-        import cms.signals  # noqa
+        import apps.cms.signals  # noqa

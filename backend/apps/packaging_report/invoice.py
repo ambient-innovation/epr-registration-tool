@@ -2,9 +2,9 @@ import datetime
 import warnings
 from decimal import Decimal
 
-from packaging.models import MaterialPrice
-from packaging.price_utils import get_material_price_at
-from packaging_report.models import FinalSubmission
+from apps.packaging.models import MaterialPrice
+from apps.packaging.price_utils import get_material_price_at
+from apps.packaging_report.models import FinalSubmission
 
 
 def last_day_of_month(date):

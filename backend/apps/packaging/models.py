@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from ambient_toolbox.models import CommonInfo
 
-from common.models import Month
+from apps.common.models import Month
 
 
 class PackagingGroup(CommonInfo):

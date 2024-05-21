@@ -3,9 +3,9 @@ from django.db.models import Prefetch
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
 
-from common.mixin import AdminViewMixin
-from packaging_report.forms import CSVExportDataForm
-from packaging_report.models import PackagingReport, ReportTypes
+from apps.common.mixin import AdminViewMixin
+from apps.packaging_report.forms import CSVExportDataForm
+from apps.packaging_report.models import PackagingReport, ReportTypes
 
 
 class CSVExportDataView(AdminViewMixin, generic.FormView):

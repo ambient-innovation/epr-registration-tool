@@ -7,8 +7,8 @@ from django.utils.translation import gettext_lazy as _
 
 from sentry_sdk import capture_exception
 
-from account.email import send_account_deactivated_mail, send_user_confirm_email_notification
-from account.models import NotificationSettings, User
+from apps.account.email import send_account_deactivated_mail, send_user_confirm_email_notification
+from apps.account.models import NotificationSettings, User
 
 admin.site.unregister(Group)
 

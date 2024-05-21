@@ -3,9 +3,9 @@ import typing
 import strawberry
 from strawberry.types import Info
 
-from common.api.permissions import IsAuthenticated
-from company.api.types import CompanyType
-from company.models import Company
+from apps.common.api.permissions import IsAuthenticated
+from apps.company.api.types import CompanyType
+from apps.company.models import Company
 
 
 def get_company_details(info: Info) -> typing.Optional[CompanyType]:

@@ -1,6 +1,6 @@
 from django.db.models import F, QuerySet
 
-from account.models import User
+from apps.account.models import User
 
 
 class PackagingReportQuerySet(QuerySet):

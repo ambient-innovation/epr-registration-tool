@@ -5,8 +5,8 @@ from django.utils.timezone import make_aware
 import time_machine
 from model_bakery import baker
 
-from common.tests.test_base import BaseApiTestCase
-from packaging_report.models import ForecastSubmission, MaterialRecord, PackagingReport, TimeframeType
+from apps.common.tests.test_base import BaseApiTestCase
+from apps.packaging_report.models import ForecastSubmission, MaterialRecord, PackagingReport, TimeframeType
 
 
 class PackagingReportDeleteTestCase(BaseApiTestCase):
@@ -26,10 +26,10 @@ class PackagingReportDeleteTestCase(BaseApiTestCase):
     def setUpTestData(cls):
         super().setUpTestData()
         cls.company = cls.create_and_assign_company(cls.user)
-        cls.packaging_group = baker.make_recipe('packaging.tests.packaging_group')
-        cls.material = baker.make_recipe('packaging.tests.packaging_material')
+        cls.packaging_group = baker.make_recipe('apps.packaging.tests.packaging_group')
+        cls.material = baker.make_recipe('apps.packaging.tests.packaging_material')
         cls.packaging_report = baker.make_recipe(
-            'packaging_report.tests.packaging_report',
+            'apps.packaging_report.tests.packaging_report',
             related_company=cls.company,
             start_month=1,
             year=2022,

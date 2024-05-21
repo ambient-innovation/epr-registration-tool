@@ -6,9 +6,9 @@ from django import forms
 from django.http import StreamingHttpResponse
 from django.utils.translation import gettext_lazy as _
 
-from common.models import Month
-from company.models import Company
-from packaging_report.models import MaterialRecord, PackagingReport, ReportTypes
+from apps.common.models import Month
+from apps.company.models import Company
+from apps.packaging_report.models import MaterialRecord, PackagingReport, ReportTypes
 
 
 class Echo:

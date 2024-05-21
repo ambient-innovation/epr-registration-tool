@@ -2,7 +2,7 @@
 
 from django.db import migrations, models
 
-import company.validators
+import apps.company.validators
 
 
 class Migration(migrations.Migration):
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                     '(lower cased)'
                 ),
                 max_length=2,
-                validators=[company.validators.validate_is_lower_case],
+                validators=[apps.company.validators.validate_is_lower_case],
                 verbose_name='Country code',
             ),
         ),

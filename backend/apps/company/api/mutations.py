@@ -12,13 +12,13 @@ from sentry_sdk import capture_exception
 from strawberry.file_uploads import Upload
 from strawberry.types import Info
 
-from account.email import send_user_confirm_email_notification
-from account.models import User
-from common.api.permissions import IsActivated, IsAuthenticated
-from company.api.inputs import AdditionalInvoiceRecipientInput, CompanyContactInfoInput, CompanyInput
-from company.email import send_company_data_changed_notification
-from company.models import AdditionalInvoiceRecipient, Company, CompanyContactInfo, DistributorType
-from company.utils import generate_unique_registration_number
+from apps.account.email import send_user_confirm_email_notification
+from apps.account.models import User
+from apps.common.api.permissions import IsActivated, IsAuthenticated
+from apps.company.api.inputs import AdditionalInvoiceRecipientInput, CompanyContactInfoInput, CompanyInput
+from apps.company.email import send_company_data_changed_notification
+from apps.company.models import AdditionalInvoiceRecipient, Company, CompanyContactInfo, DistributorType
+from apps.company.utils import generate_unique_registration_number
 
 
 def register_company(

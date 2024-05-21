@@ -1,6 +1,6 @@
 from model_bakery import baker
 
-from common.tests.test_base import BaseApiTestCase
+from apps.common.tests.test_base import BaseApiTestCase
 
 
 class CreateCompanyProfileMutationTestCase(BaseApiTestCase):
@@ -22,7 +22,7 @@ class CreateCompanyProfileMutationTestCase(BaseApiTestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        cls.company = baker.make_recipe('company.tests.company', users_queryset=[cls.user])
+        cls.company = baker.make_recipe('apps.company.tests.company', users_queryset=[cls.user])
 
     def test_company_details_not_authenticated(self):
         self.logout_user()
@@ -46,7 +46,7 @@ class CreateCompanyProfileMutationTestCase(BaseApiTestCase):
         self.assertIsNotNone(data['companyDetails']['contactInfo'])
 
     def test_company_details_without_company(self):
-        user_without_company = baker.make_recipe('account.tests.user')
+        user_without_company = baker.make_recipe('apps.account.tests.user')
         self.login(user_without_company)
         data = self.query_and_load_data(self.QUERY)
         self.assertIsNone(data['companyDetails'])
