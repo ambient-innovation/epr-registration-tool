@@ -1,6 +1,7 @@
 include:
   - remote: https://raw.githubusercontent.com/ambient-innovation/gitlab-trivy-checks/main/gitlab-trivy-checks.yaml
-
+  - remote: https://raw.githubusercontent.com/ambient-innovation/gitlab-retry-runners/master/gitlab-retry-runners.yaml
+  
 image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:${DOCKER_VERSION}
 
 stages:
