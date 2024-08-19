@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 # django
-django = "~=4.1"
+django = "~=4.2.15"
 django-environ = "~=0.8"
 psycopg2 = "~=2.9"
 # django testing
