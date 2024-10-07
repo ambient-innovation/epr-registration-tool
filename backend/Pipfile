@@ -33,7 +33,7 @@ django-storages = "~=1.12"                                            # Custom s
 boto3 = "~=1.24"                                                     # AWS S3 connector
 wagtail = "~=5.0"
 wagtail-localize = "~=1.6"                                            # Multi lang support for Wagtail
-wagtail-headless-preview = "~=0.7"                                    # Enable wagtail preview via REST
+wagtail-headless-preview = "~=0.7.0"                                    # Enable wagtail preview via REST
 beautifulsoup4 = "*"
 coverage = "~=6.4"                                                    # to create coverage report
 unittest-xml-reporting = "~=3.0"                                      # Tool for analyzing code coverage in CI pipeline
