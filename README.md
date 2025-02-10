@@ -2,7 +2,7 @@
 
 ## Links
 
-- Supporting document for EPR migration project: https://gitlab.ambient-innovation.com/giz/epr-registration-tool/-/blob/develop/epr-registration-tool-suggestions-for-smooth-migration-process.pdf
+- Supporting document for EPR project migration: https://gitlab.ambient-innovation.com/giz/epr-registration-tool/-/blob/develop/infrastructure/important-notes-for-migration-process.md
 
 - Repo: [GitLab](https://gitlab.ambient-innovation.com/giz/epr-registration-tool)
 - Designs: [Figma](https://www.figma.com/file/DAopFQAjt8DvKetQfrH7EG/GIZ-EPR-Registration-Tool-MUI)
